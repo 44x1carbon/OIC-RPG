@@ -46,4 +46,9 @@ class StudentEloquent extends Model
 
         return new Student($this->id, $scope);
     }
+
+    public function fromEntity(Student $student):StudentEloquent
+    {
+        return static::find($student->getId());
+    }
 }

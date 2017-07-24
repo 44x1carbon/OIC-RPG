@@ -2,13 +2,9 @@
 
 namespace App\Domain\Status\ValueObject;
 
-use App\Domain\ValueObjectInterface;
-use App\Domain\ValueObjectTrait;
 
-class StudentSkill implements ValueObjectInterface
+class StudentSkill extends SkillInfo
 {
-    use ValueObjectTrait;
-
-    public $belongClass;
-    public $belongCourse;
+    public $exp;
+    public $nextExp;
 }
