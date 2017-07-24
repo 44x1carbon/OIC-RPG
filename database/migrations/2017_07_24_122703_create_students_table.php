@@ -17,6 +17,8 @@ class CreateStudentsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string("student_code");
+            $table->unsignedInteger('belong_course_id');
+            $table->unsignedInteger('belong_class');
             $table->timestamps();
         });
     }
