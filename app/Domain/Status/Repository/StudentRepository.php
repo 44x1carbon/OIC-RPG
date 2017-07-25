@@ -14,12 +14,12 @@ use App\Utilities\SkillExpDictionary;
 class StudentRepository
 {
     protected $studentModel;
-    protected $skillModel;
+    protected $skillRepo;
 
-    function __construct(StudentEloquent $studentModel, SkillEloquent $skillModel)
+    function __construct(StudentEloquent $studentModel, SkillRepository $skillRepo)
     {
         $this->studentModel = $studentModel;
-        $this->skillModel = $studentModel;
+        $this->skillRepo = $skillRepo;
     }
 
     function create(StudentInfo $studentInfo, Course $course):Student
@@ -39,7 +39,7 @@ class StudentRepository
     function addSkill(Student $student, SkillInfo $skillInfo):SkillInfo
     {
         $studentModel = $this->studentModel->fromEntity($student);
-        $skillModel = $this->skillModel->findCode($skillInfo->skillCode);
+        $skillModel = $this->skillRepo->findCode($skillInfo->skillCode);
 
         $studentModel->skills()->save($skillModel, [
             "exp" => 0,

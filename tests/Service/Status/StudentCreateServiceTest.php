@@ -2,9 +2,12 @@
 
 namespace Tests\Service\Status;
 
+use App\Domain\Status\Eloquents\SkillEloquent;
 use App\Domain\Status\Entity\Course;
+use App\Domain\Status\ValueObject\SkillInfo;
 use App\Domain\Status\ValueObject\StudentInfo;
 use App\Services\Status\StudentCreateService;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class StudentCreateServiceTest extends TestCase
@@ -17,17 +20,44 @@ class StudentCreateServiceTest extends TestCase
         $this->service = App(StudentCreateService::class);
     }
 
-    public function test正常系()
+    public function testCreate()
     {
         $course = new Course(1, []);
         $studentInfo = new StudentInfo([
             "name" => "山田 太郎",
-            "studentCode" => "b9999",
+            "studentCode" => "b" . Str::random(3),
             "belongClass" => "9A"
         ]);
 
         $student = $this->service->create($studentInfo, $course);
 
         $this->assertTrue(true);
+    }
+
+    public function testAddSkill()
+    {
+        $course = new Course(1, []);
+        $studentInfo = new StudentInfo([
+            "name" => "山田 太郎",
+            "studentCode" => "b" . Str::random(3),
+            "belongClass" => "9A"
+        ]);
+
+        $student = $this->service->create($studentInfo, $course);
+
+        $skillModel = SkillEloquent::create([
+            "skill_code" => Str::random(8),
+            "name" => "スキル" . Str::random(4),
+            "memo" => Str::random(40)
+        ]);
+        $skillInfo = new SkillInfo([
+            "skillCode" => $skillModel->skill_code,
+            "name" => $skillModel->name,
+            "memo" => $skillModel->memo,
+        ]);
+
+//        dd($skillModel, $skillInfo);
+
+        $this->service->addSkill($student, $skillInfo);
     }
 }

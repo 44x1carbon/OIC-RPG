@@ -13,12 +13,12 @@ class StudentEloquent extends Model
 
     public function course()
     {
-        $this->belongsTo(CourseEloquent::class, "belong_course_id");
+        return $this->belongsTo(CourseEloquent::class, "belong_course_id");
     }
 
     public function skills()
     {
-        $this->belongsToMany(SkillEloquent::class, "student_skills", "student_id", "skill_id")->withPivot([
+        return $this->belongsToMany(SkillEloquent::class, "student_skills", "student_id", "skill_id")->withPivot([
             "next_exp",
             "exp"
         ]);
@@ -26,7 +26,7 @@ class StudentEloquent extends Model
 
     public function jobs()
     {
-        $this->belongsToMany(JobEloquent::class, "student_jobs", "student_id", "job_id");
+        return $this->belongsToMany(JobEloquent::class, "student_jobs", "student_id", "job_id");
     }
 
     public function toValueObject():StudentInfo

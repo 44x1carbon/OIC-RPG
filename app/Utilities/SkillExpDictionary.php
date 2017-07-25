@@ -12,7 +12,7 @@ class SkillExpDictionary
 
     public static function getNeedExp(int $level):int
     {
-        if(array_has(self::$tablem, $level)) throw new \Exception("Undefined offset");
+        if(!array_has(self::$table, $level)) throw new \Exception("Undefined offset");
         return self::$table[$level];
     }
 }
