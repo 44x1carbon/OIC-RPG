@@ -18,10 +18,7 @@ class StudentEloquent extends Model
 
     public function skills()
     {
-        return $this->belongsToMany(SkillEloquent::class, "student_skills", "student_id", "skill_id")->withPivot([
-            "next_exp",
-            "exp"
-        ]);
+        return $this->hasMany(StudentSkillEloquent::class, "student_id");
     }
 
     public function jobs()
