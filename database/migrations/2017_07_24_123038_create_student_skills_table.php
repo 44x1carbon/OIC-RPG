@@ -17,6 +17,7 @@ class CreateStudentSkillsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('student_id');
             $table->unsignedInteger('skill_id');
+            $table->unsignedInteger('level');
             $table->unsignedInteger('exp');
             $table->unsignedInteger('next_exp');
             $table->timestamps();

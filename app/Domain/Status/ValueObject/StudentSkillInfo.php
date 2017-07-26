@@ -3,8 +3,9 @@
 namespace App\Domain\Status\ValueObject;
 
 
-class StudentSkill extends SkillInfo
+class StudentSkillInfo extends SkillInfo
 {
     public $exp;
     public $nextExp;
+    public $level;
 }
