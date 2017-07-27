@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\AddExpEvent;
+use App\Events\LevelUpEvent;
+use App\Listeners\AddExpEventListener;
+use App\Listeners\LevelUpEventListener;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -16,6 +20,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Event' => [
             'App\Listeners\EventListener',
         ],
+        AddExpEvent::class => [
+            AddExpEventListener::class,
+        ],
+        LevelUpEvent::class => [
+            LevelUpEventListener::class,
+        ]
     ];
 
     /**
