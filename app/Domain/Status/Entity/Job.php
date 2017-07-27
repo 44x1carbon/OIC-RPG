@@ -12,9 +12,15 @@ class Job implements EntityInterface
     use EntityTrait;
 
     const SCOPE_INFO = "info";
+    const SCOPE_REQUIRED_SKILLS = "required_skills";
 
-    function info():JobInfo
+    function info(): JobInfo
     {
-        $this->getScope(self::SCOPE_INFO);
+        return $this->getScope(self::SCOPE_INFO);
+    }
+
+    function requiredSkills(): array
+    {
+        return $this->getScope(self::SCOPE_REQUIRED_SKILLS);
     }
 }

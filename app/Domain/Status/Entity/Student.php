@@ -15,6 +15,6 @@ class Student implements EntityInterface
 
     function info():StudentInfo
     {
-        $this->getScope(self::SCOPE_INFO);
+        return $this->getScope(self::SCOPE_INFO);
     }
 }
