@@ -4,17 +4,25 @@ namespace App\Services\Status;
 
 use App\Domain\Status\Entity\Course;
 use App\Domain\Status\Entity\Student;
+use App\Domain\Status\Entity\StudentSkill;
 use App\Domain\Status\Repository\StudentRepository;
+use App\Domain\Status\Repository\StudentSkillRepository;
+use App\Domain\Status\ValueObject\LevelUpPermit;
 use App\Domain\Status\ValueObject\SkillInfo;
 use App\Domain\Status\ValueObject\StudentInfo;
+use App\Domain\Status\ValueObject\StudentSkillInfo;
+use App\Events\AddExpEvent;
+use App\Utilities\SkillExpDictionary;
 
 class StudentCreateService
 {
     protected $repo;
+    protected $studentSkillRepo;
 
-    function __construct(StudentRepository $repo)
+    function __construct(StudentRepository $repo, StudentSkillRepository $studentSkillRepo)
     {
         $this->repo = $repo;
+        $this->studentSkillRepo = $studentSkillRepo;
     }
 
     function create(StudentInfo $studentInfo, Course $course):Student
@@ -25,5 +33,37 @@ class StudentCreateService
     function addSkill(Student $student, SkillInfo $skillInfo):SkillInfo
     {
         return $this->repo->addSkill($student, $skillInfo);
+    }
+
+    function addExp(StudentSkill $studentSkill, int $exp):StudentSkill
+    {
+        $originInfo = $studentSkill->info();
+
+        $data = $originInfo->toArray();
+        $data['exp'] += $exp;
+        $newInfo = new StudentSkillInfo($data);
+        $updatedStudentSkill = $this->studentSkillRepo->update($studentSkill, $newInfo);
+        event(new AddExpEvent($updatedStudentSkill));
+        return $updatedStudentSkill;
+    }
+
+    function findStudentSkill(Student $student, SkillInfo $skillInfo):StudentSkill
+    {
+        return $this->repo->findStudentSkill($student, $skillInfo);
+    }
+
+    function levelUpSkill(LevelUpPermit $permit):StudentSkill
+    {
+        $studentSkill = $permit->studentSkill;
+        $originInfo = $studentSkill->info();
+        $cost = $originInfo->nextExp;
+
+        $data = $originInfo->toArray();
+        $data['exp'] -= $cost;
+        $data['level'] += 1;
+        $data['nextExp'] = SkillExpDictionary::getNeedExp($data['level']);
+        $newInfo = new StudentSkillInfo($data);
+        $updatedStudentSkill = $this->studentSkillRepo->update($studentSkill, $newInfo);
+        return $updatedStudentSkill;
     }
 }

@@ -2,24 +2,27 @@
 
 namespace App\Domain\Status\Repository;
 
-use App\Domain\Status\Eloquents\SkillEloquent;
 use App\Domain\Status\Eloquents\StudentEloquent;
+use App\Domain\Status\Eloquents\StudentSkillEloquent;
 use App\Domain\Status\Entity\Course;
 use App\Domain\Status\Entity\Student;
+use App\Domain\Status\Entity\StudentSkill;
 use App\Domain\Status\ValueObject\SkillInfo;
 use App\Domain\Status\ValueObject\StudentInfo;
-use App\Domain\Status\ValueObject\StudentSkill;
+use App\Domain\Status\ValueObject\StudentSkillInfo;
 use App\Utilities\SkillExpDictionary;
 
 class StudentRepository
 {
     protected $studentModel;
+    protected $studentSkillRepo;
     protected $skillRepo;
 
-    function __construct(StudentEloquent $studentModel, SkillRepository $skillRepo)
+    function __construct(StudentEloquent $studentModel, SkillRepository $skillRepo, StudentSkillRepository $studentSkillRepo)
     {
         $this->studentModel = $studentModel;
         $this->skillRepo = $skillRepo;
+        $this->studentSkillRepo = $studentSkillRepo;
     }
 
     function create(StudentInfo $studentInfo, Course $course):Student
@@ -40,12 +43,16 @@ class StudentRepository
     {
         $studentModel = $this->studentModel->fromEntity($student);
         $skillModel = $this->skillRepo->findCode($skillInfo->skillCode);
-
-        $studentModel->skills()->save($skillModel, [
-            "exp" => 0,
-            "next_exp" => SkillExpDictionary::getNeedExp(1)
-        ]);
+        $studentSkillModel = $this->studentSkillRepo->makeForSkillModel($skillModel);
+        $studentModel->skills()->save($studentSkillModel);
 
         return $skillInfo;
+    }
+
+    function findStudentSkill(Student $student, SkillInfo $skillInfo):StudentSkill
+    {
+        $studentModel = $this->studentModel->fromEntity($student);
+        $skillModel = $this->skillRepo->findCode($skillInfo->skillCode);
+        return $studentModel->skills()->first(["skill_id" => $skillModel->id])->toEntity();
     }
 }
