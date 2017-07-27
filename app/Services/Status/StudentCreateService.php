@@ -3,6 +3,7 @@
 namespace App\Services\Status;
 
 use App\Domain\Status\Entity\Course;
+use App\Domain\Status\Entity\Job;
 use App\Domain\Status\Entity\Student;
 use App\Domain\Status\Entity\StudentSkill;
 use App\Domain\Status\Repository\StudentRepository;
@@ -65,5 +66,10 @@ class StudentCreateService
         $newInfo = new StudentSkillInfo($data);
         $updatedStudentSkill = $this->studentSkillRepo->update($studentSkill, $newInfo);
         return $updatedStudentSkill;
+    }
+
+    function addJob(Student $student, Job $job):Job
+    {
+        return $this->repo->addJob($student, $job);
     }
 }

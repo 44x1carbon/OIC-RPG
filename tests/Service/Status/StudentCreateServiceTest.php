@@ -66,4 +66,12 @@ class StudentCreateServiceTest extends TestCase
         $this->service->addExp($studentSkill, 100);
         $this->assertTrue(true);
     }
+
+    public function testAddJob()
+    {
+        $student = $this->sampleStudent();
+        $job = $this->sampleJob();
+        $this->service->addJob($student, $job);
+        $this->assertTrue(true);
+    }
 }
