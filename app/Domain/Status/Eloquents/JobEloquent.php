@@ -24,7 +24,7 @@ class JobEloquent extends Model
         return new Job($this->id, $scope);
     }
 
-    function toValueObject(): JobInfo
+    function toValueObject():JobInfo
     {
         return new JobInfo([
             "jobCode" => $this->job_code,
@@ -34,4 +34,8 @@ class JobEloquent extends Model
         ]);
     }
 
+    static function fromEntity(Job $job):JobEloquent
+    {
+        return self::find($job->getId());
+    }
 }
