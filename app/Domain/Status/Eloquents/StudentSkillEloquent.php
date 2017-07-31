@@ -35,7 +35,7 @@ class StudentSkillEloquent extends Model
             "skill_id" =>  $skillModel->id,
             "level" => 1,
             "exp" => 0,
-            "next_exp" => SkillExpDictionary::getNeedExp(1),
+            "next_exp" => SkillExpDictionary::getNeedExp(2),
         ]);
     }
 
