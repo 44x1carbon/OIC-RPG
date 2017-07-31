@@ -13,13 +13,21 @@ class JobEloquent extends Model
 
     public function requiredSkills()
     {
-        $this->belongsToMany(SkillEloquent::class, "required_skills", "job_id", "skill_id")->withPivot("required_level");
+        $this->hasMany(RequiredSkillEloquent::class, "job_id");
+    }
+
+    public function getRequiredSkills():array
+    {
+        return $this->requiredSkills->map(function(RequiredSkillEloquent $r) {
+            return $r->toValueObject();
+        })->toArray();
     }
 
     function toEntity():Job
     {
         $scope = [
-            Job::SCOPE_INFO => $this->toValueObject()
+            Job::SCOPE_INFO => $this->toValueObject(),
+            Job::SCOPE_REQUIRED_SKILLS => $this->getRequiredSkills()
         ];
         return new Job($this->id, $scope);
     }
