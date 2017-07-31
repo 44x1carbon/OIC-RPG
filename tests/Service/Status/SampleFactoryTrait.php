@@ -21,7 +21,7 @@ trait SampleFactoryTrait
     public function sampleStudentSkill(Student $student):StudentSkill
     {
         $studentModel = StudentEloquent::find($student->getId());
-        $studentSkillModel = $studentModel->skills()->first();
+        $studentSkillModel = $studentModel->studentSkills()->first();
         if(is_null($studentSkillModel)) throw new \Exception("データを登録してください");
 
         return $studentSkillModel->toEntity();

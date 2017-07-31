@@ -16,7 +16,7 @@ class StudentEloquent extends Model
         return $this->belongsTo(CourseEloquent::class, "belong_course_id");
     }
 
-    public function skills()
+    public function studentSkills()
     {
         return $this->hasMany(StudentSkillEloquent::class, "student_id");
     }
@@ -24,6 +24,13 @@ class StudentEloquent extends Model
     public function jobs()
     {
         return $this->belongsToMany(JobEloquent::class, "student_jobs", "student_id", "job_id");
+    }
+
+    private function getStudentSkills():array
+    {
+        return $this->studentSkills->map(function($s){
+            return $s->toValueObject();
+        })->toArray();
     }
 
     public function toValueObject():StudentInfo
@@ -38,7 +45,8 @@ class StudentEloquent extends Model
     public function toEntity():Student
     {
         $scope = [
-            Student::SCOPE_INFO => $this->toValueObject()
+            Student::SCOPE_INFO => $this->toValueObject(),
+            Student::SCOPE_STUDENT_SKILLS => $this->getStudentSkills(),
         ];
 
         return new Student($this->id, $scope);

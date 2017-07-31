@@ -52,7 +52,7 @@ class StudentRepository
         $studentModel = $this->studentModel->fromEntity($student);
         $skillModel = $this->skillRepo->findCode($skillInfo->skillCode);
         $studentSkillModel = $this->studentSkillRepo->makeForSkillModel($skillModel);
-        $studentModel->skills()->save($studentSkillModel);
+        $studentModel->studentSkills()->save($studentSkillModel);
 
         return $skillInfo;
     }
@@ -61,7 +61,7 @@ class StudentRepository
     {
         $studentModel = $this->studentModel->fromEntity($student);
         $skillModel = $this->skillRepo->findCode($skillInfo->skillCode);
-        return $studentModel->skills()->first(["skill_id" => $skillModel->id])->toEntity();
+        return $studentModel->studentSkills()->first(["skill_id" => $skillModel->id])->toEntity();
     }
 
     function addJob(Student $student, Job $job):Job
