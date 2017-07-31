@@ -2,9 +2,11 @@
 
 namespace Tests\Service\Status;
 
+use App\Domain\Status\Eloquents\CourseEloquent;
 use App\Domain\Status\Eloquents\JobEloquent;
 use App\Domain\Status\Eloquents\SkillEloquent;
 use App\Domain\Status\Eloquents\StudentEloquent;
+use App\Domain\Status\Entity\Course;
 use App\Domain\Status\Entity\Job;
 use App\Domain\Status\Entity\Skill;
 use App\Domain\Status\Entity\Student;
@@ -41,5 +43,12 @@ trait SampleFactoryTrait
         $skillModel = SkillEloquent::first();
         if(is_null($skillModel)) throw new \Exception("データを登録してください");
         return $skillModel->toEntity();
+    }
+
+    public function sampleCourse():Course
+    {
+        $model = CourseEloquent::first();
+        if(is_null($model)) throw new \Exception("データを登録してください");
+        return $model->toEntity();
     }
 }
