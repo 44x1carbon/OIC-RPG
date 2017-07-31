@@ -13,7 +13,7 @@ class JobEloquent extends Model
 
     public function requiredSkills()
     {
-        $this->hasMany(RequiredSkillEloquent::class, "job_id");
+        return $this->hasMany(RequiredSkillEloquent::class, "job_id");
     }
 
     public function getRequiredSkills():array
