@@ -70,6 +70,8 @@ class StudentCreateService
 
     function addJob(Student $student, Job $job):Job
     {
+        //ToDo 適切な例外クラスを作る
+        if(!$student->isGettableJob($job)) throw new \Exception("取得条件を満たしていません。");
         return $this->repo->addJob($student, $job);
     }
 }
