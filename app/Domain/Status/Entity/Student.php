@@ -15,6 +15,8 @@ class Student implements EntityInterface
 
     const SCOPE_INFO = "info";
     const SCOPE_STUDENT_SKILLS = "student_skills";
+    const SCOPE_STUDENT_JOBS = "student_jobs";
+    const SCOPE_COURSE_INFO = "course_info";
 
     function info():StudentInfo
     {
@@ -24,6 +26,16 @@ class Student implements EntityInterface
     function studentSkills():array
     {
         return $this->getScope(self::SCOPE_STUDENT_SKILLS);
+    }
+
+    function studentJobs():array
+    {
+        return $this->getScope(self::SCOPE_STUDENT_JOBS);
+    }
+
+    function courseInfo():CourseInfo
+    {
+        return $this->getScope(self::SCOPE_COURSE_INFO);
     }
 
     function isGettableJob(Job $job): bool
