@@ -2,11 +2,14 @@
 
 namespace App\Domain\Status\Eloquents;
 
+use App\Domain\Status\Entity\Course;
+use App\Domain\Status\ValueObject\CourseInfo;
 use Illuminate\Database\Eloquent\Model;
 
 class CourseEloquent extends Model
 {
     protected $table = "courses";
+    protected $guarded = [];
 
     public function gettableSkills()
     {
@@ -16,5 +19,22 @@ class CourseEloquent extends Model
     public function gettableJobs()
     {
         $this->belongsToMany(JobEloquent::class, "course_gettable_jobs", "course_id", "job_id");
+    }
+
+    public function getInfo():CourseInfo
+    {
+        return new CourseInfo([
+            "name" => $this->name,
+            "courseCode" => $this->course_code
+        ]);
+    }
+
+    public function toEntity():Course
+    {
+        $scope = [
+            Course::SCOPE_INFO => $this->getInfo()
+        ];
+
+        return new Course($this->id, $scope);
     }
 }
