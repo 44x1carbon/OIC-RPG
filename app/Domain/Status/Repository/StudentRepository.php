@@ -72,4 +72,11 @@ class StudentRepository
 
         return $jobModel->toEntity();
     }
+
+    function repossession(Student $student):Student
+    {
+        $studentModel = $this->studentModel->fromEntity($student);
+        return $studentModel->toEntity();
+    }
+
 }

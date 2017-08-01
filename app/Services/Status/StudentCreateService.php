@@ -28,7 +28,13 @@ class StudentCreateService
 
     function create(StudentInfo $studentInfo, Course $course):Student
     {
-        return $this->repo->create($studentInfo, $course);
+        $student = $this->repo->create($studentInfo, $course);
+        $skillInfos = $course->gettableSkills();
+        foreach ($skillInfos as $skillInfo) {
+            $this->addSkill($student, $skillInfo);
+        }
+
+        return $this->repo->repossession($student);
     }
 
     function addSkill(Student $student, SkillInfo $skillInfo):SkillInfo
