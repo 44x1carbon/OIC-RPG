@@ -53,4 +53,9 @@ class CourseEloquent extends Model
 
         return new Course($this->id, $scope);
     }
+
+    public function fromEntity(Course $course):CourseEloquent
+    {
+        return self::find($course->getId());
+    }
 }
