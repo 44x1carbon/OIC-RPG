@@ -11,6 +11,7 @@ class CourseCreateServiceTest extends TestCase
 {
     use SampleFactoryTrait;
 
+    /* @var CourseCreateService $service*/
     protected $service;
 
     protected function setUp()
@@ -27,6 +28,16 @@ class CourseCreateServiceTest extends TestCase
         ]);
 
         $this->service->create($info);
+
+        $this->assertTrue(true);
+    }
+
+    public function testAddGettableSkill()
+    {
+        $course = $this->sampleCourse();
+        $skill = $this->sampleSkill();
+
+        $this->service->addGettableSkill($course, $skill);
 
         $this->assertTrue(true);
     }
