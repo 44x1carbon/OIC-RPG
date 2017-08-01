@@ -23,16 +23,7 @@ class JobEloquent extends Model
         })->toArray();
     }
 
-    function toEntity():Job
-    {
-        $scope = [
-            Job::SCOPE_INFO => $this->toValueObject(),
-            Job::SCOPE_REQUIRED_SKILLS => $this->getRequiredSkills()
-        ];
-        return new Job($this->id, $scope);
-    }
-
-    function toValueObject():JobInfo
+    function getInfo():JobInfo
     {
         return new JobInfo([
             "jobCode" => $this->job_code,
@@ -40,6 +31,20 @@ class JobEloquent extends Model
             "imageUrl" => $this->image_url,
             "memo" => $this->memo
         ]);
+    }
+
+    function toEntity():Job
+    {
+        $scope = [
+            Job::SCOPE_INFO => $this->getInfo(),
+            Job::SCOPE_REQUIRED_SKILLS => $this->getRequiredSkills()
+        ];
+        return new Job($this->id, $scope);
+    }
+
+    function toValueObject():JobInfo
+    {
+        return $this->getInfo();
     }
 
     static function fromEntity(Job $job):JobEloquent

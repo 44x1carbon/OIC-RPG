@@ -13,12 +13,12 @@ class CourseEloquent extends Model
 
     public function gettableSkills()
     {
-        $this->belongsToMany(SkillEloquent::class, "course_gettable_skills", "course_id", "skill_id");
+        return $this->belongsToMany(SkillEloquent::class, "course_gettable_skills", "course_id", "skill_id");
     }
 
     public function gettableJobs()
     {
-        $this->belongsToMany(JobEloquent::class, "course_gettable_jobs", "course_id", "job_id");
+        return $this->belongsToMany(JobEloquent::class, "course_gettable_jobs", "course_id", "job_id");
     }
 
     public function getInfo():CourseInfo
@@ -29,10 +29,26 @@ class CourseEloquent extends Model
         ]);
     }
 
+    public function getGettableSkillInfo():array
+    {
+        return $this->gettableSkills->map(function(SkillEloquent $s){
+            return $s->getInfo();
+        })->toArray();
+    }
+
+    public function getGettableJobInfo():array
+    {
+        return $this->gettableJobs->map(function(JobEloquent $j){
+            return $j->getInfo();
+        })->toArray();
+    }
+
     public function toEntity():Course
     {
         $scope = [
-            Course::SCOPE_INFO => $this->getInfo()
+            Course::SCOPE_INFO => $this->getInfo(),
+            Course::SCOPE_GETTABLE_SKILLS => $this->getGettableSkillInfo(),
+            Course::SCOPE_GETTABLE_JOBS => $this->getGettableJobInfo(),
         ];
 
         return new Course($this->id, $scope);
