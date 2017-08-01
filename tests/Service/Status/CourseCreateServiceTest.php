@@ -41,4 +41,14 @@ class CourseCreateServiceTest extends TestCase
 
         $this->assertTrue(true);
     }
+
+    public function testAddGettableJob()
+    {
+        $course = $this->sampleCourse();
+        $job = $this->sampleJob();
+
+        $this->service->addGettableJob($course, $job);
+
+        $this->assertTrue(true);
+    }
 }
