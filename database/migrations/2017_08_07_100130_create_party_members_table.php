@@ -13,7 +13,7 @@ class CreatePertyMembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('perty_members', function (Blueprint $table) {
+        Schema::create('party_members', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('quest_id');
             $table->unsignedInteger('assignee_job_id');
@@ -29,6 +29,6 @@ class CreatePertyMembersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('perty_members');
+        Schema::dropIfExists('party_members');
     }
 }
