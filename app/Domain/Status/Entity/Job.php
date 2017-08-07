@@ -12,7 +12,7 @@ class Job implements EntityInterface
     use EntityTrait;
 
     const SCOPE_INFO = "info";
-    const SCOPE_REQUIRED_SKILLS = "required_skills";
+    const SCOPE_REQUIRED_SKILLS = "requiredSkills";
 
     function info(): JobInfo
     {

@@ -14,9 +14,9 @@ class Student implements EntityInterface
     use EntityTrait;
 
     const SCOPE_INFO = "info";
-    const SCOPE_STUDENT_SKILLS = "student_skills";
-    const SCOPE_STUDENT_JOBS = "student_jobs";
-    const SCOPE_COURSE_INFO = "course_info";
+    const SCOPE_STUDENT_SKILLS = "studentSkills";
+    const SCOPE_STUDENT_JOBS = "studentJobs";
+    const SCOPE_COURSE_INFO = "courseInfo";
 
     function info():StudentInfo
     {
