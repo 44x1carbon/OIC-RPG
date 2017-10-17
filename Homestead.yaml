@@ -7,7 +7,7 @@ keys:
     - ./.ssh/id_rsa
 folders:
     -
-        map: /Users/user/development/oic-rpg
+        map: ./
         to: /home/vagrant/Code
 sites:
     -
