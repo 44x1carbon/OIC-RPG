@@ -8,8 +8,8 @@
 
 namespace App\Domain\GuildMember\ValueObjects;
 
-
 use App\Domain\GuildMember\Spec\StudentNumberSpec;
+use App\Exceptions\DomainException;
 use PhpParser\Node\Scalar\String_;
 
 class StudentNumber
@@ -18,10 +18,9 @@ class StudentNumber
 
     public function __construct(String $code)
     {
+        if( !StudentNumberSpec::validateFormat($code) ) throw new DomainException("Error");
+
         $this->code = $code;
-
-        if( !StudentNumberSpec::validateFormat($this) ) throw new \Exception("Error");
-
     }
 
     public function code(): String
