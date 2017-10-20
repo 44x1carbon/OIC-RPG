@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
+use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        $this->app->bind(CourseRepositoryInterface::class, CourseOnMemoryRepositoryImpl::class);
     }
 }

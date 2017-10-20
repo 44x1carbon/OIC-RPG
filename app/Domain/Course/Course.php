@@ -9,7 +9,27 @@
 namespace App\Domain\Course;
 
 
+use PhpParser\Node\Scalar\String_;
+
 class Course
 {
+    private $id;
+    private $courseName;
+
+    public function __construct(String $id,String $courseName)
+    {
+        $this->id = $id;
+        $this->courseName = $courseName;
+    }
+
+    public function Id(): String
+    {
+        return $this->id;
+    }
+
+    public function  CourseName(): String
+    {
+        return $this->courseName;
+    }
 
 }
