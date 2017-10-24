@@ -9,6 +9,7 @@
 namespace App\Domain\Party\ValueObjects;
 
 use App\Domain\Party\Spec\ActivityPeriodSpec;
+use App\Exceptions\DomainException;
 
 class ActivityPeriod
 {
@@ -18,7 +19,7 @@ class ActivityPeriod
     public function __construct(int $timeStamp)
     {
         $this->timeStamp = $timeStamp;
-        if( !ActivityPeriodSpec::isUnixTimeFormat($this->timeStamp) ) throw new \Exception("Error");
+        if( !ActivityPeriodSpec::isUnixTimeFormat($this->timeStamp) ) throw new DomainException("Error");
     }
 
     public function timeStamp()
