@@ -17,10 +17,13 @@ class ActivityPeriodTest extends TestCase
 {
     function testSuccess()
     {
-        $timestamp = time();
-        $period = new ActivityPeriod($timestamp);
-        $this->assertTrue($timestamp === $period->timeStamp());
-        $this->assertTrue(date(DATE_ISO8601,$timestamp) === $period->getIso8601());
+        $timeStamp = 1431670515;
+        $period = new ActivityPeriod($timeStamp);
+        $this->assertTrue("2015-05-15T15:15:15+09:00" === $period->getIso8601());
+
+        $afterTimeStamp = 1898704983; // 2030/03/03 03:03:03
+        $afterPeriod = new ActivityPeriod($afterTimeStamp);
+        $this->assertTrue(ActivityPeriodSpec::isCheck($afterPeriod->timeStamp()));
     }
 
     /**
@@ -28,14 +31,14 @@ class ActivityPeriodTest extends TestCase
      */
     function testUnixTimeFormatFail()
     {
-        $timestamp = "2017-10-24";
-        new ActivityPeriod($timestamp);
+        $timeStamp = "2017-10-24";
+        new ActivityPeriod($timeStamp);
     }
 
     function testAfterNowFail()
     {
-        $timestamp = date(strtotime("-1 day"));
-        new ActivityPeriod($timestamp);
-        $this->assertFalse(ActivityPeriodSpec::isCheck($timestamp));
+        $timeStamp = 1431580454;
+        new ActivityPeriod($timeStamp);
+        $this->assertFalse(ActivityPeriodSpec::isCheck($timeStamp));
     }
 }
