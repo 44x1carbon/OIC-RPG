@@ -29,7 +29,7 @@ class ActivityPeriod
 
     public  function getIso8601()
     {
-        return date(DATE_ISO8601,$this->timeStamp);
+        return date('c',$this->timeStamp);
     }
 
 }
