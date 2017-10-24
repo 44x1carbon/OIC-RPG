@@ -9,9 +9,12 @@
 namespace App\Domain\GuildMember\Spec;
 
 use App\Domain\GuildMember\ValueObjects\Gender;
+use App\DomainUtility\SpecTrait;
 
 class GenderSpec
 {
+    use SpecTrait;
+
     public static function isAvailable(String $type): bool
     {
         //受け取った値が利用可能か判定
