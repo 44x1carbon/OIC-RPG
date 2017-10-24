@@ -11,17 +11,22 @@ namespace App\Infrastracture\Course;
 
 use App\Domain\Course\Course;
 use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
-use PhpParser\Node\Expr\Array_;
 
 class CourseOnMemoryRepositoryImpl implements CourseRepositoryInterface
 {
     private $data = [];
 
-    public function findById(String $id): Course
+    public function findById(String $id): ?Course
     {
-        return array_filter($this->data, function(Course $course) use($id){
+        $result = array_filter($this->data, function(Course $course) use($id){
             return $course->Id() === $id;
-        })[0];
+        });
+
+        if(count($result) > 0) {
+            return $result[0];
+        } else {
+            return null;
+        }
     }
 
     public function save(Course $course): bool

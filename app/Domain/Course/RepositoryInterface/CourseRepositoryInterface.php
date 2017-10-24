@@ -14,7 +14,7 @@ use App\Domain\Course\Course;
 interface CourseRepositoryInterface
 {
 //IDを渡してコースを受け取る
-    public function findById(String $id): Course;
+    public function findById(String $id): ?Course;
 
     public function save(Course $course): bool;
 
