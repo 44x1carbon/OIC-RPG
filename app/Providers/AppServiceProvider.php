@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
+use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
+use App\Infrastracture\ProductionType\ProductionTypeOnMemoryRepositoryImpl;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         $this->app->singleton(CourseRepositoryInterface::class, CourseOnMemoryRepositoryImpl::class);
+        $this->app->singleton(ProductionTypeRepositoryInterface::class, ProductionTypeOnMemoryRepositoryImpl::class);
     }
 }
