@@ -16,11 +16,13 @@ class RecruitmentStatusTest extends TestCase
 {
     function testSuccess()
     {
-        $status = 'open';
-        new RecruitmentStatus($status);
-        $status = 'close';
-        new RecruitmentStatus($status);
-        $this->assertTrue(true);
+        $status1 = 'open';
+        $recruitmentStatus1 = new RecruitmentStatus($status1);
+        $status2 = 'close';
+        $recruitmentStatus2 = new RecruitmentStatus($status2);
+
+        $this->assertTrue($recruitmentStatus1->status() === $status1);
+        $this->assertTrue($recruitmentStatus2->status() === $status2);
     }
 
     /**
