@@ -22,12 +22,12 @@ class Course
         $this->courseName = $courseName;
     }
 
-    public function Id(): String
+    public function id(): String
     {
         return $this->id;
     }
 
-    public function  CourseName(): String
+    public function courseName(): String
     {
         return $this->courseName;
     }

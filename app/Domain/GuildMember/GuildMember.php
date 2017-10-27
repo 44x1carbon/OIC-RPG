@@ -43,7 +43,7 @@ class GuildMember
 //  コースIDをセット
     public function setCourse(Course $course)
     {
-        $this->courseId = $course->Id();
+        $this->courseId = $course->id();
     }
 
 //  学生の性別をセット

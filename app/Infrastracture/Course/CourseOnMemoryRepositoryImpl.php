@@ -19,7 +19,7 @@ class CourseOnMemoryRepositoryImpl implements CourseRepositoryInterface
     public function findById(String $id): ?Course
     {
         $result = array_filter($this->data, function(Course $course) use($id){
-            return $course->Id() === $id;
+            return $course->id() === $id;
         });
 
         if(count($result) > 0) {

@@ -40,7 +40,7 @@ class CourseRepositoryTest extends TestCase
         $course2 = new Course('3','ccc');
         $this->repo->save($course2);
         $findCourse = $this->repo->findById('2');
-        $result = $findCourse->Id() === $course->Id() && $findCourse->CourseName() === $course->CourseName();
+        $result = $findCourse->id() === $course->id() && $findCourse->courseName() === $course->courseName();
         $this->assertTrue($result);
     }
 }
