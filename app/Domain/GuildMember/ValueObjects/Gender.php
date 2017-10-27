@@ -9,7 +9,6 @@
 namespace App\Domain\GuildMember\ValueObjects;
 
 use App\Domain\GuildMember\Spec\GenderSpec;
-use PhpParser\Node\Scalar\String_;
 
 class Gender
 {
