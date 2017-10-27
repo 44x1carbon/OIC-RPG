@@ -8,17 +8,21 @@
 
 namespace App\Domain\GuildMember;
 
+use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\Course\Course;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
+use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
 use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Scalar\String_;
 
 
 class GuildMember
 {
+    /* @var \App\Domain\Course\RepositoryInterface\CourseRepositoryInterface */
+    protected $courseRepo;
     private $studentNumber;
     private $studentName;
     private $courseId;
@@ -27,6 +31,7 @@ class GuildMember
 
     public function __construct()
     {
+        $this->courseRepo = app(CourseRepositoryInterface::class);
     }
 
 //  学籍番号VOをセット
@@ -70,10 +75,11 @@ class GuildMember
         return $this->studentName;
     }
 
-//  コースIDをゲット
-    public function course(): String
+//  最新コースをゲット
+    public function course(): Course
     {
-        return $this->courseId;
+        //dd($this->courseId);
+        return $this->courseRepo->findById($this->courseId);
     }
 
 //  性別をゲット
