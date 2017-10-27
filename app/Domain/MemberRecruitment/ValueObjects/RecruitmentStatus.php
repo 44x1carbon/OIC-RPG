@@ -26,4 +26,9 @@ class RecruitmentStatus
         if( !RecruitmentStatusSpec::isAvailable($this->status) ) throw new DomainException("Error");
     }
 
+    public function status()
+    {
+        return $this->status;
+    }
+
 }
