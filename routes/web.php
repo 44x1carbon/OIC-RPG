@@ -11,6 +11,20 @@
 |
 */
 
+use Illuminate\Http\Request;
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/sign_up', function() {
+   return view('signup');
+});
+
+Route::post('/sign_up', function(Request $request) {
+    return response()->json($request->all());
+})->name('post_sign_up');
+
+Route::get('/home', 'HomeController@index')->name('home');
