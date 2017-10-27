@@ -16,8 +16,14 @@ class StudentNumber
 {
     private $code;
 
+    const MATCH = ['b','B'];
+    const ENGLISH_LENGTH = 1;
+    const DIGIT_LENGTH = 4;
+    const MAX_LENGTH = self::ENGLISH_LENGTH + self::DIGIT_LENGTH;
+
     public function __construct(String $code)
     {
+
         if( !StudentNumberSpec::validateFormat($code) ) throw new DomainException("Error");
 
         $this->code = $code;
