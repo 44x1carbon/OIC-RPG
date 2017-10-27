@@ -16,7 +16,14 @@ window.Vue = require('vue');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('sign-up', require('./components/SignUp.vue'));
+
+const Vuex = require('vuex')
+Vue.use(Vuex)
+
+import store from './vuex/store'
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    store
 });

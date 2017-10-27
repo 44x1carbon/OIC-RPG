@@ -1,38 +1,41 @@
 <template>
     <div>
-        <router-link to="/foo">Go to Foo</router-link>
-        <router-link to="/bar">Go to Bar</router-link>
+        <h1>ギルドメンバー登録</h1>
         <div class="panel-body">
             <router-view></router-view>
         </div>
-        <input type="text" name="mail_address">
-        <input type="password" name="password">
-        <input type="text" name="name">
-        <label for="">男</label><input type="radio" name="gender" value="mail">
-        <label for="">女</label><input type="radio" name="gender" value="famail">
-        <textarea name="introduction" id="" cols="30" rows="10"></textarea>
-        <input type="text" name="academic_year">
-        <input type="text" name="course_id">
-        <button type="submit">送信</button>
+        <router-link to="/1">SignUpFirst</router-link>
+        <router-link to="/2">SignUpSecond</router-link>
+        <router-link to="/3">SignUpThird</router-link>
+        <button type="submit">登録</button>
     </div>
 </template>
 
 <script>
-    import VueRouter from 'vue-router'
+import VueRouter from 'vue-router'
 
-    const Foo = { template: '<div>foo</div>' }
-    const Bar = { template: '<div>bar</div>' }
+import SignUpFirst from './register/SignUpFirst.vue';
+import SignUpSecond from './register/SignUpSecond.vue';
+import SignUpThird from './register/SignUpThird.vue';
 
-    const routes = [
-        { path: '/foo', component: Foo },
-        { path: '/bar', component: Bar }
+const router = new VueRouter({
+    routes: [
+        {
+            path: '/1',
+            component: SignUpFirst
+        },
+        {
+            path: '/2',
+            component: SignUpSecond
+        },
+        {
+            path: '/3',
+            component: SignUpThird
+        }
     ]
+})
 
-    const router = new VueRouter({
-        routes // `routes: routes` の短縮表記
-    })
-
-    export default {
-        router
-    }
+export default {
+    router
+}
 </script>
