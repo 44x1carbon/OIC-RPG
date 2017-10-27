@@ -12,7 +12,7 @@ namespace Tests\Domain\MemberRecruitment;
 use App\Domain\MemberRecruitment\ValueObjects\RecruitmentStatus;
 use Tests\TestCase;
 
-class RecruitmentStatusSpecTest extends TestCase
+class RecruitmentStatusTest extends TestCase
 {
     function testSuccess()
     {
