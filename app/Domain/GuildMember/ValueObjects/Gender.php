@@ -25,6 +25,11 @@ class Gender
     {
         $this->type = $type;
         if( !GenderSpec::isAvailable($type) ) throw new \Exception("Error");
+    }
+//  todo Typeのゲッターを作る
 
+    public function type(): String
+    {
+        return $this->type;
     }
 }
