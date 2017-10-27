@@ -9,6 +9,7 @@
 namespace App\Domain\GuildMember\ValueObjects;
 
 use App\Domain\GuildMember\Spec\GenderSpec;
+use PhpParser\Node\Scalar\String_;
 
 class Gender
 {
@@ -25,6 +26,11 @@ class Gender
     {
         $this->type = $type;
         if( !GenderSpec::isAvailable($type) ) throw new \Exception("Error");
+    }
+//  todo Typeのゲッターを作る
 
+    public function type(): String
+    {
+        return $this->type;
     }
 }
