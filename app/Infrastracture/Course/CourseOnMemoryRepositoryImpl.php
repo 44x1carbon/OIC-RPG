@@ -21,6 +21,7 @@ class CourseOnMemoryRepositoryImpl implements CourseRepositoryInterface
         $result = array_filter($this->data, function(Course $course) use($id){
             return $course->Id() === $id;
         });
+        $result = array_values($result);
 
         if(count($result) > 0) {
             return $result[0];
