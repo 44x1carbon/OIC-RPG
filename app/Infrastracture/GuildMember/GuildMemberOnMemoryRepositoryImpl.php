@@ -6,17 +6,21 @@
  * Time: 11:21
  */
 
+namespace App\Infrastracture\GuildMember;
+
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\GuildMember;
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 
 class GuildMemberOnMemoryRepositoryImpl implements GuildMemberRepositoryInterface
 {
     private $data = [];
 
-    public function findById(String $code): \App\Domain\GuildMember\ValueObjects\StudentNumber
+    public function findByStudentNumber(StudentNumber $studentNumber): ?GuildMember
     {
-        $result = array_filter($this->data, function(GuildMember $guildMember) use($code){
-            return $guildMember->studentNumber() === $code;
+        $result = array_filter($this->data, function(GuildMember $guildMember) use($studentNumber){
+            //dd($studentNumber);
+            return $guildMember->studentNumber() == $studentNumber;
         });
 
         if(count($result) > 0) {
@@ -26,7 +30,7 @@ class GuildMemberOnMemoryRepositoryImpl implements GuildMemberRepositoryInterfac
         }
     }
 
-    public function save(\App\Domain\GuildMember\GuildMember $guildMember): bool
+    public function save(GuildMember $guildMember): bool
     {
         $this->data[] = $guildMember;
         return true;

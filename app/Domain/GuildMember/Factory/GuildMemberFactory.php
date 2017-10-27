@@ -21,14 +21,19 @@ class GuildMemberFactory
 {
     protected $repo;
 
-    public function __construct(GuildMemberRepositoryInterface $repo)
+    public function __construct()
     {
-        $this->repo = $repo;
+        //$this->repo = $repo;
     }
 
     public function createGuildMember(StudentNumber $studentNumber, String $studentName, Course $course, Gender $gender,MailAddress $mailAddress): GuildMember
     {
-
-
+        $guildMember = new GuildMember();
+        $guildMember->setStudendNumber($studentNumber);
+        $guildMember->setStudentName($studentName);
+        $guildMember->setCourse($course);
+        $guildMember->setGender($gender);
+        $guildMember->setMailAddress($mailAddress);
+        return $guildMember;
     }
 }

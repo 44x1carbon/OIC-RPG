@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
+use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
+use App\Infrastracture\GuildMember\GuildMemberOnMemoryRepositoryImpl;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         $this->app->singleton(CourseRepositoryInterface::class, CourseOnMemoryRepositoryImpl::class);
+        $this->app->singleton(GuildMemberRepositoryInterface::class,GuildMemberOnMemoryRepositoryImpl::class);
     }
 }

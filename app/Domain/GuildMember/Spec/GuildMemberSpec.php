@@ -11,17 +11,18 @@ namespace App\Domain\GuildMember\Spec;
 
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\DomainUtility\SpecTrait;
 
 class GuildMemberSpec
 {
     use SpecTrait;
 
-    public static function isExistCode(String $code): bool
+    public static function isExistStudentNumber(StudentNumber $studentNumber): bool
     {
         /* @var GuildMemberRepositoryInterface $repo */
         $repo = app(GuildMemberRepositoryInterface::class);
-        $guildMember = $repo->findById($code);
+        $guildMember = $repo->findByStudentNumber($studentNumber);
         return $guildMember !== null;
     }
 }

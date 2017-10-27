@@ -14,7 +14,7 @@ use App\Domain\GuildMember\ValueObjects\StudentNumber;
 
 interface GuildMemberRepositoryInterface
 {
-    public function findById(String $id): StudentNumber;
+    public function findByStudentNumber(StudentNumber $studentNumber): ?GuildMember;
 
     public function save(GuildMember $guildMember): bool;
 
