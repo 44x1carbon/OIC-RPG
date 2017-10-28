@@ -19,11 +19,9 @@ use App\Domain\GuildMember\ValueObjects\StudentNumber;
 
 class GuildMemberFactory
 {
-    protected $repo;
-
     public function __construct()
     {
-        //$this->repo = $repo;
+
     }
 
     public function createGuildMember(StudentNumber $studentNumber, String $studentName, Course $course, Gender $gender,MailAddress $mailAddress): GuildMember
