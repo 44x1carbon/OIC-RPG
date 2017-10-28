@@ -24,7 +24,7 @@ class CourseEloquentRepositoryImpl implements CourseRepositoryInterface
 
     public function findById(String $id): ?Course
     {
-        $courseModel = $this->eloquent->find($id);
+        $courseModel = $this->eloquent->findById($id);
         if(!$courseModel instanceof CourseEloquent) return null;
         return $courseModel->toEntity();
     }
@@ -32,7 +32,7 @@ class CourseEloquentRepositoryImpl implements CourseRepositoryInterface
     public function save(Course $course): bool
     {
         /* @var CourseEloquent $courseModel */
-        $courseModel = $this->findById($course->id());
+        $courseModel = $this->eloquent->findById($course->id());
         if(is_null($courseModel)) $courseModel = new $this->eloquent();
 
         $courseModel->course_id = $course->id();
