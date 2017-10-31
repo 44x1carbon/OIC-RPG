@@ -14,7 +14,7 @@ class ProductionType
     private $id;
     private $productionTypeName;
 
-    public function __construct(String $id,String $productionTypeName)
+    public function __construct(String $id, String $productionTypeName)
     {
         $this->id = $id;
         $this->productionTypeName = $productionTypeName;

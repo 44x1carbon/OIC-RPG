@@ -18,6 +18,6 @@ class RecruitmentStatusSpec
     public static function isAvailable(String $status): bool
     {
         $list = RecruitmentStatus::STATUS_LIST;
-        return in_array($status,$list);
+        return in_array($status, $list);
     }
 }
