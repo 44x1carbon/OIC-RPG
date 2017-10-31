@@ -50,7 +50,7 @@ class GuildMemberOnMemoryRepositoryImpl implements GuildMemberRepositoryInterfac
         return true;
     }
 
-    public function all(): Array
+    public function all(): array
     {
         return $this->data;
     }
