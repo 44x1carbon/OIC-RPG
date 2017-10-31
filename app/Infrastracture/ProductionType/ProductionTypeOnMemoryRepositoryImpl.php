@@ -22,9 +22,10 @@ class ProductionTypeOnMemoryRepositoryImpl
     public function findById(String $id): ?ProductionType
     {
         $result = array_filter($this->data, function(ProductionType $productionType) use($id){
-            return $productionType->Id() === $id;
+            return $productionType->id() === $id;
         });
 
+        $result = array_values($result);
         if(count($result) > 0) {
             return $result[0];
         } else {

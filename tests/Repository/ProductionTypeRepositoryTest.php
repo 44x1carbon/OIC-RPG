@@ -38,7 +38,7 @@ class ProductionTypeRepositoryTest extends TestCase
         $productionType2 = new ProductionType('3','ccc');
         $this->repo->save($productionType2);
         $findProductionType = $this->repo->findById('2');
-        $result = $findProductionType->Id() === $productionType->Id() && $findProductionType->ProductionTypeName() === $productionType->ProductionTypeName();
+        $result = $findProductionType->id() === $productionType->id() && $findProductionType->productionTypeName() === $productionType->productionTypeName();
         $this->assertTrue($result);
 
         // 指定したIDがなかった場合にnullが帰るかどうか

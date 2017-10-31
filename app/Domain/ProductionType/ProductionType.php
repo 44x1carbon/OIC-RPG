@@ -20,12 +20,12 @@ class ProductionType
         $this->productionTypeName = $productionTypeName;
     }
 
-    public function Id(): String
+    public function id(): String
     {
         return $this->id;
     }
 
-    public function  ProductionTypeName(): String
+    public function  productionTypeName(): String
     {
         return $this->productionTypeName;
     }
