@@ -35,7 +35,7 @@ class CourseSpecTest extends TestCase
 
     function testFail()
     {
-        $code = '2';
+        $code = '9999';
         $this->assertFalse(CourseSpec::isExistCode($code));
     }
 }

@@ -10,8 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,8 +23,6 @@ Route::get('/sign_up', function() {
    return view('signup');
 });
 
-Route::post('/sign_up', function(Request $request) {
-    return response()->json($request->all());
-})->name('post_sign_up');
+Route::post('/sign_up', SignUpController::class.'@store')->name('post_sign_up');
 
 Route::get('/home', 'HomeController@index')->name('home');
