@@ -15,8 +15,6 @@ interface SkillRepositoryInterface
 {
     public function findBySkillId(String $skillId): ?Skill;
 
-    public function findBySkillName(String $skillName): ?Skill;
-
     public function save(Skill $skill): bool;
 
     public function all(): array;

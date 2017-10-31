@@ -29,7 +29,11 @@ class SkillSpec
     {
         /* @var SkillRepositoryInterface $repo */
         $repo = app(SkillRepositoryInterface::class);
-        $skill = $repo->findBySkillName($skillName);
-        return $skill !== null;
+        $allSkill = $repo->all();
+
+        $result = array_filter($allSkill, function(Skill $skill) use($skillName){
+             return $skill->skillName() === $skillName;
+        });
+        return !empty($result);
     }
 }

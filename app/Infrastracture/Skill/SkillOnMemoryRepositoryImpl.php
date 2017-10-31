@@ -29,19 +29,6 @@ class SkillOnMemoryRepositoryImpl implements SkillRepositoryInterface
         }
     }
 
-    public function findBySkillName(String $skillName): ?Skill
-    {
-        $result = array_filter($this->data, function(Skill $skill) use($skillName){
-            return $skill->skillName() == $skillName;
-        });
-
-        if(count($result) > 0) {
-            return $result[0];
-        } else {
-            return null;
-        }
-    }
-
     public function save(Skill $skill): bool
     {
         $this->data[] = $skill;
