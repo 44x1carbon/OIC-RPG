@@ -23,10 +23,6 @@ class SkillSpecTest extends \Tests\TestCase
         $this->repo = app(SkillRepositoryInterface::class);
         $skill = SkillFactory::createSkill('ab1', 'java');
         $this->repo->save($skill);
-        $skill2 = SkillFactory::createSkill('ab2', 'php');
-        $this->repo->save($skill2);
-        $skill3 = SkillFactory::createSkill('ab3', 'css');
-        $this->repo->save($skill3);
     }
 
     function testisExistsSkillIdSuccess()
@@ -36,7 +32,7 @@ class SkillSpecTest extends \Tests\TestCase
 
     function testisExistsSkillIdFail()
     {
-        $this->assertFalse(SkillSpec::isExistsSkillId('ab4'));
+        $this->assertFalse(SkillSpec::isExistsSkillId('ab2'));
     }
 
     function testisExistsSkillNameSuccess()
@@ -46,6 +42,6 @@ class SkillSpecTest extends \Tests\TestCase
 
     function testisExistsSkillNameFail()
     {
-        $this->assertFalse(SkillSpec::isExistsSkillName('html'));
+        $this->assertFalse(SkillSpec::isExistsSkillName('php'));
     }
 }

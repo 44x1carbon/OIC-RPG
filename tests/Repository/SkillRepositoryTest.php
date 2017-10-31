@@ -34,17 +34,6 @@ class SkillRepositoryTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testFindBySkillName()
-    {
-        $skill = SkillFactory::createSkill('ab3', 'css');
-        $this->repo->save($skill);
-
-        $findName = $this->repo->findBySkillName('css');
-
-        $result = $findName->skillName() === $skill->skillName();
-        $this->assertTrue($result);
-    }
-
     public function testSave()
     {
         $skill = SkillFactory::createSkill('ab1', 'php');
