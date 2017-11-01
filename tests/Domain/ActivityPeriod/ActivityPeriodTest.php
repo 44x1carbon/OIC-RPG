@@ -23,7 +23,7 @@ class ActivityPeriodTest extends TestCase
 
         $afterTimeStamp = 1898704983; // 2030/03/03 03:03:03
         $afterPeriod = new ActivityPeriod($afterTimeStamp);
-        $this->assertTrue(ActivityPeriodSpec::isCheck($afterPeriod->timeStamp()));
+        $this->assertTrue(ActivityPeriodSpec::allValidate($afterPeriod->timeStamp()));
     }
 
     /**
@@ -39,6 +39,6 @@ class ActivityPeriodTest extends TestCase
     {
         $timeStamp = 1431580454;
         new ActivityPeriod($timeStamp);
-        $this->assertFalse(ActivityPeriodSpec::isCheck($timeStamp));
+        $this->assertFalse(ActivityPeriodSpec::allValidate($timeStamp));
     }
 }

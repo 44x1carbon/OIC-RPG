@@ -15,7 +15,7 @@ class ActivityPeriodSpec
     use SpecTrait;
 
     // UnixTime形式であるか、現在より後の時間が指定されているかをチェック
-    public static function isCheck(int $timeStamp) :bool
+    public static function allValidate(int $timeStamp) :bool
     {
         if(!self::isUnixTimeFormat($timeStamp)) return false;
         if(!self::isAfterNow($timeStamp)) return false;
