@@ -24,8 +24,8 @@ class SkillServiceTest extends \Tests\TestCase
 
     function testSuccess()
     {
-        $result = SkillService::registerService('ab1', 'php');
-        $this->assertTrue($result);
+        //$result = new SkillService('php');
+        $this->assertTrue(SkillService::registerService('php'));
     }
 
     /**
@@ -33,7 +33,9 @@ class SkillServiceTest extends \Tests\TestCase
      */
     function testFail()
     {
-        $result = SkillService::registerService('ab1', 'php');
-        $result1 = SkillService::registerService('ab1', 'php');
+        //$result = new SkillService('php');
+        $this->assertTrue(SkillService::registerService('php'));
+        //$result1 = new SkillService('php');
+        $this->assertTrue(SkillService::registerService('php'));
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Skill\Skill;
 use App\Domain\Skill\Factory\SkillFactory;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Domain\Skill\Service\SkillService;
@@ -16,23 +17,26 @@ use App\Domain\Skill\Spec\SkillSpec;
 class SkillSpecTest extends \Tests\TestCase
 {
     protected $repo;
+    private $registerId;
 
     public function setUp()
     {
         parent::setUp();
         $this->repo = app(SkillRepositoryInterface::class);
-        $skill = SkillFactory::createSkill('ab1', 'java');
+        $skillFactory = new SkillFactory();
+        $skill = $skillFactory->createSkill('java');
         $this->repo->save($skill);
+        $this->registerId = $skill->skillId();
     }
 
     function testisExistsSkillIdSuccess()
     {
-        $this->assertTrue(SkillSpec::isExistsSkillId('ab1'));
+        $this->assertTrue(SkillSpec::isExistsSkillId($this->registerId));
     }
 
     function testisExistsSkillIdFail()
     {
-        $this->assertFalse(SkillSpec::isExistsSkillId('ab2'));
+        $this->assertFalse(SkillSpec::isExistsSkillId('abki'));
     }
 
     function testisExistsSkillNameSuccess()

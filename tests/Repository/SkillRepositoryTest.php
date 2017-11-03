@@ -25,10 +25,11 @@ class SkillRepositoryTest extends TestCase
 
     public function testFindBySkillId()
     {
-        $skill = SkillFactory::createSkill('ab2', 'java');
+        $skillFactory = new SkillFactory();
+        $skill = $skillFactory->createSkill( 'java');
         $this->repo->save($skill);
 
-        $findId = $this->repo->findBySkillId('ab2');
+        $findId = $this->repo->findBySkillId($skill->skillId());
 
         $result = $findId->skillId() === $skill->skillId();
         $this->assertTrue($result);
@@ -36,7 +37,8 @@ class SkillRepositoryTest extends TestCase
 
     public function testSave()
     {
-        $skill = SkillFactory::createSkill('ab1', 'php');
+        $skillFactory = new SkillFactory();
+        $skill = $skillFactory->createSkill('php');
         $this->assertTrue($this->repo->save($skill));
     }
 }
