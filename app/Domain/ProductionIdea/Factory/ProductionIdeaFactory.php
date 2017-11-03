@@ -43,9 +43,10 @@ class ProductionIdeaFactory
         $addFlg = false;
         while ($addFlg)
         if (is_null($this->repo->findById($randId))){
-            $randId = RandomStringGenerator::makeLowerCase(4);
-        }else{
+            // findByIdがnullの場合、DBにIDのかぶりがないので正しい
             $addFlg = true;
+        }else{
+            $randId = RandomStringGenerator::makeLowerCase(4);
         }
         return $randId;
     }
