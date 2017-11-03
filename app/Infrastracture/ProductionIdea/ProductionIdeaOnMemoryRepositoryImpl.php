@@ -12,7 +12,7 @@ namespace App\Infrastracture\ProductionIdea;
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
 
-class ProductionIdeaOnMemoryRepository implements ProductionIdeaRepositoryInterface
+class ProductionIdeaOnMemoryRepositoryImpl implements ProductionIdeaRepositoryInterface
 {
     private $data = [];
 
