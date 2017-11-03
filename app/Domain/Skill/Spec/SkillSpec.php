@@ -17,6 +17,11 @@ class SkillSpec
 {
     use SpecTrait;
 
+    public function __construct()
+    {
+
+    }
+
     public static function isExistsSkillId(String $skillId): bool
     {
         /* @var SkillRepositoryInterface $repo */

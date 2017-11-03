@@ -9,21 +9,35 @@
 namespace App\Domain\Skill\Factory;
 
 
+use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Domain\Skill\Skill;
+use App\DomainUtility\RandomStringGenerator;
 
 class SkillFactory
 {
-    public function __construct()
-    {
-    }
+    protected $repo;
 
     //クリエイトスキル
 
-    public static function createSkill(String $skillId, String $skillName): Skill
+    public function createSkill(String $skillName): Skill
     {
         $skill = new Skill();
-        $skill->setSkillId($skillId);
+        $skill->setSkillId($this->makeId());
         $skill->setSkillName($skillName);
         return $skill;
     }
+
+    public function makeId()
+     {
+         $this->repo = app(SkillRepositoryInterface::class);
+         $randId = RandomStringGenerator::makeLowerCase(4);
+         $addFlg = false;
+         while ($addFlg)
+         if (!is_null($this->repo->findBySkillId($randId))){
+             $randId = RandomStringGenerator::makeLowerCase(4);
+         }else{
+                $addFlg = true;
+         }
+         return $randId;
+     }
 }
