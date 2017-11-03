@@ -10,7 +10,7 @@ namespace App\Domain\Party\Spec;
 
 use App\DomainUtility\SpecTrait;
 
-class ActivityPeriodSpec
+class ActivityEndDateSpec
 {
     use SpecTrait;
 
