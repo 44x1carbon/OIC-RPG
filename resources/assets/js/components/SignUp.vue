@@ -4,38 +4,83 @@
         <div class="panel-body">
             <router-view></router-view>
         </div>
-        <router-link to="/1">SignUpFirst</router-link>
-        <router-link to="/2">SignUpSecond</router-link>
-        <router-link to="/3">SignUpThird</router-link>
-        <button type="submit">登録</button>
     </div>
 </template>
 
 <script>
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
+import Vuex from 'vuex';
 
-import SignUpFirst from './register/SignUpFirst.vue';
-import SignUpSecond from './register/SignUpSecond.vue';
-import SignUpThird from './register/SignUpThird.vue';
+import AuthInfo from './signup/AuthInfo.vue';
+import ProfileInfo from './signup/ProfileInfo.vue';
+import SchoolInfo from './signup/SchoolInfo.vue';
+
+Vue.use(VueRouter);
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+    state: {
+        mailAddress: '',
+        password: '',
+        name: '',
+        gender: '',
+        introduction: '',
+        studentNumber: 0,
+        academicYear: 0,
+        courseId: ''
+    },
+    mutations: {
+        setAuthInfo(state, formData) {
+            state.mailAddress = formData.mailAddress;
+            state.password = formData.password;
+        },
+        setProfileInfo(state, formData) {
+            state.name = formData.name;
+            state.gender = formData.gender;
+            state.introduction = formData.introduction;
+        },
+        setSchoolInfo(state, formData) {
+            state.studentNumber = formData.studentNumber;
+            state.academicYear = formData.academicYear;
+            state.courseId = formData.courseId;
+        }
+    },
+    actions: {
+        setAuthInfo(context, formData) {
+            context.commit('setAuthInfo', formData);
+        },
+        setProfileInfo(context, formData) {
+            context.commit('setProfileInfo', formData);
+        },
+        setSchoolInfo(context, formData) {
+            context.commit('setSchoolInfo', formData);
+        }
+    }
+});
 
 const router = new VueRouter({
     routes: [
         {
-            path: '/1',
-            component: SignUpFirst
+            path: '/auth',
+            component: AuthInfo
         },
         {
-            path: '/2',
-            component: SignUpSecond
+            path: '/profile',
+            component: ProfileInfo
         },
         {
-            path: '/3',
-            component: SignUpThird
+            path: '/school',
+            component: SchoolInfo
+        },
+        {
+            path: '/',
+            redirect: '/auth'
         }
     ]
-})
+});
 
 export default {
-    router
+    router,
+    store
 }
 </script>
