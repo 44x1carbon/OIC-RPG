@@ -45,7 +45,7 @@ class ProductionIdeaRepositoryTest extends TestCase
         $description = "説明です";
 
         $productionIdeaFactory = new ProductionIdeaFactory();
-        $productionIdea = $productionIdeaFactory->createProductionIdea($id, $productionTheme, $productionType, $description);
+        $productionIdea = $productionIdeaFactory->createProductionIdea($productionTheme, $productionType, $description, $id);
         $this->productionIdeaRepository->save($productionIdea);
 
         $findProductionIdea = $this->productionIdeaRepository->findById($id);
@@ -60,28 +60,26 @@ class ProductionIdeaRepositoryTest extends TestCase
     public function testFindById()
     {
         // ProductionIdeaのデータ1を追加
-        $id = "1";
         $productionTheme = "IT";
 //        $productionTypeId = "1";
         $productionType = $this->productionTypeRepository->findById("1");
         $description = "説明1です";
-        $productionIdea = $this->productionIdeaFactory->createProductionIdea($id, $productionTheme, $productionType, $description);
+        $productionIdea = $this->productionIdeaFactory->createProductionIdea($productionTheme, $productionType, $description);
         $this->productionIdeaRepository->save($productionIdea);
 
         // ProductionIdeaのデータ2を追加
-        $id2 = "2";
         $productionTheme2 = "映像";
 //        $productionTypeId2 = "2";
         $productionType2 = $this->productionTypeRepository->findById("2");
         $description2 = "説明2です";
-        $productionIdea2 = $this->productionIdeaFactory->createProductionIdea($id2, $productionTheme2, $productionType2, $description2);
+        $productionIdea2 = $this->productionIdeaFactory->createProductionIdea($productionTheme2, $productionType2, $description2);
         $this->productionIdeaRepository->save($productionIdea2);
 
         // 保存した
-        $findProductionIdea = $this->productionIdeaRepository->findById('1');
+        $findProductionIdea = $this->productionIdeaRepository->findById($productionIdea->id());
         $result = $findProductionIdea->id() === $productionIdea->id() && $findProductionIdea->ideaDescription() === $productionIdea->ideaDescription();
         $this->assertTrue($result);
-        $findProductionIdea2 = $this->productionIdeaRepository->findById('2');
+        $findProductionIdea2 = $this->productionIdeaRepository->findById($productionIdea2->id());
         $result2 = $findProductionIdea2->Id() === $productionIdea2->id() && $findProductionIdea2->ideaDescription() === $productionIdea2->ideaDescription();
         $this->assertTrue($result2);
 
