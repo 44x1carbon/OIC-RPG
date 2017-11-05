@@ -22,22 +22,19 @@ class SkillFactory
     public function createSkill(String $skillName): Skill
     {
         $skill = new Skill();
-        $skill->setSkillId($this->makeId());
+        $skill->setSkillId($this->makeSkillId());
         $skill->setSkillName($skillName);
         return $skill;
     }
 
-    public function makeId()
+    public function makeSkillId(): String
      {
          $this->repo = app(SkillRepositoryInterface::class);
-         $randId = RandomStringGenerator::makeLowerCase(4);
-         $addFlg = false;
-         while ($addFlg)
-         if (!is_null($this->repo->findBySkillId($randId))){
+
+         do{
              $randId = RandomStringGenerator::makeLowerCase(4);
-         }else{
-                $addFlg = true;
-         }
+         }while(!is_null($this->repo->findBySkillId($randId)));
+         
          return $randId;
      }
 }
