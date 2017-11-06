@@ -13,6 +13,7 @@ use App\Domain\MemberRecruitment\ValueObjects\RecruitmentStatus;
 use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
+use App\Domain\ProductionType\Factory\ProductionTypeFactory;
 use App\Domain\ProductionType\ProductionType;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 use Tests\TestCase;
@@ -23,6 +24,7 @@ class ProductionIdeaRepositoryTest extends TestCase
     protected $productionIdeaRepository;
     protected $productionTypeRepository;
     protected $productionIdeaFactory;
+    protected $productionTypeFactory;
 
     public function setUp()
     {
@@ -30,8 +32,9 @@ class ProductionIdeaRepositoryTest extends TestCase
         $this->productionIdeaRepository = app(ProductionIdeaRepositoryInterface::class);
         $this->productionTypeRepository = app(ProductionTypeRepositoryInterface::class);
         $this->productionIdeaFactory = new ProductionIdeaFactory();
-        $productionType = new ProductionType("1","サービス");
-        $productionType2 = new ProductionType("2","映像");
+        $this->productionTypeFactory = new ProductionTypeFactory();
+        $productionType = $this->productionTypeFactory->createProductionType("サービス","1");
+        $productionType2 = $this->productionTypeFactory->createProductionType("映像","2");
         $this->productionTypeRepository->save($productionType);
         $this->productionTypeRepository->save($productionType2);
     }
