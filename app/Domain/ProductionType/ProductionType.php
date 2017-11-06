@@ -14,10 +14,8 @@ class ProductionType
     private $id;
     private $productionTypeName;
 
-    public function __construct(String $id, String $productionTypeName)
+    public function __construct()
     {
-        $this->id = $id;
-        $this->productionTypeName = $productionTypeName;
     }
 
     public function id(): String
@@ -30,4 +28,13 @@ class ProductionType
         return $this->productionTypeName;
     }
 
+    public function setId(String $id)
+    {
+        $this->id = $id;
+    }
+
+    public function setProductionTypeName(String $productionTypeName)
+    {
+        $this->productionTypeName = $productionTypeName;
+    }
 }
