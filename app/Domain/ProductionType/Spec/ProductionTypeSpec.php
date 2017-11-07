@@ -16,11 +16,11 @@ class ProductionTypeSpec
 {
     use SpecTrait;
 
-    public static function isExistCode(String $code): bool
+    public static function isExistCode(String $name): bool
     {
         /* @var ProductionTypeRepositoryInterface $repo */
         $repo = app(ProductionTypeRepositoryInterface::class);
-        $productionType = $repo->findById($code);
+        $productionType = $repo->findByName($name);
         return $productionType !== null;
     }
 }
