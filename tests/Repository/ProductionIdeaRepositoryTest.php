@@ -9,7 +9,6 @@
 namespace Tests\Repository;
 
 
-use App\Domain\MemberRecruitment\ValueObjects\RecruitmentStatus;
 use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
