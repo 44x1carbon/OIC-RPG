@@ -11,6 +11,7 @@ namespace App\Infrastracture\GuildMember;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
+use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Eloquents\GuildMemberEloquent;
 
@@ -59,6 +60,15 @@ class GuildMemberEloquentRepositoryImpl implements GuildMemberRepositoryInterfac
     public function findByLoginInfo(LoginInfo $loginInfo): ?GuildMember
     {
         $email = $loginInfo->address()->address();
+        $guildMemberModel = $this->eloquent->where('email', $email)->first();
+
+        if(!$guildMemberModel instanceof GuildMemberEloquent) return null;
+        return $guildMemberModel->toEntity();
+    }
+
+    public function findByMailAddress(MailAddress $mailAddress): ?GuildMember
+    {
+        $email = $mailAddress->address();
         $guildMemberModel = $this->eloquent->where('email', $email)->first();
 
         if(!$guildMemberModel instanceof GuildMemberEloquent) return null;

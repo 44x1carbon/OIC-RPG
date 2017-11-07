@@ -15,7 +15,8 @@ class RandomStringGenerator
      * ランダム文字列生成 (英小文字)
      * $length: 生成する文字数
      */
-    public static function makeLowerCase($length) {
+    public static function makeLowerCase($length)
+    {
         static $chars = 'abcdefghijklmnopqrstuvwxyz';
         $str = '';
         for ($i = 0; $i < $length; ++$i) {
@@ -23,5 +24,4 @@ class RandomStringGenerator
         }
         return $str;
     }
-
 }

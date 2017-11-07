@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Domain\GuildMember\Factory\GuildMemberFactory;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Http\Requests\SignUpRequest;
+use App\Infrastracture\AuthData\AuthData;
+use Illuminate\Support\Facades\Auth;
 
 class SignUpController extends Controller
 {
@@ -25,6 +27,10 @@ class SignUpController extends Controller
 
         if($repository->save($guildMember)) {
             //ユーザー登録に成功
+            //ログイン情報を登録
+            $authData = AuthData::registerMember($request->loginInfo());
+            //ログイン処理
+            Auth::login($authData);
         } else {
             //ユーザー登録に失敗
         }

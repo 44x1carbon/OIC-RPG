@@ -9,7 +9,9 @@ use App\Domain\GuildMember\Spec\MailAddressSpec;
 use App\Domain\GuildMember\Spec\PassWordSpec;
 use App\Domain\GuildMember\Spec\StudentNumberSpec;
 use App\Domain\GuildMember\ValueObjects\Gender;
+use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
+use App\Domain\GuildMember\ValueObjects\PassWord;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
@@ -119,5 +121,16 @@ class SignUpRequest extends FormRequest
     {
         $mailAddress = $this->request->get('mail_address');
         return new MailAddress($mailAddress);
+    }
+
+    public function password(): PassWord
+    {
+        $password = $this->request->get('password');
+        return new PassWord($password);
+    }
+
+    public function loginInfo(): LoginInfo
+    {
+        return new LoginInfo($this->mailAddress(), $this->password());
     }
 }

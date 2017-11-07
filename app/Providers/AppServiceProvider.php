@@ -8,12 +8,15 @@ use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterf
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Infrastracture\Course\CourseEloquentRepositoryImpl;
+use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
 use App\Infrastracture\MemberRecruitment\MemberRecruitmentOnMemoryRepositoryImpl;
 use App\Infrastracture\ProductionIdea\ProductionIdeaOnMemoryRepositoryImpl;
 use App\Infrastracture\ProductionType\ProductionTypeOnMemoryRepositoryImpl;
 use App\Infrastracture\GuildMember\GuildMemberEloquentRepositoryImpl;
 use App\Infrastracture\GuildMember\GuildMemberOnMemoryRepositoryImpl;
+use App\Infrastracture\Skill\SkillOnMemoryRepositoryImpl;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -43,5 +46,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(CourseRepositoryInterface::class, CourseEloquentRepositoryImpl::class);
 //        $this->app->singleton(GuildMemberRepositoryInterface::class,GuildMemberOnMemoryRepositoryImpl::class);
         $this->app->singleton(GuildMemberRepositoryInterface::class,GuildMemberEloquentRepositoryImpl::class);
+        $this->app->singleton(SkillRepositoryInterface::class, SkillOnMemoryRepositoryImpl::class);
     }
 }
