@@ -6,7 +6,7 @@
  * Time: 12:20
  */
 
-namespace App\Domain\MemberRecruitment\ValueObjects;
+namespace App\Domain\WantedMember\ValueObjects;
 
 // 募集役割
 class WantedRole

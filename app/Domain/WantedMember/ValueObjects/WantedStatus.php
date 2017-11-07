@@ -6,13 +6,13 @@
  * Time: 14:49
  */
 
-namespace App\Domain\MemberRecruitment\ValueObjects;
+namespace App\Domain\WantedMember\ValueObjects;
 
 
-use App\Domain\MemberRecruitment\Spec\RecruitmentStatusSpec;
+use App\Domain\WantedMember\Spec\WantedStatusSpec;
 use App\Exceptions\DomainException;
 
-class RecruitmentStatus
+class WantedStatus
 {
     const OPEN = 'open';
     const CLOSE = 'close';
@@ -23,7 +23,7 @@ class RecruitmentStatus
     public function __construct(String $status)
     {
         $this->status = $status;
-        if( !RecruitmentStatusSpec::isAvailable($this->status) ) throw new DomainException("Error");
+        if( !WantedStatusSpec::isAvailable($this->status) ) throw new DomainException("Error");
     }
 
     public function status()
