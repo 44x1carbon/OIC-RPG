@@ -12,34 +12,23 @@ namespace App\Domain\MemberRecruitment\ValueObjects;
 class WantedRole
 {
     // 募集役割名
-    private $wantedRoleName;
+    private $name;
     // 参考ジョブID
     private $referenceJobId;
 
-    public function __construct(String $wantedRoleName, String $referenceJobId)
+    public function __construct(String $name, String $referenceJobId)
     {
-        $this->wantedRoleName = $wantedRoleName;
+        $this->name = $name;
         $this->referenceJobId = $referenceJobId;
     }
 
-    public function wantedRoleName(): String
+    public function name(): String
     {
-        return $this->wantedRoleName;
+        return $this->name;
     }
 
     public function referenceJobId(): String
     {
         return $this->referenceJobId;
     }
-
-    public function setWantedRoleName(String $wantedRoleName)
-    {
-        $this->wantedRoleName = $wantedRoleName;
-    }
-
-    public function setReferenceJobId(String $referenceJobId)
-    {
-        $this->referenceJobId = $referenceJobId;
-    }
-
 }
