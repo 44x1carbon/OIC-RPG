@@ -8,33 +8,18 @@
 
 namespace App\Domain\ProductionType;
 
-
+// ProductionIdeaのValueObjects
 class ProductionType
 {
-    private $id;
-    private $productionTypeName;
+    private $name;
 
-    public function __construct()
+    public function __construct(String $name)
     {
+        $this->name = $name;
     }
 
-    public function id(): String
+    public function  name(): String
     {
-        return $this->id;
-    }
-
-    public function  productionTypeName(): String
-    {
-        return $this->productionTypeName;
-    }
-
-    public function setId(String $id)
-    {
-        $this->id = $id;
-    }
-
-    public function setProductionTypeName(String $productionTypeName)
-    {
-        $this->productionTypeName = $productionTypeName;
+        return $this->name;
     }
 }

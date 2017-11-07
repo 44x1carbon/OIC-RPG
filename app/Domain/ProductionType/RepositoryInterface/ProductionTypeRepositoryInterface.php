@@ -13,9 +13,9 @@ use App\Domain\ProductionType\ProductionType;
 
 interface ProductionTypeRepositoryInterface
 {
-    public function findById(String $id): ?ProductionType;
+    public function findByName(String $name): ?ProductionType;
 
     public function save(ProductionType $productionType): bool;
 
-    public function all(): Array;
+    public function all(): array;
 }
