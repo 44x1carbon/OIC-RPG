@@ -11,6 +11,7 @@ namespace App\Domain\WantedMember\Factory;
 
 use App\Domain\WantedMember\WantedMember;
 use App\Domain\WantedMember\ValueObjects\WantedStatus;
+use App\DomainUtility\RandomStringGenerator;
 
 class WantedMemberFactory
 {
@@ -19,13 +20,27 @@ class WantedMemberFactory
     {
     }
 
-    public function createWantedMember(String $id, WantedStatus $wantedStatus, int $wantedNumbers, String $remarks ): WantedMember
+    public function createWantedMember(WantedStatus $wantedStatus, String $officerId, String $id = null ): WantedMember
     {
-        $WantedMember = new WantedMember();
-        $WantedMember->setId($id);
-        $WantedMember->setWantedStatus($wantedStatus);
-        $WantedMember->setWantedNumbers($wantedNumbers);
-        $WantedMember->setRemarks($remarks);
-        return $WantedMember;
+        $wantedMember = new WantedMember();
+        $wantedMember->setId($id??$this->makeid());
+        $wantedMember->setWantedStatus($wantedStatus);
+        $wantedMember->setOfficerId($officerId);
+        return $wantedMember;
+    }
+
+    public function makeid()
+    {
+        $randId = RandomStringGenerator::makeLowerCase(4);
+        $reCreateIdFlg = true;
+        do {
+            if (is_null($this->repo->findById($randId))){
+                // findByIdがnullの場合、DBにIDのかぶりがないので正しい
+                $reCreateIdFlg = false;
+            }else{
+                $randId = RandomStringGenerator::makeLowerCase(4);
+            }
+        } while ($reCreateIdFlg);
+        return $randId;
     }
 }
