@@ -18,7 +18,7 @@ use App\Infrastracture\ProductionType\ProductionTypeOnMemoryRepositoryImpl;
 use App\Infrastracture\GuildMember\GuildMemberEloquentRepositoryImpl;
 use App\Infrastracture\GuildMember\GuildMemberOnMemoryRepositoryImpl;
 use App\Infrastracture\Skill\SkillOnMemoryRepositoryImpl;
-
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -40,6 +40,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $monolog = Log::getMonolog();
+        $monolog->pushHandler(new \Monolog\Handler\StreamHandler('php://stderr'));
+
+
         //
         $this->app->singleton(ProductionTypeRepositoryInterface::class, ProductionTypeOnMemoryRepositoryImpl::class);
         $this->app->singleton(ProductionIdeaRepositoryInterface::class, ProductionIdeaOnMemoryRepositoryImpl::class);
