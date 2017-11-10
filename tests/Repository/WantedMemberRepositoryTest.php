@@ -9,6 +9,7 @@
 namespace Tests\Repository;
 
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\WantedMember\Factory\WantedMemberFactory;
 use App\Domain\wantedMember\WantedMember;
 use App\Domain\WantedMember\RepositoryInterface\WantedMemberRepositoryInterface;
@@ -30,7 +31,7 @@ class WantedMemberRepositoryTest extends TestCase
     {
         $id = "11";
         $wantedStatus = new WantedStatus("open");
-        $officerId = "officer";
+        $officerId = new StudentNumber("B1111");
 
         $wantedMemberFactory = new WantedMemberFactory();
         $wantedMember = $wantedMemberFactory->createwantedMember($wantedStatus, $officerId, $id);
@@ -51,14 +52,14 @@ class WantedMemberRepositoryTest extends TestCase
 
         $id = "1";
         $wantedStatus = new WantedStatus("open");
-        $officerId = "officer1";
+        $officerId = new StudentNumber("B1111");
 
         $wantedMember = $wantedMemberFactory->createwantedMember($wantedStatus, $officerId, $id);
         $this->repo->save($wantedMember);
 
         $id2 = "2";
         $wantedStatus2 = new WantedStatus("open");
-        $officerId2 = "officer2";
+        $officerId2 = new StudentNumber("B2222");
 
         $wantedMember2 = $wantedMemberFactory->createwantedMember($wantedStatus2, $officerId2, $id2);
         $this->repo->save($wantedMember2);

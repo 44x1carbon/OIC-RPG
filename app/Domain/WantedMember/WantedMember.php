@@ -9,6 +9,7 @@
 namespace App\Domain\WantedMember;
 
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\WantedMember\ValueObjects\WantedStatus;
 
 /**
@@ -38,7 +39,7 @@ class WantedMember
         return $this->wantedStatus;
     }
 
-    public function officerId(): String
+    public function officerId(): StudentNumber
     {
         return $this->officerId;
     }
@@ -53,7 +54,7 @@ class WantedMember
         $this->wantedStatus = $wantedStatus;
     }
 
-    public function setOfficerId(String $officerId)
+    public function setOfficerId(StudentNumber $officerId)
     {
         $this->officerId = $officerId;
     }
