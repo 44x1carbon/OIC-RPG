@@ -9,6 +9,7 @@ use App\Domain\WantedMember\RepositoryInterface\WantedMemberRepositoryInterface;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
+use App\Domain\WantedRole\RepositoryInterface\WantedRoleRepositoryInterface;
 use App\Infrastracture\Course\CourseEloquentRepositoryImpl;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
@@ -20,6 +21,7 @@ use App\Infrastracture\ProductionType\ProductionTypeOnMemoryRepositoryImpl;
 use App\Infrastracture\GuildMember\GuildMemberEloquentRepositoryImpl;
 use App\Infrastracture\GuildMember\GuildMemberOnMemoryRepositoryImpl;
 use App\Infrastracture\Skill\SkillOnMemoryRepositoryImpl;
+use App\Infrastracture\WantedRole\WantedRoleOnMemoryRepositoryImpl;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -46,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(ProductionTypeRepositoryInterface::class, ProductionTypeOnMemoryRepositoryImpl::class);
         $this->app->singleton(ProductionIdeaRepositoryInterface::class, ProductionIdeaOnMemoryRepositoryImpl::class);
         $this->app->singleton(WantedMemberRepositoryInterface::class, WantedMemberOnMemoryRepositoryImpl::class);
+        $this->app->singleton(WantedRoleRepositoryInterface::class, WantedRoleOnMemoryRepositoryImpl::class);
 //        $this->app->singleton(CourseRepositoryInterface::class, CourseOnMemoryRepositoryImpl::class);
         $this->app->singleton(CourseRepositoryInterface::class, CourseEloquentRepositoryImpl::class);
 //        $this->app->singleton(GuildMemberRepositoryInterface::class,GuildMemberOnMemoryRepositoryImpl::class);
