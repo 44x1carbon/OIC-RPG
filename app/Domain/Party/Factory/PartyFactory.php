@@ -9,7 +9,7 @@
 namespace App\Domain\Party\Factory;
 
 
-use App\Domain\GuildMember\GuildMember;
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Party;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
@@ -26,15 +26,15 @@ class PartyFactory
     }
 
     public function createParty(ActivityEndDate $activityEndDate, ProductionIdea $productionIdea,
-                                GuildMember $partyManager, array $partyMembers, array $wanteds, String $id = null)
+                                StudentNumber $partyManagerId, array $partyMembers, array $wantedRoles, String $id = null)
     {
         $party = new Party();
         $party->setId($id? $id : $this->makeId());
         $party->setActivityEndDate($activityEndDate);
         $party->setProductionIdea($productionIdea);
-        $party->setPartyManager($partyManager);
+        $party->setPartyManagerId($partyManagerId);
         $party->setPartyMembers($partyMembers);
-        $party->setWanteds($wanteds);
+        $party->setWantedRoles($wantedRoles);
         return $party;
     }
 
