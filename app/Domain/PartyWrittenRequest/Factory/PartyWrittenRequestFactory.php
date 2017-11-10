@@ -8,10 +8,11 @@
 
 namespace App\Domain\PartyWrittenRequest\Factory;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
 use App\Domain\PartyWrittenRequest\PartyWrittenRequest;
 use App\Domain\PartyWrittenRequest\RepositoryInterface\PartyWrittenRequestRepositoryInterface;
-use App\Domain\ProductionIdea\ProductionIdea;
+use App\Domain\PartyWrittenRequest\ValueObject\ProductionIdeaInfo;
 use App\DomainUtility\RandomStringGenerator;
 
 class PartyWrittenRequestFactory
@@ -23,15 +24,15 @@ class PartyWrittenRequestFactory
         $this->partyWrittenRequestRepository = app(PartyWrittenRequestRepositoryInterface::class);
     }
 
-    public function createPartyWrittenRequest(String $applicantId, ActivityEndDate $activityEndDate,
-                                              ProductionIdea $productionIdea, array $wantedRoleList, String $id)
+    public function createPartyWrittenRequest(StudentNumber $applicantId, ActivityEndDate $activityEndDate,
+                                              ProductionIdeaInfo $productionInfoIdea, array $wantedRoleInfoList, String $id = null)
     {
         $partyWrittenRequest = new PartyWrittenRequest();
         $partyWrittenRequest->setId($id??$this->makeid());
         $partyWrittenRequest->setApplicantId($applicantId);
         $partyWrittenRequest->setActivityEndDate($activityEndDate);
-        $partyWrittenRequest->setProductionIdea($productionIdea);
-        $partyWrittenRequest->setWantedRoleList($wantedRoleList);
+        $partyWrittenRequest->setProductionIdeaInfo($productionInfoIdea);
+        $partyWrittenRequest->setWantedRoleInfoList($wantedRoleInfoList);
         return $partyWrittenRequest;
     }
 
