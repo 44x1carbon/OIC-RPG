@@ -25,4 +25,4 @@ Route::get('/sign_up', function() {
 
 Route::post('/sign_up', SignUpController::class.'@store')->name('post_sign_up');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/party', PartyController::class.'@store');
