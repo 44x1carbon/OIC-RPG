@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class PartyController extends Controller
 {
-    //
-
     public function store(
         PartyCreateRequest $request,
         GuildService $guildService,
