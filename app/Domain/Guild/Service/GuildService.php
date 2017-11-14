@@ -7,6 +7,8 @@ use App\Domain\Party\Factory\PartyFactory;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyWrittenRequest\PartyWrittenRequest;
 use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
+use App\Domain\WantedMember\Factory\WantedMemberFactory;
+use App\Domain\WantedRole\Factory\WantedRoleFactory;
 use App\Exceptions\DomainException;
 
 class GuildService
@@ -15,18 +17,24 @@ class GuildService
     protected $productionIdeaFactory;
     protected $guildMemberRepository;
     protected $partyRepository;
+    protected $wantedRoleFactory;
+    protected $wantedMemberFactory;
 
     function __construct(
         PartyFactory $partyFactory,
         ProductionIdeaFactory $productionIdeaFactory,
         GuildMemberRepositoryInterface $guildMemberRepository,
-        PartyRepositoryInterface $partyRepository
+        PartyRepositoryInterface $partyRepository,
+        WantedRoleFactory $wantedRoleFactory,
+        WantedMemberFactory $wantedMemberFactory
     )
     {
         $this->partyFactory = $partyFactory;
         $this->productionIdeaFactory = $productionIdeaFactory;
         $this->guildMemberRepository = $guildMemberRepository;
         $this->partyRepository = $partyRepository;
+        $this->wantedRoleFactory = $wantedRoleFactory;
+        $this->wantedMemberFactory = $wantedMemberFactory;
     }
 
     public function partyRegister(PartyWrittenRequest $partyWrittenRequest): string
@@ -40,7 +48,15 @@ class GuildService
 
 
         $wantedRoles = [];
-        foreach ($partyWrittenRequest->wantedRoleInfoList() as $wantedRole) {
+        foreach ($partyWrittenRequest->wantedRoleInfoList() as $wantedRoleInfo) {
+            $wantedRole = $this->wantedRoleFactory->createWantedRole(
+                $wantedRoleInfo->name(),
+                $wantedRoleInfo->referenceJobId(),
+                $wantedRoleInfo->remarks(),
+                []
+            );
+            // ToDo wantedMemberListをVO化する
+            $wantedRole->wantedMemberList()->addFrame($wantedRoleInfo->frameAmount());
         }
 
         $party = $this->partyFactory->createParty(
