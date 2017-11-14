@@ -9,23 +9,42 @@
 namespace App\Domain\WantedMember\Factory;
 
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\WantedMember\RepositoryInterface\WantedMemberRepositoryInterface;
 use App\Domain\WantedMember\WantedMember;
 use App\Domain\WantedMember\ValueObjects\WantedStatus;
+use App\DomainUtility\RandomStringGenerator;
 
 class WantedMemberFactory
 {
+    private $repo;
 
     public function __construct()
     {
+        $this->repo = app(WantedMemberRepositoryInterface::class);
     }
 
-    public function createWantedMember(String $id, WantedStatus $wantedStatus, int $wantedNumbers, String $remarks ): WantedMember
+    public function createWantedMember(WantedStatus $wantedStatus, StudentNumber $officerId, String $id = null ): WantedMember
     {
-        $WantedMember = new WantedMember();
-        $WantedMember->setId($id);
-        $WantedMember->setWantedStatus($wantedStatus);
-        $WantedMember->setWantedNumbers($wantedNumbers);
-        $WantedMember->setRemarks($remarks);
-        return $WantedMember;
+        $wantedMember = new WantedMember();
+        $wantedMember->setId($id??$this->makeId());
+        $wantedMember->setWantedStatus($wantedStatus);
+        $wantedMember->setOfficerId($officerId);
+        return $wantedMember;
+    }
+
+    public function makeId()
+    {
+        $randId = RandomStringGenerator::makeLowerCase(4);
+        $reCreateIdFlg = true;
+        do {
+            if (is_null($this->repo->findById($randId))){
+                // findByIdがnullの場合、DBにIDのかぶりがないので正しい
+                $reCreateIdFlg = false;
+            }else{
+                $randId = RandomStringGenerator::makeLowerCase(4);
+            }
+        } while ($reCreateIdFlg);
+        return $randId;
     }
 }

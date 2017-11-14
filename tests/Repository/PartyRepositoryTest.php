@@ -9,13 +9,13 @@
 namespace Tests\Repository;
 
 
-use App\Domain\GuildMember\GuildMember;
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Factory\PartyFactory;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
 use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
 use App\Domain\ProductionType\ProductionType;
-use App\Domain\WantedMember\WantedMember;
+use App\Domain\WantedRole\WantedRole;
 use Tests\TestCase;
 
 class PartyRepositoryTest extends TestCase
@@ -62,10 +62,10 @@ class PartyRepositoryTest extends TestCase
         // TODO : ProductionTypeがオンメモリーの間だけnewして取得
         $productionType = new ProductionType($typeName);
         $productionIdea = $this->productionIdeaFactory->createProductionIdea($ideaName, $productionType, $ideaDescription);
-        $partyManager = new GuildMember();
-        $partyMembers[] = new GuildMember();
-        $wanteds[] = new WantedMember();
-        $party = $this->partyFactory->createParty($activityEndDate, $productionIdea, $partyManager, $partyMembers, $wanteds, $id);
+        $partyManagerId = new StudentNumber("B1234");
+        $partyMembers[] = new StudentNumber("B1111");
+        $wantedRoles[] = new WantedRole();
+        $party = $this->partyFactory->createParty($activityEndDate, $productionIdea, $partyManagerId, $partyMembers, $wantedRoles, $id);
         return $party;
     }
 }

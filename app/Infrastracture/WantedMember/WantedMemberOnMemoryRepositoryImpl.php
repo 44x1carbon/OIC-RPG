@@ -18,8 +18,8 @@ class WantedMemberOnMemoryRepositoryImpl implements WantedMemberRepositoryInterf
 
     public function findById(String $id): ?WantedMember
     {
-        $result = array_filter($this->data, function(WantedMember $Wantedmember) use($id){
-            return $Wantedmember->id() == $id;
+        $result = array_filter($this->data, function(WantedMember $wantedMember) use($id){
+            return $wantedMember->id() == $id;
         });
 
         if(count($result) > 0) {
@@ -29,22 +29,22 @@ class WantedMemberOnMemoryRepositoryImpl implements WantedMemberRepositoryInterf
         }
     }
 
-    public function save(WantedMember $Wantedmember): bool
+    public function save(WantedMember $wantedMember): bool
     {
         $dataInFlg = false;
         foreach ($this->data as $key => $dataWantedMember){
-            if ($dataWantedMember->id() === $Wantedmember->id()){
-                $this->data[$key] = $Wantedmember;
+            if ($dataWantedMember->id() === $wantedMember->id()){
+                $this->data[$key] = $wantedMember;
                 $dataInFlg = true;
             }
         }
         if (!$dataInFlg){
-            $this->data[] = $Wantedmember;
+            $this->data[] = $wantedMember;
         }
         return true;
     }
 
-    public function all(): Array
+    public function all(): array
     {
         return $this->data;
     }
