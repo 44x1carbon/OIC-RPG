@@ -19,9 +19,9 @@ class PartyWrittenRequestFactory
 {
     private $partyWrittenRequestRepository;
 
-    public function __construct()
+    public function __construct(PartyWrittenRequestRepositoryInterface $partyWrittenRequestRepository)
     {
-        $this->partyWrittenRequestRepository = app(PartyWrittenRequestRepositoryInterface::class);
+        $this->partyWrittenRequestRepository = $partyWrittenRequestRepository;
     }
 
     public function createPartyWrittenRequest(StudentNumber $applicantId, ActivityEndDate $activityEndDate,

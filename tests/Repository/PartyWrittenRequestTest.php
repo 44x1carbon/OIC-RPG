@@ -27,7 +27,7 @@ class PartyWrittenRequestTest extends TestCase
     {
         parent::setUp();
         $this->partyWrittenRequestRepository = app(PartyWrittenRequestRepositoryInterface::class);
-        $this->partyWrittenRequestFactory = new PartyWrittenRequestFactory();
+        $this->partyWrittenRequestFactory = app(PartyWrittenRequestFactory::class);
     }
 
     public function testSave()
