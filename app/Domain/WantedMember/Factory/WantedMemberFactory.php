@@ -24,12 +24,14 @@ class WantedMemberFactory
         $this->repo = app(WantedMemberRepositoryInterface::class);
     }
 
-    public function createWantedMember(WantedStatus $wantedStatus, StudentNumber $officerId, String $id = null ): WantedMember
+    public function createWantedMember(WantedStatus $wantedStatus = null, StudentNumber $officerId = null, String $id = null ): WantedMember
     {
         $wantedMember = new WantedMember();
         $wantedMember->setId($id??$this->makeId());
-        $wantedMember->setWantedStatus($wantedStatus);
-        $wantedMember->setOfficerId($officerId);
+        $wantedMember->setWantedStatus($wantedStatus??new WantedStatus("OPEN"));
+        if ($officerId) {
+            $wantedMember->setOfficerId($officerId);
+        }
         return $wantedMember;
     }
 
