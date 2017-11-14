@@ -9,6 +9,7 @@
 namespace App\Domain\WantedMember;
 
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\WantedMember\ValueObjects\WantedStatus;
 
 /**
@@ -21,14 +22,11 @@ class WantedMember
     private $id;
     // 募集状況
     private $wantedStatus;
-    // 募集人数
-    private $wantedNumbers;
-    // 備考
-    private $remarks;
+    // 役員ID
+    private $officerId;
 
     public function __construct()
     {
-
     }
 
     public function id(): String
@@ -41,14 +39,9 @@ class WantedMember
         return $this->wantedStatus;
     }
 
-    public function wantedNumbers(): int
+    public function officerId(): StudentNumber
     {
-        return $this->wantedNumbers;
-    }
-
-    public function remarks(): String
-    {
-        return $this->remarks;
+        return $this->officerId;
     }
 
     public function setId(String $id)
@@ -61,13 +54,8 @@ class WantedMember
         $this->wantedStatus = $wantedStatus;
     }
 
-    public function setWantedNumbers(int $wantedNumbers)
+    public function setOfficerId(StudentNumber $officerId)
     {
-        $this->wantedNumbers = $wantedNumbers;
-    }
-
-    public function setRemarks(String $remarks)
-    {
-        $this->remarks = $remarks;
+        $this->officerId = $officerId;
     }
 }
