@@ -28,7 +28,7 @@ class PartyWrittenRequestFactory
                                               ProductionIdeaInfo $productionInfoIdea, array $wantedRoleInfoList, String $id = null)
     {
         $partyWrittenRequest = new PartyWrittenRequest();
-        $partyWrittenRequest->setId($id??$this->makeid());
+        $partyWrittenRequest->setId($id??$this->makeId());
         $partyWrittenRequest->setApplicantId($applicantId);
         $partyWrittenRequest->setActivityEndDate($activityEndDate);
         $partyWrittenRequest->setProductionIdeaInfo($productionInfoIdea);
@@ -36,7 +36,7 @@ class PartyWrittenRequestFactory
         return $partyWrittenRequest;
     }
 
-    public function makeid()
+    public function makeId()
     {
         $randId = RandomStringGenerator::makeLowerCase(4);
         $reCreateIdFlg = true;

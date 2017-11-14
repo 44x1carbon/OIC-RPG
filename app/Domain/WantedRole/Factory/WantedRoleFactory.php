@@ -25,7 +25,7 @@ class WantedRoleFactory
     public function createWantedRole(String $name, String $referenceJobId, String $remarks, array $wantedMemberList, String $id = null): WantedRole
     {
         $wantedRole = new WantedRole();
-        $wantedRole->setId($id??$this->makeid());
+        $wantedRole->setId($id??$this->makeId());
         $wantedRole->setName($name);
         $wantedRole->setReferenceJobId($referenceJobId);
         $wantedRole->setRemarks($remarks);
@@ -33,7 +33,7 @@ class WantedRoleFactory
         return $wantedRole;
     }
 
-    public function makeid()
+    public function makeId()
     {
         $randId = RandomStringGenerator::makeLowerCase(4);
         $reCreateIdFlg = true;

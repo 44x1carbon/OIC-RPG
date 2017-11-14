@@ -38,7 +38,7 @@ class PartyFactory
         return $party;
     }
 
-    public function makeid()
+    public function makeId()
     {
         $randId = RandomStringGenerator::makeLowerCase(4);
         $reCreateIdFlg = true;

@@ -27,13 +27,13 @@ class WantedMemberFactory
     public function createWantedMember(WantedStatus $wantedStatus, StudentNumber $officerId, String $id = null ): WantedMember
     {
         $wantedMember = new WantedMember();
-        $wantedMember->setId($id??$this->makeid());
+        $wantedMember->setId($id??$this->makeId());
         $wantedMember->setWantedStatus($wantedStatus);
         $wantedMember->setOfficerId($officerId);
         return $wantedMember;
     }
 
-    public function makeid()
+    public function makeId()
     {
         $randId = RandomStringGenerator::makeLowerCase(4);
         $reCreateIdFlg = true;
