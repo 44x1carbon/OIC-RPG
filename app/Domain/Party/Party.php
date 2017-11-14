@@ -10,8 +10,10 @@ namespace App\Domain\Party;
 
 
 use App\Domain\GuildMember\GuildMember;
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
 use App\Domain\ProductionIdea\ProductionIdea;
+use App\Domain\WantedRole\WantedRole;
 
 class Party
 {
@@ -20,12 +22,12 @@ class Party
     private $activityEndDate;
     // 制作物アイデア
     private $productionIdea;
-    // パーティ管理者
-    private $partyManager;
-    // パーティメンバー
+    // パーティ管理者ID
+    private $partyManagerId;
+    // パーティメンバーID一覧
     private $partyMembers;
-    // メンバー募集
-    private $wanteds;
+    // 募集役割一覧
+    private $wantedRoles;
 
     public function __construct()
     {
@@ -47,19 +49,22 @@ class Party
         return $this->productionIdea;
     }
 
-    public function getPartyManager(): GuildMember
+    public function partyManagerId(): StudentNumber
     {
-        return $this->partyManager;
+        return $this->partyManagerId;
     }
 
-    public function getPartyMembers(): array
+    public function partyMembers(): array
     {
         return $this->partyMembers;
     }
 
-    public function wanteds(): array
+    /**
+     * @return WantedRole[]
+     */
+    public function wantedRoles(): array
     {
-        return $this->wanteds;
+        return $this->wantedRoles;
     }
 
     public function setId($id)
@@ -77,9 +82,9 @@ class Party
         $this->productionIdea = $productionIdea;
     }
 
-    public function setPartyManager(GuildMember $partyManager)
+    public function setPartyManagerId(StudentNumber $partyManagerId)
     {
-        $this->partyManager = $partyManager;
+        $this->partyManagerId = $partyManagerId;
     }
 
     public function setPartyMembers(array $partyMembers)
@@ -87,10 +92,8 @@ class Party
         $this->partyMembers = $partyMembers;
     }
 
-    public function setWanteds(array $wanteds)
+    public function setWantedRoles(array $wantedRoles)
     {
-        $this->wanteds = $wanteds;
+        $this->wantedRoles = $wantedRoles;
     }
-
-
 }

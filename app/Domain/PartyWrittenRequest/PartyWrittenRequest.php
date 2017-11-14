@@ -9,9 +9,10 @@
 namespace App\Domain\PartyWrittenRequest;
 
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
-use App\Domain\ProductionIdea\ProductionIdea;
-use App\Domain\WantedMember\ValueObjects\WantedRole;
+use App\Domain\PartyWrittenRequest\ValueObject\ProductionIdeaInfo;
+use App\Domain\PartyWrittenRequest\ValueObject\WantedRoleInfo;
 
 class PartyWrittenRequest
 {
@@ -21,20 +22,20 @@ class PartyWrittenRequest
     // 活動終了日付
     private $activityEndDate;
     // 制作アイデア
-    private $productionIdea;
+    private $productionIdeaInfo;
     // 募集役割のリスト
-    private $wantedRoleList;
+    private $wantedRoleInfoList;
 
     public function __construct()
     {
     }
 
-    public function id()
+    public function id(): String
     {
         return $this->id;
     }
 
-    public function applicantId(): String
+    public function applicantId(): StudentNumber
     {
         return $this->applicantId;
     }
@@ -44,25 +45,28 @@ class PartyWrittenRequest
         return $this->activityEndDate;
     }
 
-    public function productionIdea(): ProductionIdea
+    /**
+     * @return ProductionIdeaInfo
+     */
+    public function productionIdeaInfo(): ProductionIdeaInfo
     {
-        return $this->productionIdea;
+        return $this->productionIdeaInfo;
     }
 
     /**
-     * @return WantedRole[]
+     * @return WantedRoleInfo[]
      */
-    public function wantedRoleList(): array
+    public function wantedRoleInfoList(): array
     {
-        return $this->wantedRoleList;
+        return $this->wantedRoleInfoList;
     }
 
-    public function setId($id)
+    public function setId(String $id)
     {
         $this->id = $id;
     }
 
-    public function setApplicantId(String $applicantId)
+    public function setApplicantId(StudentNumber $applicantId)
     {
         $this->applicantId = $applicantId;
     }
@@ -72,14 +76,19 @@ class PartyWrittenRequest
         $this->activityEndDate = $activityEndDate;
     }
 
-    public function setProductionIdea(ProductionIdea $productionIdea)
+    /**
+     * @param ProductionIdeaInfo $productionIdeaInfo
+     */
+    public function setProductionIdeaInfo(ProductionIdeaInfo $productionIdeaInfo)
     {
-        $this->productionIdea = $productionIdea;
+        $this->productionIdeaInfo = $productionIdeaInfo;
     }
 
-    public function setWantedRoleList(array $wantedRoleList)
+    /**
+     * @param WantedRoleInfo[] $wantedRoleInfoList
+     */
+    public function setWantedRoleInfoList(array $wantedRoleInfoList)
     {
-        $this->wantedRoleList = $wantedRoleList;
+        $this->wantedRoleInfoList = $wantedRoleInfoList;
     }
-
 }
