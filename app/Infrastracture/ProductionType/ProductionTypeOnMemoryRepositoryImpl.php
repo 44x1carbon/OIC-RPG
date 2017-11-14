@@ -10,8 +10,9 @@ namespace App\Infrastracture\ProductionType;
 
 
 use App\Domain\ProductionType\ProductionType;
+use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 
-class ProductionTypeOnMemoryRepositoryImpl
+class ProductionTypeOnMemoryRepositoryImpl implements ProductionTypeRepositoryInterface
 {
     private $data = [];
 
