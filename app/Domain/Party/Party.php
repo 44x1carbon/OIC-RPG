@@ -49,12 +49,12 @@ class Party
         return $this->productionIdea;
     }
 
-    public function getPartyManagerId(): StudentNumber
+    public function partyManagerId(): StudentNumber
     {
         return $this->partyManagerId;
     }
 
-    public function getPartyMembers(): array
+    public function partyMembers(): array
     {
         return $this->partyMembers;
     }
