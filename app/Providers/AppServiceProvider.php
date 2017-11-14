@@ -49,8 +49,6 @@ class AppServiceProvider extends ServiceProvider
         $monolog = Log::getMonolog();
         $monolog->pushHandler(new \Monolog\Handler\StreamHandler('php://stderr'));
 
-
-        //
         $this->app->singleton(ProductionTypeRepositoryInterface::class, ProductionTypeOnMemoryRepositoryImpl::class);
         $this->app->singleton(ProductionIdeaRepositoryInterface::class, ProductionIdeaOnMemoryRepositoryImpl::class);
         $this->app->singleton(WantedMemberRepositoryInterface::class, WantedMemberOnMemoryRepositoryImpl::class);
@@ -62,8 +60,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(SkillRepositoryInterface::class, SkillOnMemoryRepositoryImpl::class);
         $this->app->singleton(PartyRepositoryInterface::class, PartyOnMemoryRepositoryImpl::class);
         $this->app->singleton(PartyWrittenRequestRepositoryInterface::class, PartyWrittenRequestOnMemoryRepositoryImpl::class);
-        $this->app->bind(GuildMember::class, function() {
-           return Auth::user()->guildMemberEntity();
+        $this->app->bind(GuildMember::class, function(): ?GuildMember
+        {
+            if(Auth::check()) return Auth::user()->guildMemberEntity();
+            return null;
         });
     }
 }
