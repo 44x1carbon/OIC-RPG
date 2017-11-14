@@ -10,8 +10,9 @@ namespace App\Infrastracture\PartyWrittenRequest;
 
 
 use App\Domain\PartyWrittenRequest\PartyWrittenRequest;
+use App\Domain\PartyWrittenRequest\RepositoryInterface\PartyWrittenRequestRepositoryInterface;
 
-class PartyWrittenRequestOnMemoryRepositoryImpl
+class PartyWrittenRequestOnMemoryRepositoryImpl implements PartyWrittenRequestRepositoryInterface
 {
     private $data = [];
 
