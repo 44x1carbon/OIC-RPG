@@ -23,4 +23,14 @@ class WantedMemberList
     {
         // ToDo 指定されたIDのWantedMemberを返す
     }
+
+    public function all(): array
+    {
+        // ToDo 全て返す
+    }
+
+    public function save(WantedMember $wantedMember): bool
+    {
+        // ToDo 受け取ったWantedMemberを追加、すでに存在しているときは更新する
+    }
 }
