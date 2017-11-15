@@ -7,7 +7,7 @@ use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
-use App\Domain\PossessionSkill\Service\PossessionSkillService;
+use App\Domain\PossessionSkill\Service\PossessionSkillDomainService;
 use App\Domain\Skill\Factory\SkillFactory;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Domain\Skill\Service\SkillService;
@@ -21,7 +21,7 @@ use Tests\TestCase;
  */
 
 
-class PossessionServiceTest extends TestCase
+class PossessionSkillDomainServiceTest extends TestCase
 {
     /* @var GuildMemberRepositoryInterface $guildMemberRepo */
     protected $guildMemberRepo;
@@ -53,14 +53,14 @@ class PossessionServiceTest extends TestCase
 
     function testSuccess()
     {
-        $possessionSkillService = new PossessionSkillService();
+        $possessionSkillService = new PossessionSkillDomainService();
         $this->assertTrue($possessionSkillService->addService($this->studentNumber, $this->skill,10));
     }
 
     function testFail()
     {
         $studentNumber = new StudentNumber('B7777');
-        $possessionSkillService = new PossessionSkillService();
+        $possessionSkillService = new PossessionSkillDomainService();
         $this->assertFalse($possessionSkillService->addService($studentNumber, $this->skill,10));
     }
 }
