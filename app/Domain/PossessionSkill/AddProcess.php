@@ -15,7 +15,7 @@ class AddProcess
 
     public static function addExp(PossessionSkill $beforePossessionSkill,int $exp): PossessionSkill
     {
-        $afterPossessionSkill = clone $beforePossessionSkill;
+        $afterPossessionSkill = $beforePossessionSkill->clone();
         $afterPossessionSkill->setTotalExp($beforePossessionSkill->totalExp() + $exp);
 
         $levelUpValue = self::levelUp($beforePossessionSkill, $afterPossessionSkill);

@@ -50,4 +50,9 @@ class PossessionSkill
     {
         return $this->totalExp;
     }
+
+    public function clone(): PossessionSkill
+    {
+        return clone $this;
+    }
 }
