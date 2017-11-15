@@ -35,7 +35,7 @@ class GuildMember
     }
 
 //  学籍番号VOをセット
-    public function setStudendNumber(StudentNumber $studentNumber)
+    public function setStudentNumber(StudentNumber $studentNumber)
     {
         $this->studentNumber = $studentNumber;
     }

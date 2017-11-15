@@ -27,7 +27,7 @@ class GuildMemberFactory
     public function createGuildMember(StudentNumber $studentNumber, String $studentName, Course $course, Gender $gender,MailAddress $mailAddress): GuildMember
     {
         $guildMember = new GuildMember();
-        $guildMember->setStudendNumber($studentNumber);
+        $guildMember->setStudentNumber($studentNumber);
         $guildMember->setStudentName($studentName);
         $guildMember->setCourse($course);
         $guildMember->setGender($gender);
