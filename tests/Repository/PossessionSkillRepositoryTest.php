@@ -40,7 +40,7 @@ class PossessionSkillRepositoryTest extends TestCase
         $possessSkill = $PossessionSkillFactory->possessSkill($skill);
         $this->possessionSkillRepo->save($possessSkill);
 
-        $findSkill = $this->possessionSkillRepo->findByPossessionSkill($skill);
+        $findSkill = $this->possessionSkillRepo->findBySkill($skill);
 
         $result = $findSkill->skill()->skillId() == $skill->skillId();
         $this->assertTrue($result);

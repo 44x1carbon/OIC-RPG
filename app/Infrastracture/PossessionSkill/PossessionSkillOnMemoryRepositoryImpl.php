@@ -17,7 +17,7 @@ class PossessionSkillOnMemoryRepositoryImpl implements PossessionSkillRepository
 {
     private $data = [];
 
-    public function findByPossessionSkill(Skill $skill): ?PossessionSkill
+    public function findBySkill(Skill $skill): ?PossessionSkill
     {
         $result = array_filter($this->data, function(PossessionSkill $possessionSkill) use($skill){
             return $possessionSkill->skill()->skillId() == $skill->skillId();
