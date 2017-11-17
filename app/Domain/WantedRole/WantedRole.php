@@ -10,6 +10,7 @@ namespace App\Domain\WantedRole;
 
 
 use App\Domain\WantedMember\WantedMember;
+use App\Domain\WantedRole\ValueObject\WantedMemberList;
 
 class WantedRole
 {
@@ -58,9 +59,9 @@ class WantedRole
     }
 
     /**
-     * @return WantedMember[]
+     * @return WantedMemberList
      */
-    public function wantedMemberList(): array
+    public function wantedMemberList(): WantedMemberList
     {
         return $this->wantedMemberList;
     }
@@ -86,7 +87,7 @@ class WantedRole
         $this->remarks = $remarks;
     }
 
-    public function setWantedMemberList(array $wantedMemberList)
+    public function setWantedMemberList(WantedMemberList $wantedMemberList)
     {
         $this->wantedMemberList = $wantedMemberList;
     }

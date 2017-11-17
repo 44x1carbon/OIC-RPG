@@ -10,6 +10,7 @@ namespace App\Domain\WantedRole\Factory;
 
 
 use App\Domain\WantedRole\RepositoryInterface\WantedRoleRepositoryInterface;
+use App\Domain\WantedRole\ValueObject\WantedMemberList;
 use App\Domain\WantedRole\WantedRole;
 use App\DomainUtility\RandomStringGenerator;
 
@@ -22,10 +23,10 @@ class WantedRoleFactory
         $this->wantedRoleRepository = app(WantedRoleRepositoryInterface::class);
     }
 
-    public function createWantedRole(String $name, String $referenceJobId, String $remarks, array $wantedMemberList, String $id = null): WantedRole
+    public function createWantedRole(String $name, String $referenceJobId, String $remarks, WantedMemberList $wantedMemberList, String $id = null): WantedRole
     {
         $wantedRole = new WantedRole();
-        $wantedRole->setId($id??$this->makeId());
+        $wantedRole->setId($id ?? $this->makeId());
         $wantedRole->setName($name);
         $wantedRole->setReferenceJobId($referenceJobId);
         $wantedRole->setRemarks($remarks);

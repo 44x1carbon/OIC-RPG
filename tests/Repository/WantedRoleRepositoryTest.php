@@ -9,13 +9,18 @@
 namespace Tests\Repository;
 
 
+use App\Domain\WantedMember\RepositoryInterface\WantedMemberRepositoryInterface;
+use App\Domain\WantedMember\WantedMember;
 use App\Domain\WantedRole\Factory\WantedRoleFactory;
 use App\Domain\WantedRole\RepositoryInterface\WantedRoleRepositoryInterface;
+use App\Domain\WantedRole\ValueObject\WantedMemberList;
 use Tests\TestCase;
 
 class WantedRoleRepositoryTest extends TestCase
 {
+    /* @var WantedMemberRepositoryInterface $wantedRoleRepository */
     protected $wantedRoleRepository;
+    /* @var WantedRoleFactory $wantedRoleFactory */
     protected $wantedRoleFactory;
 
     public function setUp()
@@ -32,7 +37,7 @@ class WantedRoleRepositoryTest extends TestCase
         $name = "Laravelエンジニア";
         $referenceJobId = "B1111";
         $remarks = "laravel5.5を使いたい人";
-        $wantedMemberList[] = "123";
+        $wantedMemberList = new WantedMemberList([new WantedMember()]);
 
         $wantedRole = $this->wantedRoleFactory->createWantedRole($name, $referenceJobId, $remarks, $wantedMemberList, $id);
         $this->wantedRoleRepository->save($wantedRole);
@@ -51,7 +56,7 @@ class WantedRoleRepositoryTest extends TestCase
         $name = "Laravelエンジニア";
         $referenceJobId = "B1111";
         $remarks = "laravel5.5を使いたい人";
-        $wantedMemberList[] = "123";
+        $wantedMemberList = new WantedMemberList([new WantedMember()]);;
 
         $wantedRole = $this->wantedRoleFactory->createWantedRole($name, $referenceJobId, $remarks, $wantedMemberList, $id);
         $this->wantedRoleRepository->save($wantedRole);
@@ -60,7 +65,7 @@ class WantedRoleRepositoryTest extends TestCase
         $name2 = "Vuejsエンジニア";
         $referenceJobId2 = "B2222";
         $remarks2 = "vuejsを使いたい人";
-        $wantedMemberList2[] = "456";
+        $wantedMemberList2 = new WantedMemberList([new WantedMember()]);;
 
         $wantedRole2 = $this->wantedRoleFactory->createWantedRole($name2, $referenceJobId2, $remarks2, $wantedMemberList2, $id2);
         $this->wantedRoleRepository->save($wantedRole2);

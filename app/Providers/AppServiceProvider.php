@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
+use App\Domain\GuildMember\GuildMember;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyWrittenRequest\RepositoryInterface\PartyWrittenRequestRepositoryInterface;
 use App\Domain\WantedMember\RepositoryInterface\WantedMemberRepositoryInterface;
@@ -21,8 +22,9 @@ use App\Infrastracture\ProductionType\ProductionTypeOnMemoryRepositoryImpl;
 use App\Infrastracture\GuildMember\GuildMemberEloquentRepositoryImpl;
 use App\Infrastracture\GuildMember\GuildMemberOnMemoryRepositoryImpl;
 use App\Infrastracture\Skill\SkillOnMemoryRepositoryImpl;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Infrastracture\WantedRole\WantedRoleOnMemoryRepositoryImpl;
-
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -44,7 +46,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $monolog = Log::getMonolog();
+        $monolog->pushHandler(new \Monolog\Handler\StreamHandler('php://stderr'));
+
         $this->app->singleton(ProductionTypeRepositoryInterface::class, ProductionTypeOnMemoryRepositoryImpl::class);
         $this->app->singleton(ProductionIdeaRepositoryInterface::class, ProductionIdeaOnMemoryRepositoryImpl::class);
         $this->app->singleton(WantedMemberRepositoryInterface::class, WantedMemberOnMemoryRepositoryImpl::class);
@@ -56,5 +60,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(SkillRepositoryInterface::class, SkillOnMemoryRepositoryImpl::class);
         $this->app->singleton(PartyRepositoryInterface::class, PartyOnMemoryRepositoryImpl::class);
         $this->app->singleton(PartyWrittenRequestRepositoryInterface::class, PartyWrittenRequestOnMemoryRepositoryImpl::class);
+        $this->app->bind(GuildMember::class, function(): ?GuildMember
+        {
+            if(Auth::check()) return Auth::user()->guildMemberEntity();
+            return null;
+        });
     }
 }
