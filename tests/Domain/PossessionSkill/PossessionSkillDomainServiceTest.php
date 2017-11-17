@@ -6,6 +6,7 @@ use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Domain\PossessionSkill\Service\PossessionSkillDomainService;
 use App\Domain\Skill\Factory\SkillFactory;
@@ -23,44 +24,52 @@ use Tests\TestCase;
 
 class PossessionSkillDomainServiceTest extends TestCase
 {
-    /* @var GuildMemberRepositoryInterface $guildMemberRepo */
-    protected $guildMemberRepo;
+    /* @var PossessionSkillRepositoryInterface $possessionSkillRepo */
+    protected $possessionSkillRepo;
 
     /* @var SkillRepositoryInterface $skillRepo */
     protected $skillRepo;
 
-    private $studentNumber;
-    private $skill;
+    /* @var \App\Domain\PossessionSkill\PossessionSkill $possessionSkill */
+    private $possessionSkill;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->guildMemberRepo = app(GuildMemberRepositoryInterface::class);
-        $this->studentNumber = new StudentNumber('B4074');
-        $studentName = '新原佑亮';
-        $course = new Course('1','ITスペシャリスト');
-        $gender = new Gender('male');
-        $mailAddress = new MailAddress('b4000@oic.jp');
-        $guildMemberFactory = new GuildMemberFactory();
-        $guildMember = $guildMemberFactory->createGuildMember($this->studentNumber, $studentName, $course, $gender, $mailAddress);
-        $this->guildMemberRepo->save($guildMember);
-
+        $this->possessionSkillRepo = app(PossessionSkillRepositoryInterface::class);
         $this->skillRepo = app(SkillRepositoryInterface::class);
+
         $skillFactory = new SkillFactory();
-        $this->skill = $skillFactory->createSkill('php');
+        $skill = $skillFactory->createSkill('php');
+
+        $possessSkillFactory = new PossessionSkillFactory();
+        $this->possessionSkill = $possessSkillFactory->possessSkill($skill);
     }
 
     function testSuccess()
     {
-        $possessionSkillService = new PossessionSkillDomainService();
-        $this->assertTrue($possessionSkillService->addService($this->studentNumber, $this->skill,10));
+        $possessionSkillService = new PossessionSkillDomainService($this->possessionSkillRepo);
+        $this->assertTrue($possessionSkillService->addService($this->possessionSkill,100));
     }
 
-    function testFail()
+    public function testAddExp()
     {
-        $studentNumber = new StudentNumber('B7777');
-        $possessionSkillService = new PossessionSkillDomainService();
-        $this->assertFalse($possessionSkillService->addService($studentNumber, $this->skill,10));
+        $exp = 100;
+        $afterPossessionSkill = PossessionSkillDomainService::addExp($this->possessionSkill,$exp);
+        $this->assertTrue($this->possessionSkill->totalExp() + $exp === $afterPossessionSkill->totalExp());
+    }
+
+    public function testLevelUp()
+    {
+        $exp = 100;
+        $this->possessionSkill->setTotalExp(225);
+
+        $afterPossessionSkill = $this->possessionSkill->clone();
+        $afterPossessionSkill->setTotalExp($this->possessionSkill->totalExp() + $exp);
+
+        $resultPossessionSkill = PossessionSkillDomainService::levelUp($this->possessionSkill, $afterPossessionSkill);
+
+        $this->assertTrue($resultPossessionSkill->skillLevel() === $this->possessionSkill->skillLevel() + 1);
     }
 }
