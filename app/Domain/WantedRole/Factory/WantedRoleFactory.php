@@ -23,7 +23,6 @@ class WantedRoleFactory
         $this->wantedRoleRepository = app(WantedRoleRepositoryInterface::class);
     }
 
-//    ToDo WantedMemberList VOに置き換え
     public function createWantedRole(String $name, String $referenceJobId, String $remarks, WantedMemberList $wantedMemberList, String $id = null): WantedRole
     {
         $wantedRole = new WantedRole();

@@ -59,7 +59,6 @@ class PartyRepositoryTest extends TestCase
     function createPartyEntity(String $typeName, String $ideaName, String $ideaDescription, String $id = null)
     {
         $activityEndDate = new ActivityEndDate(1431670515);
-        // TODO : ProductionTypeがオンメモリーの間だけnewして取得
         $productionType = new ProductionType($typeName);
         $productionIdea = $this->productionIdeaFactory->createProductionIdea($ideaName, $productionType, $ideaDescription);
         $partyManagerId = new StudentNumber("B1234");

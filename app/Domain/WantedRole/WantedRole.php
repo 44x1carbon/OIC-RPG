@@ -58,7 +58,6 @@ class WantedRole
         return $this->remarks;
     }
 
-//    ToDo WantedMemberList VOに置き換え
     /**
      * @return WantedMemberList
      */
@@ -88,7 +87,6 @@ class WantedRole
         $this->remarks = $remarks;
     }
 
-//    ToDo WantedMemberList VOに置き換え
     public function setWantedMemberList(WantedMemberList $wantedMemberList)
     {
         $this->wantedMemberList = $wantedMemberList;

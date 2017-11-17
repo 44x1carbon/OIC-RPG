@@ -23,9 +23,6 @@ class WantedMemberList
 
     public function addFrame(int $frameAmount)
     {
-        // ToDo $frameAmount分 $wantedMemberListにWantedMemberを追加する
-        // WantedStatus: WantedStatus::OPEN, officerId: null
-
         for ($i=0;$i<$frameAmount;$i++) {
             $this->wantedMemberList[] = $this->wantedMemberFactory->createWantedMember();
         }
@@ -33,8 +30,6 @@ class WantedMemberList
 
     public function findById(string $id): ?WantedMember
     {
-        // ToDo 指定されたIDのWantedMemberを返す
-
         $result = array_filter($this->wantedMemberList, function(WantedMember $wantedMember) use($id){
             return $wantedMember->id() === $id;
         });
@@ -49,13 +44,11 @@ class WantedMemberList
 
     public function all(): array
     {
-        // ToDo 全て返す
         return $this->wantedMemberList;
     }
 
     public function save(WantedMember $wantedMember): bool
     {
-        // ToDo 受け取ったWantedMemberを追加、すでに存在しているときは更新する
         $findKey = -1;
         foreach ($this->wantedMemberList as $key => $dataWantedMember){
             if ($dataWantedMember->id() === $wantedMember->id()){

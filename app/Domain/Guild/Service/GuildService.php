@@ -55,7 +55,6 @@ class GuildService
                 $wantedRoleInfo->remarks(),
                 []
             );
-            // ToDo wantedMemberListをVO化する
             $wantedRole->wantedMemberList()->addFrame($wantedRoleInfo->frameAmount());
         }
 
