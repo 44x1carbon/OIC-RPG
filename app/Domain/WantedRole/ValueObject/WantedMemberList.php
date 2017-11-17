@@ -55,11 +55,14 @@ class WantedMemberList
         $dataInFlg = false;
         foreach ($this->wantedMemberList as $key => $dataWantedMember){
             if ($dataWantedMember->id() === $wantedMember->id()){
-                $this->wantedMemberList[$key] = $wantedMember;
+                $findKey = $key;
                 $dataInFlg = true;
             }
         }
-        if (!$dataInFlg){
+        // 既に存在していた場合は上書きし、なければ新規で追加する
+        if ($dataInFlg) {
+            $this->wantedMemberList[$findKey] = $wantedMember;
+        }else{
             $this->wantedMemberList[] = $wantedMember;
         }
         return true;
