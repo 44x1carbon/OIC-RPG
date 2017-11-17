@@ -56,15 +56,14 @@ class WantedMemberList
     public function save(WantedMember $wantedMember): bool
     {
         // ToDo 受け取ったWantedMemberを追加、すでに存在しているときは更新する
-        $dataInFlg = false;
+        $findKey = false;
         foreach ($this->wantedMemberList as $key => $dataWantedMember){
             if ($dataWantedMember->id() === $wantedMember->id()){
                 $findKey = $key;
-                $dataInFlg = true;
             }
         }
         // 既に存在していた場合は上書きし、なければ新規で追加する
-        if ($dataInFlg) {
+        if ($findKey) {
             $this->wantedMemberList[$findKey] = $wantedMember;
         }else{
             $this->wantedMemberList[] = $wantedMember;
