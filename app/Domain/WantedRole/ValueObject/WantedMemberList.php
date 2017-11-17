@@ -27,7 +27,7 @@ class WantedMemberList
         }
     }
 
-    public function findById(string $id): WantedMember
+    public function findById(string $id): ?WantedMember
     {
         // ToDo 指定されたIDのWantedMemberを返す
 
@@ -46,7 +46,7 @@ class WantedMemberList
     public function all(): array
     {
         // ToDo 全て返す
-        $this->wantedMemberList;
+        return $this->wantedMemberList;
     }
 
     public function save(WantedMember $wantedMember): bool
