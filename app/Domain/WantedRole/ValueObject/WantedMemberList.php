@@ -49,14 +49,14 @@ class WantedMemberList
 
     public function save(WantedMember $wantedMember): bool
     {
-        $findKey = -1;
+        $findKey = null;
         foreach ($this->wantedMemberList as $key => $dataWantedMember){
             if ($dataWantedMember->id() === $wantedMember->id()){
                 $findKey = $key;
             }
         }
         // 既に存在していた場合は上書きし、なければ新規で追加する
-        if ($findKey) {
+        if ($findKey !== null) {
             $this->wantedMemberList[$findKey] = $wantedMember;
         }else{
             $this->wantedMemberList[] = $wantedMember;
