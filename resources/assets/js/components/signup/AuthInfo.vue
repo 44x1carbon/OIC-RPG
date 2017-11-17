@@ -1,9 +1,9 @@
 <template>
     <div>
         <label for="mail-address">メールアドレス</label>
-        <input type="email" name="mail_address" id="mail-address" v-model="formData.mailAddress">
+        <input type="email" id="mail-address" v-model="formData.mailAddress">
         <label for="password">パスワード</label>
-        <input type="password" name="password" id="password" v-model="formData.password">
+        <input type="password" id="password" v-model="formData.password">
         <router-link to="/profile" @click.native="dispatch">次へ</router-link>
     </div>
 </template>

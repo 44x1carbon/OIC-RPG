@@ -1,13 +1,15 @@
 <template>
     <div>
         <label for="student-number">学籍番号</label>
-        <input type="number" name="student_number" id="student-number" v-model="formData.studentNumber">
+        <input type="number" id="student-number" v-model="formData.studentNumber" @change="dispatch">
         <label for="academic-year">学年</label>
-        <input type="number" name="academic_year" id="academic-year" v-model="formData.academicYear">
+        <input type="number" id="academic-year" v-model="formData.academicYear" @change="dispatch">
         <label for="course-id">コース</label>
-        <input type="text" name="course_id" id="course-id" v-model="formData.courseId">
+        <input type="text" id="course-id" v-model="formData.courseId" @change="dispatch">
         <router-link to="/profile">戻る</router-link>
-        <button type="submit" @click="dispatch">登録</button>
+        <input type="hidden" name="form_data" id="form-data" :value="formData.all">
+        <div @click="getSignUpFormData">sss</div>
+        <button type="submit">登録</button>
     </div>
 </template>
 
@@ -18,13 +20,17 @@ export default {
             formData: {
                 studentNumber: 0,
                 academicYear: 0,
-                courseId: ''
-            }
+                courseId: '',
+                all: ''
+            },
         }
     },
     methods: {
         dispatch() {
             this.$store.dispatch('setSchoolInfo', this.formData);
+        },
+        getSignUpFormData() {
+            this.formData.all = JSON.stringify(this.$store.getters.signUpFormData);
         }
     }
 }

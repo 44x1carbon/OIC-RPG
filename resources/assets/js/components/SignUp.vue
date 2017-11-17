@@ -55,6 +55,11 @@ const store = new Vuex.Store({
         setSchoolInfo(context, formData) {
             context.commit('setSchoolInfo', formData);
         }
+    },
+    getters: {
+        signUpFormData(state) {
+            return state;
+        }
     }
 });
 

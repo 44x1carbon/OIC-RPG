@@ -5,12 +5,12 @@
         <div>
             性別
             <label for="gender-man">男</label>
-            <input type="radio" name="gender" id="gender-man" value="mail" v-model="formData.gender">
+            <input type="radio" id="gender-man" value="mail" v-model="formData.gender">
             <label for="gender-woman">女</label>
-            <input type="radio" name="gender" id="gender-woman" value="famail" v-model="formData.gender">
+            <input type="radio" id="gender-woman" value="famail" v-model="formData.gender">
         </div>
         <label for="introduction">自己紹介</label>
-        <textarea name="introduction" id="introduction" cols="30" rows="10" v-model="formData.introduction"></textarea>
+        <textarea id="introduction" cols="30" rows="10" v-model="formData.introduction"></textarea>
         <router-link to="/auth">戻る</router-link>
         <router-link to="/school" @click.native="dispatch">次へ</router-link>
     </div>
