@@ -11,6 +11,10 @@ class WantedMemberList
     protected $wantedMemberFactory;
     protected $wantedMemberList;
 
+    /**
+     * WantedMemberList constructor.
+     * @param WantedMember[] $wantedMemberList
+     */
     function __construct(array $wantedMemberList = [])
     {
         $this->wantedMemberList = $wantedMemberList;
