@@ -43,4 +43,9 @@ class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryIn
             return $model->toEntity();
         })->toArray();
     }
+
+    public function findByName(String $name): ?ProductionType
+    {
+        return $this->eloquent->where('name', $name)->first();
+    }
 }
