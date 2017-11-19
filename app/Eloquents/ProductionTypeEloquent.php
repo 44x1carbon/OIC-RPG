@@ -23,4 +23,9 @@ class ProductionTypeEloquent extends Model
     {
         return $this->factory->createProductionType($this->production_type_id, $this->production_type_name);
     }
+
+    public function findById(string $id): ?ProductionTypeEloquent
+    {
+        return $this->where('product_type_id', $id)->first();
+    }
 }
