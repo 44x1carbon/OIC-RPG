@@ -9,10 +9,10 @@
 namespace Tests\Repository;
 
 
-use App\Domain\MemberRecruitment\ValueObjects\RecruitmentStatus;
 use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
+use App\Domain\ProductionType\Factory\ProductionTypeFactory;
 use App\Domain\ProductionType\ProductionType;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 use Tests\TestCase;
@@ -23,6 +23,7 @@ class ProductionIdeaRepositoryTest extends TestCase
     protected $productionIdeaRepository;
     protected $productionTypeRepository;
     protected $productionIdeaFactory;
+    protected $productionTypeFactory;
 
     public function setUp()
     {
@@ -30,8 +31,9 @@ class ProductionIdeaRepositoryTest extends TestCase
         $this->productionIdeaRepository = app(ProductionIdeaRepositoryInterface::class);
         $this->productionTypeRepository = app(ProductionTypeRepositoryInterface::class);
         $this->productionIdeaFactory = new ProductionIdeaFactory();
-        $productionType = new ProductionType("1","サービス");
-        $productionType2 = new ProductionType("2","映像");
+        $this->productionTypeFactory = new ProductionTypeFactory();
+        $productionType = $this->productionTypeFactory->createProductionType("サービス");
+        $productionType2 = $this->productionTypeFactory->createProductionType("映像");
         $this->productionTypeRepository->save($productionType);
         $this->productionTypeRepository->save($productionType2);
     }
@@ -41,7 +43,7 @@ class ProductionIdeaRepositoryTest extends TestCase
         $id = "11";
         $productionTheme = "IT";
 //        $productionTypeId = "1";
-        $productionType = new ProductionType("1","サービス");
+        $productionType = $this->productionTypeRepository->findByName("サービス");
         $description = "説明です";
 
         $productionIdeaFactory = new ProductionIdeaFactory();
@@ -62,7 +64,7 @@ class ProductionIdeaRepositoryTest extends TestCase
         // ProductionIdeaのデータ1を追加
         $productionTheme = "IT";
 //        $productionTypeId = "1";
-        $productionType = $this->productionTypeRepository->findById("1");
+        $productionType = $this->productionTypeRepository->findByName("サービス");
         $description = "説明1です";
         $productionIdea = $this->productionIdeaFactory->createProductionIdea($productionTheme, $productionType, $description);
         $this->productionIdeaRepository->save($productionIdea);
@@ -70,7 +72,7 @@ class ProductionIdeaRepositoryTest extends TestCase
         // ProductionIdeaのデータ2を追加
         $productionTheme2 = "映像";
 //        $productionTypeId2 = "2";
-        $productionType2 = $this->productionTypeRepository->findById("2");
+        $productionType2 = $this->productionTypeRepository->findByName("映像");
         $description2 = "説明2です";
         $productionIdea2 = $this->productionIdeaFactory->createProductionIdea($productionTheme2, $productionType2, $description2);
         $this->productionIdeaRepository->save($productionIdea2);

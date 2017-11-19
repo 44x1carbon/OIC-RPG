@@ -10,8 +10,9 @@ namespace App\Infrastracture\ProductionType;
 
 
 use App\Domain\ProductionType\ProductionType;
+use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 
-class ProductionTypeOnMemoryRepositoryImpl
+class ProductionTypeOnMemoryRepositoryImpl implements ProductionTypeRepositoryInterface
 {
     private $data = [];
 
@@ -19,10 +20,10 @@ class ProductionTypeOnMemoryRepositoryImpl
      * @param String $id
      * @return ProductionType|null
      */
-    public function findById(String $id): ?ProductionType
+    public function findByName(String $name): ?ProductionType
     {
-        $result = array_filter($this->data, function(ProductionType $productionType) use($id){
-            return $productionType->id() === $id;
+        $result = array_filter($this->data, function(ProductionType $productionType) use($name){
+            return $productionType->name() === $name;
         });
 
         $result = array_values($result);
@@ -33,13 +34,14 @@ class ProductionTypeOnMemoryRepositoryImpl
         }
     }
 
+    // オンメモリー時のみ存在
     public function save(ProductionType $productionType): bool
     {
         $this->data[] = $productionType;
         return true;
     }
 
-    public function all(): Array
+    public function all(): array
     {
         return $this->data;
     }

@@ -40,14 +40,15 @@ class ProductionIdeaFactory
     public function makeId()
     {
         $randId = RandomStringGenerator::makeLowerCase(4);
-        $addFlg = false;
-        while ($addFlg)
-        if (is_null($this->repo->findById($randId))){
-            // findByIdがnullの場合、DBにIDのかぶりがないので正しい
-            $addFlg = true;
-        }else{
-            $randId = RandomStringGenerator::makeLowerCase(4);
-        }
+        $reCreateIdFlg = true;
+        do {
+            if (is_null($this->repo->findById($randId))){
+                // findByIdがnullの場合、DBにIDのかぶりがないので正しい
+                $reCreateIdFlg = false;
+            }else{
+                $randId = RandomStringGenerator::makeLowerCase(4);
+            }
+        } while ($reCreateIdFlg);
         return $randId;
     }
 }
