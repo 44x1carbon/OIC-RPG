@@ -81,7 +81,7 @@ class GuildMemberRequest extends FormRequest
         return $name;
     }
 
-    public function course(): Course
+    public function course(): ?Course
     {
         $id = $this->request->get('course_id');
         return $this->courseRepository->findById($id);

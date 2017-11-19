@@ -41,4 +41,18 @@ class GuildMemberUpdateTest extends \Tests\TestCase
 
         $response->assertStatus(200);
     }
+
+    /**
+     * 存在しないコースがリクエストされた場合
+     */
+    public function testCourseFail()
+    {
+        $response = $this->post(route('update_guild_member'),[
+            'name' => 'テスト太郎',
+            'course_id' => 'aaaaaa',
+            'gender' => 'female',
+        ]);
+
+        $response->assertStatus(304);
+    }
 }

@@ -24,10 +24,20 @@ class GuildMemberController extends Controller
     {
         $updateMember = $loginMember;
         $updateMember->setStudentName($request->studentName());
-        $updateMember->setCourse($request->course());
         $updateMember->setGender($request->gender());
-        $guildMemberRepository->save($updateMember);
 
-        return response($updateMember->studentNumber()->code());
+        if ($request->course()){
+            $updateMember->setCourse($request->course());
+            $result = true;
+        }else{
+            $result = false;
+        }
+
+        if ($result && $guildMemberRepository->save($updateMember)) {
+            return response($updateMember->studentNumber()->code());
+        }else{
+            return response($updateMember->studentNumber()->code(),304);
+        }
     }
+
 }
