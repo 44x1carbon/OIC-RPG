@@ -18,7 +18,7 @@ class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryIn
         // TODO: Implement save() method.
     }
 
-    public function all(): Array
+    public function all(): array
     {
         // TODO: Implement all() method.
     }

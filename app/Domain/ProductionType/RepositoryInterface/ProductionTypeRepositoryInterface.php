@@ -17,5 +17,5 @@ interface ProductionTypeRepositoryInterface
 
     public function save(ProductionType $productionType): bool;
 
-    public function all(): Array;
+    public function all(): array;
 }
