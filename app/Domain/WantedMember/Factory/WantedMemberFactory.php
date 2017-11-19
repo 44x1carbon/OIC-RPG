@@ -28,7 +28,7 @@ class WantedMemberFactory
     {
         $wantedMember = new WantedMember();
         $wantedMember->setId($id??$this->makeId());
-        $wantedMember->setWantedStatus($wantedStatus??new WantedStatus("OPEN"));
+        $wantedMember->setWantedStatus($wantedStatus??new WantedStatus(WantedStatus::OPEN));
         if ($officerId) {
             $wantedMember->setOfficerId($officerId);
         }

@@ -9,6 +9,7 @@ use App\Domain\PartyWrittenRequest\PartyWrittenRequest;
 use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
 use App\Domain\WantedMember\Factory\WantedMemberFactory;
 use App\Domain\WantedRole\Factory\WantedRoleFactory;
+use App\Domain\WantedRole\ValueObject\WantedMemberList;
 use App\Exceptions\DomainException;
 
 class GuildService
@@ -53,7 +54,7 @@ class GuildService
                 $wantedRoleInfo->name(),
                 $wantedRoleInfo->referenceJobId(),
                 $wantedRoleInfo->remarks(),
-                []
+                new WantedMemberList()
             );
             $wantedRole->wantedMemberList()->addFrame($wantedRoleInfo->frameAmount());
         }
