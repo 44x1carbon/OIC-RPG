@@ -15,7 +15,8 @@ class CreateProductionTypesTable extends Migration
     {
         Schema::create('production_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('production_type_name');
+            $table->string('production_type_id');
+            $table->string('name');
             $table->timestamps();
         });
     }
