@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use App\Domain\ProductionType\ProductionType;
 use App\Eloquents\ProductionTypeEloquent;
 
