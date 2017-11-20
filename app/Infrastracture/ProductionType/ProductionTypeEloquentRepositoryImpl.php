@@ -32,7 +32,7 @@ class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryIn
             $model->production_type_id = $productionType->id();
         }
 
-        $model->production_type_name = $productionType->productionTypeName();
+        $model->name = $productionType->name();
 
         return $model->save();
     }
@@ -46,6 +46,8 @@ class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryIn
 
     public function findByName(String $name): ?ProductionType
     {
-        return $this->eloquent->where('name', $name)->first();
+        return safe_exec($this->eloquent->where('name', $name)->first(), function(ProductionTypeEloquent $model) {
+            return $model->toEntity();
+        });
     }
 }
