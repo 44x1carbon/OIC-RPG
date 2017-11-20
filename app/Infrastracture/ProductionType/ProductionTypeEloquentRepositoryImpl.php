@@ -17,7 +17,7 @@ class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryIn
 
     public function findById(String $id): ?ProductionType
     {
-        return safe_exec($this->eloquent->findById($id), function(ProductionTypeEloquent $value) {
+        return null_safety($this->eloquent->findById($id), function(ProductionTypeEloquent $value) {
             return $value->toEntity();
         });
 
@@ -46,7 +46,7 @@ class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryIn
 
     public function findByName(String $name): ?ProductionType
     {
-        return safe_exec($this->eloquent->where('name', $name)->first(), function(ProductionTypeEloquent $model) {
+        return null_safety($this->eloquent->where('name', $name)->first(), function(ProductionTypeEloquent $model) {
             return $model->toEntity();
         });
     }

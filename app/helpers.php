@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('safe_exec')) {
+if (! function_exists('null_safety')) {
 
     /**
      * 第一引数で受け取った値がnullならnullを
@@ -10,7 +10,7 @@ if (! function_exists('safe_exec')) {
      * @param callable $func
      * @return mixed
      */
-    function safe_exec($value, callable $func)
+    function null_safety($value, callable $func)
     {
         if(is_null($value)) return $value;
         return $func($value);
