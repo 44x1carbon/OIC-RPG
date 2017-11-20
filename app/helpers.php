@@ -8,7 +8,7 @@ if (! function_exists('null_safety')) {
      *
      * @param $value
      * @param callable $func
-     * @return mixed
+     * @return null | mixed
      */
     function null_safety($value, callable $func)
     {
