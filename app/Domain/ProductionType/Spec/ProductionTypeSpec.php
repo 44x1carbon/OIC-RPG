@@ -16,7 +16,7 @@ class ProductionTypeSpec
 {
     use SpecTrait;
 
-    public static function isExistCode(String $name): bool
+    public static function isExistName(String $name): bool
     {
         /* @var ProductionTypeRepositoryInterface $repo */
         $repo = app(ProductionTypeRepositoryInterface::class);

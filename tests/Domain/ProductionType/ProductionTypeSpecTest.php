@@ -28,13 +28,13 @@ class ProductionTypeSpecTest extends TestCase
     function testSuccess()
     {
         $name = $this->sampleProductionType()->name();
-        $this->assertTrue(ProductionTypeSpec::isExistCode($name));
+        $this->assertTrue(ProductionTypeSpec::isExistName($name));
     }
 
 
     function testFail()
     {
         $name = '2';
-        $this->assertFalse(ProductionTypeSpec::isExistCode($name));
+        $this->assertFalse(ProductionTypeSpec::isExistName($name));
     }
 }
