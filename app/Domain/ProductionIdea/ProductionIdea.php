@@ -11,15 +11,15 @@ namespace App\Domain\ProductionIdea;
 
 use App\Domain\ProductionType\ProductionType;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
+use App\Domain\ProductionType\ValueObject\ProductionTypeId;
 
 class ProductionIdea
 {
     private $id;
     // 制作テーマ
     private $productionTheme;
-//    private $productionTypeId;
     // 制作物の種類
-    private $productionType;
+    private $productionTypeId;
     // アイデア説明
     private $ideaDescription;
 
@@ -38,11 +38,9 @@ class ProductionIdea
 //        return $this->productionTypeId;
 //    }
 
-    public function productionType(): ProductionType
+    public function productionTypeId(): ProductionTypeId
     {
-//        $productionTypeRepository = app(ProductionTypeRepositoryInterface::class);
-//        return $productionTypeRepository->findById($this->productionTypeId);
-        return $this->productionType;
+        return $this->productionTypeId;
     }
 
     public function ideaDescription(): String
@@ -67,11 +65,11 @@ class ProductionIdea
 //    }
 
     /**
-     * @param mixed $productionType
+     * @param mixed $productionTypeId
      */
-    public function setProductionType(ProductionType $productionType)
+    public function setProductionTypeId(ProductionTypeId $productionTypeId)
     {
-        $this->productionType = $productionType;
+        $this->productionTypeId = $productionTypeId;
     }
 
     public function setIdeaDescription(String $ideaDescription)

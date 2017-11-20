@@ -4,6 +4,7 @@ namespace App\Domain\ProductionType\Factory;
 
 use App\Domain\ProductionType\ProductionType;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
+use App\Domain\ProductionType\ValueObject\ProductionTypeId;
 use App\DomainUtility\RandomStringGenerator;
 
 class ProductionTypeFactory
@@ -15,15 +16,16 @@ class ProductionTypeFactory
         $this->productionTypeRepository = $productionTypeRepository;
     }
 
-    public function createProductionType(string $productionTypeName, string $productionTypeId = null):ProductionType
+    public function createProductionType(string $productionTypeName, ProductionTypeId $productionTypeId = null):ProductionType
     {
         return new ProductionType($productionTypeId ?? $this->makeId(), $productionTypeName);
     }
 
-    public function makeId(): string
+    public function makeId(): ProductionTypeId
     {
         do {
-            $id = RandomStringGenerator::makeLowerCase(2);
+            $code = RandomStringGenerator::makeLowerCase(2);
+            $id = new ProductionTypeId($code);
         } while($this->productionTypeRepository->findById($id));
 
         return $id;
