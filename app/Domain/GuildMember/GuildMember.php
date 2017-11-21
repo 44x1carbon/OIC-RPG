@@ -29,7 +29,7 @@ class GuildMember
     private $courseId;
     private $gender;
     private $mailAddress;
-    private $possessionSkill;
+    private $possessionSkill = [];
 
     public function __construct()
     {
@@ -67,7 +67,7 @@ class GuildMember
 
     public function setPossessionSkill(PossessionSkill $possessionSkill)
     {
-        $this->possessionSkill = $possessionSkill;
+        $this->possessionSkill[] = $possessionSkill;
     }
 
 //  学籍番号をゲット
@@ -101,7 +101,7 @@ class GuildMember
         return $this->mailAddress;
     }
 
-    public function possessionSkill(): PossessionSkill
+    public function possessionSkill(): array
     {
         return $this->possessionSkill;
     }
