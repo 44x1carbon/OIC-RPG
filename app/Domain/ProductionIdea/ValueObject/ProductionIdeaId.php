@@ -15,4 +15,9 @@ class ProductionIdeaId
     {
         return $this->code;
     }
+
+    public function equals(ProductionIdeaId $id): bool
+    {
+        return $this->code() === $id->code();
+    }
 }
