@@ -78,4 +78,23 @@ class GuildMemberRepositoryTest extends TestCase
             $findGuildMember->course() == $course && $findGuildMember->gender() == $gender && $findGuildMember->mailAddress() == $mailAddress;
         $this->assertTrue($result);
     }
+
+    public function testDelete()
+    {
+        $studentNumber = new StudentNumber('B5000');
+        $studentName = 'くさかべ';
+        $course = new Course('1', 'ITスペシャリスト');
+        $gender = new Gender('female');
+        $mailAddress = new MailAddress('b5000@oic.jp');
+        $guildMemberFactory = new GuildMemberFactory();
+        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress);
+        $this->repo->save($guildMember);
+
+        $findGuildMember = $this->repo->findByStudentNumber($studentNumber);
+        $this->repo->delete($guildMember);
+        $findDeleteGuildMember = $this->repo->findByStudentNumber($studentNumber);
+
+        // DBから取得できたIDが削除して取れなくなってnullを返していることをチェック
+        $this->assertTrue(isset($findGuildMember)&&is_null($findDeleteGuildMember));
+    }
 }
