@@ -57,6 +57,11 @@ class GuildMemberRequest extends FormRequest
      */
     public function rules()
     {
+        Validator::extend('course_id_available', function($attribute, $value, $parameters, $validator){
+            $course = $this->courseRepository->findById($value);
+            return isset($course);
+        });
+
         Validator::extend('gender_available', function($attribute, $value, $parameters, $validator){
             return GenderSpec::isAvailable($value);
         });
@@ -66,7 +71,8 @@ class GuildMemberRequest extends FormRequest
                 'required'
             ],
             'course_id' => [
-                'required'
+                'required',
+                'course_id_available',
             ],
             'gender' => [
                 'required',
