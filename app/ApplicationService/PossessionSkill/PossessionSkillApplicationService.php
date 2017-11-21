@@ -57,6 +57,12 @@ class PossessionSkillApplicationService
         $possessionSkillDomainService = new PossessionSkillDomainService($this->possessionSkillRepo);
         $result = $possessionSkillDomainService->addService($possessionSkill, $exp);
 
+        $guildMember->setPossessionSkill($possessionSkill);
+        $this->guildMemberRepo->save($guildMember);
+        $guildMember = $this->guildMemberRepo->findByStudentNumber($studentNumber);
+        $allPossessionSkill= $guildMember->possessionSkill();
+        dd($guildMember);
+
         if($result)
         {
             $addResultPossessionSkill = $this->findBySkill($allPossessionSkill, $skill);

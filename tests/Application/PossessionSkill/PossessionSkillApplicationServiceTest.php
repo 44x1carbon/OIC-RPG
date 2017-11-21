@@ -55,14 +55,14 @@ class PossessionSkillApplicationServiceTest extends \Tests\TestCase
 
     function testSuccess()
     {
-        $possessionSkillService = new PossessionSkillApplicationService($this->possessionSkillRepo);
+        $possessionSkillService = new PossessionSkillApplicationService($this->possessionSkillRepo, $this->guildMemberRepo);
         $possessionSkillService->addExpService($this->studentNumber, $this->skill, 100);
     }
 
     function testFail()
     {
         $studentNumber = new StudentNumber('B7777');
-        $possessionSkillService = new PossessionSkillApplicationService($this->possessionSkillRepo);
+        $possessionSkillService = new PossessionSkillApplicationService($this->possessionSkillRepo, $this->guildMemberRepo);
         $this->assertFalse($possessionSkillService->addExpService($studentNumber, $this->skill,100));
     }
 }
