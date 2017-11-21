@@ -4,11 +4,12 @@ namespace App\Infrastracture\ProductionIdea;
 
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
+use App\Domain\ProductionIdea\ValueObject\ProductionIdeaId;
 
 class ProductionIdeaEloquentRepositoryImpl implements ProductionIdeaRepositoryInterface
 {
 
-    public function findById(String $id): ?ProductionIdea
+    public function findById(ProductionIdeaId $id): ?ProductionIdea
     {
         // TODO: Implement findById() method.
     }
