@@ -9,6 +9,7 @@
 namespace App\ApplicationService\PossessionSkill;
 
 
+use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\Spec\GuildMemberSpec;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PossessionSkill\AddProcess;
@@ -22,11 +23,16 @@ use App\Events\LevelUpEvent;
 
 class PossessionSkillApplicationService
 {
+    protected $guildMemberRepo;
     protected $possessionSkillRepo;
 
-    public function __construct(PossessionSkillRepositoryInterface $repo)
+    public function __construct(
+        PossessionSkillRepositoryInterface $possessionSkillRepository,
+        GuildMemberRepositoryInterface $guildMemberRepository
+    )
     {
-        $this->possessionSkillRepo = $repo;
+        $this->possessionSkillRepo = $possessionSkillRepository;
+        $this->guildMemberRepo = $guildMemberRepository;
     }
 
     public function addExpService(StudentNumber $studentNumber, Skill $skill, int $exp): bool
@@ -36,7 +42,12 @@ class PossessionSkillApplicationService
 
         if(!GuildMemberSpec::isExistStudentNumber($studentNumber)) return false;
 
-        $possessionSkill = $this->possessionSkillRepo->findBySkill($skill);
+//      誰の所持スキルか判定
+        $guildMember = $this->guildMemberRepo->findByStudentNumber($studentNumber);
+        $allPossessionSkill= $guildMember->possessionSkill();
+//      どのスキルか判定
+        $possessionSkill = $this->findBySkill($allPossessionSkill, $skill);
+
         if(is_null($possessionSkill))
         {
             $possessSkillFactory = new PossessionSkillFactory();
@@ -48,7 +59,7 @@ class PossessionSkillApplicationService
 
         if($result)
         {
-            $addResultPossessionSkill = $this->possessionSkillRepo->findBySkill($skill);
+            $addResultPossessionSkill = $this->findBySkill($allPossessionSkill, $skill);
             //AddExpイベント発火
             if($possessionSkill->totalExp() < $addResultPossessionSkill->totalExp())
                 event(new AddExpEvent($addResultPossessionSkill));
@@ -57,5 +68,18 @@ class PossessionSkillApplicationService
                 event(new LevelUpEvent($addResultPossessionSkill));
         }
         return $result;
+    }
+
+    public function findBySkill(array $allPossessionSkill, Skill $skill): ?PossessionSkill
+    {
+        $result = array_filter($allPossessionSkill, function(PossessionSkill $possessionSkill) use($skill){
+            return $possessionSkill->skill()->skillId() === $skill->skillId();
+        });
+
+        if(count($result) > 0) {
+            return $result[0];
+        } else {
+            return null;
+        }
     }
 }
