@@ -17,10 +17,10 @@ class PossessionSkillOnMemoryRepositoryImpl implements PossessionSkillRepository
 {
     private $data = [];
 
-    public function findBySkill(Skill $skill): ?PossessionSkill
+    public function findById(String $id): ?PossessionSkill
     {
-        $result = array_filter($this->data, function(PossessionSkill $possessionSkill) use($skill){
-            return $possessionSkill->skill()->skillId() === $skill->skillId();
+        $result = array_filter($this->data, function(PossessionSkill $possessionSkill) use($id){
+            return $possessionSkill->id() === $id;
         });
 
         if(count($result) > 0) {
