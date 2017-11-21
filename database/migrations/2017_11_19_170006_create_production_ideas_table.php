@@ -15,6 +15,7 @@ class CreateProductionIdeasTable extends Migration
     {
         Schema::create('production_ideas', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('production_idea_id');
             $table->string('production_theme');
             $table->unsignedInteger('production_type_id');
             $table->text('$idea_description');
