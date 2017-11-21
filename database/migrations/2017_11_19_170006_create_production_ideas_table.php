@@ -18,7 +18,7 @@ class CreateProductionIdeasTable extends Migration
             $table->string('production_idea_id');
             $table->string('production_theme');
             $table->unsignedInteger('production_type_id');
-            $table->text('$idea_description');
+            $table->text('idea_description');
             $table->timestamps();
         });
     }
