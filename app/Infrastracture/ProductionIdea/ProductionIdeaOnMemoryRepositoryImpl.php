@@ -45,7 +45,7 @@ class ProductionIdeaOnMemoryRepositoryImpl implements ProductionIdeaRepositoryIn
         return true;
     }
 
-    public function all(): Array
+    public function all(): array
     {
         return $this->data;
     }

@@ -17,5 +17,5 @@ interface ProductionIdeaRepositoryInterface
 
     public function save(ProductionIdea $productionIdea): bool;
 
-    public function all(): Array;
+    public function all(): array;
 }
