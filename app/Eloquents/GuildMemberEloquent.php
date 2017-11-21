@@ -35,6 +35,12 @@ class GuildMemberEloquent extends Model
         return $guildMemberModel;
     }
 
+    public function  fromEntity(GuildMember $guildMember): GuildMemberEloquent
+    {
+        $guildMemberModel = $this->findByStudentNumber($guildMember->studentNumber());
+        return $guildMemberModel;
+    }
+
     public function toEntity(): GuildMember
     {
         return $this->factory->createGuildMember(
