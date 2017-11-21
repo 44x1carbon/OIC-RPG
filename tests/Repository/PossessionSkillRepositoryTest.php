@@ -20,41 +20,34 @@ class PossessionSkillRepositoryTest extends TestCase
     /* @var PossessionSkillRepositoryInterface $possessionSkillRepo */
     protected $possessionSkillRepo;
 
-    /* @var SkillRepositoryInterface $skillRepo */
-    protected $skillRepo;
-
     public function setUp()
     {
         parent::setUp();
-        $this->skillRepo = app(SkillRepositoryInterface::class);
         $this->possessionSkillRepo = app(PossessionSkillRepositoryInterface::class);
     }
 
-    public function testFindByPossessionSkill()
+    public function testFindById()
     {
         $skillFactory = new SkillFactory();
         $skill = $skillFactory->createSkill( 'java');
-        $this->skillRepo->save($skill);
 
-        $PossessionSkillFactory = new PossessionSkillFactory();
-        $possessSkill = $PossessionSkillFactory->possessSkill($skill);
-        $this->possessionSkillRepo->save($possessSkill);
+        $possessionSkillFactory = new PossessionSkillFactory();
+        $possessionSkill = $possessionSkillFactory->createPossessionSkill($skill);
+        $this->possessionSkillRepo->save($possessionSkill);
 
-        $findSkill = $this->possessionSkillRepo->findBySkill($skill);
+        $findId = $this->possessionSkillRepo->findById($possessionSkill->id());
 
-        $result = $findSkill->skill()->skillId() == $skill->skillId();
+        $result = $findId->Id() === $possessionSkill->id();
         $this->assertTrue($result);
-
     }
 
     public function testSave()
     {
         $skillFactory = new SkillFactory();
         $skill = $skillFactory->createSkill( 'php');
-        $this->skillRepo->save($skill);
 
         $PossessionSkillFactory = new PossessionSkillFactory();
-        $possessSkill = $PossessionSkillFactory->possessSkill($skill);
+        $possessSkill = $PossessionSkillFactory->createPossessionSkill($skill);
         $this->possessionSkillRepo->save($possessSkill);
     }
 }
