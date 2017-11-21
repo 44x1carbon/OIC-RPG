@@ -44,7 +44,7 @@ class ProductionIdeaFactory
         do {
             $code = RandomStringGenerator::makeLowerCase(4);
             $id = new ProductionIdeaId($code);
-        } while ($this->repo->findById($code));
+        } while ($this->repo->findById($id));
         return $id;
     }
 }
