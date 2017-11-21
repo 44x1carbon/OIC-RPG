@@ -57,6 +57,12 @@ class GuildMemberEloquentRepositoryImpl implements GuildMemberRepositoryInterfac
         return $guildMemberCollection->toArray();
     }
 
+    public function delete(GuildMember $guildMember): bool
+    {
+        $guildMemberModel = $this->eloquent->findByStudentNumber($guildMember->studentNumber());
+        return $guildMemberModel->delete();
+    }
+
     public function findByLoginInfo(LoginInfo $loginInfo): ?GuildMember
     {
         $email = $loginInfo->address()->address();
