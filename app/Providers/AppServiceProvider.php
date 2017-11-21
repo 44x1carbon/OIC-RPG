@@ -16,6 +16,7 @@ use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
 use App\Infrastracture\Party\PartyOnMemoryRepositoryImpl;
 use App\Infrastracture\PartyWrittenRequest\PartyWrittenRequestOnMemoryRepositoryImpl;
+use App\Infrastracture\ProductionType\ProductionTypeEloquentRepositoryImpl;
 use App\Infrastracture\WantedMember\WantedMemberOnMemoryRepositoryImpl;
 use App\Infrastracture\ProductionIdea\ProductionIdeaOnMemoryRepositoryImpl;
 use App\Infrastracture\ProductionType\ProductionTypeOnMemoryRepositoryImpl;
@@ -49,7 +50,8 @@ class AppServiceProvider extends ServiceProvider
         $monolog = Log::getMonolog();
         $monolog->pushHandler(new \Monolog\Handler\StreamHandler('php://stderr'));
 
-        $this->app->singleton(ProductionTypeRepositoryInterface::class, ProductionTypeOnMemoryRepositoryImpl::class);
+//        $this->app->singleton(ProductionTypeRepositoryInterface::class, ProductionTypeOnMemoryRepositoryImpl::class);
+        $this->app->singleton(ProductionTypeRepositoryInterface::class, ProductionTypeEloquentRepositoryImpl::class);
         $this->app->singleton(ProductionIdeaRepositoryInterface::class, ProductionIdeaOnMemoryRepositoryImpl::class);
         $this->app->singleton(WantedMemberRepositoryInterface::class, WantedMemberOnMemoryRepositoryImpl::class);
         $this->app->singleton(WantedRoleRepositoryInterface::class, WantedRoleOnMemoryRepositoryImpl::class);
