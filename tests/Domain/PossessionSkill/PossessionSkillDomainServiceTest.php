@@ -44,7 +44,7 @@ class PossessionSkillDomainServiceTest extends TestCase
         $skill = $skillFactory->createSkill('php');
 
         $possessSkillFactory = new PossessionSkillFactory();
-        $this->possessionSkill = $possessSkillFactory->possessSkill($skill);
+        $this->possessionSkill = $possessSkillFactory->createPossessionSkill($skill);
     }
 
     function testSuccess()

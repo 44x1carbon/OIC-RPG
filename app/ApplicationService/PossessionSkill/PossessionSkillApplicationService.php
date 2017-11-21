@@ -40,7 +40,7 @@ class PossessionSkillApplicationService
         if(is_null($possessionSkill))
         {
             $possessSkillFactory = new PossessionSkillFactory();
-            $possessionSkill = $possessSkillFactory->possessSkill($skill);
+            $possessionSkill = $possessSkillFactory->createPossessionSkill($skill);
         }
 
         $possessionSkillDomainService = new PossessionSkillDomainService($this->possessionSkillRepo);

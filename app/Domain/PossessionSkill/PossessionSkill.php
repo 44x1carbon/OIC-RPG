@@ -3,6 +3,7 @@
 namespace App\Domain\PossessionSkill;
 
 use App\Domain\Skill\Skill;
+use PhpParser\Node\Scalar\String_;
 
 /**
  * Created by PhpStorm.
@@ -13,12 +14,18 @@ use App\Domain\Skill\Skill;
 
 class PossessionSkill
 {
+    private $id;
     private $skill;
     private $skillLevel;
     private $totalExp;
 
     public function __construct()
     {
+    }
+
+    public function setId(String $id)
+    {
+        $this->id = $id;
     }
 
     public function setSkill(Skill $skill)
@@ -34,6 +41,11 @@ class PossessionSkill
     public function setTotalExp(int $totalExp)
     {
         $this->totalExp = $totalExp;
+    }
+
+    public function id(): String
+    {
+        return $this->id;
     }
 
     public function skill(): Skill
