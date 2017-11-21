@@ -14,7 +14,7 @@ use App\Domain\Skill\Skill;
 
 class PossessionSkillFactory
 {
-    public function possessSkill(Skill $skill): PossessionSkill
+    public function createPossessionSkill(Skill $skill): PossessionSkill
     {
         $possessionSkill = new PossessionSkill();
         $possessionSkill->setSkill($skill);
