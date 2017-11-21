@@ -11,11 +11,13 @@ namespace App\Domain\ProductionIdea\Factory;
 
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
+use App\Domain\ProductionIdea\ValueObject\ProductionIdeaId;
 use App\Domain\ProductionType\ProductionType;
 use App\DomainUtility\RandomStringGenerator;
 
 class ProductionIdeaFactory
 {
+    /* @var ProductionIdeaRepositoryInterface $repo */
     private $repo;
 
     public function __construct()
@@ -37,18 +39,12 @@ class ProductionIdeaFactory
      * 新規にEntityに割り振る一意のIDを作成する
      * @return string
      */
-    public function makeId()
+    public function makeId(): ProductionIdeaId
     {
-        $randId = RandomStringGenerator::makeLowerCase(4);
-        $reCreateIdFlg = true;
         do {
-            if (is_null($this->repo->findById($randId))){
-                // findByIdがnullの場合、DBにIDのかぶりがないので正しい
-                $reCreateIdFlg = false;
-            }else{
-                $randId = RandomStringGenerator::makeLowerCase(4);
-            }
-        } while ($reCreateIdFlg);
-        return $randId;
+            $code = RandomStringGenerator::makeLowerCase(4);
+            $id = new ProductionIdeaId($code);
+        } while ($this->repo->findById($code));
+        return $id;
     }
 }
