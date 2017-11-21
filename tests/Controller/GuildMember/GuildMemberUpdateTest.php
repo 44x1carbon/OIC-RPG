@@ -49,10 +49,10 @@ class GuildMemberUpdateTest extends \Tests\TestCase
     {
         $response = $this->post(route('update_guild_member'),[
             'name' => 'テスト太郎',
-            'course_id' => 'aaaaaa',
+            'course_id' => 'aaaa',
             'gender' => 'female',
         ]);
 
-        $response->assertStatus(304);
+        $response->assertStatus(302);
     }
 }
