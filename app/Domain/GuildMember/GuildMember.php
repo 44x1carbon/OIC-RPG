@@ -14,6 +14,7 @@ use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\Course\Course;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
+use App\Domain\PossessionSkill\PossessionSkill;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
 use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Scalar\String_;
@@ -28,6 +29,7 @@ class GuildMember
     private $courseId;
     private $gender;
     private $mailAddress;
+    private $possessionSkill;
 
     public function __construct()
     {
@@ -63,6 +65,11 @@ class GuildMember
         $this->mailAddress = $mailAddress;
     }
 
+    public function setPossessionSkill(PossessionSkill $possessionSkill)
+    {
+        $this->possessionSkill = $possessionSkill;
+    }
+
 //  学籍番号をゲット
     public function studentNumber(): StudentNumber
     {
@@ -94,4 +101,8 @@ class GuildMember
         return $this->mailAddress;
     }
 
+    public function possessionSkill(): PossessionSkill
+    {
+        return $this->possessionSkill;
+    }
 }
