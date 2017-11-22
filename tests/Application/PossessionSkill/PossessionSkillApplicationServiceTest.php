@@ -56,7 +56,7 @@ class PossessionSkillApplicationServiceTest extends \Tests\TestCase
     function testSuccess()
     {
         $possessionSkillService = new PossessionSkillApplicationService($this->possessionSkillRepo);
-        $possessionSkillService->addExpService($this->studentNumber, $this->skill, 100);
+        $this->assertTrue($possessionSkillService->addExpService($this->studentNumber, $this->skill, 100));
     }
 
     function testFail()

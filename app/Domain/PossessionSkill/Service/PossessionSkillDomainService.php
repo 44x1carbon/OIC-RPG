@@ -32,7 +32,7 @@ class PossessionSkillDomainService
         $this->possessionSkillRepo = $repo;
     }
 
-    public function addService(PossessionSkill $possessionSkill, int $exp): bool
+    public function addExpService(PossessionSkill $possessionSkill, int $exp): bool
     {
         $addResultPossessionSkill = self::AddExp($possessionSkill, $exp);
         $addResultPossessionSkill = self::levelUp($possessionSkill, $addResultPossessionSkill);

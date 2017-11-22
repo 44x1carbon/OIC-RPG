@@ -2,6 +2,7 @@
 
 namespace App\Domain\PossessionSkill\RepositoryInterface;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\Skill\Skill;
 
@@ -14,7 +15,7 @@ use App\Domain\Skill\Skill;
 
 interface PossessionSkillRepositoryInterface
 {
-    public function findBySkill(Skill $skill): ?PossessionSkill;
+    public function findBySkillAndStudentNumber(Skill $skill, StudentNumber $studentNumber): ?PossessionSkill;
 
     public function save(PossessionSkill $possessionSkill): bool;
 
