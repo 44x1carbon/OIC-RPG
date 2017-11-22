@@ -27,4 +27,6 @@ Route::post('/sign_up', SignUpController::class.'@store')->name('post_sign_up');
 
 Route::post('/guild_member', GuildMemberController::class.'@update')->name('update_guild_member');
 
+Route::delete('/guild_member/delete', GuildMemberController::class.'@destroy')->name('destroy_guild_member');
+
 Route::post('/party', PartyController::class.'@store')->name('store_party');
