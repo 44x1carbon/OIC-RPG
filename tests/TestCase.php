@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
-
+/*
     public function setUp()
     {
         parent::setUp();
@@ -22,4 +22,5 @@ abstract class TestCase extends BaseTestCase
         Artisan::call('migrate:reset');
         parent::tearDown();
     }
+*/
 }
