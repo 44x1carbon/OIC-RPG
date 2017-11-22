@@ -2,6 +2,7 @@
 
 namespace App\Domain\PossessionSkill;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Skill\Skill;
 use PhpParser\Node\Scalar\String_;
 
@@ -14,7 +15,7 @@ use PhpParser\Node\Scalar\String_;
 
 class PossessionSkill
 {
-    private $id;
+    private $studentNumber;
     private $skill;
     private $skillLevel;
     private $totalExp;
@@ -23,9 +24,9 @@ class PossessionSkill
     {
     }
 
-    public function setId(String $id)
+    public function setStudentNumber(StudentNumber $studentNumber)
     {
-        $this->id = $id;
+        $this->studentNumber = $studentNumber;
     }
 
     public function setSkill(Skill $skill)
@@ -43,9 +44,9 @@ class PossessionSkill
         $this->totalExp = $totalExp;
     }
 
-    public function id(): String
+    public function studentNumber(): StudentNumber
     {
-        return $this->id;
+        return $this->studentNumber;
     }
 
     public function skill(): Skill
