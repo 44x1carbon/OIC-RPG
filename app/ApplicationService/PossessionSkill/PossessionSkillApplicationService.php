@@ -36,26 +36,28 @@ class PossessionSkillApplicationService
 
         if(!GuildMemberSpec::isExistStudentNumber($studentNumber)) return false;
 
-        $possessionSkill = $this->possessionSkillRepo->findBySkill($skill);
+        $possessionSkill = $this->possessionSkillRepo->findBySkillAndStudentNumber($skill, $studentNumber);
+
         if(is_null($possessionSkill))
         {
             $possessSkillFactory = new PossessionSkillFactory();
-            $possessionSkill = $possessSkillFactory->possessSkill($skill);
+            $possessionSkill = $possessSkillFactory->createPossessionSkill($skill, $studentNumber);
         }
 
         $possessionSkillDomainService = new PossessionSkillDomainService($this->possessionSkillRepo);
-        $result = $possessionSkillDomainService->addService($possessionSkill, $exp);
+        $result = $possessionSkillDomainService->addExpService($possessionSkill, $exp);
 
         if($result)
         {
-            $addResultPossessionSkill = $this->possessionSkillRepo->findBySkill($skill);
+            $addResultPossessionSkill = $this->possessionSkillRepo->findBySkillAndStudentNumber($skill, $studentNumber);
             //AddExpイベント発火
-            if($possessionSkill->totalExp() < $addResultPossessionSkill->totalExp())
+            if($addResultPossessionSkill != null && $exp > 0)
                 event(new AddExpEvent($addResultPossessionSkill));
             //LevelUpイベント発火
-            if($possessionSkill->skillLevel() < $addResultPossessionSkill->skillLevel())
+            if($addResultPossessionSkill != null && $possessionSkill->skillLevel() < $addResultPossessionSkill->skillLevel())
                 event(new LevelUpEvent($addResultPossessionSkill));
         }
+        //todo エラー時のロールバック
         return $result;
     }
 }
