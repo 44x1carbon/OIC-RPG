@@ -9,6 +9,7 @@
 namespace Tests\Repository;
 
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Domain\Skill\Factory\SkillFactory;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
@@ -19,32 +20,32 @@ class PossessionSkillRepositoryTest extends TestCase
 {
     /* @var PossessionSkillRepositoryInterface $possessionSkillRepo */
     protected $possessionSkillRepo;
-
     /* @var SkillRepositoryInterface $skillRepo */
     protected $skillRepo;
+    private $studentNumber;
 
     public function setUp()
     {
         parent::setUp();
         $this->skillRepo = app(SkillRepositoryInterface::class);
         $this->possessionSkillRepo = app(PossessionSkillRepositoryInterface::class);
+
+        $this->studentNumber = new StudentNumber('b4000');
     }
 
-    public function testFindByPossessionSkill()
+    public function testFindBySkillAndStudentNumber()
     {
         $skillFactory = new SkillFactory();
         $skill = $skillFactory->createSkill( 'java');
-        $this->skillRepo->save($skill);
 
         $PossessionSkillFactory = new PossessionSkillFactory();
-        $possessSkill = $PossessionSkillFactory->possessSkill($skill);
+        $possessSkill = $PossessionSkillFactory->createPossessionSkill($skill, $this->studentNumber);
         $this->possessionSkillRepo->save($possessSkill);
 
-        $findSkill = $this->possessionSkillRepo->findBySkill($skill);
+        $findSkill = $this->possessionSkillRepo->findBySkillAndStudentNumber($skill, $this->studentNumber);
 
-        $result = $findSkill->skill()->skillId() == $skill->skillId();
+        $result = $findSkill->skill()->skillId() === $skill->skillId();
         $this->assertTrue($result);
-
     }
 
     public function testSave()
@@ -54,7 +55,7 @@ class PossessionSkillRepositoryTest extends TestCase
         $this->skillRepo->save($skill);
 
         $PossessionSkillFactory = new PossessionSkillFactory();
-        $possessSkill = $PossessionSkillFactory->possessSkill($skill);
+        $possessSkill = $PossessionSkillFactory->createPossessionSkill($skill, $this->studentNumber);
         $this->possessionSkillRepo->save($possessSkill);
     }
 }
