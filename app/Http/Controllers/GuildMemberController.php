@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Http\Requests\GuildMemberRequest;
+use Illuminate\Http\Request;
 
 class GuildMemberController extends Controller
 {
@@ -35,7 +36,7 @@ class GuildMemberController extends Controller
     }
 
     public function destroy(
-        GuildMemberRequest $request,
+        Request $request,
         GuildMemberRepositoryInterface $guildMemberRepository,
         GuildMember $loginMember
     )
