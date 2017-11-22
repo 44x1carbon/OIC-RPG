@@ -19,12 +19,12 @@ class GetCondition
     {
     }
 
-    public function setSkillLevel(int $necessaryLevel)
+    public function setNecessaryLevel(int $necessaryLevel)
     {
         $this->necessaryLevel = $necessaryLevel;
     }
 
-    public function skillLevel(): int
+    public function necessaryLevel(): int
     {
         return $this->necessaryLevel;
     }
