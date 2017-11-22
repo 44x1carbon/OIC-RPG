@@ -33,11 +33,7 @@ class GuildMemberDeleteTest extends \Tests\TestCase
 
     public function testSuccess()
     {
-        $response = $this->delete(route('destroy_guild_member'),[
-            'name' => 'テスト太郎',
-            'course_id' => '1',
-            'gender' => 'male',
-        ]);
+        $response = $this->delete(route('destroy_guild_member'));
 
         $response->assertStatus(200);
     }
