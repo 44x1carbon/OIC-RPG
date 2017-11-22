@@ -2,6 +2,7 @@
 
 namespace App\Domain\PossessionSkill;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Skill\Skill;
 
 /**
@@ -13,12 +14,18 @@ use App\Domain\Skill\Skill;
 
 class PossessionSkill
 {
+    private $studentNumber;
     private $skill;
     private $skillLevel;
     private $totalExp;
 
     public function __construct()
     {
+    }
+
+    public function setStudentNumber(StudentNumber $studentNumber)
+    {
+        $this->studentNumber = $studentNumber;
     }
 
     public function setSkill(Skill $skill)
@@ -34,6 +41,11 @@ class PossessionSkill
     public function setTotalExp(int $totalExp)
     {
         $this->totalExp = $totalExp;
+    }
+
+    public function studentNumber(): StudentNumber
+    {
+        return $this->studentNumber;
     }
 
     public function skill(): Skill
