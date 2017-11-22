@@ -2,6 +2,7 @@
 
 namespace App\Infrastracture\PossessionSkill;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Domain\Skill\Skill;
@@ -17,12 +18,13 @@ class PossessionSkillOnMemoryRepositoryImpl implements PossessionSkillRepository
 {
     private $data = [];
 
-    public function findBySkill(Skill $skill): ?PossessionSkill
+    public function findBySkillAndStudentNumber(Skill $skill, StudentNumber $studentNumber): ?PossessionSkill
     {
-        $result = array_filter($this->data, function(PossessionSkill $possessionSkill) use($skill){
-            return $possessionSkill->skill()->skillId() === $skill->skillId();
+        $result = array_filter($this->data, function($possessionSKill) use($skill, $studentNumber){
+            /* @var PossessionSkill $possessionSKill*/
+            return $possessionSKill->studentNumber()->code() === $studentNumber->code() &&
+                $possessionSKill->skill()->skillId() === $skill->skillId();
         });
-
         if(count($result) > 0) {
             return $result[0];
         } else {
