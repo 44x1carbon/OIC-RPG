@@ -34,4 +34,17 @@ class GuildMemberController extends Controller
         }
     }
 
+    public function destroy(
+        GuildMemberRequest $request,
+        GuildMemberRepositoryInterface $guildMemberRepository,
+        GuildMember $loginMember
+    )
+    {
+        $deleteMember = $loginMember;
+        if ($guildMemberRepository->delete($deleteMember)) {
+            return response($loginMember->studentName());
+        }else{
+            return back();
+        }
+    }
 }
