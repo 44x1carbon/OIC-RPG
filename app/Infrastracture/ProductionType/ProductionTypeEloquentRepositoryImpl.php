@@ -4,6 +4,7 @@ namespace App\Infrastracture\ProductionType;
 
 use App\Domain\ProductionType\ProductionType;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
+use App\Domain\ProductionType\ValueObject\ProductionTypeId;
 use App\Eloquents\ProductionTypeEloquent;
 
 class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryInterface
@@ -15,12 +16,11 @@ class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryIn
         $this->eloquent = $eloquent;
     }
 
-    public function findById(String $id): ?ProductionType
+    public function findById(ProductionTypeId $id): ?ProductionType
     {
         return null_safety($this->eloquent->findById($id), function(ProductionTypeEloquent $value) {
             return $value->toEntity();
         });
-
     }
 
     public function save(ProductionType $productionType): bool
@@ -29,7 +29,7 @@ class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryIn
 
         if(is_null($model)) {
             $model = new $this->eloquent();
-            $model->production_type_id = $productionType->id();
+            $model->production_type_id = $productionType->id()->code();
         }
 
         $model->name = $productionType->name();

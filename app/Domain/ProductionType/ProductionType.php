@@ -8,12 +8,14 @@
 
 namespace App\Domain\ProductionType;
 
+use App\Domain\ProductionType\ValueObject\ProductionTypeId;
+
 class ProductionType
 {
     private $id;
     private $name;
 
-    public function __construct(string $id, string $name)
+    public function __construct(ProductionTypeId $id, string $name)
     {
         $this->id = $id;
         $this->name = $name;
@@ -24,7 +26,7 @@ class ProductionType
         return $this->name;
     }
 
-    public function id(): string
+    public function id(): ProductionTypeId
     {
         return $this->id;
     }

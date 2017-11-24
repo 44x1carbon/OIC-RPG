@@ -31,7 +31,7 @@ class ProductionIdeaRepositoryTest extends TestCase
         $this->productionIdeaRepository = app(ProductionIdeaRepositoryInterface::class);
         $this->productionTypeRepository = app(ProductionTypeRepositoryInterface::class);
         $this->productionIdeaFactory = new ProductionIdeaFactory();
-        $this->productionTypeFactory = new ProductionTypeFactory();
+        $this->productionTypeFactory = app(ProductionTypeFactory::class);
         $productionType = $this->productionTypeFactory->createProductionType("サービス");
         $productionType2 = $this->productionTypeFactory->createProductionType("映像");
         $this->productionTypeRepository->save($productionType);

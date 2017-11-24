@@ -28,7 +28,7 @@ class ProductionIdeaFactory
         $productionIdea = new ProductionIdea();
         $productionIdea->setId($id? $id : $this->makeId()); // 引数にIDが存在した場合は利用し、ない場合は新規にIDを作成する
         $productionIdea->setProductionTheme($productionTheme);
-        $productionIdea->setProductionType($productionType);
+        $productionIdea->setProductionTypeId($productionType->id());
         $productionIdea->setIdeaDescription($ideaDescription);
         return $productionIdea;
     }
