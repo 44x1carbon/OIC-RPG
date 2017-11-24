@@ -20,7 +20,7 @@ class GetCondition
     {
     }
 
-    public function setSkillId(String $skillId)
+    public function setSkillId(string $skillId)
     {
         $this->skillId = $skillId;
     }
@@ -30,7 +30,7 @@ class GetCondition
         $this->requiredLevel = $requiredLevel;
     }
 
-    public function skillId(): String
+    public function skillId(): string
     {
         return $this->skillId;
     }
