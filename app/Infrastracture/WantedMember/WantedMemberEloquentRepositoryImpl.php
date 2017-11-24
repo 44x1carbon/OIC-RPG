@@ -17,7 +17,9 @@ class WantedMemberEloquentRepositoryImpl implements WantedMemberRepositoryInterf
 
     public function findById(string $id): ?WantedMember
     {
-        // TODO: Implement findById() method.
+        return null_safety($this->eloquent->where('wanted_member_id', $id)->first(), function(WantedMemberEloquent $model) {
+            return $model->toEntity();
+        });
     }
 
     public function save(WantedMember $wantedMember): bool
