@@ -24,7 +24,16 @@ class WantedMemberEloquentRepositoryImpl implements WantedMemberRepositoryInterf
 
     public function save(WantedMember $wantedMember): bool
     {
-        // TODO: Implement save() method.
+        $model = $this->eloquent->where('wanted_member_id', $wantedMember->id())->first();
+        if(is_null($model)) {
+            $model = new $this->eloquent;
+            $model->wanted_member_id = $wantedMember->id();
+        }
+
+        $model->wanted_status = $wantedMember->wantedStatus()->status();
+        $model->officer_id = $wantedMember->officerId()->code();
+
+        return $model->save();
     }
 
     public function all(): array
