@@ -8,6 +8,7 @@ use App\Domain\PartyWrittenRequest\ValueObject\WantedRoleInfo;
 use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\ProductionType\ProductionType;
+use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 use App\Domain\WantedMember\Factory\WantedMemberFactory;
 use App\Domain\WantedMember\ValueObjects\WantedRole;
 use App\Domain\WantedMember\ValueObjects\WantedStatus;
@@ -67,7 +68,8 @@ class PartyCreateRequest extends FormRequest
     public function productionIdeaInfo(): ProductionIdeaInfo
     {
         $productionIdeaData = $this->party()['productionIdea'];
-        $productionType = new ProductionType($productionIdeaData['productionType']);
+        $productionTypeRepo = app(ProductionTypeRepositoryInterface::class);
+        $productionType = $productionTypeRepo->findByName($productionIdeaData['productionType']);
         return new ProductionIdeaInfo($productionIdeaData['productionTheme'], $productionType, $productionIdeaData['ideaDescription']);
     }
 
