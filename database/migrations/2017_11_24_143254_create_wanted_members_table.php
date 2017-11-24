@@ -16,6 +16,7 @@ class CreateWantedMembersTable extends Migration
         Schema::create('wanted_members', function (Blueprint $table) {
             $table->increments('id');
             $table->string('wanted_status');
+            $table->string('wanted_member_id');
             $table->string('officer_id');
             $table->timestamps();
         });
