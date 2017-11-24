@@ -15,7 +15,7 @@ class WantedMemberEloquentRepositoryImpl implements WantedMemberRepositoryInterf
         $this->eloquent = $eloquent;
     }
 
-    public function findById(String $id): ?WantedMember
+    public function findById(string $id): ?WantedMember
     {
         // TODO: Implement findById() method.
     }
