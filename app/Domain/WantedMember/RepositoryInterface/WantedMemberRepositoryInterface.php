@@ -16,5 +16,5 @@ interface WantedMemberRepositoryInterface
 
     public function save(WantedMember $wantedMember): bool;
 
-    public function all(): Array;
+    public function all(): array;
 }
