@@ -58,4 +58,9 @@ class WantedMember
     {
         $this->officerId = $officerId;
     }
+
+    public function isWanted(): bool
+    {
+        return $this->wantedStatus->status() == WantedStatus::OPEN && is_null($this->officerId);
+    }
 }
