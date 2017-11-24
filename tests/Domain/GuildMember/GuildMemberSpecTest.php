@@ -41,7 +41,7 @@ class GuildMemberSpecTest extends \Tests\TestCase
         $studentNumber = new StudentNumber('B4000');
         $this->assertTrue(GuildMemberSpec::isExistStudentNumber($studentNumber));
 
-        $this->assertTrue(GuildMemberSpec::isGuildMemberItems($this->repo->findByStudentNumber($studentNumber)));
+        $this->assertTrue(GuildMemberSpec::isCompleteItem($this->repo->findByStudentNumber($studentNumber)));
     }
 
 
@@ -50,6 +50,6 @@ class GuildMemberSpecTest extends \Tests\TestCase
         $studentNumber = new StudentNumber('B1111');
         $this->assertFalse(GuildMemberSpec::isExistStudentNumber($studentNumber));
 
-        $this->assertFalse(GuildMemberSpec::isGuildMemberItems(new GuildMember()));
+        $this->assertFalse(GuildMemberSpec::isCompleteItem(new GuildMember()));
     }
 }

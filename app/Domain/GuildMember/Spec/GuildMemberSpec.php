@@ -27,7 +27,7 @@ class GuildMemberSpec
         return $guildMember !== null;
     }
 
-    public static function isGuildMemberItems(GuildMember $guildMember): bool
+    public static function isCompleteItem(GuildMember $guildMember): bool
     {
         try{
             $guildMember->studentNumber();

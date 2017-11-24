@@ -35,7 +35,7 @@ class GuildMemberFactory
         $guildMember->setGender($gender);
         $guildMember->setMailAddress($mailAddress);
 
-        if (!GuildMemberSpec::isGuildMemberItems($guildMember)) throw new DomainException("Error");
+        if (!GuildMemberSpec::isCompleteItem($guildMember)) throw new DomainException("Error");
 
         return $guildMember;
     }
