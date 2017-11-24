@@ -59,7 +59,7 @@ class GuildMemberEloquentRepositoryImpl implements GuildMemberRepositoryInterfac
 
     public function delete(GuildMember $guildMember): bool
     {
-        $guildMemberModel = $this->eloquent->findByStudentNumber($guildMember->studentNumber());
+        $guildMemberModel = $this->eloquent->fromEntity($guildMember);
         return $guildMemberModel->delete();
     }
 
