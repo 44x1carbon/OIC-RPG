@@ -36,7 +36,6 @@ class GuildMemberController extends Controller
     }
 
     public function destroy(
-        Request $request,
         GuildMemberRepositoryInterface $guildMemberRepository,
         GuildMember $loginMember
     )
