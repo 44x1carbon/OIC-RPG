@@ -10,13 +10,12 @@ namespace App\Domain\ProductionIdea\RepositoryInterface;
 
 
 use App\Domain\ProductionIdea\ProductionIdea;
-use App\Domain\ProductionIdea\ValueObject\ProductionIdeaId;
 
 interface ProductionIdeaRepositoryInterface
 {
-    public function findById(ProductionIdeaId $id): ?ProductionIdea;
+    public function findById(String $id): ?ProductionIdea;
 
     public function save(ProductionIdea $productionIdea): bool;
 
-    public function all(): array;
+    public function all(): Array;
 }

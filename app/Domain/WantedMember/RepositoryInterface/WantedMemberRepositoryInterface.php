@@ -12,9 +12,9 @@ use App\Domain\WantedMember\WantedMember;
 
 interface WantedMemberRepositoryInterface
 {
-    public function findById(string $id): ?WantedMember;
+    public function findById(String $id): ?WantedMember;
 
     public function save(WantedMember $wantedMember): bool;
 
-    public function all(): array;
+    public function all(): Array;
 }

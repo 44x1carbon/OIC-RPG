@@ -9,7 +9,6 @@
 namespace App\Domain\ProductionIdea;
 
 
-use App\Domain\ProductionIdea\ValueObject\ProductionIdeaId;
 use App\Domain\ProductionType\ProductionType;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 use App\Domain\ProductionType\ValueObject\ProductionTypeId;
@@ -24,7 +23,7 @@ class ProductionIdea
     // アイデア説明
     private $ideaDescription;
 
-    public function id(): ProductionIdeaId
+    public function id(): String
     {
         return $this->id;
     }
@@ -50,7 +49,7 @@ class ProductionIdea
     }
 
 
-    public function setId(ProductionIdeaId $id)
+    public function setId(String $id)
     {
         $this->id = $id;
     }

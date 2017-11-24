@@ -43,7 +43,7 @@ class WantedMemberRepositoryTest extends TestCase
         $this->repo->save($findWantedMember);
 
         $findAfterWantedMember = $this->repo->findById($id);
-        $this->assertTrue($findAfterWantedMember->wantedStatus()->equals($afterWantedStatus));
+        $this->assertTrue($findAfterWantedMember->wantedStatus() === $afterWantedStatus);
     }
 
     public function testFindById()
@@ -64,8 +64,8 @@ class WantedMemberRepositoryTest extends TestCase
         $wantedMember2 = $wantedMemberFactory->createwantedMember($wantedStatus2, $officerId2, $id2);
         $this->repo->save($wantedMember2);
 
-        $findWantedMember = $this->repo->findById($id);
-        $result = $findWantedMember->officerId()->equals($wantedMember->officerId());
+        $findWantedMember = $this->repo->findById('1');
+        $result = $findWantedMember->officerId() === $wantedMember->officerId();
         $this->assertTrue($result);
 
         // 指定したIDがなかった場合にnullが帰るかどうか

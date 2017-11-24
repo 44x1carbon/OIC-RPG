@@ -39,7 +39,7 @@ class WantedMember
         return $this->wantedStatus;
     }
 
-    public function officerId(): ?StudentNumber
+    public function officerId(): StudentNumber
     {
         return $this->officerId;
     }

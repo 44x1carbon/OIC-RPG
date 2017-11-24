@@ -12,7 +12,6 @@ namespace Tests\Repository;
 use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
-use App\Domain\ProductionIdea\ValueObject\ProductionIdeaId;
 use App\Domain\ProductionType\Factory\ProductionTypeFactory;
 use App\Domain\ProductionType\ProductionType;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
@@ -41,7 +40,7 @@ class ProductionIdeaRepositoryTest extends TestCase
 
     public function testSave()
     {
-        $id = new ProductionIdeaId("11");
+        $id = "11";
         $productionTheme = "IT";
 //        $productionTypeId = "1";
         $productionType = $this->productionTypeRepository->findByName("サービス");
@@ -80,13 +79,13 @@ class ProductionIdeaRepositoryTest extends TestCase
 
         // 保存した
         $findProductionIdea = $this->productionIdeaRepository->findById($productionIdea->id());
-        $result = $findProductionIdea->id()->equals($productionIdea->id())  && $findProductionIdea->ideaDescription() === $productionIdea->ideaDescription();
+        $result = $findProductionIdea->id() === $productionIdea->id() && $findProductionIdea->ideaDescription() === $productionIdea->ideaDescription();
         $this->assertTrue($result);
         $findProductionIdea2 = $this->productionIdeaRepository->findById($productionIdea2->id());
-        $result2 = $findProductionIdea2->id()->equals($productionIdea2->id()) && $findProductionIdea2->ideaDescription() === $productionIdea2->ideaDescription();
+        $result2 = $findProductionIdea2->Id() === $productionIdea2->id() && $findProductionIdea2->ideaDescription() === $productionIdea2->ideaDescription();
         $this->assertTrue($result2);
 
         // 指定したIDがなかった場合にnullが帰るかどうか
-        $this->assertTrue($this->productionIdeaRepository->findById(new ProductionIdeaId('80')) === null);
+        $this->assertTrue($this->productionIdeaRepository->findById('80') === null);
     }
 }

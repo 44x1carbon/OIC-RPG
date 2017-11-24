@@ -11,13 +11,11 @@ namespace App\Domain\ProductionIdea\Factory;
 
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
-use App\Domain\ProductionIdea\ValueObject\ProductionIdeaId;
 use App\Domain\ProductionType\ProductionType;
 use App\DomainUtility\RandomStringGenerator;
 
 class ProductionIdeaFactory
 {
-    /* @var ProductionIdeaRepositoryInterface $repo */
     private $repo;
 
     public function __construct()
@@ -25,7 +23,7 @@ class ProductionIdeaFactory
         $this->repo = app(ProductionIdeaRepositoryInterface::class);
     }
 
-    public function createProductionIdea(String $productionTheme, ProductionType $productionType, String $ideaDescription, ProductionIdeaId $id = null): ProductionIdea
+    public function createProductionIdea(String $productionTheme, ProductionType $productionType, String $ideaDescription, String $id = null): ProductionIdea
     {
         $productionIdea = new ProductionIdea();
         $productionIdea->setId($id? $id : $this->makeId()); // 引数にIDが存在した場合は利用し、ない場合は新規にIDを作成する
@@ -39,12 +37,18 @@ class ProductionIdeaFactory
      * 新規にEntityに割り振る一意のIDを作成する
      * @return string
      */
-    public function makeId(): ProductionIdeaId
+    public function makeId()
     {
+        $randId = RandomStringGenerator::makeLowerCase(4);
+        $reCreateIdFlg = true;
         do {
-            $code = RandomStringGenerator::makeLowerCase(4);
-            $id = new ProductionIdeaId($code);
-        } while ($this->repo->findById($id));
-        return $id;
+            if (is_null($this->repo->findById($randId))){
+                // findByIdがnullの場合、DBにIDのかぶりがないので正しい
+                $reCreateIdFlg = false;
+            }else{
+                $randId = RandomStringGenerator::makeLowerCase(4);
+            }
+        } while ($reCreateIdFlg);
+        return $randId;
     }
 }
