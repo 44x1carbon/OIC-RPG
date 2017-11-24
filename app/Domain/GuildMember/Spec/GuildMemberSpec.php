@@ -13,6 +13,7 @@ use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\DomainUtility\SpecTrait;
+use TypeError;
 
 class GuildMemberSpec
 {
@@ -24,5 +25,19 @@ class GuildMemberSpec
         $repo = app(GuildMemberRepositoryInterface::class);
         $guildMember = $repo->findByStudentNumber($studentNumber);
         return $guildMember !== null;
+    }
+
+    public static function isGuildMemberItems(GuildMember $guildMember): bool
+    {
+        try{
+            $guildMember->studentNumber();
+            $guildMember->studentName();
+            $guildMember->course();
+            $guildMember->gender();
+            $guildMember->mailAddress();
+            return true;
+        }catch (TypeError $e){
+            return false;
+        }
     }
 }
