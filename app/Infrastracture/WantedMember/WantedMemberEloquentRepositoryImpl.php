@@ -2,6 +2,7 @@
 
 namespace App\Infrastracture\WantedMember;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\WantedMember\RepositoryInterface\WantedMemberRepositoryInterface;
 use App\Domain\WantedMember\WantedMember;
 use App\Eloquents\WantedMemberEloquent;
@@ -31,7 +32,9 @@ class WantedMemberEloquentRepositoryImpl implements WantedMemberRepositoryInterf
         }
 
         $model->wanted_status = $wantedMember->wantedStatus()->status();
-        $model->officer_id = $wantedMember->officerId()->code();
+        $model->officer_id = null_safety($wantedMember->officerId(), function(StudentNumber $officerId) {
+            return $officerId->code();
+        });
 
         return $model->save();
     }
