@@ -14,7 +14,7 @@ use App\Domain\Skill\Skill;
 class GetCondition
 {
     private $skill;
-    private $necessaryLevel;
+    private $requiredLevel;
 
     public function __construct()
     {
@@ -25,9 +25,9 @@ class GetCondition
         $this->skill = $skill;
     }
 
-    public function setNecessaryLevel(int $necessaryLevel)
+    public function setRequiredLevel(int $requiredLevel)
     {
-        $this->necessaryLevel = $necessaryLevel;
+        $this->requiredLevel = $requiredLevel;
     }
 
     public function skill(): Skill
@@ -35,8 +35,8 @@ class GetCondition
         return $this->skill;
     }
 
-    public function necessaryLevel(): int
+    public function requiredLevel(): int
     {
-        return $this->necessaryLevel;
+        return $this->requiredLevel;
     }
 }
