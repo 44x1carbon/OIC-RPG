@@ -11,15 +11,16 @@ namespace App\Infrastracture\ProductionIdea;
 
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
+use App\Domain\ProductionIdea\ValueObject\ProductionIdeaId;
 
 class ProductionIdeaOnMemoryRepositoryImpl implements ProductionIdeaRepositoryInterface
 {
     private $data = [];
 
-    public function findById(String $id): ?ProductionIdea
+    public function findById(ProductionIdeaId $id): ?ProductionIdea
     {
         $result = array_filter($this->data, function(ProductionIdea $productionIdea) use($id){
-            return $productionIdea->id() == $id;
+            return $productionIdea->id() === $id;
         });
 
         $result = array_values($result);
@@ -45,7 +46,7 @@ class ProductionIdeaOnMemoryRepositoryImpl implements ProductionIdeaRepositoryIn
         return true;
     }
 
-    public function all(): Array
+    public function all(): array
     {
         return $this->data;
     }

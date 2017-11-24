@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductionIdeasTable extends Migration
+class CreateWantedMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateProductionIdeasTable extends Migration
      */
     public function up()
     {
-        Schema::create('production_ideas', function (Blueprint $table) {
+        Schema::create('wanted_members', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('production_idea_id');
-            $table->string('production_theme');
-            $table->unsignedInteger('production_type_id');
-            $table->text('idea_description');
+            $table->string('wanted_status');
+            $table->string('wanted_member_id');
+            $table->string('officer_id')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateProductionIdeasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('production_ideas');
+        Schema::dropIfExists('wanted_members');
     }
 }
