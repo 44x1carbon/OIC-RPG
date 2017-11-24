@@ -13,6 +13,7 @@ class WantedMemberEloquent extends Model
     public function toEntity(): WantedMember
     {
         $entity = new WantedMember();
+        $entity->setId($this->wanted_member_id);
         $entity->setWantedStatus(new WantedStatus($this->wanted_status));
 
         return $entity;
