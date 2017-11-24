@@ -40,8 +40,7 @@ class GuildMemberController extends Controller
         GuildMember $loginMember
     )
     {
-        $deleteMember = $loginMember;
-        if ($guildMemberRepository->delete($deleteMember)) {
+        if ($guildMemberRepository->delete($loginMember)) {
             return response($loginMember->studentName());
         }else{
             return back();
