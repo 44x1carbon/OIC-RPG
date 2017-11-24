@@ -38,6 +38,8 @@ class WantedMemberEloquentRepositoryImpl implements WantedMemberRepositoryInterf
 
     public function all(): array
     {
-        // TODO: Implement all() method.
+        return $this->eloquent->all()->map(function(WantedMemberEloquent $model) {
+            return $model->toEntity();
+        })->toArray();
     }
 }
