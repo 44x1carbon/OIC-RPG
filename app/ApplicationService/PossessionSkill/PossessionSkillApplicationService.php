@@ -36,13 +36,7 @@ class PossessionSkillApplicationService
 
         if(!GuildMemberSpec::isExistStudentNumber($studentNumber)) return false;
 
-        $possessionSkill = $this->possessionSkillRepo->findBySkillAndStudentNumber($skill, $studentNumber);
-
-        if(is_null($possessionSkill))
-        {
-            $possessSkillFactory = new PossessionSkillFactory();
-            $possessionSkill = $possessSkillFactory->createPossessionSkill($skill, $studentNumber);
-        }
+        $possessionSkill = $this->findPossessionSkill($skill, $studentNumber);
 
         $possessionSkillDomainService = new PossessionSkillDomainService($this->possessionSkillRepo);
         $result = $possessionSkillDomainService->addExpService($possessionSkill, $exp);
@@ -59,5 +53,18 @@ class PossessionSkillApplicationService
         }
         //todo エラー時のロールバック
         return $result;
+    }
+
+    public function findPossessionSkill($skill, $studentNumber): PossessionSkill
+    {
+        $possessionSkill = $this->possessionSkillRepo->findBySkillAndStudentNumber($skill, $studentNumber);
+
+        if(is_null($possessionSkill))
+        {
+            $possessSkillFactory = new PossessionSkillFactory();
+            $possessionSkill = $possessSkillFactory->createPossessionSkill($skill, $studentNumber);
+        }
+
+        return $possessionSkill;
     }
 }
