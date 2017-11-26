@@ -15,6 +15,7 @@ class CreateWantedRolesTable extends Migration
     {
         Schema::create('wanted_roles', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('wanted_role_id');
             $table->string('role_name');
             $table->text('remarks');
             $table->string('reference_job_id');
