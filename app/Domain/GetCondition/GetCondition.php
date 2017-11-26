@@ -13,19 +13,30 @@ use App\Domain\Skill\Skill;
 
 class GetCondition
 {
-    private $necessaryLevel;
+    private $skillId;
+    private $requiredLevel;
 
     public function __construct()
     {
     }
 
-    public function setSkillLevel(int $necessaryLevel)
+    public function setSkillId(string $skillId)
     {
-        $this->necessaryLevel = $necessaryLevel;
+        $this->skillId = $skillId;
     }
 
-    public function skillLevel(): int
+    public function setRequiredLevel(int $requiredLevel)
     {
-        return $this->necessaryLevel;
+        $this->requiredLevel = $requiredLevel;
+    }
+
+    public function skillId(): string
+    {
+        return $this->skillId;
+    }
+
+    public function requiredLevel(): int
+    {
+        return $this->requiredLevel;
     }
 }
