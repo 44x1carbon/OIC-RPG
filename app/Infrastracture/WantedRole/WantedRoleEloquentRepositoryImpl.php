@@ -17,7 +17,9 @@ class WantedRoleEloquentRepositoryImpl implements WantedRoleRepositoryInterface
 
     public function findById(String $id): ?WantedRole
     {
-        
+        return null_safety($this->eloquent->where('wanted_role_id', $id)->first(), function(WantedRoleEloquent $model) {
+            return $model->toEntity();
+        });
     }
 
     public function save(WantedRole $wantedMember): bool
