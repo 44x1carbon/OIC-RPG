@@ -16,6 +16,7 @@ use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
 use App\Infrastracture\Party\PartyOnMemoryRepositoryImpl;
 use App\Infrastracture\PartyWrittenRequest\PartyWrittenRequestOnMemoryRepositoryImpl;
+use App\Infrastracture\Skill\SkillEloquentRepositoryImpl;
 use App\Infrastracture\WantedMember\WantedMemberOnMemoryRepositoryImpl;
 use App\Infrastracture\ProductionIdea\ProductionIdeaOnMemoryRepositoryImpl;
 use App\Infrastracture\ProductionType\ProductionTypeOnMemoryRepositoryImpl;
@@ -57,7 +58,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(CourseRepositoryInterface::class, CourseEloquentRepositoryImpl::class);
 //        $this->app->singleton(GuildMemberRepositoryInterface::class,GuildMemberOnMemoryRepositoryImpl::class);
         $this->app->singleton(GuildMemberRepositoryInterface::class,GuildMemberEloquentRepositoryImpl::class);
-        $this->app->singleton(SkillRepositoryInterface::class, SkillOnMemoryRepositoryImpl::class);
+//        $this->app->singleton(SkillRepositoryInterface::class, SkillOnMemoryRepositoryImpl::class);
+        $this->app->singleton(SkillRepositoryInterface::class, SkillEloquentRepositoryImpl::class);
         $this->app->singleton(PartyRepositoryInterface::class, PartyOnMemoryRepositoryImpl::class);
         $this->app->singleton(PartyWrittenRequestRepositoryInterface::class, PartyWrittenRequestOnMemoryRepositoryImpl::class);
         $this->app->bind(GuildMember::class, function(): ?GuildMember
