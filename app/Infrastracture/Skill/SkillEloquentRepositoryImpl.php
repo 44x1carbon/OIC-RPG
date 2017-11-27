@@ -31,7 +31,13 @@ class SkillEloquentRepositoryImpl implements SkillRepositoryInterface
 
     public function save(Skill $skill): bool
     {
-        // TODO: Implement save() method.
+        $skillModel = $this->eloquent->findBySkillId($skill->skillId());
+        if(is_null($skillModel)) $skillModel = new $this->eloquent();
+
+        $skillModel->skill_id = $skill->skillId();
+        $skillModel->name = $skill->skillName();
+
+        return $skillModel->save();
     }
 
     public function all(): array
