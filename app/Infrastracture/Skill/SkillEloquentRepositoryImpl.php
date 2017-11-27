@@ -15,9 +15,18 @@ use App\Eloquents\SkillEloquent;
 
 class SkillEloquentRepositoryImpl implements SkillRepositoryInterface
 {
+    protected $eloquent;
+
+    public function __construct(SkillEloquent $eloquent)
+    {
+        $this->eloquent = $eloquent;
+    }
+
     public function findBySkillId(String $skillId): ?Skill
     {
-        // TODO: Implement findBySkillId() method.
+        $skillModel = $this->eloquent->findBySkillId($skillId);
+        if(is_null($skillModel)) return null;
+        return $skillModel->toEntity();
     }
 
     public function save(Skill $skill): bool
