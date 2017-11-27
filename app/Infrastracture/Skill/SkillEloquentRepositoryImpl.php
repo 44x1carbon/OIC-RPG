@@ -42,6 +42,11 @@ class SkillEloquentRepositoryImpl implements SkillRepositoryInterface
 
     public function all(): array
     {
-        // TODO: Implement all() method.
+        $skillModels = $this->eloquent->all();
+
+        $skillCollection = $skillModels->map(function(SkillEloquent $eloquent){
+           return $eloquent->toEntity();
+        });
+        return $skillCollection->toArray();
     }
 }
