@@ -27,10 +27,12 @@ class SkillEloquent extends Model
 
     public function toEntity(): Skill
     {
-        return $this->factory->createSkill(
-            $this->skillId(),
-            $this->skillName()
-        );
+        $entity = new Skill();
+
+        $entity->setSkillId($this->skillId());
+        $entity->setSkillName($this->skillName());
+
+        return $entity;
     }
 
     public function findBySkillId(string $id): ?SkillEloquent
