@@ -8,9 +8,6 @@ use App\Domain\PartyWrittenRequest\ValueObject\ProductionIdeaInfo;
 Interface GuildReceptionistFacadeInterface
 {
 
-    /**
-     *
-     * @return PartyId
-     */
+    /** パーティー新規作成の申請を聞き、パーティーを作成する*/
     public function PartyWrittenRequestAcceptance(StudentNumber $applicantId, \DateTime $activityEndDate, ProductionIdeaInfo $productionIdeaInfo, WantedRoleInfoList $wantedRoleInfoList): PartyId;
 }
