@@ -2,6 +2,7 @@
 
 namespace App\Infrastracture\WantedRole;
 
+use App\Domain\WantedMember\WantedMember;
 use App\Domain\WantedRole\RepositoryInterface\WantedRoleRepositoryInterface;
 use App\Domain\WantedRole\WantedRole;
 use App\Eloquents\WantedRoleEloquent;
@@ -22,13 +23,25 @@ class WantedRoleEloquentRepositoryImpl implements WantedRoleRepositoryInterface
         });
     }
 
-    public function save(WantedRole $wantedMember): bool
+    public function save(WantedRole $wantedRole): bool
     {
-        // TODO: Implement save() method.
+        $model = $this->eloquent->where('wanted_role_id', $wantedRole->id())->first();
+        if(is_null($model)) {
+            $model = new $this->eloquent();
+            $model->wanted_role_id = $wantedRole->id();
+        }
+
+        $model->role_name = $wantedRole->name();
+        $model->remarks = $wantedRole->remarks();
+        $model->reference_job_id = $wantedRole->referenceJobId();
+
+        return $model->save();
     }
 
     public function all(): array
     {
-        // TODO: Implement all() method.
+        return $this->eloquent->all()->map(function(WantedRoleEloquent $model) {
+            return $model->toEntity();
+        })->toArray();
     }
 }
