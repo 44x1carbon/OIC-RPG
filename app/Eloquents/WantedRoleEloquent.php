@@ -9,6 +9,11 @@ class WantedRoleEloquent extends Model
 {
     protected $table = 'wanted_roles';
 
+    public function wantedMemberEloquents()
+    {
+        return $this->hasMany(WantedMemberEloquent::class, 'wanted_role_id');
+    }
+
     public function toEntity(): WantedRole
     {
         $entity = new WantedRole();
