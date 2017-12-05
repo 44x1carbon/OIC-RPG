@@ -11,6 +11,11 @@ class ProductionIdeaEloquent extends Model
 {
     protected $table = 'production_ideas';
 
+    public function productionTypeEloquent()
+    {
+        return $this->belongsTo(ProductionTypeEloquent::class, 'id', 'production_type_id');
+    }
+
     public function findById(ProductionIdeaId $id): ?ProductionIdeaEloquent
     {
         return $this->where('production_idea_id', $id->code())->first();
