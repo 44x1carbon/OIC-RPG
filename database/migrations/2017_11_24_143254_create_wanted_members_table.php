@@ -17,7 +17,7 @@ class CreateWantedMembersTable extends Migration
             $table->increments('id');
             $table->string('wanted_status');
             $table->string('wanted_member_id');
-            $table->unsignedInteger('wanted_role_id');
+            $table->string('wanted_role_id');
             $table->string('officer_id')->nullable();
             $table->timestamps();
         });
