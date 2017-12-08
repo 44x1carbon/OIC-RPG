@@ -41,4 +41,17 @@ class SkillRepositoryTest extends TestCase
         $skill = $skillFactory->createSkill('php');
         $this->assertTrue($this->repo->save($skill));
     }
+
+    public function testAll()
+    {
+        $skillFactory = new SkillFactory();
+        $skill = $skillFactory->createSkill('php');
+        $this->repo->save($skill);
+        $skill1 = $skillFactory->createSkill('java');
+        $this->repo->save($skill1);
+
+        $allSkill = $this->repo->all();
+
+        $this->assertTrue($skill == $allSkill[0] && $skill1 == $allSkill[1]);
+    }
 }
