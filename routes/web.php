@@ -25,6 +25,8 @@ Route::get('/sign_up', function() {
 
 Route::post('/sign_up', SignUpController::class.'@store')->name('post_sign_up');
 
+Route::post('/sign_in', SignInController::class.'@store')->name('post_sign_in');
+
 Route::post('/guild_member', GuildMemberController::class.'@update')->name('update_guild_member');
 
 Route::post('/party', PartyController::class.'@store')->name('store_party');
