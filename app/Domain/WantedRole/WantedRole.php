@@ -9,6 +9,7 @@
 namespace App\Domain\WantedRole;
 
 
+use App\Domain\Party\Exception\NotFoundAssignableFrameException;
 use App\Domain\WantedMember\WantedMember;
 use App\Domain\WantedRole\ValueObject\WantedMemberList;
 
@@ -90,5 +91,13 @@ class WantedRole
     public function setWantedMemberList(WantedMemberList $wantedMemberList)
     {
         $this->wantedMemberList = $wantedMemberList;
+    }
+
+    public function getAssignableFrame(): WantedMember
+    {
+        $assignableList = $this->wantedMemberList()->assignableList();
+        if(count($assignableList) === 0) throw new NotFoundAssignableFrameException();
+
+        return $assignableList[0];
     }
 }
