@@ -12,7 +12,7 @@ class PartyServiceFacade
 {
     function __construct(PartyAppService $service, PartyRepositoryInterface $partyRepository)
     {
-        $this->servoce = $service;
+        $this->service = $service;
         $this->partyRepository = $partyRepository;
     }
 
@@ -25,7 +25,7 @@ class PartyServiceFacade
         string $ideaDescription = null,
         array $wantedRoleList = []
     ): string {
-        $partyId = $this->servoce->registerParty(new ActivityEndDate($activityEndDate->getTimestamp()), new StudentNumber($studentNumber), $roleName);
+        $partyId = $this->service->registerParty(new ActivityEndDate($activityEndDate->getTimestamp()), new StudentNumber($studentNumber), $roleName);
 
         $party = $this->partyRepository->findById($partyId);
         $this->servoce->updateProductionIdea($party->id(), $productionTheme, $productionTypeId, $ideaDescription);
