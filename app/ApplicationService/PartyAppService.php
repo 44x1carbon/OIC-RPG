@@ -5,6 +5,7 @@ namespace App\ApplicationService;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Party;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
+use App\Domain\Party\Spec\PartySpec;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
 
 class PartyAppService
@@ -48,5 +49,13 @@ class PartyAppService
         $this->partyRepository->save($party);
 
         return $party->id();
+    }
+
+    public function searchParty(string $keyword): array
+    {
+        $allParty = $this->partyRepository->all();
+        return array_values(array_filter($allParty, function(Party $party) use($keyword){
+            return PartySpec::isKeywordMatch($party, $keyword);
+        }));
     }
 }
