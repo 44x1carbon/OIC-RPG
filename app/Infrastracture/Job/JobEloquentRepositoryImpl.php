@@ -19,16 +19,18 @@ use App\Eloquents\JobEloquent;
 
 class JobEloquentRepositoryImpl implements JobRepositoryInterface
 {
-    protected $eloquent;
+    protected $jobEloquent;
+    protected $getConditionEloquent;
 
-    public function __construct(JobEloquent $eloquent)
+    public function __construct(JobEloquent $jobEloquent, GetConditionEloquent $getConditionEloquent)
     {
-        $this->eloquent = $eloquent;
+        $this->jobEloquent = $jobEloquent;
+        $this->getConditionEloquent = $getConditionEloquent;
     }
 
     public function findById(string $code): ?Job
     {
-        $jobModel = $this->eloquent->findById($code);
+        $jobModel = $this->jobEloquent->findById($code);
         if(is_null($jobModel)) return null;
         return $jobModel->toEntity();
     }
@@ -37,7 +39,7 @@ class JobEloquentRepositoryImpl implements JobRepositoryInterface
     {
         do{
             $randId = RandomStringGenerator::makeLowerCase(4);
-        }while(!is_null($this->eloquent->findById($randId)));
+        }while(!is_null($this->jobEloquent->findById($randId)));
 
         $jobId = new JobId($randId);
 
@@ -46,15 +48,15 @@ class JobEloquentRepositoryImpl implements JobRepositoryInterface
 
     public function save(Job $job): bool
     {
-        JobEloquent::saveDomainObject($job);
-        GetConditionEloquent::saveManyDomainObject($job->getConditions(), $job->jobId());
+        $this->jobEloquent->saveDomainObject($job);
+        $this->getConditionEloquent->saveManyDomainObject($job->getConditions(), $job->jobId());
 
         return true;
     }
 
     public function all(): array
     {
-        $jobModels = $this->eloquent->all();
+        $jobModels = $this->jobEloquent->all();
 
         $jobCollection = $jobModels->map(function(JobEloquent $eloquent) {
             return $eloquent->toEntity();
