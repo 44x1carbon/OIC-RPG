@@ -25,8 +25,11 @@ class WantedMember
     // 役員ID
     private $officerId;
 
-    public function __construct()
+    public function __construct($id, $status = null, $officerId = null)
     {
+        $this->id = $id;
+        $this->wantedStatus = $status ?? new WantedStatus(WantedStatus::OPEN);
+        $this->officerId = $officerId;
     }
 
     public function id(): String
@@ -57,5 +60,10 @@ class WantedMember
     public function setOfficerId(StudentNumber $officerId)
     {
         $this->officerId = $officerId;
+    }
+
+    public function assign($memberId)
+    {
+        $this->officerId = $memberId;
     }
 }

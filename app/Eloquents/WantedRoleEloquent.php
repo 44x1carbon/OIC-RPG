@@ -10,7 +10,7 @@ class WantedRoleEloquent extends Model
 {
     protected $table = 'wanted_roles';
 
-    public static function fromEntity($wantedRole)
+    public static function fromEntity(WantedRole $wantedRole)
     {
         $model = self::where('wanted_role_id', $wantedRole->id())->first();
         if(is_null($model)) {
@@ -18,21 +18,21 @@ class WantedRoleEloquent extends Model
             $model->wanted_role_id = $wantedRole->id();
         }
 
-        $model->role_name = $wantedRole->name();
+        $model->role_name = $wantedRole->roleName();
         $model->remarks = $wantedRole->remarks();
         $model->reference_job_id = $wantedRole->referenceJobId();
 
         return $model;
     }
 
-    public static function saveDomainObject(WantedRole $wantedRole, string $id)
+    public static function saveDomainObject(WantedRole $wantedRole, PartyEloquent $parentModel)
     {
         $model = self::fromEntity($wantedRole);
-        $model->party_id = $id;
+        $model->partyEloquent()->associate($parentModel);
         $result = $model->save();
 
         foreach ($wantedRole->wantedMemberList()->all() as $wantedMember) {
-            $result = WantedMemberEloquent::saveDomainObject($wantedMember, $wantedRole->id())? $result : false;
+            $result = WantedMemberEloquent::saveDomainObject($wantedMember, $model)? $result : false;
         }
 
         return $result;
@@ -43,13 +43,24 @@ class WantedRoleEloquent extends Model
         return $this->hasMany(WantedMemberEloquent::class, 'wanted_role_id');
     }
 
+    public function partyEloquent()
+    {
+        return $this->belongsTo(PartyEloquent::class, 'party_id');
+    }
+
     public function toEntity(): WantedRole
     {
-        $entity = new WantedRole();
-        $entity->setId($this->wanted_role_id);
-        $entity->setReferenceJobId($this->reference_job_id);
-        $entity->setName($this->role_name);
-        $entity->setRemarks($this->remarks);
+        $wantedMembers = $this->wantedMemberEloquents->map(function(WantedMemberEloquent $model) {
+           return $model->toEntity();
+        })->toArray();
+
+        $entity = new WantedRole(
+            $this->wanted_role_id,
+            $this->role_name,
+            $this->reference_job_id,
+            $this->remarks,
+            $wantedMembers
+        );
 
         return $entity;
     }

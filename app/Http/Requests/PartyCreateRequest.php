@@ -16,6 +16,7 @@ use App\Domain\WantedMember\WantedMember;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PartyCreateRequest extends FormRequest
 {
@@ -42,15 +43,29 @@ class PartyCreateRequest extends FormRequest
     {
         return [
             'party.activityEndDate' => ['required'],
+            'party.roleName' => ['required'],
             'party.productionIdea.productionTheme' => ['required'],
-            'party.productionIdea.productionType'  => ['required'],
+            'party.productionIdea.productionTypeId'  => ['required'],
             'party.productionIdea.ideaDescription' => ['required'],
             'party.wantedRoleList'    => ['required', 'array'],
             'party.wantedRoleList.*.frameAmount' => ['required'],
             'party.wantedRoleList.*.remarks' => ['required'],
-            'party.wantedRoleList.*.name' => ['required'],
+            'party.wantedRoleList.*.roleName' => ['required'],
             'party.wantedRoleList.*.referenceJobId' => ['required'],
         ];
+    }
+
+    protected function getValidatorInstance()
+    {
+        return parent::getValidatorInstance()->after(function($validator){
+            // Call the after method of the FormRequest (see below)
+            $this->after($validator);
+        });
+    }
+
+    public function after($validator)
+    {
+        Log::debug($validator->errors());
     }
 
     private function party(): array
@@ -58,25 +73,36 @@ class PartyCreateRequest extends FormRequest
         return $this->request->get('party');
     }
 
-    public function activityEndDate(): ActivityEndDate
+    public function roleName(): string
     {
-        $dateStr = $this->party()['activityEndDate'];
-        $date = \DateTime::createFromFormat('Y-m-d', $dateStr);
-        return new ActivityEndDate($date->getTimestamp());
+        return $this->party()['roleName'];
     }
 
-    public function productionIdeaInfo(): ProductionIdeaInfo
+    public function activityEndDate(): \DateTime
     {
-        $productionIdeaData = $this->party()['productionIdea'];
-        $productionTypeRepo = app(ProductionTypeRepositoryInterface::class);
-        $productionType = $productionTypeRepo->findByName($productionIdeaData['productionType']);
-        return new ProductionIdeaInfo($productionIdeaData['productionTheme'], $productionType, $productionIdeaData['ideaDescription']);
+        $dateStr = $this->party()['activityEndDate'];
+        return \DateTime::createFromFormat('Y-m-d', $dateStr);
+    }
+
+    public function productionTheme(): string
+    {
+        return $productionIdeaData = $this->party()['productionIdea']['productionTheme'];
+    }
+
+    public function productionTypeId(): string
+    {
+        return $productionIdeaData = $this->party()['productionIdea']['productionTypeId'];
+    }
+
+    public function ideDescription(): string
+    {
+        return $productionIdeaData = $this->party()['productionIdea']['ideaDescription'];
     }
 
     public function wantedRoleList(): array
     {
         return array_map(function($wantedRole) {
-            return new WantedRoleInfo($wantedRole['name'], $wantedRole['remarks'], $wantedRole['referenceJobId'], $wantedRole['frameAmount']);
+            return new WantedRoleInfo($wantedRole['roleName'], $wantedRole['remarks'], $wantedRole['referenceJobId'], $wantedRole['frameAmount']);
         }, $this->party()['wantedRoleList']);
     }
 }

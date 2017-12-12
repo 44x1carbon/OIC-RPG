@@ -31,7 +31,7 @@ class WantedRoleEloquentRepositoryImpl implements WantedRoleRepositoryInterface
             $model->wanted_role_id = $wantedRole->id();
         }
 
-        $model->role_name = $wantedRole->name();
+        $model->role_name = $wantedRole->roleName();
         $model->remarks = $wantedRole->remarks();
         $model->reference_job_id = $wantedRole->referenceJobId();
 

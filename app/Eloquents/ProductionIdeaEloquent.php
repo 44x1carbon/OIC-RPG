@@ -11,25 +11,30 @@ class ProductionIdeaEloquent extends Model
 {
     protected $table = 'production_ideas';
 
+    public function partyEloquent()
+    {
+        return $this->belongsTo(PartyEloquent::class, 'party_id');
+    }
+
     public static function fromEntity(ProductionIdea $productionIdea): ProductionIdeaEloquent
     {
-        $model = self::where('production_idea_id', $productionIdea->id()->code())->first();
+        $model = self::where('production_idea_id', $productionIdea->id())->first();
         if(is_null($model)) {
             $model = new static();
-            $model->production_idea_id = $productionIdea->id()->code();
+            $model->production_idea_id = $productionIdea->id();
         }
 
         $model->production_theme = $productionIdea->productionTheme();
-        $model->production_type_id = $productionIdea->productionTypeId()->code();
+        $model->production_type_id = $productionIdea->productionTypeId();
         $model->idea_description = $productionIdea->ideaDescription();
 
         return $model;
     }
 
-    public static function saveDomainObject(ProductionIdea $productionIdea, string $id)
+    public static function saveDomainObject(ProductionIdea $productionIdea, PartyEloquent $parentModel)
     {
         $model = self::fromEntity($productionIdea);
-        $model->party_id = $id;
+        $model->partyEloquent()->associate($parentModel);
 
         return $model->save();
     }
@@ -46,12 +51,11 @@ class ProductionIdeaEloquent extends Model
 
     public function toEntity(): ProductionIdea
     {
-        $productionIdea = new ProductionIdea();
-        $productionIdea->setId(new ProductionIdeaId($this->production_idea_id));
-        $productionIdea->setProductionTheme($this->production_theme);
-        $productionIdea->setIdeaDescription($this->idea_description);
-        $productionIdea->setProductionTypeId(new ProductionTypeId($this->production_type_id));
-
-        return $productionIdea;
+        return new ProductionIdea(
+            $this->production_idea_id,
+            $this->production_theme,
+            $this->production_type_id,
+            $this->idea_description
+        );
     }
 }

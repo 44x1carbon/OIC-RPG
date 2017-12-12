@@ -17,6 +17,7 @@ class CreatePartiesTable extends Migration
             $table->increments('id');
             $table->string('party_id');
             $table->date('active_end_date');
+            $table->string('manager_id');
             $table->timestamps();
         });
     }

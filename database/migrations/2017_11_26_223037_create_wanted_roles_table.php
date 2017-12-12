@@ -17,9 +17,9 @@ class CreateWantedRolesTable extends Migration
             $table->increments('id');
             $table->string('wanted_role_id');
             $table->string('role_name');
-            $table->text('remarks');
-            $table->string('reference_job_id');
-            $table->string('party_id');
+            $table->text('remarks')->nullable();
+            $table->string('reference_job_id')->nullable();
+            $table->unsignedInteger('party_id');
             $table->timestamps();
         });
     }

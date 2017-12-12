@@ -16,10 +16,10 @@ class CreateProductionIdeasTable extends Migration
         Schema::create('production_ideas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('production_idea_id');
-            $table->string('production_theme');
-            $table->string('production_type_id');
-            $table->string('party_id');
-            $table->text('idea_description');
+            $table->string('production_theme')->nullable();
+            $table->string('production_type_id')->nullable();
+            $table->unsignedInteger('party_id')->nullable();
+            $table->text('idea_description')->nullable();
             $table->timestamps();
         });
     }

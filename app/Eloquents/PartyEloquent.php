@@ -2,9 +2,9 @@
 
 namespace App\Eloquents;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Party;
-use App\Eloquents\ProductionIdeaEloquent;
-use App\Eloquents\WantedRoleEloquent;
+use App\Domain\Party\ValueObjects\ActivityEndDate;
 use Illuminate\Database\Eloquent\Model;
 
 class PartyEloquent extends Model
@@ -18,18 +18,20 @@ class PartyEloquent extends Model
             $model = new static();
             $model->party_id = $party->id();
         }
-        $model->active_end_date = $party->activityEndDate()->getIso8601();
+        $model->active_end_date = $party->activityEndDate()->date();
+        $model->manager_id = $party->partyManagerId()->code();
 
         return $model;
     }
 
     public static function saveDomainObject(Party $party): bool
     {
-        $result = self::fromEntity($party)->save();
-        $result = ProductionIdeaEloquent::saveDomainObject($party->productionIdea(), $party->id()) ? $result : false;
+        $model = self::fromEntity($party);
+        $result = $model->save();
+        $result = ProductionIdeaEloquent::saveDomainObject($party->productionIdea(), $model) ? $result : false;
 
         foreach ($party->wantedRoles() as $wantedRole) {
-            $result = WantedRoleEloquent::saveDomainObject($wantedRole, $party->id()) ? $result : false;
+            $result = WantedRoleEloquent::saveDomainObject($wantedRole, $model) ? $result : false;
         }
 
         return $result;
@@ -42,6 +44,22 @@ class PartyEloquent extends Model
 
     public function wantedRoleEloquents()
     {
-        return $this->hasMany(WantedRoleEloquent::class, 'party_id',);
+        return $this->hasMany(WantedRoleEloquent::class, 'party_id');
+    }
+
+    public function toEntity(): Party
+    {
+        $productionIdea = $this->productionIdeaEloquent->toEntity();
+        $wantedRoles = $this->wantedRoleEloquents->map(function(WantedRoleEloquent $model) {
+            return $model->toEntity();
+        })->toArray();
+
+        return new Party(
+            $this->party_id,
+            new ActivityEndDate($this->active_end_date),
+            new StudentNumber($this->manager_id),
+            $productionIdea,
+            $wantedRoles
+        );
     }
 }
