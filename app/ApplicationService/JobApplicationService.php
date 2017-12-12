@@ -12,6 +12,7 @@ namespace App\ApplicationService;
 use App\Domain\GetCondition\GetCondition;
 use App\Domain\Job\Job;
 use App\Domain\Job\JobRepositoryInterface;
+use App\Domain\Job\ValueObjects\JobId;
 
 class JobApplicationService
 {
