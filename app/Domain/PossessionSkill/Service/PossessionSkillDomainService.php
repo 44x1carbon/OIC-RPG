@@ -40,6 +40,17 @@ class PossessionSkillDomainService
         return $this->possessionSkillRepo->save($addResultPossessionSkill);
     }
 
+    public function checkPossessionSKill(Skill $skill): PossessionSkill
+    {
+        $possessionSkill = $this->possessionSkillRepo->findBySkill($skill);
+        if(is_null($possessionSkill))
+        {
+            $possessSkillFactory = new PossessionSkillFactory();
+            $possessionSkill = $possessSkillFactory->createPossessionSkill($skill);
+        }
+        return $possessionSkill;
+    }
+
     public static function addExp(PossessionSkill $beforePossessionSkill, int $exp): PossessionSkill
     {
         $afterPossessionSkill = $beforePossessionSkill->clone();
