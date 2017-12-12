@@ -14,6 +14,8 @@ use App\Domain\Skill\Skill;
 
 interface PossessionSkillRepositoryInterface
 {
+    public function findById(string $id): ?PossessionSkill;
+
     public function findBySkill(Skill $skill): ?PossessionSkill;
 
     public function save(PossessionSkill $possessionSkill): bool;
