@@ -52,9 +52,9 @@ class JobEloquent extends Model
         return $entity;
     }
 
-    public static function saveDomainObject(Job $job)
+    public function saveDomainObject(Job $job)
     {
-        $jobModel = self::fromEntity($job);
+        $jobModel = $this->fromEntity($job);
         $jobModel->save();
     }
 }
