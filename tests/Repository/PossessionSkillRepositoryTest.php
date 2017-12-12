@@ -37,7 +37,7 @@ class PossessionSkillRepositoryTest extends TestCase
         $this->skillRepo->save($skill);
 
         $PossessionSkillFactory = new PossessionSkillFactory();
-        $possessSkill = $PossessionSkillFactory->possessSkill($skill);
+        $possessSkill = $PossessionSkillFactory->createPossessionSkill($skill);
         $this->possessionSkillRepo->save($possessSkill);
 
         $findSkill = $this->possessionSkillRepo->findBySkill($skill);
@@ -54,7 +54,7 @@ class PossessionSkillRepositoryTest extends TestCase
         $this->skillRepo->save($skill);
 
         $PossessionSkillFactory = new PossessionSkillFactory();
-        $possessSkill = $PossessionSkillFactory->possessSkill($skill);
+        $possessSkill = $PossessionSkillFactory->createPossessionSkill($skill);
         $this->possessionSkillRepo->save($possessSkill);
     }
 }
