@@ -18,7 +18,6 @@ class JobId
 
     public function __construct(string $code)
     {
-        if(!JobIdSpec::isExistCode($code)) throw new DomainException("Error");
         $this->code = $code;
     }
 
