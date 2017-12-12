@@ -44,4 +44,9 @@ class PartyServiceFacade
 
 
     }
+
+    public function searchParty(string  $keyword): array
+    {
+        return $this->service->searchParty($keyword);
+    }
 }
