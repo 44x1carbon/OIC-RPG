@@ -11,6 +11,7 @@ namespace App\Presentation\Job;
 
 use App\ApplicationService\JobApplicationService;
 use App\Domain\GetCondition\GetCondition;
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Job\ValueObjects\JobId;
 
 class JobServiceFacade
@@ -29,6 +30,18 @@ class JobServiceFacade
         $jobApplicationService = new JobApplicationService();
         /* @var $jobId JobId */
         $jobId = $jobApplicationService->registerJob($jobName, $imagePath, $_getConditions);
+        return $jobId->code();
+    }
+
+    public function getJob(string $studentNumber, string $jobId): string
+    {
+        $_studentNumber = new StudentNumber($studentNumber);
+        $_jobId = new JobId($jobId);
+
+        $jobApplicationService = new JobApplicationService();
+
+        /* @var $jobId JobId */
+        $jobId = $jobApplicationService->getJob($_studentNumber, $_jobId);
         return $jobId->code();
     }
 }
