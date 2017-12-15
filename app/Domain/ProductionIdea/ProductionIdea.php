@@ -24,27 +24,32 @@ class ProductionIdea
     // アイデア説明
     private $ideaDescription;
 
-    public function id(): ProductionIdeaId
+
+    function __construct(string $id, string $productionTheme = null, string $productionTypeId = null, string $ideaDescription = null)
+    {
+        $this->id = $id;
+        if($productionTypeId) $this->productionTypeId = $productionTypeId;
+        $this->productionTheme = $productionTheme;
+        $this->ideaDescription = $ideaDescription;
+    }
+
+    public function id(): string
     {
         return $this->id;
     }
 
-    public function productionTheme(): String
+    public function productionTheme(): ?string
     {
         return $this->productionTheme;
     }
 
-//    public function productionTypeId(): String
-//    {
-//        return $this->productionTypeId;
-//    }
 
-    public function productionTypeId(): ProductionTypeId
+    public function productionTypeId(): ?string
     {
         return $this->productionTypeId;
     }
 
-    public function ideaDescription(): String
+    public function ideaDescription(): ?string
     {
         return $this->ideaDescription;
     }
@@ -55,25 +60,21 @@ class ProductionIdea
         $this->id = $id;
     }
 
-    public function setProductionTheme(String $productionTheme)
+    public function setProductionTheme(string $productionTheme)
     {
         $this->productionTheme = $productionTheme;
     }
 
-//    public function setProductionTypeId(String $productionTypeId)
-//    {
-//        $this->productionTypeId = $productionTypeId;
-//    }
-
     /**
      * @param mixed $productionTypeId
      */
-    public function setProductionTypeId(ProductionTypeId $productionTypeId)
+
+    public function setProductionTypeId(string $productionTypeId)
     {
         $this->productionTypeId = $productionTypeId;
     }
 
-    public function setIdeaDescription(String $ideaDescription)
+    public function setIdeaDescription(string $ideaDescription)
     {
         $this->ideaDescription = $ideaDescription;
     }

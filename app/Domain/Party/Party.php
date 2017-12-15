@@ -11,6 +11,7 @@ namespace App\Domain\Party;
 
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\Party\Exception\NotFoundAssignableFrameException;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\WantedRole\WantedRole;
@@ -29,8 +30,57 @@ class Party
     // 募集役割一覧
     private $wantedRoles;
 
-    public function __construct()
+    public function __construct(string $id, ActivityEndDate $activityEndDate, StudentNumber $managerId, ProductionIdea $productionIdea = null, $wantedRoles = [])
     {
+        $this->id = $id;
+        $this->activityEndDate = $activityEndDate;
+        $this->partyManagerId = $managerId;
+        $this->productionIdea = $productionIdea ??new ProductionIdea( $this->id);
+        $this->wantedRoles = $wantedRoles;
+    }
+
+    public function editProductionIdea(string $productionTheme = null, string $productionTypeId = null, string $ideaDescription = null)
+    {
+        if(!is_null($productionTheme))  $this->productionIdea->setProductionTheme($productionTheme);
+        if(!is_null($productionTypeId)) $this->productionIdea->setProductionTypeId($productionTypeId);
+        if(!is_null($ideaDescription))  $this->productionIdea->setIdeaDescription($ideaDescription);
+    }
+
+    public function assignMember(string $wantedRoleId, StudentNumber $memberId)
+    {
+        $wantedRole = $this->findWantedRoleById($wantedRoleId);
+
+        $wantedMember = $wantedRole->getAssignableFrame();
+        $wantedMember->assign($memberId);
+    }
+
+    public function addWantedRole(string $roleName, string $jobId = null, string $remarks = null): string
+    {
+        $wantedRole = new WantedRole($this->nextWantedRoleId(), $roleName, $jobId, $remarks);
+        $this->wantedRoles[] = $wantedRole;
+        return $wantedRole->id();
+    }
+
+    public function addWantedFrame(string $wantedRoleId, int $num)
+    {
+        /* @var WantedRole $wantedRole */
+        $wantedRole = $this->findWantedRoleById($wantedRoleId);
+        $wantedRole->addFrame($num);
+    }
+
+    private function findWantedRoleById(string $wantedRoleId): ?WantedRole
+    {
+        $filterArr = array_values(array_filter($this->wantedRoles(), function(WantedRole $wantedRole) use($wantedRoleId){
+            return $wantedRole->id() === $wantedRoleId;
+        }));
+
+        if(count($filterArr) === 0) return null;
+        return $filterArr[0];
+    }
+
+    private function nextWantedRoleId(): string
+    {
+        return (string) (count($this->wantedRoles) + 1);
     }
 
     public function id(): String

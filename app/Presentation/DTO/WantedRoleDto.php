@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domain\PartyWrittenRequest\ValueObject;
+namespace App\Presentation\DTO;
 
-class WantedRoleInfo
+class WantedRoleDto
 {
     // 募集役割名
-    private $name;
+    private $roleName;
     // 備考
     private $remarks;
     // 参考ジョブID
@@ -13,9 +13,9 @@ class WantedRoleInfo
     // 枠数
     private $frameAmount;
 
-    function __construct(string $name, string $remarks, string $referenceJobId, int $frameAmount)
+    function __construct(string $roleName, string $remarks, string $referenceJobId, int $frameAmount)
     {
-        $this->name = $name;
+        $this->roleName = $roleName;
         $this->remarks = $remarks;
         $this->referenceJobId = $referenceJobId;
         $this->frameAmount = $frameAmount;
@@ -24,9 +24,9 @@ class WantedRoleInfo
     /**
      * @return string
      */
-    public function name(): string
+    public function roleName(): string
     {
-        return $this->name;
+        return $this->roleName;
     }
 
     /**

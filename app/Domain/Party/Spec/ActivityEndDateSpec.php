@@ -8,6 +8,7 @@
 
 namespace App\Domain\Party\Spec;
 
+use App\Domain\Party\ValueObjects\ActivityEndDate;
 use App\DomainUtility\SpecTrait;
 
 class ActivityEndDateSpec

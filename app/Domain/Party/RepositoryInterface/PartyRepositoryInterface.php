@@ -18,4 +18,6 @@ interface PartyRepositoryInterface
     public function save(Party $party): bool;
 
     public function all(): array;
+
+    public function nextId(): string;
 }
