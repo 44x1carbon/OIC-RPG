@@ -7,6 +7,7 @@ use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
 use App\Domain\PartyWrittenRequest\ValueObject\WantedRoleInfo;
+use App\Presentation\DTO\WantedRoleDto;
 
 class PartyServiceFacade
 {
@@ -31,7 +32,7 @@ class PartyServiceFacade
         $this->servoce->updateProductionIdea($party->id(), $productionTheme, $productionTypeId, $ideaDescription);
 
 
-        /* @var WantedRoleInfo $wantedRole */
+        /* @var WantedRoleDto $wantedRole */
         foreach ($wantedRoleList as $wantedRole) {
             $this->servoce->addWantedRole($party->id(), $wantedRole->roleName(), $wantedRole->referenceJobId(), $wantedRole->remarks(), $wantedRole->frameAmount());
         }

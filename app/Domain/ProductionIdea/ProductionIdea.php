@@ -25,7 +25,7 @@ class ProductionIdea
     private $ideaDescription;
 
 
-    function __construct($id, $productionTheme = null, $productionTypeId = null, $ideaDescription = null)
+    function __construct(string $id, string $productionTheme = null, string $productionTypeId = null, string $ideaDescription = null)
     {
         $this->id = $id;
         if($productionTypeId) $this->productionTypeId = $productionTypeId;
@@ -38,7 +38,7 @@ class ProductionIdea
         return $this->id;
     }
 
-    public function productionTheme(): ?String
+    public function productionTheme(): ?string
     {
         return $this->productionTheme;
     }
@@ -49,7 +49,7 @@ class ProductionIdea
         return $this->productionTypeId;
     }
 
-    public function ideaDescription(): ?String
+    public function ideaDescription(): ?string
     {
         return $this->ideaDescription;
     }
@@ -60,7 +60,7 @@ class ProductionIdea
         $this->id = $id;
     }
 
-    public function setProductionTheme(String $productionTheme)
+    public function setProductionTheme(string $productionTheme)
     {
         $this->productionTheme = $productionTheme;
     }
@@ -74,7 +74,7 @@ class ProductionIdea
         $this->productionTypeId = $productionTypeId;
     }
 
-    public function setIdeaDescription(String $ideaDescription)
+    public function setIdeaDescription(string $ideaDescription)
     {
         $this->ideaDescription = $ideaDescription;
     }
