@@ -23,8 +23,6 @@ use App\Infrastracture\PossessionSkill\PossessionSkillOnMemoryRepositoryImpl;
 
 class PossessionSkillDomainService
 {
-    const LEVEL_UP_INTERVAL = 100;
-
     protected $possessionSkillRepo;
 
     public function __construct(PossessionSkillRepositoryInterface $repo)
@@ -35,7 +33,7 @@ class PossessionSkillDomainService
     public function addExpService(PossessionSkill $possessionSkill, int $exp): bool
     {
         $addResultPossessionSkill = self::AddExp($possessionSkill, $exp);
-        $addResultPossessionSkill = self::levelUp($possessionSkill, $addResultPossessionSkill);
+        $addResultPossessionSkill = PossessionSkill::levelUp($possessionSkill, $addResultPossessionSkill);
 
         return $this->possessionSkillRepo->save($addResultPossessionSkill);
     }
@@ -44,19 +42,6 @@ class PossessionSkillDomainService
     {
         $afterPossessionSkill = $beforePossessionSkill->clone();
         $afterPossessionSkill->setTotalExp($beforePossessionSkill->totalExp() + $exp);
-
-        return $afterPossessionSkill;
-    }
-
-    public static function levelUp(PossessionSkill $beforePossessionSkill, PossessionSkill $afterPossessionSkill): PossessionSkill
-    {
-        $beforeTotalExp = $beforePossessionSkill->totalExp();
-        $afterTotalExp = $afterPossessionSkill->totalExp();
-
-        $exp = $afterTotalExp - $beforeTotalExp;
-
-        $levelUpValue = (int) floor(($beforeTotalExp % self::LEVEL_UP_INTERVAL + $exp) / self::LEVEL_UP_INTERVAL);
-        $afterPossessionSkill->setSkillLevel($afterPossessionSkill->skillLevel() + $levelUpValue);
 
         return $afterPossessionSkill;
     }
