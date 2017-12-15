@@ -15,7 +15,7 @@ interface WantedRoleRepositoryInterface
 {
     public function findById(String $id): ?WantedRole;
 
-    public function save(WantedRole $wantedMember): bool;
+    public function save(WantedRole $wantedRole): bool;
 
     public function all(): array;
 }
