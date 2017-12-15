@@ -8,6 +8,7 @@ use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\GuildMember\ValueObjects\PassWord;
+use Illuminate\Support\Facades\Auth;
 
 class GuildMemberDeleteTest extends \Tests\TestCase
 {
@@ -33,12 +34,16 @@ class GuildMemberDeleteTest extends \Tests\TestCase
 
     public function testSuccess()
     {
-        $response = $this->delete(route('destroy_guild_member'),[
-            'name' => 'テスト太郎',
-            'course_id' => '1',
-            'gender' => 'male',
-        ]);
+        $response = $this->delete(route('destroy_guild_member'));
 
         $response->assertStatus(200);
+    }
+
+    public function testFail()
+    {
+        Auth::logout();
+        $response = $this->delete(route('destroy_guild_member'));
+
+        $response->assertStatus(302);
     }
 }

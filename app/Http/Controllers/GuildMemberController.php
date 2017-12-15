@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Http\Requests\GuildMemberRequest;
+use Illuminate\Support\Facades\Auth;
 
 class GuildMemberController extends Controller
 {
@@ -36,10 +37,10 @@ class GuildMemberController extends Controller
 
     public function destroy(
         GuildMemberRepositoryInterface $guildMemberRepository,
-        GuildMember $loginMember
+        GuildMember $loginMember = null
     )
     {
-        if ($guildMemberRepository->delete($loginMember)) {
+        if ($loginMember && $guildMemberRepository->delete($loginMember)) {
             return response($loginMember->studentName());
         }else{
             return back();
