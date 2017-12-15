@@ -2,7 +2,6 @@
 
 namespace App\Eloquents;
 
-use App\Domain\ProductionType\Factory\ProductionTypeFactory;
 use App\Domain\ProductionType\ProductionType;
 use App\Domain\ProductionType\ValueObject\ProductionTypeId;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +22,6 @@ class ProductionTypeEloquent extends Model
 
     public function findById(ProductionTypeId $id): ?ProductionTypeEloquent
     {
-        return $this->where('product_type_id', $id->code())->first();
+        return $this->where('production_type_id', $id->code())->first();
     }
 }
