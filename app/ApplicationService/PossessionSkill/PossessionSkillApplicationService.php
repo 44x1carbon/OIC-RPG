@@ -54,8 +54,8 @@ class PossessionSkillApplicationService
             if($addResultPossessionSkill != null && $possessionSkill->skillLevel() < $addResultPossessionSkill->skillLevel())
                 event(new LevelUpEvent($addResultPossessionSkill));
         }
+        //todo エラー時のロールバック
         return $result;
     }
-
 
 }
