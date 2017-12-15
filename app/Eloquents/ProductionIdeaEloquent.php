@@ -11,11 +11,20 @@ class ProductionIdeaEloquent extends Model
 {
     protected $table = 'production_ideas';
 
+    /** リレーション定義 */
     public function partyEloquent()
     {
         return $this->belongsTo(PartyEloquent::class, 'party_id');
     }
 
+    public function productionTypeEloquent()
+    {
+        return $this->belongsTo(ProductionTypeEloquent::class, 'id', 'production_type_id');
+    }
+
+    /**
+     * ドメインオブジェクトを利用して永続化&親とのリレーションをはる
+     */
     public static function saveDomainObject(ProductionIdea $productionIdea, PartyEloquent $parentModel)
     {
         $model = $parentModel->productionIdeaEloquent;
@@ -26,6 +35,9 @@ class ProductionIdeaEloquent extends Model
         return $model->save();
     }
 
+    /**
+     * ドメインオブジェクトからEloquentの属性をセットする
+     */
     public function setAttrByEntity(ProductionIdea $productionIdea): ProductionIdeaEloquent
     {
         $this->production_idea_id = $productionIdea->id();
@@ -35,16 +47,9 @@ class ProductionIdeaEloquent extends Model
         return $this;
     }
 
-    public function productionTypeEloquent()
-    {
-        return $this->belongsTo(ProductionTypeEloquent::class, 'id', 'production_type_id');
-    }
-
-    public function findById(ProductionIdeaId $id): ?ProductionIdeaEloquent
-    {
-        return $this->where('production_idea_id', $id->code())->first();
-    }
-
+    /**
+     * Eloquentからドメインオブジェクトへ変換する
+     */
     public function toEntity(): ProductionIdea
     {
         return new ProductionIdea(

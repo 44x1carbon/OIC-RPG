@@ -10,6 +10,20 @@ class WantedRoleEloquent extends Model
 {
     protected $table = 'wanted_roles';
 
+    /** リレーション定義 */
+    public function wantedMemberEloquents()
+    {
+        return $this->hasMany(WantedMemberEloquent::class, 'wanted_role_id');
+    }
+
+    public function partyEloquent()
+    {
+        return $this->belongsTo(PartyEloquent::class, 'party_id');
+    }
+
+    /**
+     * $parentModelないから、引数で与えられたWantedRoleのIdからEloquentを検索し、なければ新しく作る
+     */
     public static function findOrNewModel(WantedRole $wantedRole, PartyEloquent $parentModel)
     {
         return $parentModel
@@ -18,6 +32,9 @@ class WantedRoleEloquent extends Model
             ->firstOrNew([]);
     }
 
+    /**
+     * ドメインオブジェクトを利用して永続化&親とのリレーションをはる
+     */
     public static function saveDomainObject(WantedRole $wantedRole, PartyEloquent $parentModel)
     {
         $model = self::findOrNewModel($wantedRole, $parentModel);
@@ -32,6 +49,9 @@ class WantedRoleEloquent extends Model
         return $result;
     }
 
+    /**
+     * ドメインオブジェクトからEloquentの属性をセットする
+     */
     public function setAttrByEntity(WantedRole $wantedRole): WantedRoleEloquent
     {
         $this->wanted_role_id = $wantedRole->id();
@@ -42,16 +62,9 @@ class WantedRoleEloquent extends Model
         return $this;
     }
 
-    public function wantedMemberEloquents()
-    {
-        return $this->hasMany(WantedMemberEloquent::class, 'wanted_role_id');
-    }
-
-    public function partyEloquent()
-    {
-        return $this->belongsTo(PartyEloquent::class, 'party_id');
-    }
-
+    /**
+     * Eloquentからドメインオブジェクトへ変換する
+     */
     public function toEntity(): WantedRole
     {
         $wantedMembers = $this->wantedMemberEloquents->map(function(WantedMemberEloquent $model) {

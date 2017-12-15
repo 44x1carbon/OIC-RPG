@@ -11,11 +11,15 @@ class WantedMemberEloquent extends Model
 {
     protected $table = 'wanted_members';
 
+    /** リレーション定義 */
     public function wantedRoleEloquent()
     {
         return $this->belongsTo(WantedRoleEloquent::class, 'wanted_role_id');
     }
 
+    /**
+     * $parentModelないから、引数で与えられたWantedMemberのIdからEloquentを検索し、なければ新しく作る
+     */
     public static function findOrNewModel(WantedMember $wantedMember, WantedRoleEloquent $parentModel): WantedMemberEloquent
     {
         return $parentModel
@@ -24,6 +28,9 @@ class WantedMemberEloquent extends Model
             ->firstOrNew([]);
     }
 
+    /**
+     * ドメインオブジェクトを利用して永続化&親とのリレーションをはる
+     */
     public static function saveDomainObject(WantedMember $wantedMember, WantedRoleEloquent $parentModel)
     {
         $model = self::findOrNewModel($wantedMember, $parentModel);
@@ -32,6 +39,9 @@ class WantedMemberEloquent extends Model
         return $model->save();
     }
 
+    /**
+     * ドメインオブジェクトからEloquentの属性をセットする
+     */
     public function setAttrByEntity(WantedMember $wantedMember): WantedMemberEloquent
     {
         $this->wanted_member_id = $wantedMember->id();
@@ -43,6 +53,9 @@ class WantedMemberEloquent extends Model
         return $this;
     }
 
+    /**
+     * Eloquentからドメインオブジェクトへ変換する
+     */
     public function toEntity(): WantedMember
     {
         return new WantedMember(
