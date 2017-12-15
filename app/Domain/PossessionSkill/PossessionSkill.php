@@ -14,6 +14,8 @@ use App\Domain\Skill\Skill;
 
 class PossessionSkill
 {
+    const LEVEL_UP_INTERVAL = 100;
+
     private $studentNumber;
     private $skill;
     private $skillLevel;
@@ -66,5 +68,18 @@ class PossessionSkill
     public function clone(): PossessionSkill
     {
         return clone $this;
+    }
+
+    public static function levelUp(PossessionSkill $beforePossessionSkill, PossessionSkill $afterPossessionSkill): PossessionSkill
+    {
+        $beforeTotalExp = $beforePossessionSkill->totalExp();
+        $afterTotalExp = $afterPossessionSkill->totalExp();
+
+        $exp = $afterTotalExp - $beforeTotalExp;
+
+        $levelUpValue = (int) floor(($beforeTotalExp % self::LEVEL_UP_INTERVAL + $exp) / self::LEVEL_UP_INTERVAL);
+        $afterPossessionSkill->setSkillLevel($afterPossessionSkill->skillLevel() + $levelUpValue);
+
+        return $afterPossessionSkill;
     }
 }
