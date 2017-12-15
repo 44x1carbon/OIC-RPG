@@ -24,6 +24,7 @@ class ProductionIdea
     // アイデア説明
     private $ideaDescription;
 
+
     function __construct($id, $productionTheme = null, $productionTypeId = null, $ideaDescription = null)
     {
         $this->id = $id;
@@ -41,6 +42,7 @@ class ProductionIdea
     {
         return $this->productionTheme;
     }
+
 
     public function productionTypeId(): ?string
     {
@@ -66,6 +68,7 @@ class ProductionIdea
     /**
      * @param mixed $productionTypeId
      */
+
     public function setProductionTypeId(string $productionTypeId)
     {
         $this->productionTypeId = $productionTypeId;
