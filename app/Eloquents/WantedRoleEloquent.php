@@ -10,24 +10,18 @@ class WantedRoleEloquent extends Model
 {
     protected $table = 'wanted_roles';
 
-    public static function fromEntity(WantedRole $wantedRole)
+    public static function findOrNewModel(WantedRole $wantedRole, PartyEloquent $parentModel)
     {
-        $model = self::where('wanted_role_id', $wantedRole->id())->first();
-        if(is_null($model)) {
-            $model = new static();
-            $model->wanted_role_id = $wantedRole->id();
-        }
-
-        $model->role_name = $wantedRole->roleName();
-        $model->remarks = $wantedRole->remarks();
-        $model->reference_job_id = $wantedRole->referenceJobId();
-
-        return $model;
+        return $parentModel
+            ->wantedRoleEloquents()
+            ->where('wanted_role_id', $wantedRole->id())
+            ->firstOrNew([]);
     }
 
     public static function saveDomainObject(WantedRole $wantedRole, PartyEloquent $parentModel)
     {
-        $model = self::fromEntity($wantedRole);
+        $model = self::findOrNewModel($wantedRole, $parentModel);
+        $model->setAttrByEntity($wantedRole);
         $model->partyEloquent()->associate($parentModel);
         $result = $model->save();
 
@@ -36,6 +30,16 @@ class WantedRoleEloquent extends Model
         }
 
         return $result;
+    }
+
+    public function setAttrByEntity(WantedRole $wantedRole): WantedRoleEloquent
+    {
+        $this->wanted_role_id = $wantedRole->id();
+        $this->role_name = $wantedRole->roleName();
+        $this->remarks = $wantedRole->remarks();
+        $this->reference_job_id = $wantedRole->referenceJobId();
+
+        return $this;
     }
 
     public function wantedMemberEloquents()
