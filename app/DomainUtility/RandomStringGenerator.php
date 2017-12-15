@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: user
+ * User: yamagon
  * Date: 2017/11/03
- * Time: 14:53
+ * Time: 13:27
  */
 
 namespace App\DomainUtility;

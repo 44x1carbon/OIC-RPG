@@ -1,0 +1,33 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: yamagon
+ * Date: 2017/10/24
+ * Time: 19:21
+ */
+
+namespace App\Domain\ProductionType;
+
+use App\Domain\ProductionType\ValueObject\ProductionTypeId;
+
+class ProductionType
+{
+    private $id;
+    private $name;
+
+    public function __construct(ProductionTypeId $id, string $name)
+    {
+        $this->id = $id;
+        $this->name = $name;
+    }
+
+    public function  name(): string
+    {
+        return $this->name;
+    }
+
+    public function id(): ProductionTypeId
+    {
+        return $this->id;
+    }
+}

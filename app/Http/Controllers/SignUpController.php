@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ApplicationService\GuildMemberAppService;
 use App\Domain\GuildMember\Factory\GuildMemberFactory;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Http\Requests\SignUpRequest;
@@ -15,25 +16,16 @@ class SignUpController extends Controller
 
     }
 
-    public function store(SignUpRequest $request, GuildMemberFactory $factory, GuildMemberRepositoryInterface $repository)
+    public function store(SignUpRequest $request, GuildMemberAppService $guildMemberAppService)
     {
-        $guildMember = $factory->createGuildMember(
+        $authData = $guildMemberAppService->registerMember(
             $request->studentNumber(),
             $request->studentName(),
             $request->course(),
             $request->gender(),
-            $request->mailAddress()
+            $request->mailAddress(),
+            $request->loginInfo()
         );
-
-        if($repository->save($guildMember)) {
-            //ユーザー登録に成功
-            //ログイン情報を登録
-            $authData = AuthData::registerMember($request->loginInfo());
-            //ログイン処理
-            Auth::login($authData);
-        } else {
-            //ユーザー登録に失敗
-        }
-
+        Auth::login($authData);
     }
 }
