@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-
 use App\Domain\PartyWrittenRequest\ValueObject\WantedRoleInfo;
 use App\Domain\WantedMember\ValueObjects\WantedRole;
 use App\Presentation\DTO\WantedRoleDto;
