@@ -18,13 +18,10 @@ class SignInController extends Controller
 {
     public function store(SignInRequest $request)
     {
-        $loginInfo = SignInFacade::signIn($request->mailAddress(), $request->password());
-        if ($loginInfo){
-            $authData = AuthData::findByLoginInfo($loginInfo);
-            Auth::login($authData);
+        $authData = SignInFacade::signIn($request->mailAddress(), $request->password());
+        if ($authData){
             // ログインに成功したGuildMemberのStudentNumberを返す
             return response($authData->guildMemberEntity()->studentNumber()->code());
-
         }
         // ログイン失敗
         return response(null, 401);

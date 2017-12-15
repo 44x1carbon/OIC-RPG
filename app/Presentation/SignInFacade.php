@@ -13,6 +13,8 @@ use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\PassWord;
+use App\Infrastracture\AuthData\AuthData;
+use Illuminate\Support\Facades\Auth;
 
 class SignInFacade
 {
@@ -20,12 +22,18 @@ class SignInFacade
     {
     }
 
-    public static function signIn(String $mailAddress, String $passWord)
+    public static function signIn(String $mailAddress, String $passWord): ?AuthData
     {
         $guildMemberRepository = app(GuildMemberRepositoryInterface::class);
         $loginInfo = new LoginInfo(new MailAddress($mailAddress), new PassWord($passWord));
         $guildMember = $guildMemberRepository->findByLoginInfo($loginInfo);
-        return $guildMember ? $loginInfo : null;
+
+        if ($guildMember) {
+            $authData = AuthData::findByLoginInfo($loginInfo);
+            Auth::login($authData);
+            return $authData;
+        }
+        return null;
     }
 
 }
