@@ -11,32 +11,7 @@ class PartyEloquent extends Model
 {
     protected $table = 'parties';
 
-    public static function fromEntity(Party $party): PartyEloquent
-    {
-        $model = self::where('party_id', $party->id())->first();
-        if(is_null($model)) {
-            $model = new static();
-            $model->party_id = $party->id();
-        }
-        $model->active_end_date = $party->activityEndDate()->date();
-        $model->manager_id = $party->partyManagerId()->code();
-
-        return $model;
-    }
-
-    public static function saveDomainObject(Party $party): bool
-    {
-        $model = self::fromEntity($party);
-        $result = $model->save();
-        $result = ProductionIdeaEloquent::saveDomainObject($party->productionIdea(), $model) ? $result : false;
-
-        foreach ($party->wantedRoles() as $wantedRole) {
-            $result = WantedRoleEloquent::saveDomainObject($wantedRole, $model) ? $result : false;
-        }
-
-        return $result;
-    }
-
+    /** リレーション定義 */
     public function productionIdeaEloquent()
     {
         return $this->hasOne(ProductionIdeaEloquent::class, 'party_id');
@@ -47,6 +22,46 @@ class PartyEloquent extends Model
         return $this->hasMany(WantedRoleEloquent::class, 'party_id');
     }
 
+    /**
+     * ドメインオブジェクトを利用して永続化&親とのリレーションをはる
+     */
+    public static function saveDomainObject(Party $party): bool
+    {
+        $model = self::findOrNewModel($party);
+        $model->setAttrByEntity($party);
+        $result = $model->save();
+        $result = ProductionIdeaEloquent::saveDomainObject($party->productionIdea(), $model) ? $result : false;
+
+        foreach ($party->wantedRoles() as $wantedRole) {
+            $result = WantedRoleEloquent::saveDomainObject($wantedRole, $model) ? $result : false;
+        }
+
+        return $result;
+    }
+
+    /**
+     * 引数で与えられたPartyのIdからEloquentを検索し、なければ新しく作る
+     */
+    public static function findOrNewModel(Party $party): PartyEloquent
+    {
+        return self::where('party_id', $party->id())->firstOrNew([]);
+    }
+
+    /**
+     * ドメインオブジェクトからEloquentの属性をセットする
+     */
+    public function setAttrByEntity(Party $party): PartyEloquent
+    {
+        $this->party_id = $party->id();
+        $this->active_end_date = $party->activityEndDate()->date();
+        $this->manager_id = $party->partyManagerId()->code();
+
+        return $this;
+    }
+
+    /**
+     * Eloquentからドメインオブジェクトへ変換する
+     */
     public function toEntity(): Party
     {
         $productionIdea = $this->productionIdeaEloquent->toEntity();

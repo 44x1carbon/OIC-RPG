@@ -11,40 +11,59 @@ class WantedMemberEloquent extends Model
 {
     protected $table = 'wanted_members';
 
+    /** リレーション定義 */
     public function wantedRoleEloquent()
     {
         return $this->belongsTo(WantedRoleEloquent::class, 'wanted_role_id');
     }
 
-    public static function fromEntity(WantedMember $wantedMember): WantedMemberEloquent
+    /**
+     * $parentModelないから、引数で与えられたWantedMemberのIdからEloquentを検索し、なければ新しく作る
+     */
+    public static function findOrNewModel(WantedMember $wantedMember, WantedRoleEloquent $parentModel): WantedMemberEloquent
     {
-        $model = self::where('wanted_member_id', $wantedMember->id())->first();
-        if(is_null($model)) {
-            $model = new static();
-            $model->wanted_member_id = $wantedMember->id();
-        }
-
-        $model->wanted_status = $wantedMember->wantedStatus()->status();
-        $model->officer_id = null_safety($wantedMember->officerId(), function(StudentNumber $officerId) {
-            return $officerId->code();
-        });
-
-        return $model;
+        return $parentModel
+            ->wantedMemberEloquents()
+            ->where('wanted_member_id', $wantedMember->id())
+            ->firstOrNew([]);
     }
 
+    /**
+     * ドメインオブジェクトを利用して永続化&親とのリレーションをはる
+     */
     public static function saveDomainObject(WantedMember $wantedMember, WantedRoleEloquent $parentModel)
     {
-        $model = self::fromEntity($wantedMember);
+        $model = self::findOrNewModel($wantedMember, $parentModel);
+        $model->setAttrByEntity($wantedMember);
         $model->wantedRoleEloquent()->associate($parentModel);
         return $model->save();
     }
 
+    /**
+     * ドメインオブジェクトからEloquentの属性をセットする
+     */
+    public function setAttrByEntity(WantedMember $wantedMember): WantedMemberEloquent
+    {
+        $this->wanted_member_id = $wantedMember->id();
+        $this->wanted_status = $wantedMember->wantedStatus()->status();
+        $this->officer_id = null_safety($wantedMember->officerId(), function(StudentNumber $officerId) {
+            return $officerId->code();
+        });
+
+        return $this;
+    }
+
+    /**
+     * Eloquentからドメインオブジェクトへ変換する
+     */
     public function toEntity(): WantedMember
     {
         return new WantedMember(
             $this->wanted_member_id,
             new WantedStatus($this->wanted_status),
-            new StudentNumber($this->officer_id)
+            null_safety($this->officer_id, function($id) {
+                new StudentNumber($id);
+            })
         );
     }
 }
