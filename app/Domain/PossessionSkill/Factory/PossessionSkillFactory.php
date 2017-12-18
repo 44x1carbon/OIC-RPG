@@ -15,11 +15,11 @@ use App\Domain\Skill\Skill;
 
 class PossessionSkillFactory
 {
-    public function createPossessionSkill(Skill $skill, StudentNumber $studentNumber): PossessionSkill
+    public function createPossessionSkill(string $skillId, StudentNumber $studentNumber): PossessionSkill
     {
         $possessionSkill = new PossessionSkill();
         $possessionSkill->setStudentNumber($studentNumber);
-        $possessionSkill->setSkill($skill);
+        $possessionSkill->setSkillId($skillId);
         $possessionSkill->setSkillLevel(1);
         $possessionSkill->setTotalExp(0);
         return $possessionSkill;

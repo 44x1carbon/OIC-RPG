@@ -17,7 +17,7 @@ class PossessionSkill
     const LEVEL_UP_INTERVAL = 100;
 
     private $studentNumber;
-    private $skill;
+    private $skillId;
     private $skillLevel;
     private $totalExp;
 
@@ -30,9 +30,9 @@ class PossessionSkill
         $this->studentNumber = $studentNumber;
     }
 
-    public function setSkill(Skill $skill)
+    public function setSkillId(string $skillId)
     {
-        $this->skill = $skill;
+        $this->skillId = $skillId;
     }
 
     public function setSkillLevel(int $skillLevel)
@@ -50,9 +50,9 @@ class PossessionSkill
         return $this->studentNumber;
     }
 
-    public function skill(): Skill
+    public function skillId(): string
     {
-        return $this->skill;
+        return $this->skillId;
     }
 
     public function skillLevel(): int
