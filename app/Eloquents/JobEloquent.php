@@ -26,9 +26,11 @@ class JobEloquent extends Model
     public static function fromEntity(Job $job): JobEloquent
     {
         $jobModel = self::findById($job->jobId()->code());
-        if(is_null($jobModel)) $jobModel = new JobEloquent();
-
-        $jobModel->job_id = $job->jobId()->code();
+        if(is_null($jobModel))
+        {
+            $jobModel = new JobEloquent();
+            $jobModel->job_id = $job->jobId()->code();
+        }
         $jobModel->job_name = $job->jobName();
         $jobModel->image_path = $job->imagePath();
 
