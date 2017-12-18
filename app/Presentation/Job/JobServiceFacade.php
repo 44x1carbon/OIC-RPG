@@ -11,10 +11,18 @@ namespace App\Presentation\Job;
 
 use App\ApplicationService\JobApplicationService;
 use App\Domain\GetCondition\GetCondition;
+use App\Domain\Job\JobRepositoryInterface;
 use App\Domain\Job\ValueObjects\JobId;
 
 class JobServiceFacade
 {
+    protected $jobRepository;
+
+    public function __construct(JobRepositoryInterface $repo)
+    {
+        $this->jobRepository = $repo;
+    }
+
     public function registerJob(string $jobName, string $imagePath, array $getConditions): string
     {
         $_getConditions = [];
@@ -26,7 +34,7 @@ class JobServiceFacade
             $_getConditions[] = $_getCondition;
         }
 
-        $jobApplicationService = new JobApplicationService();
+        $jobApplicationService = new JobApplicationService($this->jobRepository);
         /* @var $jobId JobId */
         $jobId = $jobApplicationService->registerJob($jobName, $imagePath, $_getConditions);
         return $jobId->code();

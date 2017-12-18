@@ -34,7 +34,7 @@ class JobServiceFacadeTest extends TestCase
         $getConditions[] = $getCondition1;
         $getConditions[] = $getCondition2;
 
-        $facade = new JobServiceFacade();
+        $facade = new JobServiceFacade($this->repo);
         $code = $facade->registerJob('javaマスター', 'hoge\hogehoge', $getConditions);
 
         $result = $this->repo->findById($code);
