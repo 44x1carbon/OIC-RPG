@@ -47,7 +47,7 @@ class GuildMemberEloquentRepositoryImpl implements GuildMemberRepositoryInterfac
         return $guildMemberModel->save();
     }
 
-    public function all(): Array
+    public function all(): array
     {
         $guildMemberModels = $this->eloquent->all();
 
