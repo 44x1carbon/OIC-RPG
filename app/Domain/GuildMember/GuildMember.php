@@ -67,7 +67,7 @@ class GuildMember
         $this->mailAddress = $mailAddress;
     }
 
-    public function setPossessionSkill(PossessionSkillCollection $possessionSkillCollection)
+    public function setPossessionSkills(PossessionSkillCollection $possessionSkillCollection)
     {
         $this->possessionSkillCollection = $possessionSkillCollection;
     }
@@ -103,7 +103,7 @@ class GuildMember
         return $this->mailAddress;
     }
 
-    public function possessionSkill(): PossessionSkillCollection
+    public function possessionSkills(): ?PossessionSkillCollection
     {
         return $this->possessionSkillCollection;
     }
