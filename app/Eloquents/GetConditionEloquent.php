@@ -21,7 +21,10 @@ class GetConditionEloquent extends Model
     public function findByJobId(string $jobId): ?array
     {
         $getConditionModel = $this->where('job_id', $jobId)->get();
-        return $getConditionModel->toArray();
+        $getConditionCollection = $getConditionModel->map(function(GetConditionEloquent $eloquent){
+            return $eloquent->toValueObject();
+        });
+        return $getConditionCollection->toArray();
     }
 
     public static function findByJobIdAndSkillId(string $jobId, string $skillId): ?GetConditionEloquent
@@ -40,6 +43,15 @@ class GetConditionEloquent extends Model
         $getConditionModel->required_level = $getCondition->requiredLevel();
 
         return $getConditionModel;
+    }
+
+    public function toValueObject(): GetCondition
+    {
+        $valueObject = new GetCondition(
+            $this->skill_id,
+            $this->required_level
+        );
+        return $valueObject;
     }
 
     public static function saveManyDomainObject(array $getConditions, JobId $jobId)
