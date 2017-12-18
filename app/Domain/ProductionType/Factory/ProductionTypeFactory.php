@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Domain\ProductionType\Factory;
+
+use App\Domain\ProductionType\ProductionType;
+use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
+use App\Domain\ProductionType\ValueObject\ProductionTypeId;
+use App\DomainUtility\RandomStringGenerator;
+
+class ProductionTypeFactory
+{
+    protected $productionTypeRepository;
+
+    function __construct(ProductionTypeRepositoryInterface $productionTypeRepository)
+    {
+        $this->productionTypeRepository = $productionTypeRepository;
+    }
+
+    public function createProductionType(string $productionTypeName, ProductionTypeId $productionTypeId = null):ProductionType
+    {
+        return new ProductionType($productionTypeId ?? $this->makeId(), $productionTypeName);
+    }
+
+    public function makeId(): ProductionTypeId
+    {
+        do {
+            $code = RandomStringGenerator::makeLowerCase(2);
+            $id = new ProductionTypeId($code);
+        } while($this->productionTypeRepository->findById($id));
+
+        return $id;
+    }
+}
