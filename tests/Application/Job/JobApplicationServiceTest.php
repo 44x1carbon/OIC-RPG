@@ -34,7 +34,7 @@ class JobApplicationServiceTest extends TestCase
         $getConditions[] = $getCondition1;
         $getConditions[] = $getCondition2;
 
-        $jobApplicationService = new JobApplicationService();
+        $jobApplicationService = new JobApplicationService($this->repo);
         $jobId = $jobApplicationService->registerJob('サーバーサイドマスター', 'hoge\hoge', $getConditions);
 
         $result = $this->repo->findById($jobId->code());
