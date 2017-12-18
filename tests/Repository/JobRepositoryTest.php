@@ -98,19 +98,29 @@ class JobRepositoryTest extends TestCase
         $this->assertTrue($this->jobRepository->save($this->job));
     }
 
+
     public function testAll()
     {
+        $registerJobs[] = $this->job;
+        $registerJobs[] = $this->job1;
+        $registerJobIds = [];
+
+        $getAllJobs = $this->jobRepository->all();
+        $getAllJobIds = [];
+        
         /* @var Job $job */
-        /* @var Job $job1 */
-        $allJob = $this->jobRepository->all();
+        foreach ($getAllJobs as $job)
+        {
+            $getAllJobIds[] = $job->jobId()->code();
+        }
 
-        $job = $allJob[0];
-        $job1 = $allJob[1];
+        foreach ($registerJobs as $job)
+        {
+            $registerJobIds[] = $job->jobId()->code();
+        }
 
-        $result = false;
-        if($job->jobId()->code() === $this->job->jobId()->code()
-            && $job1->jobId()->code() === $this->job1->jobId()->code()) $result = true;
-
-        $this->assertTrue($result);
+        $this->assertTrue(empty(array_diff($registerJobIds, $getAllJobIds)));
     }
+
+
 }
