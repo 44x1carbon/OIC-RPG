@@ -9,37 +9,47 @@
 namespace App\Domain\PossessionSkill;
 
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
+use App\Domain\Skill\Skill;
 use ArrayObject;
 use InvalidArgumentException;
 
 class PossessionSkillCollection extends ArrayObject
 {
-    protected $possessionSkillRepo;
-
-    public function __construct()
+    public function __construct(array $possessionSkills)
     {
-        $this->possessionSkillRepo = app(PossessionSkillRepositoryInterface::class);
+        foreach ($possessionSkills as $possessionSkill)
+        {
+            $this->append($possessionSkill);
+        }
     }
 
-    function offsetSet($offset, $value)
+    function append($value)
     {
         if($value instanceof PossessionSkill)
         {
-            return parent::offsetSet($offset, $value);
+            return parent::append($value);
         }
         throw new InvalidArgumentException;
     }
 
-    public function findPossessionSkill($skill, $studentNumber): PossessionSkill
+    public function findPossessionSkill(string $skillId, StudentNumber $studentNumber): PossessionSkill
     {
-        $possessionSkill = $this->possessionSkillRepo->findBySkillAndStudentNumber($skill, $studentNumber);
+        $result = array_filter((array) $this, function(PossessionSkill $possessionSkill) use($skillId, $studentNumber){
+            return $possessionSkill->skillId() === $skillId && $possessionSkill->studentNumber()->code() === $studentNumber->code();
+        });
+        if(count($result) > 0) {
+            $possessionSkill = $result[0];
+        } else {
+            $possessionSkill = null;
+        }
 
         if(is_null($possessionSkill))
         {
             $possessSkillFactory = new PossessionSkillFactory();
-            $possessionSkill = $possessSkillFactory->createPossessionSkill($skill, $studentNumber);
+            $possessionSkill = $possessSkillFactory->createPossessionSkill($skillId, $studentNumber);
         }
 
         return $possessionSkill;
