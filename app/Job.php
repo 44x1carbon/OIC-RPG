@@ -8,7 +8,7 @@ class Job extends Model
 {
     protected $primaryKey = "job_id";
 
-    public function getCondition()
+    public function getConditions()
     {
         return $this->hasMany('App\GetCondition');
     }
