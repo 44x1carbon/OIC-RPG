@@ -9,6 +9,7 @@
 namespace App\Domain\WantedRole;
 
 
+use App\Domain\Party\Exception\NotFoundAssignableFrameException;
 use App\Domain\WantedMember\WantedMember;
 use App\Domain\WantedRole\ValueObject\WantedMemberList;
 
@@ -26,8 +27,13 @@ class WantedRole
     // メンバー募集のリスト
     private $wantedMemberList;
 
-    public function __construct()
+    public function __construct($id, $roleName, $jobId, $remarks, $wantedMembers = [])
     {
+        $this->id = $id;
+        $this->roleName = $roleName;
+        $this->referenceJobId = $jobId;
+        $this->remarks = $remarks;
+        $this->wantedMemberList = new WantedMemberList($wantedMembers);
     }
 
     public function id(): String
@@ -35,12 +41,12 @@ class WantedRole
         return $this->id;
     }
 
-    public function name(): String
+    public function roleName(): String
     {
-        return $this->name;
+        return $this->roleName;
     }
 
-    public function referenceJobId(): String
+    public function referenceJobId(): ?String
     {
         return $this->referenceJobId;
     }
@@ -53,7 +59,7 @@ class WantedRole
         return $this->referenceSkillIdList;
     }
 
-    public function remarks(): String
+    public function remarks(): ?String
     {
         return $this->remarks;
     }
@@ -90,5 +96,18 @@ class WantedRole
     public function setWantedMemberList(WantedMemberList $wantedMemberList)
     {
         $this->wantedMemberList = $wantedMemberList;
+    }
+
+    public function getAssignableFrame(): WantedMember
+    {
+        $assignableList = $this->wantedMemberList()->assignableList();
+        if(count($assignableList) === 0) throw new NotFoundAssignableFrameException();
+
+        return $assignableList[0];
+    }
+
+    public function addFrame(int $num)
+    {
+       $this->wantedMemberList()->addFrame($num);
     }
 }

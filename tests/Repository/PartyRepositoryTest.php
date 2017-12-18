@@ -16,10 +16,13 @@ use App\Domain\Party\ValueObjects\ActivityEndDate;
 use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
 use App\Domain\ProductionType\ProductionType;
 use App\Domain\WantedRole\WantedRole;
+use Tests\Sampler;
 use Tests\TestCase;
 
 class PartyRepositoryTest extends TestCase
 {
+    use Sampler;
+
     protected $partyRepository;
     protected $partyFactory;
     protected $productionIdeaFactory;
@@ -35,7 +38,7 @@ class PartyRepositoryTest extends TestCase
 
     function testSave()
     {
-        $party = $this->createPartyEntity("種類名", "アイデア名", "説明", "abc");
+        $party = $this->createPartyEntity("アイデア名", "説明", "abc");
         $this->partyRepository->save($party);
         $findParty = $this->partyRepository->findById("abc");
 
@@ -45,9 +48,9 @@ class PartyRepositoryTest extends TestCase
 
     function testFindById()
     {
-        $party = $this->createPartyEntity("種類名1", "アイデア名1", "説明1");
+        $party = $this->createPartyEntity("アイデア名1", "説明1");
         $this->partyRepository->save($party);
-        $party2 = $this->createPartyEntity("種類名2", "アイデア名2", "説明2");
+        $party2 = $this->createPartyEntity("アイデア名2", "説明2");
         $this->partyRepository->save($party2);
         $findParty = $this->partyRepository->findById($party->id());
 
@@ -56,10 +59,10 @@ class PartyRepositoryTest extends TestCase
     }
 
     // テスト用にパーティのEntityを作成してくれるメソッド
-    function createPartyEntity(String $typeName, String $ideaName, String $ideaDescription, String $id = null)
+    function createPartyEntity(String $ideaName, String $ideaDescription, String $id = null)
     {
         $activityEndDate = new ActivityEndDate(1431670515);
-        $productionType = new ProductionType($typeName);
+        $productionType = $this->sampleProductionType();
         $productionIdea = $this->productionIdeaFactory->createProductionIdea($ideaName, $productionType, $ideaDescription);
         $partyManagerId = new StudentNumber("B1234");
         $partyMembers[] = new StudentNumber("B1111");
