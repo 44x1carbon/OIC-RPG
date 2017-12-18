@@ -9,6 +9,7 @@
 namespace App\ApplicationService\PossessionSkill;
 
 
+use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\Spec\GuildMemberSpec;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PossessionSkill\AddProcess;
@@ -24,29 +25,33 @@ use App\Events\LevelUpEvent;
 class PossessionSkillApplicationService
 {
     protected $possessionSkillRepo;
+    protected $guildMemberRepo;
     private $possessionSkillDomainService;
 
-    public function __construct(PossessionSkillRepositoryInterface $repo, PossessionSkillDomainService $possessionSkillDomainService)
+    public function __construct(
+        PossessionSkillRepositoryInterface $possessionSkillRepository,
+        PossessionSkillDomainService $possessionSkillDomainService,
+        GuildMemberRepositoryInterface $guildMemberRepository)
     {
-        $this->possessionSkillRepo = $repo;
+        $this->possessionSkillRepo = $possessionSkillRepository;
         $this->possessionSkillDomainService = $possessionSkillDomainService;
+        $this->guildMemberRepo = $guildMemberRepository;
     }
 
-    public function addExpService(StudentNumber $studentNumber, Skill $skill, int $exp): bool
+    public function addExpService(StudentNumber $studentNumber, string $skillId, int $exp): bool
     {
         /* @var PossessionSkill $possessionSkill */
         /* @var PossessionSkill $addResultPossessionSkill */
 
         if(!GuildMemberSpec::isExistStudentNumber($studentNumber)) return false;
 
-        $possessionSkillCollection = new PossessionSkillCollection();
-        $possessionSkill = $possessionSkillCollection->findPossessionSkill($skill, $studentNumber);
-
+        $guildMember = $this->guildMemberRepo->findByStudentNumber($studentNumber);
+        $possessionSkill = $guildMember->possessionSkills()->findPossessionSkill($skillId, $guildMember->studentNumber());
         $result = $this->possessionSkillDomainService->addExpService($possessionSkill, $exp);
 
         if($result)
         {
-            $addResultPossessionSkill = $this->possessionSkillRepo->findBySkillAndStudentNumber($skill, $studentNumber);
+            $addResultPossessionSkill = $this->possessionSkillRepo->findBySkillAndStudentNumber($skillId, $studentNumber);
             //AddExpイベント発火
             if($addResultPossessionSkill != null && $exp > 0)
                 event(new AddExpEvent($addResultPossessionSkill));
@@ -54,7 +59,6 @@ class PossessionSkillApplicationService
             if($addResultPossessionSkill != null && $possessionSkill->skillLevel() < $addResultPossessionSkill->skillLevel())
                 event(new LevelUpEvent($addResultPossessionSkill));
         }
-        //todo エラー時のロールバック
         return $result;
     }
 
