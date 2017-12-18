@@ -14,6 +14,7 @@ use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInte
 use App\Domain\Skill\Factory\SkillFactory;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
+use App\PossessionSkill;
 use Tests\TestCase;
 
 class PossessionSkillRepositoryTest extends TestCase
@@ -39,12 +40,12 @@ class PossessionSkillRepositoryTest extends TestCase
         $skill = $skillFactory->createSkill( 'java');
 
         $PossessionSkillFactory = new PossessionSkillFactory();
-        $possessSkill = $PossessionSkillFactory->createPossessionSkill($skill, $this->studentNumber);
-        $this->possessionSkillRepo->save($possessSkill);
+        $possessSkill = $PossessionSkillFactory->createPossessionSkill($skill->skillId(), $this->studentNumber);
+        $this->possessionSkillRepo->save($possessSkill, $this->studentNumber);
 
-        $findSkill = $this->possessionSkillRepo->findBySkillAndStudentNumber($skill, $this->studentNumber);
+        $findSkill = $this->possessionSkillRepo->findBySkillAndStudentNumber($skill->skillId(), $this->studentNumber);
 
-        $result = $findSkill->skill()->skillId() === $skill->skillId();
+        $result = $findSkill->skillId() === $skill->skillId();
         $this->assertTrue($result);
     }
 
@@ -55,7 +56,7 @@ class PossessionSkillRepositoryTest extends TestCase
         $this->skillRepo->save($skill);
 
         $PossessionSkillFactory = new PossessionSkillFactory();
-        $possessSkill = $PossessionSkillFactory->createPossessionSkill($skill, $this->studentNumber);
-        $this->possessionSkillRepo->save($possessSkill);
+        $possessSkill = $PossessionSkillFactory->createPossessionSkill($skill->skillId(), $this->studentNumber);
+        $this->assertTrue($this->possessionSkillRepo->save($possessSkill, $this->studentNumber));
     }
 }

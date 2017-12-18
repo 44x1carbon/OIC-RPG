@@ -7,6 +7,7 @@ use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
+use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Domain\PossessionSkill\Service\PossessionSkillDomainService;
 use App\Domain\Skill\Factory\SkillFactory;
@@ -46,7 +47,7 @@ class PossessionSkillDomainServiceTest extends TestCase
         $studentNumber = new StudentNumber('b4000');
 
         $possessSkillFactory = new PossessionSkillFactory();
-        $this->possessionSkill = $possessSkillFactory->createPossessionSkill($skill, $studentNumber);
+        $this->possessionSkill = $possessSkillFactory->createPossessionSkill($skill->skillId(), $studentNumber);
     }
 
     function testSuccess()
@@ -70,7 +71,7 @@ class PossessionSkillDomainServiceTest extends TestCase
         $afterPossessionSkill = $this->possessionSkill->clone();
         $afterPossessionSkill->setTotalExp($this->possessionSkill->totalExp() + $exp);
 
-        $resultPossessionSkill = PossessionSkillDomainService::levelUp($this->possessionSkill, $afterPossessionSkill);
+        $resultPossessionSkill = PossessionSkill::levelUp($this->possessionSkill, $afterPossessionSkill);
 
         $this->assertTrue($resultPossessionSkill->skillLevel() === $this->possessionSkill->skillLevel() + 1);
     }
