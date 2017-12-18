@@ -76,7 +76,7 @@ class JobRepositoryTest extends TestCase
     {
         $nextId = $this->jobRepository->nextId();
 
-        $this->assertTrue($nextId->code() != $this->job->jobId()->code());
+        $this->assertTrue(is_null($this->jobRepository->findById($nextId->code())));
     }
 
     public function testSave()
