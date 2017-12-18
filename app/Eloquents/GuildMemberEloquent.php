@@ -9,6 +9,7 @@ use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\PossessionSkill\PossessionSkillCollection;
 use Illuminate\Database\Eloquent\Model;
 
 class GuildMemberEloquent extends Model
@@ -18,10 +19,8 @@ class GuildMemberEloquent extends Model
 
     /* @var GuildMemberFactory $factory */
     protected $factory;
-    /* @var CourseRepositoryInterfac $courseRepository */
+    /* @var CourseRepositoryInterface $courseRepository */
     protected $courseRepository;
-
-
 
     function __construct()
     {
@@ -37,13 +36,20 @@ class GuildMemberEloquent extends Model
 
     public function toEntity(): GuildMember
     {
-        return $this->factory->createGuildMember(
+        $guildMember = $this->factory->createGuildMember(
             $this->studentNumber(),
             $this->studentName(),
             $this->course(),
             $this->gender(),
             $this->mailAddress()
         );
+
+        $possessionSkillEloquent = new PossessionSkillEloquent();
+        $possessionSkills = $possessionSkillEloquent->findByStudentNumber($this->studentNumber());
+        $possessionSkillCollection = new PossessionSkillCollection($possessionSkills);
+
+        $guildMember->setPossessionSkills($possessionSkillCollection);
+        return $guildMember;
     }
 
     public function studentNumber(): StudentNumber
