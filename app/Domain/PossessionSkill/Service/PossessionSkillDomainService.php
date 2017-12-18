@@ -35,7 +35,7 @@ class PossessionSkillDomainService
         $addResultPossessionSkill = self::AddExp($possessionSkill, $exp);
         $addResultPossessionSkill = PossessionSkill::levelUp($possessionSkill, $addResultPossessionSkill);
 
-        return $this->possessionSkillRepo->save($addResultPossessionSkill);
+        return $this->possessionSkillRepo->save($addResultPossessionSkill, $possessionSkill->studentNumber());
     }
 
     public static function addExp(PossessionSkill $beforePossessionSkill, int $exp): PossessionSkill
