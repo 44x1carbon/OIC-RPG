@@ -58,5 +58,6 @@ class JobEloquent extends Model
     {
         $jobModel = self::fromEntity($job);
         $jobModel->save();
+        GetConditionEloquent::saveManyDomainObject($job->getConditions(), $job->jobId());
     }
 }

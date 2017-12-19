@@ -40,8 +40,6 @@ class JobEloquentRepositoryImpl implements JobRepositoryInterface
     public function save(Job $job): bool
     {
         JobEloquent::saveDomainObject($job);
-        GetConditionEloquent::saveManyDomainObject($job->getConditions(), $job->jobId());
-
         return true;
     }
 
