@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="background">
+<div class="background">
         <div class="layer layer1 board"></div>
     </div><!-- background -->
     <div class="entry layer2 entry-color">
