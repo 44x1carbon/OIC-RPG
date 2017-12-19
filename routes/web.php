@@ -23,6 +23,12 @@ Route::get('/sign_up', function() {
    return view('signup');
 });
 
+
+//ToDo nameをつける
+Route::get('/sign_up/auth_info', GuildMemberRegistrationController::class.'@showAuthInfo');
+Route::get('/sign_up/profile', GuildMemberRegistrationController::class.'@showProfile');
+Route::get('/sign_up/school_info', GuildMemberRegistrationController::class.'@showSchoolInfo');
+
 Route::post('/sign_up', SignUpController::class.'@store')->name('post_sign_up');
 
 Route::post('/guild_member', GuildMemberController::class.'@update')->name('update_guild_member');
