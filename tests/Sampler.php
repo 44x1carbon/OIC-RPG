@@ -23,7 +23,7 @@ trait Sampler
         return $model->toEntity();
     }
 
-    public function sampleGuildMember(): GuildMember
+    public function sampleGuildMember($attr = []): GuildMember
     {
         /* @var GuildMemberFacade $guildMemberFacade*/
         $guildMemberFacade = app(GuildMemberFacade::class);
@@ -33,14 +33,19 @@ trait Sampler
         $genderList = Gender::TYPE_LIST;
         $studentNumberData = "B".$faker->numberBetween(4000,4999);
 
-        $data = array(
-            "studentNumberData" => $studentNumberData,
-            "studentName" => $faker->name,
-            "courseId" => $faker->randomNumber(1)%3+1,
-            "genderId" => $genderList[$faker->randomNumber(1)%2],
-            "mailAddressData" => $studentNumberData."@oic.jp",
-            "password" => $faker->bothify('????####'),
+        $data = array_merge(
+            [
+                "studentNumberData" => $studentNumberData,
+                "studentName" => $faker->name,
+                "courseId" => $faker->randomNumber(1)%2+1,
+                "genderId" => $genderList[$faker->randomNumber(1)%2],
+                "mailAddressData" => $studentNumberData."@oic.jp",
+                "password" => $faker->bothify('????####'),
+            ],
+            $attr
         );
+
+
 
         $authData = $guildMemberFacade::registerMember($data['studentNumberData'], $data['studentName'], $data['courseId'], $data['genderId'], $data['mailAddressData'], $data['password']);
 
@@ -54,19 +59,22 @@ trait Sampler
      * @param string|null partyManagerId
      * @return Party
      */
-    public function sampleParty(string $partyManagerId = null): Party
+    public function sampleParty($attr = []): Party
     {
         $partyServiceFacade = app(PartyServiceFacade::class);
         $partyRepository = app(PartyRepositoryInterface::class);
 
         $faker = Faker::create('ja_JP');
 
-        $data = array(
-            "roleName" => $faker->realText($faker->numberBetween(10,10)),
-            "partyManagerId" => $partyManagerId ?? "B".$faker->numberBetween(4000,4999),
-            "activityEndDate" => $faker->dateTimeThisMonth->format('Y-m-d'),
-            "ideaName" => $faker->realText($faker->numberBetween(10,20)),
-            "ideaDescription" => $faker->realText($faker->numberBetween(20,40)),
+        $data = array_merge(
+            [
+                "roleName" => $faker->realText($faker->numberBetween(10,10)),
+                "partyManagerId" => "B".$faker->numberBetween(4000,4999),
+                "activityEndDate" => $faker->dateTimeThisMonth->format('Y-m-d'),
+                "ideaName" => $faker->realText($faker->numberBetween(10,20)),
+                "ideaDescription" => $faker->realText($faker->numberBetween(20,40)),
+            ],
+            $attr
         );
         $productionType = $this->sampleProductionType();
 
