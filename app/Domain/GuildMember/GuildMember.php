@@ -17,6 +17,7 @@ use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
+use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
 use ArrayObject;
 use Illuminate\Support\Facades\Mail;
@@ -27,6 +28,7 @@ class GuildMember
 {
     protected $possessionSkillFactory;
 
+    protected $possessionSkillRepo;
     /* @var \App\Domain\Course\RepositoryInterface\CourseRepositoryInterface */
     protected $courseRepo;
     private $studentNumber;
@@ -38,6 +40,7 @@ class GuildMember
 
     public function __construct()
     {
+        $this->possessionSkillRepo = app(PossessionSkillRepositoryInterface::class);
         $this->courseRepo = app(CourseRepositoryInterface::class);
         $this->possessionSkillFactory = app(PossessionSkillFactory::class);
     }
@@ -112,8 +115,16 @@ class GuildMember
         return $this->possessionSkillCollection;
     }
 
-    public function learnSkill(string $skillId)
+    public function learnSkill(string $skillId): bool
     {
-        return $this->possessionSkillFactory->createPossessionSkill($skillId, $this->studentNumber);
+        return $this->possessionSkillRepo->save($this->possessionSkillFactory->createPossessionSkill($skillId, $this->studentNumber));
+    }
+
+    public function gainExp(PossessionSkill $possessionSkill, int $exp): bool
+    {
+        $addResultPossessionSkill = PossessionSkill::AddExp($possessionSkill, $exp);
+        $addResultPossessionSkill = PossessionSkill::levelUp($possessionSkill, $addResultPossessionSkill);
+
+        return $this->possessionSkillRepo->save($addResultPossessionSkill, $possessionSkill->studentNumber());
     }
 }
