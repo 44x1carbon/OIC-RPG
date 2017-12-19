@@ -66,13 +66,10 @@ class PossessionSkillDomainServiceTest extends TestCase
     public function testLevelUp()
     {
         $exp = 100;
-        $this->possessionSkill->setTotalExp(225);
 
-        $afterPossessionSkill = $this->possessionSkill->clone();
-        $afterPossessionSkill->setTotalExp($this->possessionSkill->totalExp() + $exp);
-
+        $afterPossessionSkill = PossessionSkillDomainService::addExp($this->possessionSkill,$exp);
         $resultPossessionSkill = PossessionSkill::levelUp($this->possessionSkill, $afterPossessionSkill);
 
-        $this->assertTrue($resultPossessionSkill->skillLevel() === $this->possessionSkill->skillLevel() + 1);
+        $this->assertTrue($resultPossessionSkill->skillLevel() !== $this->possessionSkill->skillLevel());
     }
 }
