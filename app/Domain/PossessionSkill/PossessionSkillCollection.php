@@ -35,23 +35,16 @@ class PossessionSkillCollection extends ArrayObject
         throw new InvalidArgumentException;
     }
 
-    public function findPossessionSkill(string $skillId, StudentNumber $studentNumber): PossessionSkill
+    public function findPossessionSkill(string $skillId): ?PossessionSkill
     {
-        $result = array_filter((array) $this, function(PossessionSkill $possessionSkill) use($skillId, $studentNumber){
-            return $possessionSkill->skillId() === $skillId && $possessionSkill->studentNumber()->code() === $studentNumber->code();
+        $result = array_filter((array) $this, function(PossessionSkill $possessionSkill) use($skillId){
+            return $possessionSkill->skillId() === $skillId;
         });
+        array_values($result);
         if(count($result) > 0) {
-            $possessionSkill = $result[0];
+            return $result[0];
         } else {
-            $possessionSkill = null;
+            return null;
         }
-
-        if(is_null($possessionSkill))
-        {
-            $possessSkillFactory = new PossessionSkillFactory();
-            $possessionSkill = $possessSkillFactory->createPossessionSkill($skillId, $studentNumber);
-        }
-
-        return $possessionSkill;
     }
 }

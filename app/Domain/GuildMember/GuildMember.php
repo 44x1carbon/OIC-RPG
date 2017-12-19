@@ -14,6 +14,7 @@ use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\Course\Course;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
+use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
@@ -24,6 +25,8 @@ use PhpParser\Node\Scalar\String_;
 
 class GuildMember
 {
+    protected $possessionSkillFactory;
+
     /* @var \App\Domain\Course\RepositoryInterface\CourseRepositoryInterface */
     protected $courseRepo;
     private $studentNumber;
@@ -36,6 +39,7 @@ class GuildMember
     public function __construct()
     {
         $this->courseRepo = app(CourseRepositoryInterface::class);
+        $this->possessionSkillFactory = app(PossessionSkillFactory::class);
     }
 
 //  学籍番号VOをセット
@@ -106,5 +110,10 @@ class GuildMember
     public function possessionSkills(): ?PossessionSkillCollection
     {
         return $this->possessionSkillCollection;
+    }
+
+    public function learnSkill(string $skillId)
+    {
+        return $this->possessionSkillFactory->createPossessionSkill($skillId, $this->studentNumber);
     }
 }
