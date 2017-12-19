@@ -23,7 +23,7 @@ use Tests\TestCase;
  */
 
 
-class PossessionSkillDomainServiceTest extends TestCase
+class PossessionSkillTest extends TestCase
 {
     /* @var PossessionSkillRepositoryInterface $possessionSkillRepo */
     protected $possessionSkillRepo;
@@ -50,16 +50,10 @@ class PossessionSkillDomainServiceTest extends TestCase
         $this->possessionSkill = $possessSkillFactory->createPossessionSkill($skill->skillId(), $studentNumber);
     }
 
-    function testSuccess()
-    {
-        $possessionSkillService = new PossessionSkillDomainService($this->possessionSkillRepo);
-        $this->assertTrue($possessionSkillService->addExpService($this->possessionSkill,100));
-    }
-
     public function testAddExp()
     {
         $exp = 100;
-        $afterPossessionSkill = PossessionSkillDomainService::addExp($this->possessionSkill,$exp);
+        $afterPossessionSkill = PossessionSkill::addExp($this->possessionSkill,$exp);
         $this->assertTrue($this->possessionSkill->totalExp() + $exp === $afterPossessionSkill->totalExp());
     }
 
@@ -67,7 +61,7 @@ class PossessionSkillDomainServiceTest extends TestCase
     {
         $exp = 100;
 
-        $afterPossessionSkill = PossessionSkillDomainService::addExp($this->possessionSkill,$exp);
+        $afterPossessionSkill = PossessionSkill::addExp($this->possessionSkill,$exp);
         $resultPossessionSkill = PossessionSkill::levelUp($this->possessionSkill, $afterPossessionSkill);
 
         $this->assertTrue($resultPossessionSkill->skillLevel() !== $this->possessionSkill->skillLevel());
