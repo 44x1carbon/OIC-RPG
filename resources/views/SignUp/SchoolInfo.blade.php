@@ -29,6 +29,12 @@
                             <option value="4">4年</option>
                         </select>
                 </div>
+                <div class="item form-item">
+                    <h3 class="form-item-title">コース</h3>
+                    <select name="course"><!-- コース -->
+                        <option value="">ITスペシャリスト先専攻</option>
+                    </select>
+                </div>
                 <div class="btn-wrap row flex-end-length flex-center-length">
                     <button class="btn btn-register" type="submit">登録</button>
                 </div>
