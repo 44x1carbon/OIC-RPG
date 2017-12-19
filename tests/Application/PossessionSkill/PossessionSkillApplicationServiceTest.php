@@ -31,7 +31,6 @@ class PossessionSkillApplicationServiceTest extends \Tests\TestCase
     protected $skillRepo;
     protected $possessionSkillRepo;
 
-    private $domainService;
     private $studentNumber;
     /* @var Skill $skill */
     private $skill;
@@ -41,7 +40,6 @@ class PossessionSkillApplicationServiceTest extends \Tests\TestCase
         parent::setUp();
 
         $this->possessionSkillRepo = app(PossessionSkillRepositoryInterface::class);
-        $this->domainService = new PossessionSkillDomainService($this->possessionSkillRepo);
         $this->guildMemberRepo = app(GuildMemberRepositoryInterface::class);
         $this->skillRepo = app(SkillRepositoryInterface::class);
 
@@ -67,14 +65,14 @@ class PossessionSkillApplicationServiceTest extends \Tests\TestCase
 
     function testSuccess()
     {
-        $possessionSkillService = new PossessionSkillApplicationService($this->possessionSkillRepo, $this->domainService, $this->guildMemberRepo);
+        $possessionSkillService = new PossessionSkillApplicationService($this->possessionSkillRepo, $this->guildMemberRepo);
         $this->assertTrue($possessionSkillService->addExpService($this->studentNumber, $this->skill->SkillId(), 100));
     }
 
     function testFail()
     {
         $studentNumber = new StudentNumber('B7777');
-        $possessionSkillService = new PossessionSkillApplicationService($this->possessionSkillRepo, $this->domainService, $this->guildMemberRepo);
+        $possessionSkillService = new PossessionSkillApplicationService($this->possessionSkillRepo, $this->guildMemberRepo);
         $this->assertFalse($possessionSkillService->addExpService($studentNumber, $this->skill->skillId(),100));
     }
 }
