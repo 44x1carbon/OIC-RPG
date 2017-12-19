@@ -26,15 +26,12 @@ class PossessionSkillApplicationService
 {
     protected $possessionSkillRepo;
     protected $guildMemberRepo;
-    private $possessionSkillDomainService;
 
     public function __construct(
         PossessionSkillRepositoryInterface $possessionSkillRepository,
-        PossessionSkillDomainService $possessionSkillDomainService,
         GuildMemberRepositoryInterface $guildMemberRepository)
     {
         $this->possessionSkillRepo = $possessionSkillRepository;
-        $this->possessionSkillDomainService = $possessionSkillDomainService;
         $this->guildMemberRepo = $guildMemberRepository;
     }
 
@@ -47,9 +44,11 @@ class PossessionSkillApplicationService
 
         $guildMember = $this->guildMemberRepo->findByStudentNumber($studentNumber);
         $possessionSkill = $guildMember->possessionSkills()->findPossessionSkill($skillId);
-        if(is_null($possessionSkill)) $possessionSkill = $guildMember->learnSkill($skillId);
+        if(is_null($possessionSkill)){
+            if($guildMember->learnSkill($skillId)) $possessionSkill = $guildMember->possessionSkills()->findPossessionSkill($skillId);
+        }
 
-        $result = $this->possessionSkillDomainService->addExpService($possessionSkill, $exp);
+        $result = $guildMember->gainExp($possessionSkill, $exp);
 
         if($result)
         {
