@@ -18,15 +18,16 @@ class PartyServiceFacade
     }
 
     public function registerParty(
-        \DateTime $activityEndDate,
+        string $activityEndDate,
         string $studentNumber,
         string $roleName,
         string $productionTheme = null,
         string $productionTypeId = null,
         string $ideaDescription = null,
         array $wantedRoleList = []
-    ): string {
-        $partyId = $this->servoce->registerParty(new ActivityEndDate($activityEndDate->getTimestamp()), new StudentNumber($studentNumber), $roleName);
+    ): string
+    {
+        $partyId = $this->servoce->registerParty(new ActivityEndDate($activityEndDate), new StudentNumber($studentNumber), $roleName);
 
         $party = $this->partyRepository->findById($partyId);
         $this->servoce->updateProductionIdea($party->id(), $productionTheme, $productionTypeId, $ideaDescription);

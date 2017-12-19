@@ -17,7 +17,7 @@ class WantedRole
 {
     private $id;
     // 募集役割名
-    private $name;
+    private $roleName;
     // 参考ジョブID
     private $referenceJobId;
     // 参考スキルIDリスト
@@ -77,9 +77,9 @@ class WantedRole
         $this->id = $id;
     }
 
-    public function setName(String $name)
+    public function setRoleName(String $roleName)
     {
-        $this->name = $name;
+        $this->roleName = $roleName;
     }
 
     public function setReferenceJobId(String $referenceJobId)
