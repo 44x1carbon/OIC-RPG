@@ -17,7 +17,8 @@
         </div>
         <!-- main-heading -->
         <div class="entry-body body-color">
-            <form class="form" action="">
+            <form class="form" action="{{ route('do_sign_up_auth_info') }}" method="post">
+                {{ csrf_field() }}
                 <div class="item form-item">
                     <h3 class="form-item-title">メールアドレス</h3>
                     <input type="text" class="input" name=""><!--メールアドレス-->

@@ -15,7 +15,8 @@
             <h2 class="entry-title">ギルドメンバー登録</h2>
         </div><!-- main-heading -->
         <div class="entry-body body-color">
-            <form class="form" action="">
+            <form class="form" action="{{ route('do_sign_up_school_info') }}" method="post">
+                {{ csrf_field() }}
                 <div class="item form-item">
                     <h3 class="form-item-title">学籍番号</h3>
                     <input type="text" class="input" name=""><!-- 学籍番号 -->
