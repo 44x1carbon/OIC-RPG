@@ -3,6 +3,7 @@
 namespace App\Domain\PossessionSkill;
 
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Domain\Skill\Skill;
 
 /**
@@ -15,6 +16,8 @@ use App\Domain\Skill\Skill;
 class PossessionSkill
 {
     const LEVEL_UP_INTERVAL = 100;
+
+    protected $possessionSkillRepo;
 
     private $studentNumber;
     private $skillId;
@@ -32,6 +35,8 @@ class PossessionSkill
         $this->skillId = $skillId;
         $this->skillLevel = $skillLevel;
         $this->totalExp = $totalExp;
+
+        $this->possessionSkillRepo = app(PossessionSkillRepositoryInterface::class);
     }
 
     public function setSkillLevel(int $skillLevel)
@@ -67,6 +72,14 @@ class PossessionSkill
     public function clone(): PossessionSkill
     {
         return clone $this;
+    }
+
+    public static function addExp(PossessionSkill $beforePossessionSkill, int $exp): PossessionSkill
+    {
+        $afterPossessionSkill = $beforePossessionSkill->clone();
+        $afterPossessionSkill->setTotalExp($beforePossessionSkill->totalExp() + $exp);
+
+        return $afterPossessionSkill;
     }
 
     public static function levelUp(PossessionSkill $beforePossessionSkill, PossessionSkill $afterPossessionSkill): PossessionSkill
