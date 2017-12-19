@@ -62,7 +62,7 @@ class WantedMemberEloquent extends Model
             $this->wanted_member_id,
             new WantedStatus($this->wanted_status),
             null_safety($this->officer_id, function($id) {
-                new StudentNumber($id);
+                return new StudentNumber($id);
             })
         );
     }
