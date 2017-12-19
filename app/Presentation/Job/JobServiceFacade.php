@@ -18,9 +18,13 @@ class JobServiceFacade
 {
     protected $jobRepository;
 
+    private $jobApplicationService;
+
     public function __construct(JobRepositoryInterface $repo)
     {
         $this->jobRepository = $repo;
+        $this->jobApplicationService = new JobApplicationService($this->jobRepository);
+
     }
 
     public function registerJob(string $jobName, string $imagePath, array $getConditions): string
@@ -34,9 +38,8 @@ class JobServiceFacade
             $_getConditions[] = $_getCondition;
         }
 
-        $jobApplicationService = new JobApplicationService($this->jobRepository);
         /* @var $jobId JobId */
-        $jobId = $jobApplicationService->registerJob($jobName, $imagePath, $_getConditions);
+        $jobId = $this->jobApplicationService->registerJob($jobName, $imagePath, $_getConditions);
         return $jobId->code();
     }
 }
