@@ -6,7 +6,10 @@
         @component('Shared._Header')
             @yield('header_title')
         @endcomponent
-
-        @yield('content')
+        <main class="main">
+            @yield('content')
+        </main>
+        @component('Shared._footer')
+        @endcomponent
     </body>
 </html>
