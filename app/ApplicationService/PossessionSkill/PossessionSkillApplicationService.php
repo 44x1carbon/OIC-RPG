@@ -46,7 +46,9 @@ class PossessionSkillApplicationService
         if(!GuildMemberSpec::isExistStudentNumber($studentNumber)) return false;
 
         $guildMember = $this->guildMemberRepo->findByStudentNumber($studentNumber);
-        $possessionSkill = $guildMember->possessionSkills()->findPossessionSkill($skillId, $guildMember->studentNumber());
+        $possessionSkill = $guildMember->possessionSkills()->findPossessionSkill($skillId);
+        if(is_null($possessionSkill)) $possessionSkill = $guildMember->learnSkill($skillId);
+
         $result = $this->possessionSkillDomainService->addExpService($possessionSkill, $exp);
 
         if($result)
