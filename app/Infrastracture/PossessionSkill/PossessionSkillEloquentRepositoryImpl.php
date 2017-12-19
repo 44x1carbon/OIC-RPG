@@ -20,8 +20,9 @@ class PossessionSkillEloquentRepositoryImpl implements PossessionSkillRepository
     public function findBySkillAndStudentNumber(string $skillId, StudentNumber $studentNumber): ?PossessionSkill
     {
         $possessionSkillModel = PossessionSkillEloquent::findBySkillAndStudentNumber($skillId, $studentNumber);
-        if(is_null($possessionSkillModel)) return null;
-        return $possessionSkillModel->toEntity();
+        return null_safety($possessionSkillModel, function(PossessionSkillEloquent $eloquent){
+            return $eloquent->toEntity();
+        });
     }
 
     public function save(PossessionSkill $possessionSkill, StudentNumber $studentNumber): bool
