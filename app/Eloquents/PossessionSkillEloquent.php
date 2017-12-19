@@ -52,11 +52,12 @@ class PossessionSkillEloquent extends Model
     {
         $studentNumber = new StudentNumber($this->student_number);
 
-        $entity = new PossessionSkill();
-        $entity->setStudentNumber($studentNumber);
-        $entity->setSkillId($this->skill_id);
-        $entity->setSkillLevel($this->skill_level);
-        $entity->setTotalExp($this->total_exp);
+        $entity = new PossessionSkill(
+            $studentNumber,
+            $this->skill_id,
+            $this->skill_level,
+            $this->total_exp
+        );
 
         return $entity;
     }

@@ -21,18 +21,17 @@ class PossessionSkill
     private $skillLevel;
     private $totalExp;
 
-    public function __construct()
-    {
-    }
-
-    public function setStudentNumber(StudentNumber $studentNumber)
+    public function __construct(
+        StudentNumber $studentNumber,
+        string $skillId,
+        int $skillLevel,
+        int $totalExp
+    )
     {
         $this->studentNumber = $studentNumber;
-    }
-
-    public function setSkillId(string $skillId)
-    {
         $this->skillId = $skillId;
+        $this->skillLevel = $skillLevel;
+        $this->totalExp = $totalExp;
     }
 
     public function setSkillLevel(int $skillLevel)

@@ -17,11 +17,12 @@ class PossessionSkillFactory
 {
     public function createPossessionSkill(string $skillId, StudentNumber $studentNumber): PossessionSkill
     {
-        $possessionSkill = new PossessionSkill();
-        $possessionSkill->setStudentNumber($studentNumber);
-        $possessionSkill->setSkillId($skillId);
-        $possessionSkill->setSkillLevel(1);
-        $possessionSkill->setTotalExp(0);
+        $possessionSkill = new PossessionSkill(
+            $studentNumber,
+            $skillId,
+            1,
+            0
+        );
         return $possessionSkill;
     }
 }
