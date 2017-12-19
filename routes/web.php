@@ -24,10 +24,9 @@ Route::get('/sign_up', function() {
 });
 
 
-//ToDo nameをつける
-Route::get('/sign_up/auth_info', GuildMemberRegistrationController::class.'@showAuthInfo');
-Route::get('/sign_up/profile', GuildMemberRegistrationController::class.'@showProfile');
-Route::get('/sign_up/school_info', GuildMemberRegistrationController::class.'@showSchoolInfo');
+Route::get('/sign_up/auth_info', GuildMemberRegistrationController::class.'@showAuthInfo')->name('show_sign_up_auth_info');
+Route::get('/sign_up/profile', GuildMemberRegistrationController::class.'@showProfile')->name('show_sign_up_profile');
+Route::get('/sign_up/school_info', GuildMemberRegistrationController::class.'@showSchoolInfo')->name('show_sign_up_school_info');
 
 Route::post('/sign_up', SignUpController::class.'@store')->name('post_sign_up');
 
