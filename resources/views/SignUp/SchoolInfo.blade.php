@@ -28,7 +28,9 @@
                 <div class="item form-item">
                     <h3 class="form-item-title">コース</h3>
                     <select name="course_id"><!-- コース -->
-                        <option value="1">ITスペシャリスト先専攻</option>
+                        @foreach($courses as $course)
+                            <option value="{{ $course->id() }}">{{ $course->courseName() }}</option>
+                        @endforeach
                     </select>
                     @foreach($errors->get('guild_member.course_id') as $message)
                         <p class="error form-error">※{{ $message }}</p>

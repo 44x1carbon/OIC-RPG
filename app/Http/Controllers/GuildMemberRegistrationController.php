@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
 use App\Http\Requests\GuildMemberRegistration\AuthInfoRequest;
 use App\Http\Requests\GuildMemberRegistration\ProfileRequest;
 use App\Http\Requests\SignUpRequest;
@@ -33,9 +34,11 @@ class GuildMemberRegistrationController extends Controller
         return redirect()->route('show_sign_up_school_info');
     }
 
-    public function showSchoolInfo()
+    public function showSchoolInfo(CourseRepositoryInterface $courseRepository)
     {
-        return view('signup.schoolinfo')->with('session', session('guild_member'));
+        return view('signup.schoolinfo')
+            ->with('session', session('guild_member'))
+            ->with('courses', $courseRepository->all());
     }
 
     public function doSchoolInfo(SignUpRequest $request, GuildMemberFacade $guildMemberFacade)
