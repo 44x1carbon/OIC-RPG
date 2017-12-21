@@ -8,7 +8,7 @@ trait SessionExt
     {
         foreach ($data as $k => $value) {
             $key = $parentKey . '.' .$k;
-            if(is_array($value)) {
+            if(is_array($value) && is_assoc($value)) {
                 self::sessionSave($value, $key);
             } else {
                 session([$key => $value]);
