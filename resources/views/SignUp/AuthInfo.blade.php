@@ -21,13 +21,17 @@
                 {{ csrf_field() }}
                 <div class="item form-item">
                     <h3 class="form-item-title">メールアドレス</h3>
-                    <input type="text" class="input" name=""><!--メールアドレス-->
-                    <p class="error form-error">※メールアドレスが間違っています</p>
+                    <input type="text" class="input" name="guild_member[mail_address]"><!--メールアドレス-->
+                    @foreach($errors->get('guild_member.mail_address') as $message)
+                        <p class="error form-error">※{{ $message }}</p>
+                    @endforeach
                 </div><!-- item -->
                 <div class="item form-item">
                     <h3 class="form-item-title">パスワード</h3>
-                    <input type="text" class="input" name=""><!--パスワード-->
-                    <p class="error form-error">※パスワードが間違っています</p>
+                    <input type="password" class="input" name="guild_member[password]"><!--パスワード-->
+                    @foreach($errors->get('guild_member.password') as $message)
+                        <p class="error form-error">※{{ $message }}</p>
+                    @endforeach
                 </div><!-- item -->
                 <div class="btn-wrap row flex-end-side flex-end-length">
                     <button class="btn btn-next" type="submit">次へ</button>

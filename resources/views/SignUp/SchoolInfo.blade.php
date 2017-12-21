@@ -19,26 +19,31 @@
                 {{ csrf_field() }}
                 <div class="item form-item">
                     <h3 class="form-item-title">学籍番号</h3>
-                    <input type="text" class="input" name=""><!-- 学籍番号 -->
+                    <input type="text" class="input" name="student_number"><!-- 学籍番号 -->
+                    @foreach($errors->get('guild_member.student_number') as $message)
+                        <p class="error form-error">※{{ $message }}</p>
+                    @endforeach
                 </div>
-                <div class="item form-item">
-                    <h3 class="form-item-title">学年</h3>
-                        <select name="schoolyear"><!-- 学年 -->
-                            <option value="1">1年</option>
-                            <option value="2">2年</option>
-                            <option value="3">3年</option>
-                            <option value="4">4年</option>
-                        </select>
-                </div>
+
                 <div class="item form-item">
                     <h3 class="form-item-title">コース</h3>
-                    <select name="course"><!-- コース -->
-                        <option value="">ITスペシャリスト先専攻</option>
+                    <select name="course_id"><!-- コース -->
+                        <option value="1">ITスペシャリスト先専攻</option>
                     </select>
+                    @foreach($errors->get('guild_member.course_id') as $message)
+                        <p class="error form-error">※{{ $message }}</p>
+                    @endforeach
                 </div>
                 <div class="btn-wrap row flex-end-length flex-center-length">
                     <button class="btn btn-register" type="submit">登録</button>
                 </div>
+
+                {{-- 全データを一度に送るためにセッションから持ってくる --}}
+                <input type="hidden" name="name" value="{{ $session['name'] }}">
+                <input type="hidden" name="mail_address" value="{{ $session['mail_address'] }}">
+                <input type="hidden" name="password" value="{{ $session['password'] }}">
+                <input type="hidden" name="gender" value="{{ $session['gender'] }}">
+                <input type="hidden" name="introduction" value="{{ $session['introduction'] }}">
             </form><!-- form -->
         </div><!-- body -->
     </div><!-- entry -->
