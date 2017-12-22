@@ -62,9 +62,13 @@ class PossessionSkillEloquent extends Model
         return $entity;
     }
 
-    public static function saveDomainObject(PossessionSkill $possessionSkill, StudentNumber $studentNumber): bool
+    public static function saveManyDomainObject(PossessionSkillCollection $possessionSkillCollection, StudentNumber $studentNumber): bool
     {
-        $possessionSkillModel = self::fromEntity($possessionSkill, $studentNumber);
-        return($possessionSkillModel->save());
+        foreach ((array)$possessionSkillCollection as $possessionSkill)
+        {
+            $possessionSkillModel = self::fromEntity($possessionSkill, $studentNumber);
+            if($possessionSkillModel->save()) return false;
+        }
+        return true;
     }
 }
