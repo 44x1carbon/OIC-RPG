@@ -27,8 +27,7 @@ class PossessionSkillApplicationService
     protected $possessionSkillRepo;
     protected $guildMemberRepo;
 
-    public function __construct(
-        GuildMemberRepositoryInterface $guildMemberRepository)
+    public function __construct(GuildMemberRepositoryInterface $guildMemberRepository)
     {
         $this->guildMemberRepo = $guildMemberRepository;
     }
