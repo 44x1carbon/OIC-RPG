@@ -16,6 +16,13 @@ use App\Domain\Job\ValueObjects\JobId;
 
 class JobServiceFacade
 {
+    private $jobApplicationService;
+
+    public function __construct()
+    {
+        $this->jobApplicationService = app(JobApplicationService::class);
+    }
+
     public function registerJob(string $jobName, string $imagePath, array $getConditions): string
     {
         $_getConditions = [];
@@ -27,9 +34,8 @@ class JobServiceFacade
             $_getConditions[] = $_getCondition;
         }
 
-        $jobApplicationService = new JobApplicationService();
         /* @var $jobId JobId */
-        $jobId = $jobApplicationService->registerJob($jobName, $imagePath, $_getConditions);
+        $jobId = $this->jobApplicationService->registerJob($jobName, $imagePath, $_getConditions);
         return $jobId->code();
     }
 

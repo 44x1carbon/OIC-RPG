@@ -21,18 +21,21 @@ class GetConditionEloquent extends Model
     public function findByJobId(string $jobId): ?array
     {
         $getConditionModel = $this->where('job_id', $jobId)->get();
-        return $getConditionModel->toArray();
+        $getConditionCollection = $getConditionModel->map(function(GetConditionEloquent $eloquent){
+            return $eloquent->toValueObject();
+        });
+        return $getConditionCollection->toArray();
     }
 
-    public function findByJobIdAndSkillId(string $jobId, string $skillId): ?GetConditionEloquent
+    public static function findByJobIdAndSkillId(string $jobId, string $skillId): ?GetConditionEloquent
     {
-        $getConditionModel = $this->where('job_id', $jobId)->where('skill_id', $skillId)->first();
+        $getConditionModel = self::where('job_id', $jobId)->where('skill_id', $skillId)->first();
         return $getConditionModel;
     }
 
-    public function fromValueObject(GetCondition $getCondition, JobId $jobId): GetConditionEloquent
+    public static function fromValueObject(GetCondition $getCondition, JobId $jobId): GetConditionEloquent
     {
-        $getConditionModel = $this->findByJobIdAndSkillId($jobId->code(), $getCondition->skillId());
+        $getConditionModel = self::findByJobIdAndSkillId($jobId->code(), $getCondition->skillId());
         if(is_null($getConditionModel)) $getConditionModel = new GetConditionEloquent();
 
         $getConditionModel->job_id = $jobId->code();
@@ -42,11 +45,20 @@ class GetConditionEloquent extends Model
         return $getConditionModel;
     }
 
-    public function saveManyDomainObject(array $getConditions, JobId $jobId)
+    public function toValueObject(): GetCondition
+    {
+        $valueObject = new GetCondition(
+            $this->skill_id,
+            $this->required_level
+        );
+        return $valueObject;
+    }
+
+    public static function saveManyDomainObject(array $getConditions, JobId $jobId)
     {
         foreach ($getConditions as $getCondition)
         {
-            $getConditionModel = $this->fromValueObject($getCondition, $jobId);
+            $getConditionModel = self::fromValueObject($getCondition, $jobId);
             $getConditionModel->save();
         }
     }

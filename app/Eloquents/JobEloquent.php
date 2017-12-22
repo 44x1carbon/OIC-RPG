@@ -17,18 +17,20 @@ class JobEloquent extends Model
 {
     protected $table = 'jobs';
 
-    public function findById(string $id): ?JobEloquent
+    public static function findById(string $id): ?JobEloquent
     {
-        $jobModel = $this->where('job_id', $id)->first();
+        $jobModel = self::where('job_id', $id)->first();
         return $jobModel;
     }
 
-    public function fromEntity(Job $job): JobEloquent
+    public static function fromEntity(Job $job): JobEloquent
     {
-        $jobModel = $this->findById($job->jobId()->code());
-        if(is_null($jobModel)) $jobModel = new JobEloquent();
-
-        $jobModel->job_id = $job->jobId()->code();
+        $jobModel = self::findById($job->jobId()->code());
+        if(is_null($jobModel))
+        {
+            $jobModel = new JobEloquent();
+            $jobModel->job_id = $job->jobId()->code();
+        }
         $jobModel->job_name = $job->jobName();
         $jobModel->image_path = $job->imagePath();
 
@@ -52,9 +54,10 @@ class JobEloquent extends Model
         return $entity;
     }
 
-    public function saveDomainObject(Job $job)
+    public static function saveDomainObject(Job $job)
     {
-        $jobModel = $this->fromEntity($job);
+        $jobModel = self::fromEntity($job);
         $jobModel->save();
+        GetConditionEloquent::saveManyDomainObject($job->getConditions(), $job->jobId());
     }
 }
