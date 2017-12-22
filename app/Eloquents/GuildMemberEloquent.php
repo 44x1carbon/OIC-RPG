@@ -9,6 +9,7 @@ use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\PossessionSkill\PossessionSkillCollection;
 use Illuminate\Database\Eloquent\Model;
 
 class GuildMemberEloquent extends Model
@@ -18,15 +19,16 @@ class GuildMemberEloquent extends Model
 
     /* @var GuildMemberFactory $factory */
     protected $factory;
-    /* @var CourseRepositoryInterfac $courseRepository */
+    /* @var CourseRepositoryInterface $courseRepository */
     protected $courseRepository;
 
-
+    protected $possessionSkillEloquent;
 
     function __construct()
     {
         $this->factory = app(GuildMemberFactory::class);
         $this->courseRepository = app(CourseRepositoryInterface::class);
+        $this->possessionSkillEloquent = new PossessionSkillEloquent();
     }
 
     public function findByStudentNumber(StudentNumber $studentNumber): ?GuildMemberEloquent
@@ -37,13 +39,18 @@ class GuildMemberEloquent extends Model
 
     public function toEntity(): GuildMember
     {
-        return $this->factory->createGuildMember(
+        $possessionSkills = $this->possessionSkillEloquent->findByStudentNumber($this->studentNumber());
+        $possessionSkillCollection = new PossessionSkillCollection($possessionSkills);
+
+        $guildMember = $this->factory->createGuildMember(
             $this->studentNumber(),
             $this->studentName(),
             $this->course(),
             $this->gender(),
-            $this->mailAddress()
+            $this->mailAddress(),
+            $possessionSkillCollection
         );
+        return $guildMember;
     }
 
     public function studentNumber(): StudentNumber

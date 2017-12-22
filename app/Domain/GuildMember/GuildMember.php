@@ -14,13 +14,20 @@ use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\Course\Course;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
+use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
+use App\Domain\PossessionSkill\PossessionSkill;
+use App\Domain\PossessionSkill\PossessionSkillCollection;
+use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
+use ArrayObject;
 use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Scalar\String_;
 
 
 class GuildMember
 {
+    /* @var PossessionSkillFactory $possessionSkillFactory */
+    protected $possessionSkillFactory;
     /* @var \App\Domain\Course\RepositoryInterface\CourseRepositoryInterface */
     protected $courseRepo;
     private $studentNumber;
@@ -28,10 +35,12 @@ class GuildMember
     private $courseId;
     private $gender;
     private $mailAddress;
+    private $possessionSkillCollection;
 
     public function __construct()
     {
         $this->courseRepo = app(CourseRepositoryInterface::class);
+        $this->possessionSkillFactory = app(PossessionSkillFactory::class);
     }
 
 //  学籍番号VOをセット
@@ -41,7 +50,7 @@ class GuildMember
     }
 
 //  学生の名前をセット
-    public function setStudentName(String $studentName)
+    public function setStudentName(string $studentName)
     {
         $this->studentName = $studentName;
     }
@@ -63,6 +72,11 @@ class GuildMember
         $this->mailAddress = $mailAddress;
     }
 
+    public function setPossessionSkills(PossessionSkillCollection $possessionSkillCollection)
+    {
+        $this->possessionSkillCollection = $possessionSkillCollection;
+    }
+
 //  学籍番号をゲット
     public function studentNumber(): StudentNumber
     {
@@ -70,7 +84,7 @@ class GuildMember
     }
 
 //  名前をゲット
-    public function studentName(): String
+    public function studentName(): string
     {
         return $this->studentName;
     }
@@ -94,4 +108,23 @@ class GuildMember
         return $this->mailAddress;
     }
 
+    public function possessionSkills(): ?PossessionSkillCollection
+    {
+        return $this->possessionSkillCollection;
+    }
+
+    public function learnSkill(string $skillId): PossessionSkill
+    {
+        $possessionSkill = $this->possessionSkillFactory->createPossessionSkill($skillId, $this->studentNumber);
+        $this->possessionSkills()->append($possessionSkill);
+        return $possessionSkill;
+    }
+
+    public function gainExp(PossessionSkill $possessionSkill, int $exp): PossessionSkill
+    {
+        $addResultPossessionSkill = PossessionSkill::AddExp($possessionSkill, $exp);
+        $addResultPossessionSkill = PossessionSkill::levelUp($possessionSkill, $addResultPossessionSkill);
+
+        return $addResultPossessionSkill;
+    }
 }

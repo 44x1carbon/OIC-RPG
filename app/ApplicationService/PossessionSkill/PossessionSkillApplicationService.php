@@ -9,10 +9,12 @@
 namespace App\ApplicationService\PossessionSkill;
 
 
+use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\Spec\GuildMemberSpec;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PossessionSkill\AddProcess;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
+use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Domain\PossessionSkill\Service\PossessionSkillDomainService;
 use App\Domain\PossessionSkill\PossessionSkill;
@@ -23,39 +25,41 @@ use App\Events\LevelUpEvent;
 class PossessionSkillApplicationService
 {
     protected $possessionSkillRepo;
+    protected $guildMemberRepo;
 
-    public function __construct(PossessionSkillRepositoryInterface $repo)
+    public function __construct(GuildMemberRepositoryInterface $guildMemberRepository)
     {
-        $this->possessionSkillRepo = $repo;
+        $this->guildMemberRepo = $guildMemberRepository;
     }
 
-    public function addExpService(StudentNumber $studentNumber, Skill $skill, int $exp): bool
+    public function addExpService(StudentNumber $studentNumber, string $skillId, int $exp): bool
     {
         /* @var PossessionSkill $possessionSkill */
         /* @var PossessionSkill $addResultPossessionSkill */
 
         if(!GuildMemberSpec::isExistStudentNumber($studentNumber)) return false;
 
-        $possessionSkill = $this->possessionSkillRepo->findBySkill($skill);
-        if(is_null($possessionSkill))
-        {
-            $possessSkillFactory = new PossessionSkillFactory();
-            $possessionSkill = $possessSkillFactory->possessSkill($skill);
-        }
+        $guildMember = $this->guildMemberRepo->findByStudentNumber($studentNumber);
 
-        $possessionSkillDomainService = new PossessionSkillDomainService($this->possessionSkillRepo);
-        $result = $possessionSkillDomainService->addService($possessionSkill, $exp);
+        $possessionSkill = $guildMember->possessionSkills()->findPossessionSkill($skillId);
+        if(is_null($possessionSkill))  $possessionSkill = $guildMember->learnSkill($skillId);
+        $beforeLevel = $possessionSkill->skillLevel();
+        $offset = $guildMember->possessionSkills()->getOffset($skillId);
+
+        $possessionSkill = $guildMember->gainExp($possessionSkill, $exp);
+
+        $guildMember->possessionSkills()->offsetSet($offset, $possessionSkill);
+        $result = $this->guildMemberRepo->save($guildMember);
 
         if($result)
         {
-            $addResultPossessionSkill = $this->possessionSkillRepo->findBySkill($skill);
             //AddExpイベント発火
-            if($possessionSkill->totalExp() < $addResultPossessionSkill->totalExp())
-                event(new AddExpEvent($addResultPossessionSkill));
+            if($exp > 0)
+                event(new AddExpEvent($guildMember->possessionSkills()->offsetGet($offset)));
             //LevelUpイベント発火
-            if($possessionSkill->skillLevel() < $addResultPossessionSkill->skillLevel())
-                event(new LevelUpEvent($addResultPossessionSkill));
+            if($beforeLevel < $possessionSkill->skillLevel())
+                event(new LevelUpEvent($guildMember->possessionSkills()->offsetGet($offset)));
         }
-        return $result;
+        return true;
     }
 }

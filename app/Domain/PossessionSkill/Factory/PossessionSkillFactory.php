@@ -2,6 +2,7 @@
 
 namespace App\Domain\PossessionSkill\Factory;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\Skill\Skill;
 
@@ -14,12 +15,14 @@ use App\Domain\Skill\Skill;
 
 class PossessionSkillFactory
 {
-    public function possessSkill(Skill $skill): PossessionSkill
+    public function createPossessionSkill(string $skillId, StudentNumber $studentNumber): PossessionSkill
     {
-        $possessionSkill = new PossessionSkill();
-        $possessionSkill->setSkill($skill);
-        $possessionSkill->setSkillLevel(1);
-        $possessionSkill->setTotalExp(0);
+        $possessionSkill = new PossessionSkill(
+            $studentNumber,
+            $skillId,
+            1,
+            0
+        );
         return $possessionSkill;
     }
 }

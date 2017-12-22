@@ -2,6 +2,8 @@
 
 namespace App\Domain\PossessionSkill;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Domain\Skill\Skill;
 
 /**
@@ -13,17 +15,24 @@ use App\Domain\Skill\Skill;
 
 class PossessionSkill
 {
-    private $skill;
+    const LEVEL_UP_INTERVAL = 100;
+
+    private $studentNumber;
+    private $skillId;
     private $skillLevel;
     private $totalExp;
 
-    public function __construct()
+    public function __construct(
+        StudentNumber $studentNumber,
+        string $skillId,
+        int $skillLevel,
+        int $totalExp
+    )
     {
-    }
-
-    public function setSkill(Skill $skill)
-    {
-        $this->skill = $skill;
+        $this->studentNumber = $studentNumber;
+        $this->skillId = $skillId;
+        $this->skillLevel = $skillLevel;
+        $this->totalExp = $totalExp;
     }
 
     public function setSkillLevel(int $skillLevel)
@@ -36,9 +45,14 @@ class PossessionSkill
         $this->totalExp = $totalExp;
     }
 
-    public function skill(): Skill
+    public function studentNumber(): StudentNumber
     {
-        return $this->skill;
+        return $this->studentNumber;
+    }
+
+    public function skillId(): string
+    {
+        return $this->skillId;
     }
 
     public function skillLevel(): int
@@ -54,5 +68,26 @@ class PossessionSkill
     public function clone(): PossessionSkill
     {
         return clone $this;
+    }
+
+    public static function addExp(PossessionSkill $beforePossessionSkill, int $exp): PossessionSkill
+    {
+        $afterPossessionSkill = $beforePossessionSkill->clone();
+        $afterPossessionSkill->setTotalExp($beforePossessionSkill->totalExp() + $exp);
+
+        return $afterPossessionSkill;
+    }
+
+    public static function levelUp(PossessionSkill $beforePossessionSkill, PossessionSkill $afterPossessionSkill): PossessionSkill
+    {
+        $beforeTotalExp = $beforePossessionSkill->totalExp();
+        $afterTotalExp = $afterPossessionSkill->totalExp();
+
+        $exp = $afterTotalExp - $beforeTotalExp;
+
+        $levelUpValue = (int) floor(($beforeTotalExp % self::LEVEL_UP_INTERVAL + $exp) / self::LEVEL_UP_INTERVAL);
+        $afterPossessionSkill->setSkillLevel($afterPossessionSkill->skillLevel() + $levelUpValue);
+
+        return $afterPossessionSkill;
     }
 }

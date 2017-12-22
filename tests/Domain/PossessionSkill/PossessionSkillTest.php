@@ -7,6 +7,7 @@ use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
+use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Domain\PossessionSkill\Service\PossessionSkillDomainService;
 use App\Domain\Skill\Factory\SkillFactory;
@@ -22,11 +23,8 @@ use Tests\TestCase;
  */
 
 
-class PossessionSkillDomainServiceTest extends TestCase
+class PossessionSkillTest extends TestCase
 {
-    /* @var PossessionSkillRepositoryInterface $possessionSkillRepo */
-    protected $possessionSkillRepo;
-
     /* @var SkillRepositoryInterface $skillRepo */
     protected $skillRepo;
 
@@ -37,39 +35,31 @@ class PossessionSkillDomainServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->possessionSkillRepo = app(PossessionSkillRepositoryInterface::class);
         $this->skillRepo = app(SkillRepositoryInterface::class);
 
         $skillFactory = new SkillFactory();
         $skill = $skillFactory->createSkill('php');
 
-        $possessSkillFactory = new PossessionSkillFactory();
-        $this->possessionSkill = $possessSkillFactory->possessSkill($skill);
-    }
+        $studentNumber = new StudentNumber('b4000');
 
-    function testSuccess()
-    {
-        $possessionSkillService = new PossessionSkillDomainService($this->possessionSkillRepo);
-        $this->assertTrue($possessionSkillService->addService($this->possessionSkill,100));
+        $possessSkillFactory = new PossessionSkillFactory();
+        $this->possessionSkill = $possessSkillFactory->createPossessionSkill($skill->skillId(), $studentNumber);
     }
 
     public function testAddExp()
     {
         $exp = 100;
-        $afterPossessionSkill = PossessionSkillDomainService::addExp($this->possessionSkill,$exp);
+        $afterPossessionSkill = PossessionSkill::addExp($this->possessionSkill,$exp);
         $this->assertTrue($this->possessionSkill->totalExp() + $exp === $afterPossessionSkill->totalExp());
     }
 
     public function testLevelUp()
     {
         $exp = 100;
-        $this->possessionSkill->setTotalExp(225);
 
-        $afterPossessionSkill = $this->possessionSkill->clone();
-        $afterPossessionSkill->setTotalExp($this->possessionSkill->totalExp() + $exp);
+        $afterPossessionSkill = PossessionSkill::addExp($this->possessionSkill,$exp);
+        $resultPossessionSkill = PossessionSkill::levelUp($this->possessionSkill, $afterPossessionSkill);
 
-        $resultPossessionSkill = PossessionSkillDomainService::levelUp($this->possessionSkill, $afterPossessionSkill);
-
-        $this->assertTrue($resultPossessionSkill->skillLevel() === $this->possessionSkill->skillLevel() + 1);
+        $this->assertTrue($resultPossessionSkill->skillLevel() !== $this->possessionSkill->skillLevel());
     }
 }
