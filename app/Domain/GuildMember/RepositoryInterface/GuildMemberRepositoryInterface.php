@@ -25,4 +25,6 @@ interface GuildMemberRepositoryInterface
     public function save(GuildMember $guildMember): bool;
 
     public function all(): array;
+
+    public function delete(GuildMember $guildMember): bool;
 }

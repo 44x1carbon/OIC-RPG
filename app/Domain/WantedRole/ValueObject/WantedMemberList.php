@@ -3,6 +3,7 @@
 namespace App\Domain\WantedRole\ValueObject;
 
 use App\Domain\WantedMember\Factory\WantedMemberFactory;
+use App\Domain\WantedMember\Spec\WantedMemberSpec;
 use App\Domain\WantedMember\WantedMember;
 
 class WantedMemberList
@@ -24,7 +25,7 @@ class WantedMemberList
     public function addFrame(int $frameAmount)
     {
         for ($i=0;$i<$frameAmount;$i++) {
-            $this->wantedMemberList[] = $this->wantedMemberFactory->createWantedMember();
+            $this->wantedMemberList[] = new WantedMember($this->nextWantedMemberId());
         }
     }
 
@@ -62,5 +63,17 @@ class WantedMemberList
             $this->wantedMemberList[] = $wantedMember;
         }
         return true;
+    }
+
+    public function assignableList(): array
+    {
+        return array_values(array_filter($this->all(), function(WantedMember $wantedMember) {
+           return WantedMemberSpec::isAssignable($wantedMember);
+        }));
+    }
+
+    private function nextWantedMemberId(): string
+    {
+        return (string) (count($this->all()) + 1);
     }
 }

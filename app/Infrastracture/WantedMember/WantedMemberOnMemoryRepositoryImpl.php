@@ -16,7 +16,7 @@ class WantedMemberOnMemoryRepositoryImpl implements WantedMemberRepositoryInterf
 {
     private $data = [];
 
-    public function findById(String $id): ?WantedMember
+    public function findById(string $id): ?WantedMember
     {
         $result = array_filter($this->data, function(WantedMember $wantedMember) use($id){
             return $wantedMember->id() == $id;

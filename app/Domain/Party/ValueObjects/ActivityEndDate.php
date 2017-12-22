@@ -14,22 +14,15 @@ use App\Exceptions\DomainException;
 class ActivityEndDate
 {
 
-    private $timeStamp;
+    private $date;
 
-    public function __construct(int $timeStamp)
+    public function __construct(string $dateStr)
     {
-        $this->timeStamp = $timeStamp;
-        if( !ActivityEndDateSpec::isUnixTimeFormat($this->timeStamp) ) throw new DomainException("Error");
+        $this->date = new \DateTime($dateStr);
     }
 
-    public function timeStamp()
+    public function date(): \DateTime
     {
-        return $this->timeStamp;
+        return $this->date;
     }
-
-    public  function getIso8601()
-    {
-        return date('c', $this->timeStamp);
-    }
-
 }

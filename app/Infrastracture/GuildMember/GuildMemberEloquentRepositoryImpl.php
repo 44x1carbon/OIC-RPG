@@ -14,6 +14,7 @@ use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Eloquents\GuildMemberEloquent;
+use App\Eloquents\PossessionSkillEloquent;
 
 class GuildMemberEloquentRepositoryImpl implements GuildMemberRepositoryInterface
 {
@@ -44,10 +45,11 @@ class GuildMemberEloquentRepositoryImpl implements GuildMemberRepositoryInterfac
         $guildMemberModel->gender_type = $guildMember->gender()->type();
         $guildMemberModel->email = $guildMember->mailAddress()->address();
 
+        PossessionSkillEloquent::saveManyDomainObject($guildMember->possessionSkills(), $guildMember->studentNumber());
         return $guildMemberModel->save();
     }
 
-    public function all(): Array
+    public function all(): array
     {
         $guildMemberModels = $this->eloquent->all();
 
@@ -55,6 +57,12 @@ class GuildMemberEloquentRepositoryImpl implements GuildMemberRepositoryInterfac
             return $eloquent->toEntity();
         });
         return $guildMemberCollection->toArray();
+    }
+
+    public function delete(GuildMember $guildMember): bool
+    {
+        $guildMemberModel = $this->eloquent->fromEntity($guildMember);
+        return $guildMemberModel->delete();
     }
 
     public function findByLoginInfo(LoginInfo $loginInfo): ?GuildMember
