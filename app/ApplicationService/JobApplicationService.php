@@ -18,9 +18,9 @@ class JobApplicationService
 {
     protected $jobRepository;
 
-    public function __construct()
+    public function __construct(JobRepositoryInterface $repo)
     {
-        $this->jobRepository = app(JobRepositoryInterface::class);
+        $this->jobRepository = $repo;
     }
 
     public function registerJob(string $jobName, string $imagePath, array $getConditions): JobId
