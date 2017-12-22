@@ -25,9 +25,6 @@ use Tests\TestCase;
 
 class PossessionSkillTest extends TestCase
 {
-    /* @var PossessionSkillRepositoryInterface $possessionSkillRepo */
-    protected $possessionSkillRepo;
-
     /* @var SkillRepositoryInterface $skillRepo */
     protected $skillRepo;
 
@@ -38,7 +35,6 @@ class PossessionSkillTest extends TestCase
     {
         parent::setUp();
 
-        $this->possessionSkillRepo = app(PossessionSkillRepositoryInterface::class);
         $this->skillRepo = app(SkillRepositoryInterface::class);
 
         $skillFactory = new SkillFactory();
