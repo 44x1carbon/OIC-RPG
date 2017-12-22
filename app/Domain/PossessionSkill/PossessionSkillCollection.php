@@ -40,11 +40,22 @@ class PossessionSkillCollection extends ArrayObject
         $result = array_filter((array) $this, function(PossessionSkill $possessionSkill) use($skillId){
             return $possessionSkill->skillId() === $skillId;
         });
-        array_values($result);
+        $result = array_values($result);
         if(count($result) > 0) {
             return $result[0];
         } else {
             return null;
         }
+    }
+
+    public function getOffset($skillId): int
+    {
+        /* @var PossessionSkill $possessionSkill*/
+        for($i = 0; $i < $this->count(); $i++)
+        {
+            $possessionSkill = $this->offsetGet($i);
+            if($possessionSkill->skillId() === $skillId) break;
+        }
+        return $i;
     }
 }
