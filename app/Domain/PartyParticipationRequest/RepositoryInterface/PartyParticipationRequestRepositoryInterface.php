@@ -8,11 +8,16 @@
 
 namespace App\Domain\PartyParticipationRequest\RepositoryInterface;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PartyParticipationRequest\PartyParticipationRequest;
 
 interface PartyParticipationRequestRepositoryInterface
 {
-    public function findById(String $id): ?PartyParticipationRequest;
+    public function findById(string $id): ?PartyParticipationRequest;
+
+    public function findListByStudentNumber(StudentNumber $studentNumber): array;
+
+    public function findListByPartyId(string $partyId): array;
 
     public function save(PartyParticipationRequest $party): bool;
 
