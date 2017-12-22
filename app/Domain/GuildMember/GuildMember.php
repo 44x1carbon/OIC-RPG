@@ -117,7 +117,6 @@ class GuildMember
     {
         $possessionSkill = $this->possessionSkillFactory->createPossessionSkill($skillId, $this->studentNumber);
         $this->possessionSkills()->append($possessionSkill);
-        //$this->possessionSkills()->offsetSet($skillId, $possessionSkill);
         return $possessionSkill;
     }
 
