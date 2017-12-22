@@ -26,9 +26,7 @@ use App\Infrastracture\ProductionIdea\ProductionIdeaOnMemoryRepositoryImpl;
 use App\Infrastracture\ProductionType\ProductionTypeOnMemoryRepositoryImpl;
 use App\Infrastracture\GuildMember\GuildMemberEloquentRepositoryImpl;
 use App\Infrastracture\GuildMember\GuildMemberOnMemoryRepositoryImpl;
-use App\Infrastracture\PossessionSkill\PossessionSkillEloquentRepositoryImpl;
 use App\Infrastracture\Skill\SkillOnMemoryRepositoryImpl;
-use App\Infrastracture\PossessionSkill\PossessionSkillOnMemoryRepositoryImpl;
 use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Infrastracture\WantedRole\WantedRoleEloquentRepositoryImpl;
 use Illuminate\Support\Facades\Auth;
@@ -71,8 +69,6 @@ class AppServiceProvider extends ServiceProvider
 //        $this->app->singleton(GuildMemberRepositoryInterface::class,GuildMemberOnMemoryRepositoryImpl::class);
         $this->app->singleton(GuildMemberRepositoryInterface::class,GuildMemberEloquentRepositoryImpl::class);
         $this->app->singleton(SkillRepositoryInterface::class, SkillOnMemoryRepositoryImpl::class);
-        $this->app->singleton(PossessionSkillRepositoryInterface::class, PossessionSkillEloquentRepositoryImpl::class);
-//        $this->app->singleton(PossessionSkillRepositoryInterface::class, PossessionSkillOnMemoryRepositoryImpl::class);
 //        $this->app->singleton(PartyRepositoryInterface::class, PartyOnMemoryRepositoryImpl::class);
         $this->app->singleton(PartyRepositoryInterface::class, PartyEloquentRepositoryImpl::class);
         $this->app->singleton(PartyWrittenRequestRepositoryInterface::class, PartyWrittenRequestOnMemoryRepositoryImpl::class);
