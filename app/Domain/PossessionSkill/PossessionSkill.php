@@ -17,8 +17,6 @@ class PossessionSkill
 {
     const LEVEL_UP_INTERVAL = 100;
 
-    protected $possessionSkillRepo;
-
     private $studentNumber;
     private $skillId;
     private $skillLevel;
@@ -35,8 +33,6 @@ class PossessionSkill
         $this->skillId = $skillId;
         $this->skillLevel = $skillLevel;
         $this->totalExp = $totalExp;
-
-        $this->possessionSkillRepo = app(PossessionSkillRepositoryInterface::class);
     }
 
     public function setSkillLevel(int $skillLevel)
