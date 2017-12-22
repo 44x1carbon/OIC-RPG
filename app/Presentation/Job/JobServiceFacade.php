@@ -16,15 +16,11 @@ use App\Domain\Job\ValueObjects\JobId;
 
 class JobServiceFacade
 {
-    protected $jobRepository;
-
     private $jobApplicationService;
 
-    public function __construct(JobRepositoryInterface $repo)
+    public function __construct()
     {
-        $this->jobRepository = $repo;
-        $this->jobApplicationService = new JobApplicationService($this->jobRepository);
-
+        $this->jobApplicationService = app(JobApplicationService::class);
     }
 
     public function registerJob(string $jobName, string $imagePath, array $getConditions): string
