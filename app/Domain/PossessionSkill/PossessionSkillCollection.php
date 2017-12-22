@@ -50,12 +50,17 @@ class PossessionSkillCollection extends ArrayObject
 
     public function getOffset($skillId): int
     {
+        $result = 0;
         /* @var PossessionSkill $possessionSkill*/
         for($i = 0; $i < $this->count(); $i++)
         {
             $possessionSkill = $this->offsetGet($i);
-            if($possessionSkill->skillId() === $skillId) break;
+            if($possessionSkill->skillId() === $skillId)
+            {
+                $result = $i;
+                break;
+            }
         }
-        return $i;
+        return $result;
     }
 }
