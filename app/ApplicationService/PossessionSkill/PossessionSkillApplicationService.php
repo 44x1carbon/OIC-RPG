@@ -28,10 +28,8 @@ class PossessionSkillApplicationService
     protected $guildMemberRepo;
 
     public function __construct(
-        PossessionSkillRepositoryInterface $possessionSkillRepository,
         GuildMemberRepositoryInterface $guildMemberRepository)
     {
-        $this->possessionSkillRepo = $possessionSkillRepository;
         $this->guildMemberRepo = $guildMemberRepository;
     }
 
@@ -43,24 +41,26 @@ class PossessionSkillApplicationService
         if(!GuildMemberSpec::isExistStudentNumber($studentNumber)) return false;
 
         $guildMember = $this->guildMemberRepo->findByStudentNumber($studentNumber);
-        $possessionSkill = $guildMember->possessionSkills()->findPossessionSkill($skillId);
-        if(is_null($possessionSkill)){
-            if($guildMember->learnSkill($skillId)) $possessionSkill = $guildMember->possessionSkills()->findPossessionSkill($skillId);
-        }
 
-        $result = $guildMember->gainExp($possessionSkill, $exp);
+        $possessionSkill = $guildMember->possessionSkills()->findPossessionSkill($skillId);
+        if(is_null($possessionSkill))  $possessionSkill = $guildMember->learnSkill($skillId);
+        $beforeLevel = $possessionSkill->skillLevel();
+        $offset = $guildMember->possessionSkills()->getOffset($skillId);
+
+        $possessionSkill = $guildMember->gainExp($possessionSkill, $exp);
+
+        $guildMember->possessionSkills()->offsetSet($offset, $possessionSkill);
+        $result = $this->guildMemberRepo->save($guildMember);
 
         if($result)
         {
-            $addResultPossessionSkill = $this->possessionSkillRepo->findBySkillAndStudentNumber($skillId, $studentNumber);
             //AddExpイベント発火
-            if($addResultPossessionSkill != null && $exp > 0)
-                event(new AddExpEvent($addResultPossessionSkill));
+            if($exp > 0)
+                event(new AddExpEvent($guildMember->possessionSkills()->offsetGet($offset)));
             //LevelUpイベント発火
-            if($addResultPossessionSkill != null && $possessionSkill->skillLevel() < $addResultPossessionSkill->skillLevel())
-                event(new LevelUpEvent($addResultPossessionSkill));
+            if($beforeLevel < $possessionSkill->skillLevel())
+                event(new LevelUpEvent($guildMember->possessionSkills()->offsetGet($offset)));
         }
-        return $result;
+        return true;
     }
-
 }
