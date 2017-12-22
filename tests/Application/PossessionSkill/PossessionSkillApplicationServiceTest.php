@@ -29,7 +29,6 @@ class PossessionSkillApplicationServiceTest extends \Tests\TestCase
     protected $guildMemberRepo;
     /* @var SkillRepositoryInterface $skillRepo */
     protected $skillRepo;
-    protected $possessionSkillRepo;
 
     private $studentNumber;
     /* @var Skill $skill */
@@ -39,7 +38,6 @@ class PossessionSkillApplicationServiceTest extends \Tests\TestCase
     {
         parent::setUp();
 
-        $this->possessionSkillRepo = app(PossessionSkillRepositoryInterface::class);
         $this->guildMemberRepo = app(GuildMemberRepositoryInterface::class);
         $this->skillRepo = app(SkillRepositoryInterface::class);
 
@@ -56,7 +54,6 @@ class PossessionSkillApplicationServiceTest extends \Tests\TestCase
         $possessionSkill = $possessionSkillFactory->createPossessionSkill($this->skill->skillId(), $this->studentNumber);
         $possessionSkills[] = $possessionSkill;
         $possessionSkillCollection = new PossessionSkillCollection($possessionSkills);
-        $this->possessionSkillRepo->save($possessionSkill, $this->studentNumber);
 
         $guildMemberFactory = new GuildMemberFactory();
         $guildMember = $guildMemberFactory->createGuildMember($this->studentNumber, $studentName, $course, $gender, $mailAddress, $possessionSkillCollection);
@@ -65,14 +62,14 @@ class PossessionSkillApplicationServiceTest extends \Tests\TestCase
 
     function testSuccess()
     {
-        $possessionSkillService = new PossessionSkillApplicationService($this->possessionSkillRepo, $this->guildMemberRepo);
-        $this->assertTrue($possessionSkillService->addExpService($this->studentNumber, $this->skill->SkillId(), 100));
+        $possessionSkillService = new PossessionSkillApplicationService($this->guildMemberRepo);
+        $this->assertTrue($possessionSkillService->addExpService($this->studentNumber, $this->skill->skillId(), 100));
     }
 
     function testFail()
     {
         $studentNumber = new StudentNumber('B7777');
-        $possessionSkillService = new PossessionSkillApplicationService($this->possessionSkillRepo, $this->guildMemberRepo);
+        $possessionSkillService = new PossessionSkillApplicationService($this->guildMemberRepo);
         $this->assertFalse($possessionSkillService->addExpService($studentNumber, $this->skill->skillId(),100));
     }
 }
