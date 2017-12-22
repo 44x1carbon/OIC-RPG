@@ -26,9 +26,8 @@ use PhpParser\Node\Scalar\String_;
 
 class GuildMember
 {
+    /* @var PossessionSkillFactory $possessionSkillFactory */
     protected $possessionSkillFactory;
-
-    protected $possessionSkillRepo;
     /* @var \App\Domain\Course\RepositoryInterface\CourseRepositoryInterface */
     protected $courseRepo;
     private $studentNumber;
@@ -40,7 +39,6 @@ class GuildMember
 
     public function __construct()
     {
-        $this->possessionSkillRepo = app(PossessionSkillRepositoryInterface::class);
         $this->courseRepo = app(CourseRepositoryInterface::class);
         $this->possessionSkillFactory = app(PossessionSkillFactory::class);
     }
@@ -115,16 +113,19 @@ class GuildMember
         return $this->possessionSkillCollection;
     }
 
-    public function learnSkill(string $skillId): bool
+    public function learnSkill(string $skillId): PossessionSkill
     {
-        return $this->possessionSkillRepo->save($this->possessionSkillFactory->createPossessionSkill($skillId, $this->studentNumber));
+        $possessionSkill = $this->possessionSkillFactory->createPossessionSkill($skillId, $this->studentNumber);
+        $this->possessionSkills()->append($possessionSkill);
+        //$this->possessionSkills()->offsetSet($skillId, $possessionSkill);
+        return $possessionSkill;
     }
 
-    public function gainExp(PossessionSkill $possessionSkill, int $exp): bool
+    public function gainExp(PossessionSkill $possessionSkill, int $exp): PossessionSkill
     {
         $addResultPossessionSkill = PossessionSkill::AddExp($possessionSkill, $exp);
         $addResultPossessionSkill = PossessionSkill::levelUp($possessionSkill, $addResultPossessionSkill);
 
-        return $this->possessionSkillRepo->save($addResultPossessionSkill, $possessionSkill->studentNumber());
+        return $addResultPossessionSkill;
     }
 }
