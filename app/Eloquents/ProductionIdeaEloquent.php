@@ -11,32 +11,10 @@ class ProductionIdeaEloquent extends Model
 {
     protected $table = 'production_ideas';
 
+    /** リレーション定義 */
     public function partyEloquent()
     {
         return $this->belongsTo(PartyEloquent::class, 'party_id');
-    }
-
-    public static function fromEntity(ProductionIdea $productionIdea): ProductionIdeaEloquent
-    {
-        $model = self::where('production_idea_id', $productionIdea->id())->first();
-        if(is_null($model)) {
-            $model = new static();
-            $model->production_idea_id = $productionIdea->id();
-        }
-
-        $model->production_theme = $productionIdea->productionTheme();
-        $model->production_type_id = $productionIdea->productionTypeId();
-        $model->idea_description = $productionIdea->ideaDescription();
-
-        return $model;
-    }
-
-    public static function saveDomainObject(ProductionIdea $productionIdea, PartyEloquent $parentModel)
-    {
-        $model = self::fromEntity($productionIdea);
-        $model->partyEloquent()->associate($parentModel);
-
-        return $model->save();
     }
 
     public function productionTypeEloquent()
@@ -44,14 +22,36 @@ class ProductionIdeaEloquent extends Model
         return $this->belongsTo(ProductionTypeEloquent::class, 'id', 'production_type_id');
     }
 
-    public function findById(ProductionIdeaId $id): ?ProductionIdeaEloquent
+    /**
+     * ドメインオブジェクトを利用して永続化&親とのリレーションをはる
+     */
+    public static function saveDomainObject(ProductionIdea $productionIdea, PartyEloquent $parentModel)
     {
-        return $this->where('production_idea_id', $id->code())->first();
+        $model = $parentModel->productionIdeaEloquent;
+        if(is_null($model)) $model = new static();
+        $model->setAttrByEntity($productionIdea);
+        $model->partyEloquent()->associate($parentModel);
+
+        return $model->save();
     }
 
+    /**
+     * ドメインオブジェクトからEloquentの属性をセットする
+     */
+    public function setAttrByEntity(ProductionIdea $productionIdea): ProductionIdeaEloquent
+    {
+        $this->production_idea_id = $productionIdea->id();
+        $this->production_theme = $productionIdea->productionTheme();
+        $this->production_type_id = $productionIdea->productionTypeId();
+        $this->idea_description = $productionIdea->ideaDescription();
+        return $this;
+    }
+
+    /**
+     * Eloquentからドメインオブジェクトへ変換する
+     */
     public function toEntity(): ProductionIdea
     {
-
         return new ProductionIdea(
             $this->production_idea_id,
             $this->production_theme,
