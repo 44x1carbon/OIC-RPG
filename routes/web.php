@@ -43,3 +43,8 @@ Route::post('/guild_member', GuildMemberController::class.'@update')->name('upda
 
 Route::delete('/guild_member/delete', GuildMemberController::class.'@destroy')->name('destroy_guild_member');
 
+
+/** 検索 */
+Route::get('/search', function() {
+    return view('guild.search.party');
+});
