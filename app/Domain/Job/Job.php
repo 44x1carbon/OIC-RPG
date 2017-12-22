@@ -10,40 +10,25 @@ namespace App\Domain\Job;
 
 
 use App\Domain\GetCondition\GetCondition;
+use App\Domain\Job\ValueObjects\JobId;
 use App\Domain\Job\ValueObjects\JobImage;
 
 class Job
 {
     private $jobId;
     private $jobName;
-    private $image;
-    private $getCondition;
+    private $imagePath;
+    private $getConditions;
 
-    public function __construct()
+    public function __construct(JobId $jobId, string $jobName, string $imagePath, array $getConditions)
     {
-    }
-
-    public function setJobId(string $JobId)
-    {
-        $this->jobId = $JobId;
-    }
-
-    public function setJobName(string $jobName)
-    {
+        $this->jobId = $jobId;
         $this->jobName = $jobName;
+        $this->imagePath = $imagePath;
+        $this->getConditions = $getConditions;
     }
 
-    public function setImage(JobImage $jobImage)
-    {
-        $this->image = $jobImage;
-    }
-
-    public function setGetCondition(GetCondition $getCondition)
-    {
-        $this->getCondition = $getCondition;
-    }
-
-    public function jobId(): string
+    public function jobId(): JobId
     {
         return $this->jobId;
     }
@@ -53,13 +38,13 @@ class Job
         return $this->jobName;
     }
 
-    public function image(): JobImage
+    public function imagePath(): string
     {
-        return $this->image;
+        return $this->imagePath;
     }
 
-    public function getCondition(): GetCondition
+    public function getConditions(): array
     {
-        return $this->getCondition;
+        return $this->getConditions;
     }
 }
