@@ -1,0 +1,141 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: yamagon
+ * Date: 2017/12/19
+ * Time: 12:12
+ */
+
+namespace App\Domain\PartyParticipationRequest;
+
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\PartyParticipationRequest\ValueObjects\Reply;
+use Carbon\Carbon;
+use \Datetime;
+
+/**
+ * パーティ参加申請
+ */
+class PartyParticipationRequest
+{
+    protected $id;              // 参加申請ID
+    protected $partyId;         // 参加したいパーティのID
+    protected $wantedRoleId;    // 参加したいパーティ内の役割
+    protected $guildMemberId;   // 参加したいギルドメンバーのID
+    protected $applicationDate; // 申請日
+    protected $reply;           // 申請への返事VO
+
+    public function __construct(
+        string $id,
+        string $partyId,
+        string $wantedRoleId,
+        StudentNumber $guildMemberId,
+        DateTime $applicationDate = null,
+        Reply $reply = null
+    )
+    {
+        $this->id = $id;
+        $this->partyId = $partyId;
+        $this->wantedRoleId = $wantedRoleId;
+        $this->guildMemberId = $guildMemberId;
+        $this->applicationDate = $applicationDate ?? Carbon::now();
+        $this->Reply = $reply;
+    }
+
+    /**
+     * @return string
+     */
+    public function id(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function partyId(): string
+    {
+        return $this->partyId;
+    }
+
+    /**
+     * @return string
+     */
+    public function wantedRoleId(): string
+    {
+        return $this->wantedRoleId;
+    }
+
+    /**
+     * @return StudentNumber
+     */
+    public function guildMemberId(): StudentNumber
+    {
+        return $this->guildMemberId;
+    }
+
+    /**
+     * @return Datetime|static
+     */
+    public function applicationDate(): Datetime
+    {
+        return $this->applicationDate;
+    }
+
+    /**
+     * @return Reply|null
+     */
+    public function reply(): ?Reply
+    {
+        return $this->reply;
+    }
+
+    /**
+     * @param string $id
+     */
+    public function setId(string $id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param string $partyId
+     */
+    public function setPartyId(string $partyId)
+    {
+        $this->partyId = $partyId;
+    }
+
+    /**
+     * @param string $wantedRoleId
+     */
+    public function setWantedRoleId(string $wantedRoleId)
+    {
+        $this->wantedRoleId = $wantedRoleId;
+    }
+
+    /**
+     * @param StudentNumber $guildMemberId
+     */
+    public function setGuildMemberId(StudentNumber $guildMemberId)
+    {
+        $this->guildMemberId = $guildMemberId;
+    }
+
+    /**
+     * @param Datetime $applicationDate
+     */
+    public function setApplicationDate(DateTime $applicationDate)
+    {
+        $this->applicationDate = $applicationDate;
+    }
+
+    /**
+     * @param Reply $Reply
+     */
+    public function setReply(Reply $Reply)
+    {
+        $this->Reply = $Reply;
+    }
+
+}
