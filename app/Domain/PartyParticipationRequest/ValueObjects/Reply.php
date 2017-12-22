@@ -18,15 +18,17 @@ class Reply
     const REJECTION = 'rejection';
     const STATUS_LIST = [self::PERMIT, self::REJECTION];
 
-    public function __construct(string $type)
+    private $status;
+
+    public function __construct(string $status)
     {
-        $this->type = $type;
-        if ( !ReplySpec::isAvailable($type) ) throw new \Exception("Error");
+        $this->status = $status;
+        if ( !ReplySpec::isAvailable($status) ) throw new \Exception("Error");
     }
 
-    public function type(): string
+    public function status(): string
     {
-        return $this->type;
+        return $this->status;
     }
 
 }

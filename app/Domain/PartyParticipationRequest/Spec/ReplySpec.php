@@ -15,11 +15,11 @@ class ReplySpec
 {
     use SpecTrait;
 
-    public static function isAvailable(String $type): bool
+    public static function isAvailable(String $status): bool
     {
         //受け取った値が利用可能か判定
         //Replyのリストと受け取り値を判定
         $list = Reply::STATUS_LIST;
-        return in_array($type,$list);
+        return in_array($status,$list);
     }
 }
