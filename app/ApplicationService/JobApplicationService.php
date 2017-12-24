@@ -9,7 +9,6 @@
 namespace App\ApplicationService;
 
 
-use App\Domain\GetCondition\GetCondition;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Job\Job;
 use App\Domain\Job\JobRepositoryInterface;
@@ -18,16 +17,10 @@ use App\Domain\Job\ValueObjects\JobId;
 class JobApplicationService
 {
     protected $jobRepository;
-    protected $guildMemberRepository;
-
+  
     public function __construct()
     {
         $this->jobRepository = app(JobRepositoryInterface::class);
-    }
-
-    public function __construct(JobRepositoryInterface $repo)
-    {
-        $this->jobRepository = $repo;
     }
 
     public function registerJob(string $jobName, string $imagePath, array $getConditions): JobId
@@ -38,10 +31,5 @@ class JobApplicationService
         $this->jobRepository->save($job);
 
         return $job->jobId();
-    }
-
-    public function getJob(StudentNumber $studentNumber, JobId $jobId): JobId
-    {
-
     }
 }
