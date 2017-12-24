@@ -17,7 +17,7 @@ class ProductionTypeEloquent extends Model
 
     public function toEntity(): ProductionType
     {
-        return new ProductionType(new ProductionTypeId($this->production_type_id), $this->name);
+        return new ProductionType($this->production_type_id, $this->name);
     }
 
     public function findById(string $id): ?ProductionTypeEloquent
