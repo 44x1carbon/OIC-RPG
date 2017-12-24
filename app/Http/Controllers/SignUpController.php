@@ -7,6 +7,7 @@ use App\Domain\GuildMember\Factory\GuildMemberFactory;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Http\Requests\SignUpRequest;
 use App\Infrastracture\AuthData\AuthData;
+use App\Presentation\GuildMemberFacade;
 use Illuminate\Support\Facades\Auth;
 
 class SignUpController extends Controller
@@ -16,15 +17,15 @@ class SignUpController extends Controller
 
     }
 
-    public function store(SignUpRequest $request, GuildMemberAppService $guildMemberAppService)
+    public function store(SignUpRequest $request, GuildMemberFacade $guildMemberFacade)
     {
-        $authData = $guildMemberAppService->registerMember(
+        $authData = $guildMemberFacade->registerMember(
             $request->studentNumber(),
             $request->studentName(),
-            $request->course(),
-            $request->gender(),
+            $request->courseId(),
+            $request->genderId(),
             $request->mailAddress(),
-            $request->loginInfo()
+            $request->password()
         );
         Auth::login($authData);
     }

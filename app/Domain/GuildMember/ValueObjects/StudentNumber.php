@@ -33,4 +33,9 @@ class StudentNumber
     {
         return $this->code;
     }
+
+    public function equals(StudentNumber $studentNumber): bool
+    {
+        return $this->code === $studentNumber->code();
+    }
 }
