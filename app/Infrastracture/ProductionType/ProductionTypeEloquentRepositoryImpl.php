@@ -16,7 +16,7 @@ class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryIn
         $this->eloquent = $eloquent;
     }
 
-    public function findById(ProductionTypeId $id): ?ProductionType
+    public function findById(string $id): ?ProductionType
     {
         return null_safety($this->eloquent->findById($id), function(ProductionTypeEloquent $value) {
             return $value->toEntity();

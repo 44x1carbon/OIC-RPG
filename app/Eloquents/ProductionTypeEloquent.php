@@ -20,8 +20,8 @@ class ProductionTypeEloquent extends Model
         return new ProductionType(new ProductionTypeId($this->production_type_id), $this->name);
     }
 
-    public function findById(ProductionTypeId $id): ?ProductionTypeEloquent
+    public function findById(string $id): ?ProductionTypeEloquent
     {
-        return $this->where('production_type_id', $id->code())->first();
+        return $this->where('production_type_id', $id)->first();
     }
 }
