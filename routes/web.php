@@ -33,6 +33,8 @@ Route::get('/sign_up/school_info', GuildMemberRegistrationController::class.'@sh
 Route::post('/sign_up/school_info', GuildMemberRegistrationController::class.'@doSchoolInfo')->name('do_sign_up_school_info');
 Route::post('/sign_up', SignUpController::class.'@store')->name('post_sign_up');
 
+Route::post('/sign_in', SignInController::class.'@store')->name('post_sign_in');
+
 /** パーティー作成のフロー */
 Route::get('/party/registration/production_idea', PartyRegistrationController::class.'@showProductionIdea')->name('show_party_registration_production_idea');
 Route::get('/party/registration/wanted', PartyRegistrationController::class.'@showWanted')->name('show_party_registration_wanted');
