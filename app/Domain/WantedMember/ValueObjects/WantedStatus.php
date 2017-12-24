@@ -31,4 +31,8 @@ class WantedStatus
         return $this->status;
     }
 
+    public function equals(WantedStatus $status): bool
+    {
+        return $status->status() === $this->status;
+    }
 }

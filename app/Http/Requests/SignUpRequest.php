@@ -93,44 +93,35 @@ class SignUpRequest extends FormRequest
         ];
     }
 
-    public function studentNumber():StudentNumber
+    public function studentNumber():string
     {
-        $code = $this->request->get('student_number');
-        return new StudentNumber($code);
+        return $this->request->get('student_number');
     }
 
-    public function studentName(): String
+    public function studentName(): string
     {
-        $name = $this->request->get('name');
-        return $name;
+        return $this->request->get('name');
     }
 
-    public function course(): Course
+    public function courseId(): string
     {
-        $id = $this->request->get('course_id');
-        return $this->courseRepository->findById($id);
+        return $this->request->get('course_id');
+
     }
 
-    public function gender(): Gender
+    public function genderId(): string
     {
-        $gender = $this->request->get('gender');
-        return new Gender($gender);
+        return $this->request->get('gender');
     }
 
-    public function mailAddress(): MailAddress
+    public function mailAddress(): string
     {
-        $mailAddress = $this->request->get('mail_address');
-        return new MailAddress($mailAddress);
+        return  $this->request->get('mail_address');
     }
 
-    public function password(): PassWord
+    public function password(): string
     {
-        $password = $this->request->get('password');
-        return new PassWord($password);
+        return $this->request->get('password');
     }
 
-    public function loginInfo(): LoginInfo
-    {
-        return new LoginInfo($this->mailAddress(), $this->password());
-    }
 }
