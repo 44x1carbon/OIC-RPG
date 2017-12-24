@@ -38,7 +38,6 @@ class PartyParticipationRequestEloquentRepositoryImpl implements PartyParticipat
      */
     public function findListByStudentNumber(StudentNumber $studentNumber): array
     {
-//        dd($this->eloquent->where('guild_member_id', $studentNumber->code())->get());
         return $this->eloquent->where('guild_member_id', $studentNumber->code())->get()->map(function(PartyParticipationRequestEloquent $model) {
              return $model->toEntity();
         })->toArray();
@@ -51,11 +50,12 @@ class PartyParticipationRequestEloquentRepositoryImpl implements PartyParticipat
      */
     public function findListByPartyId(string $partyId): array
     {
-//        dd($this->eloquent->where('party_id', $partyId)->get());
         return $this->eloquent->where('party_id', $partyId)->get()->map(function(PartyParticipationRequestEloquent $model) {
             return $model->toEntity();
         })->toArray();
     }
+
+
 
     public function save(PartyParticipationRequest $party): bool
     {
