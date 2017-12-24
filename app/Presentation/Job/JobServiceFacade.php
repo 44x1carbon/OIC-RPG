@@ -38,16 +38,4 @@ class JobServiceFacade
         $jobId = $this->jobApplicationService->registerJob($jobName, $imagePath, $_getConditions);
         return $jobId->code();
     }
-
-    public function getJob(string $studentNumber, string $jobId): string
-    {
-        $_studentNumber = new StudentNumber($studentNumber);
-        $_jobId = new JobId($jobId);
-
-        $jobApplicationService = new JobApplicationService();
-
-        /* @var $jobId JobId */
-        $jobId = $jobApplicationService->getJob($_studentNumber, $_jobId);
-        return $jobId->code();
-    }
 }
