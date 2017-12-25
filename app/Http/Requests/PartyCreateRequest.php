@@ -34,15 +34,14 @@ class PartyCreateRequest extends FormRequest
     {
         return [
             'party.activityEndDate' => ['required'],
-            'party.roleName' => ['required'],
             'party.productionIdea.productionTheme' => ['required'],
             'party.productionIdea.productionTypeId'  => ['required'],
             'party.productionIdea.ideaDescription' => ['required'],
             'party.wantedRoleList'    => ['required', 'array'],
             'party.wantedRoleList.*.frameAmount' => ['required'],
-            'party.wantedRoleList.*.remarks' => ['required'],
+            'party.wantedRoleList.*.remarks' => [],
             'party.wantedRoleList.*.roleName' => ['required'],
-            'party.wantedRoleList.*.referenceJobId' => ['required'],
+            'party.wantedRoleList.*.referenceJobId' => [],
         ];
     }
 
