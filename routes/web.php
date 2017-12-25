@@ -37,7 +37,9 @@ Route::post('/sign_in', SignInController::class.'@store')->name('post_sign_in');
 
 /** パーティー作成のフロー */
 Route::get('/party/registration/production_idea', PartyRegistrationController::class.'@showProductionIdea')->name('show_party_registration_production_idea');
+Route::post('/party/registration/production_idea', PartyRegistrationController::class.'@doProductionIdea')->name('do_party_registration_production_idea');
 Route::get('/party/registration/wanted', PartyRegistrationController::class.'@showWanted')->name('show_party_registration_wanted');
+Route::post('/party/registration/wanted', PartyRegistrationController::class.'@handleWanted')->name('do_party_registration_wanted');
 Route::get('/party/registration/confirm', PartyRegistrationController::class.'@showConfirm')->name('show_party_confirm');
 Route::post('/party', PartyController::class.'@store')->name('store_party');
 
