@@ -23,12 +23,12 @@ class PossessionJob
         $this->jobId = $jobId;
     }
 
-    public function studentNumber()
+    public function studentNumber(): StudentNumber
     {
         return $this->studentNumber;
     }
 
-    public function jobId()
+    public function jobId(): JobId
     {
         return $this->jobId;
     }
