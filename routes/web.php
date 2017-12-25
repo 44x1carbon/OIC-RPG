@@ -58,6 +58,4 @@ Route::get('/party/detail', function() {
 });
 
 /** 検索 */
-Route::get('/search', function() {
-    return view('guild.search.party');
-});
+Route::get('/party/search', PartyController::class.'@search' )->name('search_party');
