@@ -24,10 +24,8 @@ class PossessionJobServiceFacade
 
     public function getJob(string $studentNumber, string $jobId): string
     {
-        $_studentNumber = new StudentNumber($studentNumber);
-        $_jobId = new JobId($jobId);
         /* @var JobId $possessionJobId */
-        $possessionJobId = $this->possessionJobAppService->getJob($_studentNumber, $_jobId);
+        $possessionJobId = $this->possessionJobAppService->getJob(new StudentNumber($studentNumber), new JobId($jobId));
         return $possessionJobId->code();
     }
 }
