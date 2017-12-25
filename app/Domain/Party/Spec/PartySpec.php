@@ -8,6 +8,7 @@ class PartySpec
 {
     public static function isKeywordMatch(Party $party, string $keyword): bool
     {
+        if($keyword == '') return true;
         return self::isIncludeKeywordInTheme($party, $keyword) || self::isIncludeKeyWordInWanted($party, $keyword);
     }
 
