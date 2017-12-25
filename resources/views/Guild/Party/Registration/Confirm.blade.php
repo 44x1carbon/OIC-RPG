@@ -56,6 +56,7 @@
                                         <input type="hidden" name="party[wantedRoleList][{{$index}}][referenceJobId]" value="{{ $wantedRoleDto->referenceJobId }}">
                                         <input type="hidden" name="party[wantedRoleList][{{$index}}][frameAmount]" value="{{ $wantedRoleDto->frameAmount }}">
                                         <input type="hidden" name="party[wantedRoleList][{{$index}}][remarks]" value="{{ $wantedRoleDto->remarks }}">
+                                        <input type="hidden" name="party[wantedRoleList][{{$index}}][managerAssigned]" value="{{ $wantedRoleDto->managerAssigned }}">
                                     </div>
                                 </div>
                             @endforeach

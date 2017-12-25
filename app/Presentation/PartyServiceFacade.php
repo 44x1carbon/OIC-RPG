@@ -26,18 +26,21 @@ class PartyServiceFacade
         $managerId = new StudentNumber($studentNumber);
         $partyId = $this->servoce->registerParty(new ActivityEndDate($partyDto->activityEndDate), $managerId);
 
-        $party = $this->partyRepository->findById($partyId);
         $productionIdeaDto = $partyDto->productionIdeaDto;
-        $this->servoce->updateProductionIdea($party->id(), $productionIdeaDto->productionTheme, $productionIdeaDto->productionTypeDto->id, $productionIdeaDto->ideaDescription);
+        $this->servoce->updateProductionIdea($partyId, $productionIdeaDto->productionTheme, $productionIdeaDto->productionTypeDto->id, $productionIdeaDto->ideaDescription);
 
 
         /* @var WantedRoleDto $wantedRoleDto */
         foreach ($partyDto->wantedRoleDtos as $wantedRoleDto) {
-            $wantedRoleId = $this->servoce->addWantedRole($party->id(), $wantedRoleDto->roleName, $wantedRoleDto->referenceJobId, $wantedRoleDto->remarks, $wantedRoleDto->frameAmount);
+            $wantedRoleId = $this->servoce->addWantedRole($partyId, $wantedRoleDto->roleName, $wantedRoleDto->referenceJobId, $wantedRoleDto->remarks, $wantedRoleDto->frameAmount);
             if($wantedRoleDto->managerAssigned) {
-                $party->assignMember($wantedRoleId, $managerId);
+                $managerRoleId = $wantedRoleId;
             }
         }
+
+        $party = $this->partyRepository->findById($partyId);
+        $party->assignMember($managerRoleId, $managerId);
+        $this->partyRepository->save($party);
 
         return $partyId;
     }

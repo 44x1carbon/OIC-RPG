@@ -21,7 +21,7 @@
                     <div class="item form-item">
                         <h4 class="form-item-title">役割名</h4>
                         <input type="text" class="input" name="party[wantedRoleList][{{$index}}][roleName]" value="{{ $wantedRole->roleName }}"><!-- 役割名 -->
-                        <input type="checkbox">この役職に自分も所属する
+                        <input type="checkbox" name="party[wantedRoleList][{{$index}}][managerAssigned]">この役職に自分も所属する
                     </div><!-- item -->
                     <div class="item form-item">
                         <h4 class="form-item-title">参考ジョブ</h4>

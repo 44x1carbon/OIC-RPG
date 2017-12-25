@@ -113,7 +113,8 @@ class PartyCreateRequest extends FormRequest
                 $w['remarks'],
                 $w['referenceJobId'],
                 'モック',
-                $w['frameAmount']
+                $w['frameAmount'],
+                $w['managerAssigned']
             );
         }, $this->input('party.wantedRoleList'));
     }
