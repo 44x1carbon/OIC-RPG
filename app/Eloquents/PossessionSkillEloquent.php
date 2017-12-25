@@ -67,7 +67,7 @@ class PossessionSkillEloquent extends Model
         foreach ((array)$possessionSkillCollection as $possessionSkill)
         {
             $possessionSkillModel = self::fromEntity($possessionSkill, $studentNumber);
-            $possessionSkillModel->save();
+            if(!$possessionSkillModel->save()) return false;
         }
         return true;
     }

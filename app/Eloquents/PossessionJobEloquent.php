@@ -63,7 +63,7 @@ class PossessionJobEloquent extends Model
         foreach ((array)$possessionJobCollection as $possessionJob)
         {
             $possessionJobModel = self::fromEntity($possessionJob, $studentNumber);
-            $possessionJobModel->save();
+            if(!$possessionJobModel->save()) return false;
         }
         return true;
     }
