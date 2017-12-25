@@ -39,7 +39,7 @@ class PartyParticipationRequest
         $this->wantedRoleId = $wantedRoleId;
         $this->guildMemberId = $guildMemberId;
         $this->applicationDate = $applicationDate ?? Carbon::now();
-        $this->Reply = $reply;
+        $this->reply = $reply;
     }
 
     /**
@@ -135,7 +135,7 @@ class PartyParticipationRequest
      */
     public function setReply(Reply $Reply)
     {
-        $this->Reply = $Reply;
+        $this->reply = $Reply;
     }
 
 }
