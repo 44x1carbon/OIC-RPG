@@ -28,7 +28,7 @@ class PartyEloquentRepositoryImpl implements PartyRepositoryInterface
         $this->eloquent = $eloquent;
     }
 
-    public function findById(String $id): ?Party
+    public function findById(string $id): ?Party
     {
         return null_safety($this->eloquent->where('party_id', $id)->first(), function(PartyEloquent $model) {
             return $model->toEntity();

@@ -10,6 +10,7 @@ namespace Tests\Repository;
 
 use App\Domain\Skill\Factory\SkillFactory;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
+use App\Domain\Skill\Skill;
 use Tests\TestCase;
 
 class SkillRepositoryTest extends TestCase
@@ -40,5 +41,34 @@ class SkillRepositoryTest extends TestCase
         $skillFactory = new SkillFactory();
         $skill = $skillFactory->createSkill('php');
         $this->assertTrue($this->repo->save($skill));
+    }
+
+    public function testAll()
+    {
+        $registerSkills = [];
+        $registerSkillIds = [];
+
+        $skillFactory = new SkillFactory();
+        $skill = $skillFactory->createSkill('php');
+        $this->repo->save($skill);
+        $skill1 = $skillFactory->createSkill('java');
+        $this->repo->save($skill1);
+
+        $registerSkills[] = $skill;
+        $registerSkills[] = $skill1;
+
+        /* @var Skill $registerSkill */
+        foreach ($registerSkills as $registerSkill) {
+            $registerSkillIds[] = $registerSkill->skillId();
+        }
+
+        $getSkills = $this->repo->all();
+        $getSkillIds = [];
+        /* @var Skill $getSkill */
+        foreach ($getSkills as $getSkill){
+            $getSkillIds[] = $getSkill->skillId();
+        }
+
+        $this->assertEmpty(array_diff($registerSkillIds, $getSkillIds));
     }
 }

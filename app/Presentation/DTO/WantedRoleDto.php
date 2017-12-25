@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\PartyWrittenRequest\ValueObject;
+namespace App\Presentation\DTO;
 
-class WantedRoleInfo
+class WantedRoleDto
 {
     // 募集役割名
     private $roleName;

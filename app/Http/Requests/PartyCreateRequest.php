@@ -2,19 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Domain\Party\ValueObjects\ActivityEndDate;
-use App\Domain\PartyWrittenRequest\ValueObject\ProductionIdeaInfo;
 use App\Domain\PartyWrittenRequest\ValueObject\WantedRoleInfo;
-use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
-use App\Domain\ProductionIdea\ProductionIdea;
-use App\Domain\ProductionType\ProductionType;
-use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
-use App\Domain\WantedMember\Factory\WantedMemberFactory;
 use App\Domain\WantedMember\ValueObjects\WantedRole;
-use App\Domain\WantedMember\ValueObjects\WantedStatus;
-use App\Domain\WantedMember\WantedMember;
+use App\Presentation\DTO\WantedRoleDto;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -102,7 +93,7 @@ class PartyCreateRequest extends FormRequest
     public function wantedRoleList(): array
     {
         return array_map(function($wantedRole) {
-            return new WantedRoleInfo($wantedRole['roleName'], $wantedRole['remarks'], $wantedRole['referenceJobId'], $wantedRole['frameAmount']);
+            return new WantedRoleDto($wantedRole['roleName'], $wantedRole['remarks'], $wantedRole['referenceJobId'], $wantedRole['frameAmount']);
         }, $this->party()['wantedRoleList']);
     }
 }
