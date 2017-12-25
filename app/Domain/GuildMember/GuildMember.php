@@ -14,6 +14,9 @@ use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\Course\Course;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
+use App\Domain\Job\Job;
+use App\Domain\PossessionJob\PossessionJob;
+use App\Domain\PossessionJob\PossessionJobCollection;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
@@ -36,6 +39,7 @@ class GuildMember
     private $gender;
     private $mailAddress;
     private $possessionSkillCollection;
+    private $possessionJobCollection;
 
     public function __construct()
     {
@@ -77,6 +81,11 @@ class GuildMember
         $this->possessionSkillCollection = $possessionSkillCollection;
     }
 
+    public function setPossessionJobs(PossessionJobCollection $possessionJobCollection)
+    {
+        $this->possessionJobCollection = $possessionJobCollection;
+    }
+
 //  学籍番号をゲット
     public function studentNumber(): StudentNumber
     {
@@ -111,6 +120,11 @@ class GuildMember
     public function possessionSkills(): ?PossessionSkillCollection
     {
         return $this->possessionSkillCollection;
+    }
+
+    public function possessionJobs(): ?PossessionJobCollection
+    {
+        return $this->possessionJobCollection;
     }
 
     public function learnSkill(string $skillId): PossessionSkill
