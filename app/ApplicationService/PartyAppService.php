@@ -52,7 +52,8 @@ class PartyAppService
     {
         $allParty = $this->partyRepository->all();
         $releasedParty = array_filter($allParty, function(Party $party) {
-           return $party->released();
+            //return $party->released();
+            return true;
         });
         $matchedParty = array_filter($releasedParty, function(Party $party) use($keyword){
             return PartySpec::isKeywordMatch($party, $keyword);
