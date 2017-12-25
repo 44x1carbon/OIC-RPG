@@ -31,4 +31,16 @@ class Reply
         return $this->status;
     }
 
+    // パーティ参加申請を許可しているか
+    public function isPermit(): bool
+    {
+        return $this->status === self::PERMIT;
+    }
+
+    // パーティ参加申請を拒否しているか
+    public function isRejection(): bool
+    {
+        return $this->status === self::REJECTION;
+    }
+
 }
