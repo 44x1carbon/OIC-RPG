@@ -24,7 +24,8 @@ class ProductionIdea
     // アイデア説明
     private $ideaDescription;
 
-    function __construct($id, $productionTheme = null, $productionTypeId = null, $ideaDescription = null)
+
+    function __construct(string $id, string $productionTheme = null, string $productionTypeId = null, string $ideaDescription = null)
     {
         $this->id = $id;
         if($productionTypeId) $this->productionTypeId = $productionTypeId;
@@ -37,17 +38,24 @@ class ProductionIdea
         return $this->id;
     }
 
-    public function productionTheme(): ?String
+    public function productionTheme(): ?string
     {
         return $this->productionTheme;
     }
+
 
     public function productionTypeId(): ?string
     {
         return $this->productionTypeId;
     }
 
-    public function ideaDescription(): ?String
+    public function productionType(): ProductionType
+    {
+        $productionTypeRepo = app(ProductionTypeRepositoryInterface::class);
+        return $productionTypeRepo->findById($this->productionTypeId);
+    }
+
+    public function ideaDescription(): ?string
     {
         return $this->ideaDescription;
     }
@@ -58,7 +66,7 @@ class ProductionIdea
         $this->id = $id;
     }
 
-    public function setProductionTheme(String $productionTheme)
+    public function setProductionTheme(string $productionTheme)
     {
         $this->productionTheme = $productionTheme;
     }
@@ -66,12 +74,13 @@ class ProductionIdea
     /**
      * @param mixed $productionTypeId
      */
+
     public function setProductionTypeId(string $productionTypeId)
     {
         $this->productionTypeId = $productionTypeId;
     }
 
-    public function setIdeaDescription(String $ideaDescription)
+    public function setIdeaDescription(string $ideaDescription)
     {
         $this->ideaDescription = $ideaDescription;
     }

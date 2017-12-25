@@ -5,6 +5,7 @@ namespace App\ApplicationService;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Party;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
+use App\Domain\Party\Spec\PartySpec;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
 
 class PartyAppService
@@ -16,13 +17,10 @@ class PartyAppService
         $this->partyRepository = $partyRepository;
     }
 
-    public function registerParty(ActivityEndDate $activityEndDate, StudentNumber $managerId, string $roleName): string
+    public function registerParty(ActivityEndDate $activityEndDate, StudentNumber $managerId): string
     {
         $partyId = $this->partyRepository->nextId();
         $party = new Party($partyId, $activityEndDate, $managerId);
-        $wantedRoleId = $party->addWantedRole($roleName);
-        $party->addWantedFrame($wantedRoleId, 1);
-        $party->assignMember($wantedRoleId, $managerId);
 
         $this->partyRepository->save($party);
 
@@ -39,7 +37,7 @@ class PartyAppService
         return $party->id();
     }
 
-    public function addWantedRole(string $partyId, string $roleName, string $jobId = null, string $remarks = null, int $frameAmount)
+    public function addWantedRole(string $partyId, string $roleName, string $jobId = null, string $remarks = null, int $frameAmount): string
     {
         $party = $this->partyRepository->findById($partyId);
         $wantedRoleId = $party->addWantedRole($roleName, $jobId, $remarks);
@@ -47,6 +45,20 @@ class PartyAppService
 
         $this->partyRepository->save($party);
 
-        return $party->id();
+        return $wantedRoleId;
+    }
+
+    public function searchParty(string $keyword): array
+    {
+        $allParty = $this->partyRepository->all();
+        $releasedParty = array_filter($allParty, function(Party $party) {
+            //return $party->released();
+            return true;
+        });
+        $matchedParty = array_filter($releasedParty, function(Party $party) use($keyword){
+            return PartySpec::isKeywordMatch($party, $keyword);
+        });
+
+        return array_values($matchedParty);
     }
 }
