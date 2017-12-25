@@ -48,12 +48,13 @@ Route::delete('/guild_member/delete', GuildMemberController::class.'@destroy')->
 /** パーティー編集 */
 Route::get('/party/edit', function() {
     return view('guild.party.edit');
-/** パーティー詳細表示 */
-Route::get('/party/detail', function() {
-    return view('guild.party.detail');
-});
-
-/** 検索 */
-Route::get('/search', function() {
-    return view('guild.search.party');
+    /** パーティー詳細表示 */
+    Route::get('/party/detail', function () {
+        return view('guild.party.detail');
+    });
+    
+    /** 検索 */
+    Route::get('/search', function () {
+        return view('guild.search.party');
+    });
 });
