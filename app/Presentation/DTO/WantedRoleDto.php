@@ -2,23 +2,31 @@
 
 namespace App\Presentation\DTO;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 class WantedRoleDto
 {
     // 募集役割名
-    private $roleName;
+    public $roleName;
     // 備考
-    private $remarks;
+    public $remarks;
     // 参考ジョブID
-    private $referenceJobId;
+    public $referenceJobId;
+    // 参考ジョブ名
+    public $referenceJobName;
     // 枠数
-    private $frameAmount;
+    public $frameAmount;
 
-    function __construct(string $roleName, string $remarks, string $referenceJobId, int $frameAmount)
+    public $managerAssigned;
+
+    function __construct(string $roleName = null, string $remarks = null, string $referenceJobId = null, string $referenceJobName = null, int $frameAmount = null, bool $managerAssigned = false)
     {
         $this->roleName = $roleName;
         $this->remarks = $remarks;
         $this->referenceJobId = $referenceJobId;
         $this->frameAmount = $frameAmount;
+        $this->referenceJobName = $referenceJobName;
+        $this->managerAssigned = $managerAssigned;
     }
 
     /**

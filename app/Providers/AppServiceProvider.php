@@ -12,6 +12,7 @@ use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterf
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Eloquents\PossessionSkillEloquent;
 use App\Domain\WantedRole\RepositoryInterface\WantedRoleRepositoryInterface;
+use App\Infrastracture\AuthData\AuthData;
 use App\Infrastracture\Course\CourseEloquentRepositoryImpl;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
@@ -77,6 +78,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(PartyWrittenRequestRepositoryInterface::class, PartyWrittenRequestOnMemoryRepositoryImpl::class);
         $this->app->bind(GuildMember::class, function(): ?GuildMember
         {
+            if(env('APP_DEBUG', false)) return AuthData::firstOrFail()->guildMemberEntity();
             if(Auth::check()) return Auth::user()->guildMemberEntity();
             return null;
         });
