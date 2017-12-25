@@ -134,6 +134,13 @@ class GuildMember
         return $possessionSkill;
     }
 
+    public function getJob(Job $job): PossessionJob
+    {
+        $possessionJob = new PossessionJob($this->studentNumber(), $job->jobId());
+        $this->possessionJobs()->append($possessionJob);
+        return $possessionJob;
+    }
+
     public function gainExp(PossessionSkill $possessionSkill, int $exp): PossessionSkill
     {
         $addResultPossessionSkill = PossessionSkill::AddExp($possessionSkill, $exp);
