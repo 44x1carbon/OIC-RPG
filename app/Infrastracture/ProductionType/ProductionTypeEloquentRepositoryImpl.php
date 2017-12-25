@@ -5,6 +5,7 @@ namespace App\Infrastracture\ProductionType;
 use App\Domain\ProductionType\ProductionType;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 use App\Domain\ProductionType\ValueObject\ProductionTypeId;
+use App\DomainUtility\RandomStringGenerator;
 use App\Eloquents\ProductionTypeEloquent;
 
 class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryInterface
@@ -29,7 +30,7 @@ class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryIn
 
         if(is_null($model)) {
             $model = new $this->eloquent();
-            $model->production_type_id = $productionType->id()->code();
+            $model->production_type_id = $productionType->id();
         }
 
         $model->name = $productionType->name();
@@ -49,5 +50,14 @@ class ProductionTypeEloquentRepositoryImpl implements ProductionTypeRepositoryIn
         return null_safety($this->eloquent->where('name', $name)->first(), function(ProductionTypeEloquent $model) {
             return $model->toEntity();
         });
+    }
+
+    public function nextId(): string
+    {
+        do {
+            $id = RandomStringGenerator::makeLowerCase(2);
+        } while($this->findById($id));
+
+        return $id;
     }
 }
