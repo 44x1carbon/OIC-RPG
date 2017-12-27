@@ -64,4 +64,7 @@ Route::get('/search', function() {
 Route::get('/party/management/holding', function() {
     return view('guild.party.management.holding');
 });
+Route::get('/party/management/entry', function() {
+    return view('guild.party.management.entry');
+});
 
