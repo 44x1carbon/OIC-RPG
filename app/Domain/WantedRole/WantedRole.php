@@ -110,4 +110,19 @@ class WantedRole
     {
        $this->wantedMemberList()->addFrame($num);
     }
+
+    public function assignedFrameNum(): int
+    {
+        return count($this->wantedMemberList->assignedList());
+    }
+
+    public function assignableFrameNum(): int
+    {
+        return count($this->wantedMemberList->assignableList());
+    }
+
+    public function totalFrameNum(): int
+    {
+        return $this->assignableFrameNum() + $this->assignedFrameNum();
+    }
 }
