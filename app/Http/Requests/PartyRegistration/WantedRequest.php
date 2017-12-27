@@ -53,9 +53,8 @@ class WantedRequest extends FormRequest
                 $w['roleName'],
                 $w['remarks'],
                 $w['referenceJobId'],
-                'モック',
                 $w['frameAmount'],
-                $w['managerAssigned']
+                isset($w['managerAssigned'])? w['managerAssigned'] : false
             );
         }, $this->input('party.wantedRoleList'));
     }
