@@ -42,13 +42,21 @@ class HandleWantedRequest extends FormRequest
         });
 
         return [
-            'party.wantedRoleList'    => ['required', 'array', 'required_manager_assigned'],
-            'party.wantedRoleList.*.frameAmount' => ['required'],
-            'party.wantedRoleList.*.remarks' => ['required'],
-            'party.wantedRoleList.*.roleName' => ['required'],
-            'party.wantedRoleList.*.referenceJobId' => ['required'],
+            'party.wantedRoleList'    => array_merge(['required', 'array'], $this->onlyDone(['required_manager_assigned']) ),
+            'party.wantedRoleList.*.frameAmount' => $this->onlyDone(['required']),
+            'party.wantedRoleList.*.remarks' => $this->onlyDone(['required']),
+            'party.wantedRoleList.*.roleName' => $this->onlyDone(['required']),
+            'party.wantedRoleList.*.referenceJobId' => $this->onlyDone(['required']),
         ];
     }
+
+    private function onlyDone($rules): array
+    {
+        if(!$this->isDone()) return [];
+        if(is_array($rules)) return $rules;
+        return [$rules];
+    }
+
 
     public function isAdd(): bool
     {
