@@ -20,4 +20,6 @@ interface ProductionTypeRepositoryInterface
     public function save(ProductionType $productionType): bool;
 
     public function all(): array;
+
+    public function nextId(): string;
 }
