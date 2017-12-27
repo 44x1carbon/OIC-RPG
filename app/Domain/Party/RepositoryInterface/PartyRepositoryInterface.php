@@ -9,11 +9,14 @@
 namespace App\Domain\Party\RepositoryInterface;
 
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Party;
 
 interface PartyRepositoryInterface
 {
     public function findById(String $id): ?Party;
+
+    public function findListByManagerId(StudentNumber $managerId): ?array;
 
     public function save(Party $party): bool;
 
