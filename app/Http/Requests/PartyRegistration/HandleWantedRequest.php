@@ -10,6 +10,7 @@ namespace App\Http\Requests\PartyRegistration;
 
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
 
 class HandleWantedRequest extends FormRequest
 {
@@ -32,7 +33,21 @@ class HandleWantedRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        Validator::extend('required_manager_assigned', function($attribute, $value, $parameters, $validator){
+            $exsitManagerAssineds = array_filter($value, function($v) {
+                var_dump($v);
+                return array_key_exists('managerAssigned', $v);
+            });
+            return count($exsitManagerAssineds) > 0;
+        });
+
+        return [
+            'party.wantedRoleList'    => ['required', 'array', 'required_manager_assigned'],
+            'party.wantedRoleList.*.frameAmount' => ['required'],
+            'party.wantedRoleList.*.remarks' => ['required'],
+            'party.wantedRoleList.*.roleName' => ['required'],
+            'party.wantedRoleList.*.referenceJobId' => ['required'],
+        ];
     }
 
     public function isAdd(): bool
