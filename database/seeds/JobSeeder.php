@@ -19,42 +19,42 @@ class JobSeeder extends Seeder
     {
         $jobServiceFacade = app(\App\Presentation\Job\JobServiceFacade::class);
 
-        $jobServiceFacade->registerJob('学生(IT)', 'job/it_nojob.png', $this->makeGetConditions([]));
-        $jobServiceFacade->registerJob('学生(ゲーム)', 'job/game_nojob.png', $this->makeGetConditions([]));
-        $jobServiceFacade->registerJob('学生(デザイン)', 'job/design_nojob.png', $this->makeGetConditions([]));
-        $jobServiceFacade->registerJob('学生(映像)', 'job/movie_nojob.png', $this->makeGetConditions([]));
+        $jobServiceFacade->registerJob('学生(IT)', 'it_nojob', $this->makeGetConditions([]));
+        $jobServiceFacade->registerJob('学生(ゲーム)', 'game_nojob', $this->makeGetConditions([]));
+        $jobServiceFacade->registerJob('学生(デザイン)', 'design_nojob', $this->makeGetConditions([]));
+        $jobServiceFacade->registerJob('学生(映像)', 'movie_nojob', $this->makeGetConditions([]));
 
-        $jobServiceFacade->registerJob('Webエンジニア', 'job/web_engineer.png', $this->makeGetConditions([
+        $jobServiceFacade->registerJob('Webエンジニア', 'web_engineer', $this->makeGetConditions([
             [ 'PHP', 3 ], [ 'HTML', 1 ], [ 'JavaScript', 3 ], [ 'CSS', 1 ],
         ]));
-        $jobServiceFacade->registerJob('ネットワークエンジニア', 'job/infra_engineer.png', $this->makeGetConditions([
+        $jobServiceFacade->registerJob('ネットワークエンジニア', 'network_engineer', $this->makeGetConditions([
             [ 'ネットワーク', 5 ], [ 'Linux', 5 ],
         ]));
 
-        $jobServiceFacade->registerJob('ゲームプログラマー', 'job/game_programmer.png', $this->makeGetConditions([
+        $jobServiceFacade->registerJob('ゲームプログラマー', 'game_programmer', $this->makeGetConditions([
             [ 'C++', 5 ], [ 'Unity', 5 ],
         ]));
-        $jobServiceFacade->registerJob('ゲームグラフィッカー', 'job/game_graphicer.png', $this->makeGetConditions([
+        $jobServiceFacade->registerJob('ゲームグラフィッカー', 'game_graphicer', $this->makeGetConditions([
             [ 'デッサン', 3 ], [ 'モーション', 3 ], [ '色彩', 3 ],
         ]));
-        $jobServiceFacade->registerJob('ゲームプランナー', 'job/game_planner.png', $this->makeGetConditions([
+        $jobServiceFacade->registerJob('ゲームプランナー', 'game_planner', $this->makeGetConditions([
             [ 'Unity', 3 ], [ 'デッサン', 3 ], [ 'マーケティング', 3 ]
         ]));
 
-        $jobServiceFacade->registerJob('イラストレーター', 'job/illustrator.png', $this->makeGetConditions([
+        $jobServiceFacade->registerJob('イラストレーター', 'illustrator', $this->makeGetConditions([
             [ '色彩', 5 ], [ 'デッサン', 5 ],
         ]));
-        $jobServiceFacade->registerJob('Webデザイナー', 'job/web_designer.png', $this->makeGetConditions([
+        $jobServiceFacade->registerJob('Webデザイナー', 'web_designer', $this->makeGetConditions([
             [ 'HTML', 3 ], [ 'CSS', 3 ], [ '色彩', 3 ], [ 'デッサン', 3 ],
         ]));
-        $jobServiceFacade->registerJob('グラフィックデザイナー', 'job/graphic_designer.png', $this->makeGetConditions([
+        $jobServiceFacade->registerJob('グラフィックデザイナー', 'graphic_designer', $this->makeGetConditions([
             [ '色彩', 3 ], [ 'デッサン', 3 ], [ 'Illustrator', 3 ],
         ]));
 
-        $jobServiceFacade->registerJob('3DCGデザイナー', 'job/3dcg_designer.png', $this->makeGetConditions([
+        $jobServiceFacade->registerJob('3DCGデザイナー', '3dcg_designer', $this->makeGetConditions([
             [ '3DCG', 5 ], [ 'モーション', 5 ],
         ]));
-        $jobServiceFacade->registerJob('映像クリエイター', 'job/movie_creater.png', $this->makeGetConditions([
+        $jobServiceFacade->registerJob('映像クリエイター', 'movie_creater', $this->makeGetConditions([
             [ '撮影', 5 ], [ '編集', 5 ],
         ]));
     }
