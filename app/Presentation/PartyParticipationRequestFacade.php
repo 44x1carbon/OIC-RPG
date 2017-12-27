@@ -64,4 +64,14 @@ class PartyParticipationRequestFacade
         return $partyParticipationRequestList;
     }
 
+    // 自分が申請しているパーティ参加申請一覧を取得
+    public static function findStudentNumberPartyParticipationRequestList(string $guildMemberId)
+    {
+        /* @var PartyParticipationRequestAppService $partyParticipationRequestAppService */
+        $partyParticipationRequestAppService = app(PartyParticipationRequestAppService::class);
+
+        return $partyParticipationRequestAppService->findStudentNumberPartyParticipationRequestList(new StudentNumber($guildMemberId));
+
+    }
+
 }
