@@ -10,10 +10,13 @@ namespace App\Domain\Party;
 
 
 use App\Domain\GuildMember\GuildMember;
+use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Exception\NotFoundAssignableFrameException;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
+use App\Domain\Party\ValueObjects\PartyMember;
 use App\Domain\ProductionIdea\ProductionIdea;
+use App\Domain\WantedMember\WantedMember;
 use App\Domain\WantedRole\WantedRole;
 
 class Party
