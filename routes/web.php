@@ -23,13 +23,14 @@ Route::get('/sign_up', function() {
    return view('signup');
 });
 
-
 /** サインアップのフロー */
 Route::get('/sign_up/auth_info', GuildMemberRegistrationController::class.'@showAuthInfo')->name('show_sign_up_auth_info');
+Route::post('/sign_up/auth_info', GuildMemberRegistrationController::class.'@doAuthInfo')->name('do_sign_up_auth_info');
 Route::get('/sign_up/profile', GuildMemberRegistrationController::class.'@showProfile')->name('show_sign_up_profile');
+Route::post('/sign_up/profile', GuildMemberRegistrationController::class.'@doProfile')->name('do_sign_up_profile');
 Route::get('/sign_up/school_info', GuildMemberRegistrationController::class.'@showSchoolInfo')->name('show_sign_up_school_info');
+Route::post('/sign_up/school_info', GuildMemberRegistrationController::class.'@doSchoolInfo')->name('do_sign_up_school_info');
 Route::post('/sign_up', SignUpController::class.'@store')->name('post_sign_up');
-
 Route::post('/sign_in', SignInController::class.'@store')->name('post_sign_in');
 
 /** パーティー作成のフロー */
@@ -64,10 +65,6 @@ Route::get('/party/management/holding', function() {
 Route::get('/party/management/entry', function() {
     return view('guild.party.management.entry');
 });
-<<<<<<< HEAD
 Route::get('/party/management/applying', function() {
     return view('guild.party.management.applying');
 });
-=======
-
->>>>>>> 043165652ef05348bd3f473e3e231550a2343163
