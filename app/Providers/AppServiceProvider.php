@@ -4,16 +4,19 @@ namespace App\Providers;
 
 use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
 use App\Domain\GuildMember\GuildMember;
+use App\Domain\Job\JobRepositoryInterface;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyWrittenRequest\RepositoryInterface\PartyWrittenRequestRepositoryInterface;
 use App\Domain\WantedMember\RepositoryInterface\WantedMemberRepositoryInterface;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
+use App\Eloquents\PossessionSkillEloquent;
 use App\Domain\WantedRole\RepositoryInterface\WantedRoleRepositoryInterface;
 use App\Infrastracture\Course\CourseEloquentRepositoryImpl;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
+use App\Infrastracture\Job\JobEloquentRepositoryImpl;
 use App\Infrastracture\Party\PartyEloquentRepositoryImpl;
 use App\Infrastracture\Party\PartyOnMemoryRepositoryImpl;
 use App\Infrastracture\PartyWrittenRequest\PartyWrittenRequestOnMemoryRepositoryImpl;
@@ -27,6 +30,7 @@ use App\Infrastracture\ProductionType\ProductionTypeOnMemoryRepositoryImpl;
 use App\Infrastracture\GuildMember\GuildMemberEloquentRepositoryImpl;
 use App\Infrastracture\GuildMember\GuildMemberOnMemoryRepositoryImpl;
 use App\Infrastracture\Skill\SkillOnMemoryRepositoryImpl;
+use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Infrastracture\WantedRole\WantedRoleEloquentRepositoryImpl;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -78,5 +82,6 @@ class AppServiceProvider extends ServiceProvider
             if(Auth::check()) return Auth::user()->guildMemberEntity();
             return null;
         });
+        $this->app->singleton(JobRepositoryInterface::class, JobEloquentRepositoryImpl::class);
     }
 }
