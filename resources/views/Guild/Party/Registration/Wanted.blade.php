@@ -26,7 +26,10 @@
                     <div class="item form-item">
                         <h4 class="form-item-title">参考ジョブ</h4>
                         <select id="" name="party[wantedRoleList][{{$index}}][referenceJobId]"><!-- 参考ジョブ -->
-                            <option value="">androidエンジニア</option>
+                            <?php /* @var \App\Domain\Job\Job $job */ ?>
+                            @foreach($allJob as $job)
+                                <option value="{{ $job->jobId()->code() }}">{{ $job->jobName() }}</option>
+                            @endforeach
                         </select>
                     </div><!-- item -->
                     <div class="item form-item">

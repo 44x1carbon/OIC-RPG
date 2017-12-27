@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Job\JobRepositoryInterface;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 use App\Http\Requests\PartyRegistration\AddWantedRoleRequest;
 use App\Http\Requests\PartyRegistration\HandleWantedRequest;
@@ -41,11 +42,11 @@ class PartyRegistrationController extends Controller
         return redirect()->route('show_party_registration_wanted');
     }
 
-    public function showWanted()
+    public function showWanted(JobRepositoryInterface $jobRepository)
     {
-
         return view('Guild.Party.Registration.Wanted')
-            ->with('session', $this->getSessionData());
+            ->with('session', $this->getSessionData())
+            ->with('allJob', $jobRepository->all());
     }
 
     public function handleWanted(HandleWantedRequest $request)
