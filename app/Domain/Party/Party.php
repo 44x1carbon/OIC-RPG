@@ -106,7 +106,20 @@ class Party
 
     public function partyMembers(): array
     {
-        return $this->partyMembers;
+        $guildMemberRepo = app(GuildMemberRepositoryInterface::class);
+
+        $members = array_flatten(array_map(function(WantedRole $wantedRole) use($guildMemberRepo){
+            return array_map(function(WantedMember $wantedMember) use ($wantedRole, $guildMemberRepo){
+                /* @var GuildMember $guildMember */
+                $guildMember = $guildMemberRepo->findByStudentNumber($wantedMember->officerId());
+                return new PartyMember(
+                    $wantedRole->roleName(),
+                    $wantedMember->officerId(),
+                    $guildMember->studentName()
+                );
+            }, $wantedRole->wantedMemberList()->assignedList());
+        }, $this->wantedRoles));
+        return $members;
     }
 
     /**
