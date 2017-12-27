@@ -9,6 +9,8 @@
 namespace App\Domain\WantedRole;
 
 
+use App\Domain\Job\Job;
+use App\Domain\Job\JobRepositoryInterface;
 use App\Domain\Party\Exception\NotFoundAssignableFrameException;
 use App\Domain\WantedMember\WantedMember;
 use App\Domain\WantedRole\ValueObject\WantedMemberList;
@@ -27,6 +29,9 @@ class WantedRole
     // メンバー募集のリスト
     private $wantedMemberList;
 
+    /* @var JobRepositoryInterface $jobRepo */
+    private $jobRepo;
+
     public function __construct($id, $roleName, $jobId, $remarks, $wantedMembers = [])
     {
         $this->id = $id;
@@ -34,6 +39,7 @@ class WantedRole
         $this->referenceJobId = $jobId;
         $this->remarks = $remarks;
         $this->wantedMemberList = new WantedMemberList($wantedMembers);
+        $this->jobRepo = app(JobRepositoryInterface::class);
     }
 
     public function id(): String
@@ -124,5 +130,10 @@ class WantedRole
     public function totalFrameNum(): int
     {
         return $this->assignableFrameNum() + $this->assignedFrameNum();
+    }
+
+    public function referenceJob(): ?Job
+    {
+        return $this->jobRepo->findByid($this->referenceJobId());
     }
 }
