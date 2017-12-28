@@ -35,7 +35,6 @@ class HandleWantedRequest extends FormRequest
     {
         Validator::extend('required_manager_assigned', function($attribute, $value, $parameters, $validator){
             $exsitManagerAssineds = array_filter($value, function($v) {
-                var_dump($v);
                 return array_key_exists('managerAssigned', $v);
             });
             return count($exsitManagerAssineds) > 0;
