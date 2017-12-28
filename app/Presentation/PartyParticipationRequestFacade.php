@@ -17,8 +17,19 @@ use \DateTime;
 
 class PartyParticipationRequestFacade
 {
+    /* @var PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository */
+    protected $partyParticipationRequestRepository;
+    /* @var PartyAppService $partyAppService */
+    protected $partyAppService;
+
+    public function __construct(PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository, PartyAppService $partyAppService)
+    {
+        $this->partyParticipationRequestRepository = $partyParticipationRequestRepository;
+        $this->partyAppService = $partyAppService;
+    }
+
     // パーティ参加申請を作成
-    public static function registerPartyParticipationRequest(
+    public function registerPartyParticipationRequest(
         string $partyId,
         string $wantedRoleId,
         string $guildMemberIdData,
@@ -26,12 +37,9 @@ class PartyParticipationRequestFacade
         string $reply = null
     )
     {
-        $repository = app(PartyParticipationRequestRepositoryInterface::class);
-        $partyAppService = app(PartyAppService::class);
+        $partyParticipationRequestId = $this->partyAppService->registerPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), new DateTime($applicationDateData), new Reply($reply));
 
-        $partyParticipationRequestId = $partyAppService->registerPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), new DateTime($applicationDateData), new Reply($reply));
-
-        return $repository->findById($partyParticipationRequestId);
+        return $this->partyParticipationRequestRepository->findById($partyParticipationRequestId);
     }
 
 }
