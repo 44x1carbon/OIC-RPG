@@ -15,4 +15,28 @@ class Field
         $this->courseIdList = $courseIdList;
     }
 
+    /**
+     * @return string
+     */
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return array
+     */
+    public function jobIdList(): array
+    {
+        return $this->jobIdList;
+    }
+
+    /**
+     * @return array
+     */
+    public function courseIdList(): array
+    {
+        return $this->courseIdList;
+    }
+
 }
