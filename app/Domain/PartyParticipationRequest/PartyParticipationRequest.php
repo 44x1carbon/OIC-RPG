@@ -125,7 +125,7 @@ class PartyParticipationRequest
     /**
      * @param Reply $Reply
      */
-    public function setReply(Reply $Reply)
+    public function returnReply(Reply $Reply)
     {
         $this->Reply = $Reply;
     }
