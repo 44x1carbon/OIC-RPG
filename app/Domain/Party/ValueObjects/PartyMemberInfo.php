@@ -3,26 +3,27 @@
 namespace App\Domain\Party\ValueObjects;
 
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\WantedRole\WantedRole;
 
-class PartyMember
+class PartyMemberInfo
 {
-    private $assigneeRoleName;
+    private $assigneeRole;
     private $memberId;
-    private $memberName;
+    private $partyId;
 
-    function __construct(string $roleName, StudentNumber $memberId, string $memberName)
+    function __construct(WantedRole $role, StudentNumber $memberId, string $partyId)
     {
-        $this->assigneeRoleName = $roleName;
+        $this->assigneeRole = $role;
         $this->memberId = $memberId;
-        $this->memberName = $memberName;
+        $this->partyId = $partyId;
     }
 
     /**
-     * @return string
+     * @return WantedRole
      */
-    public function assigneeRoleName(): string
+    public function assigneeRole(): WantedRole
     {
-        return $this->assigneeRoleName;
+        return $this->assigneeRole;
     }
 
     /**
@@ -36,8 +37,8 @@ class PartyMember
     /**
      * @return string
      */
-    public function memberName(): string
+    public function partyId(): string
     {
-        return $this->memberName;
+        return $this->partyId;
     }
 }

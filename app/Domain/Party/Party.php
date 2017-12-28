@@ -14,7 +14,7 @@ use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Exception\NotFoundAssignableFrameException;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
-use App\Domain\Party\ValueObjects\PartyMember;
+use App\Domain\Party\ValueObjects\PartyMemberInfo;
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\WantedMember\WantedMember;
 use App\Domain\WantedRole\WantedRole;
@@ -115,11 +115,10 @@ class Party
         $members = array_flatten(array_map(function(WantedRole $wantedRole) use($guildMemberRepo){
             return array_map(function(WantedMember $wantedMember) use ($wantedRole, $guildMemberRepo){
                 /* @var GuildMember $guildMember */
-                $guildMember = $guildMemberRepo->findByStudentNumber($wantedMember->officerId());
-                return new PartyMember(
-                    $wantedRole->roleName(),
+                return new PartyMemberInfo(
+                    $wantedRole,
                     $wantedMember->officerId(),
-                    $guildMember->studentName()
+                    $this->id
                 );
             }, $wantedRole->wantedMemberList()->assignedList());
         }, $this->wantedRoles));
