@@ -39,4 +39,27 @@ class Field
         return $this->courseIdList;
     }
 
+    /**
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param array $jobIdList
+     */
+    public function setJobIdList(array $jobIdList)
+    {
+        $this->jobIdList = $jobIdList;
+    }
+
+    /**
+     * @param array $courseIdList
+     */
+    public function setCourseIdList(array $courseIdList)
+    {
+        $this->courseIdList = $courseIdList;
+    }
 }
