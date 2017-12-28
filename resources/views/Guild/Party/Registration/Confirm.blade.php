@@ -69,7 +69,6 @@
             </div>
         </div><!-- detail-party_body -->
     </form>
-    {{ var_dump($errors->messages())  }}
 </div><!-- detail-party -->
 
 @endsection
