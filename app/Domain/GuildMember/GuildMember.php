@@ -121,9 +121,9 @@ class GuildMember
         return $this->favoriteJobId;
     }
 
-    public function setFavoriteJob(Job $job)
+    public function setFavoriteJob(JobId $jobId)
     {
-        $this->favoriteJobId = $job->jobId();
+        $this->favoriteJobId = $jobId;
     }
 
     public function learnSkill(string $skillId): PossessionSkill
