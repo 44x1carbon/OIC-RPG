@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Domain\GuildMember\GuildMember;
+use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Http\Requests\PartyCreateRequest;
+use App\Infrastracture\Party\PartyViewModel;
 use App\Presentation\PartyServiceFacade;
 
 class PartyController extends Controller
@@ -20,5 +22,13 @@ class PartyController extends Controller
         );
 
         return response($partyId);
+    }
+
+    public function detail(string $partyId, PartyRepositoryInterface $partyRepository)
+    {
+        $party = $partyRepository->findById($partyId);
+
+        return view('Guild.Party.Detail')
+            ->with('party', new PartyViewModel($party));
     }
 }

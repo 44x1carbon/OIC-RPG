@@ -53,9 +53,7 @@ Route::get('/party/edit', function() {
 });
 
 /** パーティー詳細表示 */
-Route::get('/party/detail', function() {
-    return view('guild.party.detail');
-});
+Route::get('/party/{partyId}/detail', PartyController::class.'@detail');
 
 /** 検索 */
 Route::get('/search', function() {
