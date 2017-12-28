@@ -16,17 +16,9 @@ class GetCondition
     private $skillId;
     private $requiredLevel;
 
-    public function __construct()
-    {
-    }
-
-    public function setSkillId(string $skillId)
+    public function __construct(string $skillId, int $requiredLevel)
     {
         $this->skillId = $skillId;
-    }
-
-    public function setRequiredLevel(int $requiredLevel)
-    {
         $this->requiredLevel = $requiredLevel;
     }
 

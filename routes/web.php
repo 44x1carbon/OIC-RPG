@@ -59,3 +59,11 @@ Route::get('/party/detail', function() {
 
 /** 検索 */
 Route::get('/party/search', PartyController::class.'@search' )->name('search_party');
+
+/** パーティー管理 */
+Route::get('/party/management/holding', function() {
+    return view('guild.party.management.holding');
+});
+Route::get('/party/management/entry', function() {
+    return view('guild.party.management.entry');
+});
