@@ -1,22 +1,23 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: user
+ * Date: 2017/12/22
+ * Time: 11:52
+ */
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\PartyRegistration;
 
-use App\Domain\PartyWrittenRequest\ValueObject\WantedRoleInfo;
+use App\Domain\ProductionType\ProductionType;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
-use App\Domain\WantedMember\ValueObjects\WantedRole;
-use App\Presentation\DTO\PartyDto;
 use App\Presentation\DTO\ProductionIdeaDto;
 use App\Presentation\DTO\ProductionTypeDto;
-use App\Presentation\DTO\WantedRoleDto;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
-class PartyCreateRequest extends FormRequest
+class ProductionIdeaRequest extends FormRequest
 {
-
-    protected $productionTypeRepository;
+    /* @var ProductionTypeRepositoryInterface $productionTypeRepository */
+    private $productionTypeRepository;
 
     public function __construct(
         array $query = array(),
@@ -45,11 +46,6 @@ class PartyCreateRequest extends FormRequest
         return Auth::check();
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
@@ -57,25 +53,7 @@ class PartyCreateRequest extends FormRequest
             'party.productionIdea.productionTheme' => ['required'],
             'party.productionIdea.productionTypeId'  => ['required'],
             'party.productionIdea.ideaDescription' => ['required'],
-            'party.wantedRoleList'    => ['required', 'array'],
-            'party.wantedRoleList.*.frameAmount' => ['required'],
-            'party.wantedRoleList.*.remarks' => [],
-            'party.wantedRoleList.*.roleName' => ['required'],
-            'party.wantedRoleList.*.referenceJobId' => [],
         ];
-    }
-
-    protected function getValidatorInstance()
-    {
-        return parent::getValidatorInstance()->after(function($validator){
-            // Call the after method of the FormRequest (see below)
-            $this->after($validator);
-        });
-    }
-
-    public function after($validator)
-    {
-        Log::debug($validator->errors());
     }
 
     public function productionIdeaDto(): ProductionIdeaDto
@@ -103,27 +81,5 @@ class PartyCreateRequest extends FormRequest
     public function activityEndDate(): string
     {
         return $this->input('party.activityEndDate');
-    }
-
-    public function wantedRoleDtos(): array
-    {
-        return array_map(function($w) {
-            return new WantedRoleDto(
-                $w['roleName'],
-                $w['remarks'],
-                $w['referenceJobId'],
-                $w['frameAmount'],
-                isset($w['managerAssigned'])? w['managerAssigned'] : false
-            );
-        }, $this->input('party.wantedRoleList'));
-    }
-
-    public function partyDto(): PartyDto
-    {
-        return new PartyDto(
-            $this->activityEndDate(),
-            $this->productionIdeaDto(),
-            $this->wantedRoleDtos()
-        );
     }
 }

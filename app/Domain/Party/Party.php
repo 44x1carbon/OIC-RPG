@@ -18,6 +18,7 @@ use App\Domain\Party\ValueObjects\PartyMember;
 use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\WantedMember\WantedMember;
 use App\Domain\WantedRole\WantedRole;
+use App\Exceptions\DomainException;
 
 class Party
 {
@@ -52,7 +53,7 @@ class Party
     public function assignMember(string $wantedRoleId, StudentNumber $memberId)
     {
         $wantedRole = $this->findWantedRoleById($wantedRoleId);
-
+        if(is_null($wantedRole)) throw new DomainException("WantedRoleId $wantedRoleId is not found.");
         $wantedMember = $wantedRole->getAssignableFrame();
         $wantedMember->assign($memberId);
     }
