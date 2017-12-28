@@ -18,7 +18,7 @@ interface FieldRepositoryInterface
      * @param string $name
      * @return Field
      */
-    public function findByName(string $name): Field;
+    public function findByName(string $name): ?Field;
 
     /**
      * コースIDからそのコースが所属しているFieldインスタンスを取得する
@@ -26,7 +26,7 @@ interface FieldRepositoryInterface
      * @param string $courseId
      * @return Field
      */
-    public function findByCourseId(string $courseId): Field;
+    public function findByCourseId(string $courseId): ?Field;
 
     /**
      * ジョブIDからそのジョブが所属しているFieldインスタンスを取得する
@@ -34,7 +34,7 @@ interface FieldRepositoryInterface
      * @param JobId $jobId
      * @return Field
      */
-    public function findByJobId(JobId $jobId): Field;
+    public function findByJobId(JobId $jobId): ?Field;
 
     /**
      * すべてのFieldインスタンスを取得する

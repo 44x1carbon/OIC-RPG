@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
+use App\Domain\Field\FieldRepositoryInterface;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\Job\JobRepositoryInterface;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
@@ -16,6 +17,7 @@ use App\Domain\WantedRole\RepositoryInterface\WantedRoleRepositoryInterface;
 use App\Infrastracture\Course\CourseEloquentRepositoryImpl;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
+use App\Infrastracture\Field\FieldEloquentRepositoryImpl;
 use App\Infrastracture\Job\JobEloquentRepositoryImpl;
 use App\Infrastracture\Party\PartyEloquentRepositoryImpl;
 use App\Infrastracture\Party\PartyOnMemoryRepositoryImpl;
@@ -83,5 +85,6 @@ class AppServiceProvider extends ServiceProvider
             return null;
         });
         $this->app->singleton(JobRepositoryInterface::class, JobEloquentRepositoryImpl::class);
+        $this->app->singleton(FieldRepositoryInterface::class, FieldEloquentRepositoryImpl::class);
     }
 }
