@@ -44,6 +44,7 @@ class GuildMemberEloquentRepositoryImpl implements GuildMemberRepositoryInterfac
         $guildMemberModel->course_id = $guildMember->course()->id();
         $guildMemberModel->gender_type = $guildMember->gender()->type();
         $guildMemberModel->email = $guildMember->mailAddress()->address();
+        $guildMemberModel->favorite_job_id = $guildMember->favoriteJobId()->code();
 
         PossessionSkillEloquent::saveManyDomainObject($guildMember->possessionSkills(), $guildMember->studentNumber());
         return $guildMemberModel->save();
