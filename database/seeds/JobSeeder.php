@@ -5,9 +5,13 @@ use Illuminate\Database\Seeder;
 
 class JobSeeder extends Seeder
 {
+    /* @var \App\Domain\Field\FieldRepositoryInterface $fieldRepo */
+    private $fieldRepo;
+
     function __construct(\App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface $skillRepository)
     {
         $this->skills = $skillRepository->all();
+        $this->fieldRepo = app(\App\Domain\Field\FieldRepositoryInterface::class);
     }
 
     /**
@@ -17,46 +21,115 @@ class JobSeeder extends Seeder
      */
     public function run()
     {
+        /* @var \App\Presentation\Job\JobServiceFacade $jobServiceFacade */
         $jobServiceFacade = app(\App\Presentation\Job\JobServiceFacade::class);
 
-        $jobServiceFacade->registerJob('学生(IT)', 'it_nojob', $this->makeGetConditions([]));
-        $jobServiceFacade->registerJob('学生(ゲーム)', 'game_nojob', $this->makeGetConditions([]));
-        $jobServiceFacade->registerJob('学生(デザイン)', 'design_nojob', $this->makeGetConditions([]));
-        $jobServiceFacade->registerJob('学生(映像)', 'movie_nojob', $this->makeGetConditions([]));
+        $fields = [
+            '情報処理IT' => [
+                [
+                    'name' => '学生(IT)',
+                    'path' => 'it_nojob',
+                    'conditions' => []
+                ],
+                [
+                    'name' => 'Webエンジニア',
+                    'path' => 'web_engineer',
+                    'conditions' => [
+                        [ 'PHP', 3 ], [ 'HTML', 1 ], [ 'JavaScript', 3 ], [ 'CSS', 1 ],
+                    ]
+                ],
+                [
+                    'name' => 'ネットワークエンジニア',
+                    'path' => 'network_engineer',
+                    'conditions' => [
+                        [ 'ネットワーク', 5 ], [ 'Linux', 5 ],
+                    ]
+                ],
+            ],
+            'ゲーム' => [
+                [
+                    'name' => '学生(ゲーム)',
+                    'path' => 'game_nojob',
+                    'conditions' => []
+                ],
+                [
+                    'name' => 'ゲームプログラマー',
+                    'path' => 'game_programmer',
+                    'conditions' => [
+                        [ 'C++', 5 ], [ 'Unity', 5 ],
+                    ]
+                ],
+                [
+                    'name' => 'ゲームグラフィッカー',
+                    'path' => 'game_graphicer',
+                    'conditions' => [
+                        [ 'デッサン', 3 ], [ 'モーション', 3 ], [ '色彩', 3 ],
+                    ]
+                ],
+            ],
+            'CG・映像・アニメーション' => [
+                [
+                    'name' => '学生(映像)',
+                    'path' => 'movie_nojob',
+                    'conditions' => []
+                ],
+                [
+                    'name' => '3DCGデザイナー',
+                    'path' => '3dcg_designer',
+                    'conditions' => [
+                        [ '3DCG', 5 ], [ 'モーション', 5 ],
+                    ]
+                ],
+                [
+                    'name' => '映像クリエイター',
+                    'path' => 'movie_creater',
+                    'conditions' => [
+                        [ '撮影', 5 ], [ '編集', 5 ],
+                    ]
+                ],
+            ],
+            'デザイン・Web' => [
+                [
+                    'name' => '学生(デザイン)',
+                    'path' => 'design_nojob',
+                    'conditions' => []
+                ],
+                [
+                    'name' => 'イラストレーター',
+                    'path' => 'illustrator',
+                    'conditions' => [
+                        [ '色彩', 5 ], [ 'デッサン', 5 ],
+                    ]
+                ],
+                [
+                    'name' => 'Webデザイナー',
+                    'path' => 'web_designer',
+                    'conditions' => [
+                        [ 'HTML', 3 ], [ 'CSS', 3 ], [ '色彩', 3 ], [ 'デッサン', 3 ],
+                    ]
+                ],
+                [
+                    'name' => 'グラフィックデザイナー',
+                    'path' => 'graphic_designer',
+                    'conditions' => [
+                        [ '色彩', 3 ], [ 'デッサン', 3 ], [ 'Illustrator', 3 ],
+                    ]
+                ],
+            ],
+        ];
 
-        $jobServiceFacade->registerJob('Webエンジニア', 'web_engineer', $this->makeGetConditions([
-            [ 'PHP', 3 ], [ 'HTML', 1 ], [ 'JavaScript', 3 ], [ 'CSS', 1 ],
-        ]));
-        $jobServiceFacade->registerJob('ネットワークエンジニア', 'network_engineer', $this->makeGetConditions([
-            [ 'ネットワーク', 5 ], [ 'Linux', 5 ],
-        ]));
+        foreach ($fields as $fieldName => $jobs) {
+            $jobIds = [];
+            foreach ($jobs as $job) {
+                $jobIdStr = $jobServiceFacade->registerJob($job['name'], $job['path'], $this->makeGetConditions($job['conditions']));
+                $jobIds[] = new \App\Domain\Job\ValueObjects\JobId($jobIdStr);
+            }
 
-        $jobServiceFacade->registerJob('ゲームプログラマー', 'game_programmer', $this->makeGetConditions([
-            [ 'C++', 5 ], [ 'Unity', 5 ],
-        ]));
-        $jobServiceFacade->registerJob('ゲームグラフィッカー', 'game_graphicer', $this->makeGetConditions([
-            [ 'デッサン', 3 ], [ 'モーション', 3 ], [ '色彩', 3 ],
-        ]));
-        $jobServiceFacade->registerJob('ゲームプランナー', 'game_planner', $this->makeGetConditions([
-            [ 'Unity', 3 ], [ 'デッサン', 3 ], [ 'マーケティング', 3 ]
-        ]));
-
-        $jobServiceFacade->registerJob('イラストレーター', 'illustrator', $this->makeGetConditions([
-            [ '色彩', 5 ], [ 'デッサン', 5 ],
-        ]));
-        $jobServiceFacade->registerJob('Webデザイナー', 'web_designer', $this->makeGetConditions([
-            [ 'HTML', 3 ], [ 'CSS', 3 ], [ '色彩', 3 ], [ 'デッサン', 3 ],
-        ]));
-        $jobServiceFacade->registerJob('グラフィックデザイナー', 'graphic_designer', $this->makeGetConditions([
-            [ '色彩', 3 ], [ 'デッサン', 3 ], [ 'Illustrator', 3 ],
-        ]));
-
-        $jobServiceFacade->registerJob('3DCGデザイナー', '3dcg_designer', $this->makeGetConditions([
-            [ '3DCG', 5 ], [ 'モーション', 5 ],
-        ]));
-        $jobServiceFacade->registerJob('映像クリエイター', 'movie_creater', $this->makeGetConditions([
-            [ '撮影', 5 ], [ '編集', 5 ],
-        ]));
+            /* @var \App\Domain\Field\Field $field */
+            $field = $this->fieldRepo->findByName($fieldName);
+            $field->setJobIdList($jobIds);
+            $this->fieldRepo->save($field);
+        }
     }
 
     public function makeGetConditions($data): array

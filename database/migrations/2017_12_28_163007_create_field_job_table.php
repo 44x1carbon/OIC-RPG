@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGuildMembersTable extends Migration
+class CreateFieldJobTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateGuildMembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('guild_members', function (Blueprint $table) {
+        Schema::create('field_job', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('student_number');
-            $table->string('name');
-            $table->string('course_id');
-            $table->string('gender_type');
-            $table->string('email');
-            $table->string('favorite_job_id');
+            $table->unsignedInteger('field_id');
+            $table->string('job_id');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateGuildMembersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('guild_members');
+        Schema::dropIfExists('field_job');
     }
 }
