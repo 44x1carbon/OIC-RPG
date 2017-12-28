@@ -14,6 +14,8 @@ use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\Course\Course;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
+use App\Domain\Job\Job;
+use App\Domain\Job\ValueObjects\JobId;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
@@ -36,6 +38,7 @@ class GuildMember
     private $gender;
     private $mailAddress;
     private $possessionSkillCollection;
+    private $favoriteJobId;
 
     public function __construct()
     {
@@ -111,6 +114,16 @@ class GuildMember
     public function possessionSkills(): ?PossessionSkillCollection
     {
         return $this->possessionSkillCollection;
+    }
+
+    public function favoriteJobId(): JobId
+    {
+        return $this->favoriteJobId;
+    }
+
+    public function setFavoriteJob(Job $job)
+    {
+        $this->favoriteJobId = $job->jobId();
     }
 
     public function learnSkill(string $skillId): PossessionSkill
