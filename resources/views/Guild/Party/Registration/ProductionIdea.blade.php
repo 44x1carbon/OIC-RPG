@@ -14,25 +14,27 @@
             <h2 class="entry-title">制作内容</h2>
         </div><!-- entry-header -->
         <div class="entry-body">
-            <form class="form">
+            <form class="form" action="{{ route('do_party_registration_production_idea') }}" method="post">
+                {{ csrf_field() }}
                 <div class="item form-item">
                     <h3 class="form-item-title">テーマ</h3>
-                    <input type="text" class="input" name=""><!-- テーマ -->
+                    <input type="text" class="input" name="party[productionIdea][productionTheme]"><!-- テーマ -->
                 </div><!-- item -->
                 <div class="item form-item">
                     <h3 class="form-item-title">種類</h3>
-                    <select name="production-type" id="">
-                        <option value="0">システム</option>
-                        <option value="1">映像</option>
+                    <select name="party[productionIdea][productionTypeId]" id="">
+                        @foreach($productionTypes as $productionType)
+                            <option value="{{ $productionType->id() }}">{{ $productionType->name() }}</option>
+                        @endforeach
                     </select><!-- 種類 -->
                 </div><!-- item -->
                 <div class="item form-item">
                     <h3 class="form-item-title">説明</h3>
-                    <input type="textarea" class="input input-large" name=""><!-- 説明 -->
+                    <input type="textarea" class="input input-large" name="party[productionIdea][ideaDescription]"><!-- 説明 -->
                 </div><!-- item -->
                 <div class="item form-item">
                     <h3 class="form-item-title">活動期間</h3>
-                    <input type="date" class="input" name=""><!-- 活動期間 -->
+                    <input type="date" class="input" name="party[activityEndDate]"><!-- 活動期間 -->
                 </div><!-- item -->
                 <div class="btn-wrap row flex-end-side flex-end-length">
                     <button class="btn btn-next" type="submit">次へ</button>
