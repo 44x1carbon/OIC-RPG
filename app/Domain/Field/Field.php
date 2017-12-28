@@ -2,11 +2,21 @@
 
 namespace App\Domain\Field;
 
+use App\Domain\Job\Job;
+use App\Domain\Job\JobRepositoryInterface;
+
 class Field
 {
     private $name;
     private $jobIdList;
     private $courseIdList;
+
+    const DEFAULT_JOB_LIST = [
+        '情報処理IT' => '学生(IT)',
+        'ゲーム' => '学生(ゲーム)',
+        'CG・映像・アニメーション' => '学生(映像)',
+        'デザイン・Web' => '学生(デザイン)',
+    ];
 
     public function __construct(string $name, array $jobIdList = [], array $courseIdList = [])
     {
@@ -37,6 +47,13 @@ class Field
     public function courseIdList(): array
     {
         return $this->courseIdList;
+    }
+
+    public function defaultJob(): Job
+    {
+        /* @var JobRepositoryInterface $jobRepo */
+        $jobRepo = app(JobRepositoryInterface::class);
+        return $jobRepo->findByName(self::DEFAULT_JOB_LIST[$this->name]);
     }
 
     /**
