@@ -18,7 +18,7 @@ class ProductionIdeaDto
     /**
      * @return string
      */
-    public function getProductionTheme(): string
+    public function productionTheme(): string
     {
         return $this->productionTheme;
     }
@@ -34,7 +34,7 @@ class ProductionIdeaDto
     /**
      * @return ProductionTypeDto
      */
-    public function getProductionTypeDto(): ProductionTypeDto
+    public function productionTypeDto(): ProductionTypeDto
     {
         return $this->productionTypeDto;
     }
@@ -50,7 +50,7 @@ class ProductionIdeaDto
     /**
      * @return string
      */
-    public function getIdeaDescription(): string
+    public function ideaDescription(): string
     {
         return $this->ideaDescription;
     }
