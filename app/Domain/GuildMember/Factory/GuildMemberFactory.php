@@ -10,6 +10,7 @@ use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\PossessionJob\PossessionJobCollection;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Exceptions\DomainException;
 
@@ -27,7 +28,15 @@ class GuildMemberFactory
 
     }
 
-    public function createGuildMember(StudentNumber $studentNumber, String $studentName, Course $course, Gender $gender,MailAddress $mailAddress, PossessionSkillCollection $possessionSkills): GuildMember
+    public function createGuildMember(
+        StudentNumber $studentNumber,
+        string $studentName,
+        Course $course,
+        Gender $gender,
+        MailAddress $mailAddress,
+        PossessionSkillCollection $possessionSkills = null,
+        PossessionJobCollection $possessionJobCollection = null
+    ): GuildMember
     {
         $guildMember = new GuildMember();
         $guildMember->setStudentNumber($studentNumber);
@@ -35,7 +44,8 @@ class GuildMemberFactory
         $guildMember->setCourse($course);
         $guildMember->setGender($gender);
         $guildMember->setMailAddress($mailAddress);
-        $guildMember->setPossessionSkills($possessionSkills);
+        $guildMember->setPossessionSkills($possessionSkills ?? new PossessionJobCollection([]));
+        $guildMember->setPossessionJobs($possessionJobCollection ?? new PossessionJobCollection([]));
 
         if (!GuildMemberSpec::isCompleteItem($guildMember)) throw new DomainException("Error");
 
