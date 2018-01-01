@@ -9,6 +9,7 @@ use App\Domain\GuildMember\Factory\GuildMemberFactory;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\PossessionSkill\PossessionSkillCollection;
 
 /**
  * Created by PhpStorm.
@@ -32,7 +33,7 @@ class GuildMemberSpecTest extends \Tests\TestCase
         $gender = new Gender('male');
         $mailAddress = new MailAddress('b4000@oic.jp');
         $guildMemberFactory = new GuildMemberFactory();
-        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress);
+        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress, new PossessionSkillCollection([]));
         $this->repo->save($guildMember);
     }
 
