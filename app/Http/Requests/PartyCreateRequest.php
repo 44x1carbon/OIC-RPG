@@ -3,7 +3,11 @@
 namespace App\Http\Requests;
 
 use App\Domain\PartyWrittenRequest\ValueObject\WantedRoleInfo;
+use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 use App\Domain\WantedMember\ValueObjects\WantedRole;
+use App\Presentation\DTO\PartyDto;
+use App\Presentation\DTO\ProductionIdeaDto;
+use App\Presentation\DTO\ProductionTypeDto;
 use App\Presentation\DTO\WantedRoleDto;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +15,22 @@ use Illuminate\Support\Facades\Log;
 
 class PartyCreateRequest extends FormRequest
 {
+
+    protected $productionTypeRepository;
+
+    public function __construct(
+        array $query = array(),
+        array $request = array(),
+        array $attributes = array(),
+        array $cookies = array(),
+        array $files = array(),
+        array $server = array(),
+        $content = null
+    ) {
+        parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
+        $this->productionTypeRepository = app(ProductionTypeRepositoryInterface::class);
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -34,15 +54,14 @@ class PartyCreateRequest extends FormRequest
     {
         return [
             'party.activityEndDate' => ['required'],
-            'party.roleName' => ['required'],
             'party.productionIdea.productionTheme' => ['required'],
             'party.productionIdea.productionTypeId'  => ['required'],
             'party.productionIdea.ideaDescription' => ['required'],
             'party.wantedRoleList'    => ['required', 'array'],
             'party.wantedRoleList.*.frameAmount' => ['required'],
-            'party.wantedRoleList.*.remarks' => ['required'],
+            'party.wantedRoleList.*.remarks' => [],
             'party.wantedRoleList.*.roleName' => ['required'],
-            'party.wantedRoleList.*.referenceJobId' => ['required'],
+            'party.wantedRoleList.*.referenceJobId' => [],
         ];
     }
 
@@ -59,41 +78,52 @@ class PartyCreateRequest extends FormRequest
         Log::debug($validator->errors());
     }
 
-    private function party(): array
+    public function productionIdeaDto(): ProductionIdeaDto
     {
-        return $this->request->get('party');
+        $productionIdea = $this->input('party.productionIdea');
+        return new ProductionIdeaDto(
+            $productionIdea['productionTheme'],
+            $this->productionTypeDto(),
+            $productionIdea['ideaDescription']
+        );
     }
 
-    public function roleName(): string
+    public function productionTypeDto(): ProductionTypeDto
     {
-        return $this->party()['roleName'];
+        $productionTypeId = $this->input('party.productionIdea.productionTypeId');
+
+        /* @var ProductionType $productionType */
+        $productionType = $this->productionTypeRepository->findById($productionTypeId);
+        return new ProductionTypeDto(
+            $productionType->id(),
+            $productionType->name()
+        );
     }
 
-    public function activityEndDate(): \DateTime
+    public function activityEndDate(): string
     {
-        $dateStr = $this->party()['activityEndDate'];
-        return \DateTime::createFromFormat('Y-m-d', $dateStr);
+        return $this->input('party.activityEndDate');
     }
 
-    public function productionTheme(): string
+    public function wantedRoleDtos(): array
     {
-        return $productionIdeaData = $this->party()['productionIdea']['productionTheme'];
+        return array_map(function($w) {
+            return new WantedRoleDto(
+                $w['roleName'],
+                $w['remarks'],
+                $w['referenceJobId'],
+                $w['frameAmount'],
+                isset($w['managerAssigned'])? $w['managerAssigned'] : false
+            );
+        }, $this->input('party.wantedRoleList'));
     }
 
-    public function productionTypeId(): string
+    public function partyDto(): PartyDto
     {
-        return $productionIdeaData = $this->party()['productionIdea']['productionTypeId'];
-    }
-
-    public function ideDescription(): string
-    {
-        return $productionIdeaData = $this->party()['productionIdea']['ideaDescription'];
-    }
-
-    public function wantedRoleList(): array
-    {
-        return array_map(function($wantedRole) {
-            return new WantedRoleDto($wantedRole['roleName'], $wantedRole['remarks'], $wantedRole['referenceJobId'], $wantedRole['frameAmount']);
-        }, $this->party()['wantedRoleList']);
+        return new PartyDto(
+            $this->activityEndDate(),
+            $this->productionIdeaDto(),
+            $this->wantedRoleDtos()
+        );
     }
 }

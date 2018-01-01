@@ -1,8 +1,8 @@
 <?php
 
-use App\Domain\Course\Course;
 use App\Domain\ProductionType\Factory\ProductionTypeFactory;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
+use App\Domain\ProductionType\ProductionType;
 use Illuminate\Database\Seeder;
 
 class ProductionTypeSeeder extends Seeder
@@ -21,7 +21,7 @@ class ProductionTypeSeeder extends Seeder
 
     public function run()
     {
-        $this->repo->save($this->factory->createProductionType('システム'));
-        $this->repo->save($this->factory->createProductionType('映像'));
+        $this->repo->save(new ProductionType($this->repo->nextId(), 'Webシステム'));
+        $this->repo->save(new ProductionType($this->repo->nextId(), 'Webデザイン'));
     }
 }
