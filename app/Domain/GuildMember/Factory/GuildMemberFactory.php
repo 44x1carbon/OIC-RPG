@@ -34,8 +34,8 @@ class GuildMemberFactory
         Course $course,
         Gender $gender,
         MailAddress $mailAddress,
-        PossessionSkillCollection $possessionSkills,
-        PossessionJobCollection $possessionJobCollection
+        PossessionSkillCollection $possessionSkills = null,
+        PossessionJobCollection $possessionJobCollection = null
     ): GuildMember
     {
         $guildMember = new GuildMember();
@@ -44,8 +44,8 @@ class GuildMemberFactory
         $guildMember->setCourse($course);
         $guildMember->setGender($gender);
         $guildMember->setMailAddress($mailAddress);
-        $guildMember->setPossessionSkills($possessionSkills);
-        $guildMember->setPossessionJobs($possessionJobCollection);
+        $guildMember->setPossessionSkills($possessionSkills ?? new PossessionJobCollection([]));
+        $guildMember->setPossessionJobs($possessionJobCollection ?? new PossessionJobCollection([]));
 
         if (!GuildMemberSpec::isCompleteItem($guildMember)) throw new DomainException("Error");
 
