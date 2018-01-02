@@ -10,26 +10,20 @@ namespace App\Domain\GuildMember;
 
 use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
+use App\Domain\GuildMember\ValueObjects\MemberSkillStatus;
+use App\Domain\GuildMember\ValueObjects\SkillAcquisitionStatus;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\Course\Course;
-use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\Job\Job;
 use App\Domain\Job\ValueObjects\JobId;
-use App\Domain\MemberSkillStatus\MemberSkillStatus;
-use App\Domain\MemberSkillStatus\SkillAcquisitionStatus;
 use App\Domain\PossessionJob\PossessionJob;
 use App\Domain\PossessionJob\PossessionJobCollection;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
-use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Domain\Skill\Skill;
-use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
-use ArrayObject;
-use Illuminate\Support\Facades\Mail;
-use PhpParser\Node\Scalar\String_;
 
 
 class GuildMember

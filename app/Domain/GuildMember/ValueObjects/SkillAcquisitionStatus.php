@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\MemberSkillStatus;
+namespace App\Domain\GuildMember\ValueObjects;
 
 /**
  * スキルを取得しているかどうかの状態を表現するドメインモデル
