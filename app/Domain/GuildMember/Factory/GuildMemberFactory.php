@@ -29,7 +29,7 @@ class GuildMemberFactory
 
     }
 
-    public function createGuildMember(StudentNumber $studentNumber, String $studentName, Course $course, Gender $gender,MailAddress $mailAddress, JobId $favoriteJobId, PossessionSkillCollection $possessionSkills = null): GuildMember
+    public function createGuildMember(StudentNumber $studentNumber, String $studentName, Course $course, Gender $gender,MailAddress $mailAddress, JobId $favoriteJobId = null, PossessionSkillCollection $possessionSkills = null): GuildMember
     {
         $guildMember = new GuildMember();
         $guildMember->setStudentNumber($studentNumber);
@@ -38,7 +38,8 @@ class GuildMemberFactory
         $guildMember->setGender($gender);
         $guildMember->setMailAddress($mailAddress);
         $guildMember->setPossessionSkills($possessionSkills ?? new PossessionSkillCollection([]));
-        $guildMember->setFavoriteJob($favoriteJobId);
+        if($favoriteJobId !== null) $guildMember->setFavoriteJob($favoriteJobId);
+
 
         if (!GuildMemberSpec::isCompleteItem($guildMember)) throw new DomainException("Error");
 
