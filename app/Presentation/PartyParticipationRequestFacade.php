@@ -31,9 +31,7 @@ class PartyParticipationRequestFacade
         /* @var PartyAppService $partyAppService */
         $partyAppService = app(PartyAppService::class);
 
-        $partyParticipationRequestId = $partyAppService->registerPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), $applicationDateData ? new DateTime($applicationDateData) : null, $reply ? new Reply($reply) : null);
-
-        return $repository->findById($partyParticipationRequestId);
+        return $partyAppService->registerPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), $applicationDateData ? new DateTime($applicationDateData) : null, $reply ? new Reply($reply) : null);
     }
 
     // パーティ参加申請に返信
@@ -48,9 +46,7 @@ class PartyParticipationRequestFacade
         /* @var PartyAppService $partyAppService */
         $partyAppService = app(PartyAppService::class);
 
-        $partyParticipationRequestId = $partyAppService->replyPartyParticipationRequest($partyId, new StudentNumber($partyManagerId), new StudentNumber($guildMemberId), new Reply($replyStatus));
-
-        return $repository->findById($partyParticipationRequestId);
+        return $partyAppService->replyPartyParticipationRequest($partyId, new StudentNumber($partyManagerId), new StudentNumber($guildMemberId), new Reply($replyStatus));
     }
 
     // 自分が管理しているパーティの参加申請一覧を取得
