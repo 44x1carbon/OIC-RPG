@@ -69,10 +69,10 @@ class PartyCreateRequest extends FormRequest
         return $this->party()['roleName'];
     }
 
-    public function activityEndDate(): \DateTime
+    public function activityEndDate(): string
     {
-        $dateStr = $this->party()['activityEndDate'];
-        return \DateTime::createFromFormat('Y-m-d', $dateStr);
+        return $this->party()['activityEndDate'];
+
     }
 
     public function productionTheme(): string
