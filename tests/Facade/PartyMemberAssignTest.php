@@ -33,7 +33,7 @@ class PartyMemberAssignTest extends \Tests\TestCase
     protected $party;
     protected $partyManager;
     protected $partyMember;
-    protected $partyParticipationRequest;
+    protected $partyParticipationRequestId;
 
     public function setUp()
     {
@@ -49,14 +49,14 @@ class PartyMemberAssignTest extends \Tests\TestCase
         $this->party = $this->sampleParty(['partyManagerId' => "B4000"]);
         $this->partyManager = $this->sampleGuildMember(['studentNumber' => "B4000"]);
         $this->partyMember = $this->sampleGuildMember(['studentNumber' => "B4999"]);
-        $this->partyParticipationRequest = $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party->id(),'1', $this->partyMember->studentNumber()->code());
+        $this->partyParticipationRequestId = $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party->id(),'1', $this->partyMember->studentNumber()->code());
     }
 
     public function testSuccess()
     {
         $this->party->addWantedFrame('1',1);
         $this->partyRepoitory->save($this->party);
-        $this->partyMemberFacade->assignPartyMember($this->partyParticipationRequest->id(), "B4000");
+        $this->partyMemberFacade->assignPartyMember($this->partyParticipationRequestId, "B4000");
     }
 
     /**
@@ -66,7 +66,7 @@ class PartyMemberAssignTest extends \Tests\TestCase
     {
         $this->partyRepoitory->save($this->party);
 
-        $this->partyMemberFacade->assignPartyMember($this->partyParticipationRequest->id(), "B4000");
+        $this->partyMemberFacade->assignPartyMember($this->partyParticipationRequestId, "B4000");
     }
 
     /**
@@ -77,7 +77,7 @@ class PartyMemberAssignTest extends \Tests\TestCase
         $this->party->addWantedFrame('1',1);
         $this->partyRepoitory->save($this->party);
 
-        $this->partyMemberFacade->assignPartyMember($this->partyParticipationRequest->id(), "B4444");
+        $this->partyMemberFacade->assignPartyMember($this->partyParticipationRequestId, "B4444");
     }
 
     /**
@@ -85,10 +85,11 @@ class PartyMemberAssignTest extends \Tests\TestCase
      */
     public function testFailPartyParticipationRequestReplyRejection()
     {
+        $partyParticipationRequest = $this->partyParticipationRequestRepository->findById($this->partyParticipationRequestId);
         $this->party->addWantedFrame('1',1);
         $this->partyRepoitory->save($this->party);
-        $this->partyParticipationRequest->setReply(new Reply('rejection'));
-        $this->partyParticipationRequestRepository->save($this->partyParticipationRequest);
-        $this->partyMemberFacade->assignPartyMember($this->partyParticipationRequest->id(), "B4000");
+        $partyParticipationRequest->setReply(new Reply('rejection'));
+        $this->partyParticipationRequestRepository->save($partyParticipationRequest);
+        $this->partyMemberFacade->assignPartyMember($partyParticipationRequest->id(), "B4000");
     }
 }
