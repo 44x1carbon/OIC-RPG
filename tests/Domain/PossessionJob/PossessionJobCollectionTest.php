@@ -14,6 +14,7 @@ use App\Domain\PossessionJob\PossessionJobCollection;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Domain\Skill\Factory\SkillFactory;
+use Tests\SampleGuildMember;
 use Tests\TestCase;
 
 /**
@@ -59,15 +60,14 @@ class PossessionJobCollectionTest extends TestCase
         $possessionJobs[] = $possessionJob;
         $possessionJobCollection = new PossessionJobCollection($possessionJobs);
 
-        $guildMemberFactory = new GuildMemberFactory();
-        $this->guildMember = $guildMemberFactory->createGuildMember(
-            $studentNumber,
-            $studentName,
-            $course,
-            $gender,
-            $mailAddress,
-            $possessionSkillCollection,
-            $possessionJobCollection);
+        $this->guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $studentNumber,
+            SampleGuildMember::studentName => $studentName,
+            SampleGuildMember::gender => $gender,
+            SampleGuildMember::mailAddress => $mailAddress,
+            SampleGuildMember::possessionSkills => $possessionSkillCollection,
+            SampleGuildMember::possessionJobCollection => $possessionJobCollection
+        ]);
     }
 
     public function testFindPossessionJob()

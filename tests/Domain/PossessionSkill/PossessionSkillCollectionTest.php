@@ -21,6 +21,7 @@ use App\Domain\Skill\Factory\SkillFactory;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Domain\Skill\Skill;
 use App\PossessionSkill;
+use Tests\SampleGuildMember;
 use Tests\TestCase;
 
 class PossessionSkillCollectionTest extends TestCase
@@ -46,7 +47,6 @@ class PossessionSkillCollectionTest extends TestCase
 
         $studentNumber = new StudentNumber('B4300');
         $studentName = '新原佑亮';
-        $course = new Course('1','ITスペシャリスト');
         $gender = new Gender('male');
         $mailAddress = new MailAddress('b4000@oic.jp');
         $possessionSkills = [];
@@ -55,8 +55,13 @@ class PossessionSkillCollectionTest extends TestCase
         $possessionSkills[] = $possessionSkill;
         $possessionSkillCollection = new PossessionSkillCollection($possessionSkills);
 
-        $guildMemberFactory = new GuildMemberFactory();
-        $this->guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress, $possessionSkillCollection);
+        $this->guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $studentNumber,
+            SampleGuildMember::studentName => $studentName,
+            SampleGuildMember::gender => $gender,
+            SampleGuildMember::mailAddress => $mailAddress,
+            SampleGuildMember::possessionSkills => $possessionSkillCollection,
+        ]);
     }
 
     public function testFindPossessionSkill()
