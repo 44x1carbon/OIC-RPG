@@ -124,7 +124,7 @@ class GuildMember
         return $this->possessionSkillCollection;
     }
 
-    public function favoriteJobId(): JobId
+    public function favoriteJobId(): ?JobId
     {
         return $this->favoriteJobId;
     }
