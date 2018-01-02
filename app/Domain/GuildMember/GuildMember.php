@@ -16,12 +16,16 @@ use App\Domain\Course\Course;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\Job\Job;
 use App\Domain\Job\ValueObjects\JobId;
+use App\Domain\MemberSkillStatus\MemberSkillStatus;
+use App\Domain\MemberSkillStatus\SkillAcquisitionStatus;
 use App\Domain\PossessionJob\PossessionJob;
 use App\Domain\PossessionJob\PossessionJobCollection;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
+use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
+use App\Domain\Skill\Skill;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
 use ArrayObject;
 use Illuminate\Support\Facades\Mail;
@@ -34,6 +38,8 @@ class GuildMember
     protected $possessionSkillFactory;
     /* @var \App\Domain\Course\RepositoryInterface\CourseRepositoryInterface */
     protected $courseRepo;
+    /* @var SkillRepositoryInterface $skillRepo */
+    protected $skillRepo;
     private $studentNumber;
     private $studentName;
     private $courseId;
@@ -47,6 +53,7 @@ class GuildMember
     {
         $this->courseRepo = app(CourseRepositoryInterface::class);
         $this->possessionSkillFactory = app(PossessionSkillFactory::class);
+        $this->skillRepo = app(SkillRepositoryInterface::class);
     }
 
 //  学籍番号VOをセット
@@ -159,5 +166,20 @@ class GuildMember
         $addResultPossessionSkill = PossessionSkill::levelUp($possessionSkill, $addResultPossessionSkill);
 
         return $addResultPossessionSkill;
+    }
+
+    public function skillAcquisitionList(): array
+    {
+        $allSkill = $this->skillRepo->all();
+
+        return array_map(function(Skill $skill) {
+            if(is_null($this->possessionSkills()->findPossessionSkill($skill->skillId()))) {
+                $status = SkillAcquisitionStatus::NOT_LEARNED();
+            } else {
+                $status = SkillAcquisitionStatus::LEARNED();
+            }
+
+            return new MemberSkillStatus($skill->skillId(), $status);
+        }, $allSkill);
     }
 }
