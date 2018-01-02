@@ -23,4 +23,20 @@ class MemberSkillStatus
         $this->status = $status;
         $this->skillId = $skillId;
     }
+
+    /**
+     * @return SkillAcquisitionStatus
+     */
+    public function status(): SkillAcquisitionStatus
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return string
+     */
+    public function skillId(): string
+    {
+        return $this->skillId;
+    }
 }

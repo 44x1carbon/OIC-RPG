@@ -59,4 +59,12 @@ class SkillAcquisitionStatus
     {
         return $this->status === self::LEARNED;
     }
+
+    /**
+     * @return string
+     */
+    public function status(): string
+    {
+        return $this->status;
+    }
 }
