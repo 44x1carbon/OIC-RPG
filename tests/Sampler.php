@@ -2,11 +2,13 @@
 
 namespace Tests;
 
-use App\ApplicationService\GuildMemberAppService;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\ValueObjects\Gender;
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Party;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
+use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
+use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\ProductionType\ProductionType;
 use App\Eloquents\ProductionTypeEloquent;
 use App\Presentation\GuildMemberFacade;
@@ -35,21 +37,41 @@ trait Sampler
 
         $data = array_merge(
             [
-                "studentNumberData" => $studentNumberData,
+                "studentNumber" => $studentNumberData,
                 "studentName" => $faker->name,
                 "courseId" => $faker->randomNumber(1)%2+1,
                 "genderId" => $genderList[$faker->randomNumber(1)%2],
-                "mailAddressData" => $studentNumberData."@oic.jp",
+                "mailAddress" => $studentNumberData."@oic.jp",
                 "password" => $faker->bothify('????####'),
             ],
             $attr
         );
+        $possessionSkill = $this->samplePossessionSkill();
 
-
-
-        $authData = $guildMemberFacade::registerMember($data['studentNumberData'], $data['studentName'], $data['courseId'], $data['genderId'], $data['mailAddressData'], $data['password']);
+        // TODO FacadeにPossessionSkillsの中身が連想配列ではなくDTOになった場合は変更する
+        $authData = $guildMemberFacade::registerMember($data['studentNumber'], $data['studentName'], $data['courseId'], $data['genderId'], $data['mailAddress'], $data['password'], [['skillId' => $possessionSkill->skillId(), 'studentNumber' => $possessionSkill->studentNumber()->code()]]);
 
         return $authData->guildMemberEntity();
+    }
+
+    public function samplePossessionSkill($attr = []): PossessionSkill
+    {
+        /* @var PossessionSkillFactory $possessionSkillFactory */
+        $possessionSkillFactory = app(PossessionSkillFactory::class);
+
+        $faker = Faker::create('ja_JP');
+
+        $studentNumberData = "B".$faker->numberBetween(4000,4999);
+
+        $data = array_merge(
+            [
+                "skillId" => $faker->randomNumber(1)%10+1,
+                "studentNumber" => $studentNumberData
+            ],
+            $attr
+        );
+
+        return $possessionSkillFactory->createPossessionSkill($data['skillId'], new StudentNumber($data['studentNumber']));
     }
 
     /**
