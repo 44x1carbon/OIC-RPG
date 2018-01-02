@@ -9,6 +9,7 @@ use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Infrastracture\AuthData\AuthData;
 use Illuminate\Auth\Events\Login;
 
@@ -30,6 +31,7 @@ class  GuildMemberAppService
         Course $course,
         Gender $gender,
         MailAddress $mailAddress,
+        PossessionSkillCollection $possessionSkills,
         LoginInfo $loginInfo
     )
     {
@@ -38,7 +40,8 @@ class  GuildMemberAppService
             $studentName,
             $course,
             $gender,
-            $mailAddress
+            $mailAddress,
+            $possessionSkills
         );
 
         if($this->repository->save($guildMember)) {
