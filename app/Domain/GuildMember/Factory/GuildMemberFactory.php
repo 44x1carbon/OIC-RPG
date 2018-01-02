@@ -12,6 +12,7 @@ use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Job\Job;
 use App\Domain\Job\ValueObjects\JobId;
+use App\Domain\PossessionJob\PossessionJobCollection;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Exceptions\DomainException;
 
@@ -29,8 +30,16 @@ class GuildMemberFactory
 
     }
 
-    public function createGuildMember(StudentNumber $studentNumber, String $studentName, Course $course, Gender $gender,MailAddress $mailAddress, JobId $favoriteJobId = null, PossessionSkillCollection $possessionSkills = null): GuildMember
-    {
+    public function createGuildMember(
+        StudentNumber $studentNumber, 
+        String $studentName, 
+        Course $course, 
+        Gender $gender,
+        MailAddress $mailAddress, 
+        JobId $favoriteJobId = null,
+        PossessionSkillCollection $possessionSkills = null,
+        PossessionJobCollection $possessionJobCollection = null
+    ): GuildMember {
         $guildMember = new GuildMember();
         $guildMember->setStudentNumber($studentNumber);
         $guildMember->setStudentName($studentName);
@@ -39,7 +48,8 @@ class GuildMemberFactory
         $guildMember->setMailAddress($mailAddress);
         $guildMember->setPossessionSkills($possessionSkills ?? new PossessionSkillCollection([]));
         if($favoriteJobId !== null) $guildMember->setFavoriteJob($favoriteJobId);
-
+        $guildMember->setPossessionSkills($possessionSkills ?? new PossessionJobCollection([]));
+        $guildMember->setPossessionJobs($possessionJobCollection ?? new PossessionJobCollection([]));
 
         if (!GuildMemberSpec::isCompleteItem($guildMember)) throw new DomainException("Error");
 

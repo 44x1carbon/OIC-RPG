@@ -16,6 +16,8 @@ use App\Domain\Course\Course;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\Job\Job;
 use App\Domain\Job\ValueObjects\JobId;
+use App\Domain\PossessionJob\PossessionJob;
+use App\Domain\PossessionJob\PossessionJobCollection;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
@@ -39,6 +41,7 @@ class GuildMember
     private $mailAddress;
     private $possessionSkillCollection;
     private $favoriteJobId;
+    private $possessionJobCollection;
 
     public function __construct()
     {
@@ -78,6 +81,11 @@ class GuildMember
     public function setPossessionSkills(PossessionSkillCollection $possessionSkillCollection)
     {
         $this->possessionSkillCollection = $possessionSkillCollection;
+    }
+
+    public function setPossessionJobs(PossessionJobCollection $possessionJobCollection)
+    {
+        $this->possessionJobCollection = $possessionJobCollection;
     }
 
 //  学籍番号をゲット
@@ -126,11 +134,23 @@ class GuildMember
         $this->favoriteJobId = $jobId;
     }
 
+    public function possessionJobs(): ?PossessionJobCollection
+    {
+        return $this->possessionJobCollection;
+    }
+
     public function learnSkill(string $skillId): PossessionSkill
     {
         $possessionSkill = $this->possessionSkillFactory->createPossessionSkill($skillId, $this->studentNumber);
         $this->possessionSkills()->append($possessionSkill);
         return $possessionSkill;
+    }
+
+    public function getJob(Job $job): PossessionJob
+    {
+        $possessionJob = new PossessionJob($this->studentNumber(), $job->jobId());
+        $this->possessionJobs()->append($possessionJob);
+        return $possessionJob;
     }
 
     public function gainExp(PossessionSkill $possessionSkill, int $exp): PossessionSkill

@@ -17,6 +17,7 @@ use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use Tests\TestCase;
+use App\Domain\PossessionSkill\PossessionSkillCollection;
 
 class GuildMemberRepositoryTest extends TestCase
 {
@@ -46,7 +47,7 @@ class GuildMemberRepositoryTest extends TestCase
         $gender = new Gender('male');
         $mailAddress = new MailAddress('b4000@oic.jp');
         $guildMemberFactory = new GuildMemberFactory();
-        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress);
+        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress,  new PossessionSkillCollection([]));
         $this->repo->save($guildMember);
         $this->assertTrue(true);
     }
@@ -59,7 +60,7 @@ class GuildMemberRepositoryTest extends TestCase
         $gender = new Gender('female');
         $mailAddress = new MailAddress('b4001@oic.jp');
         $guildMemberFactory = new GuildMemberFactory();
-        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress);
+        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress,  new PossessionSkillCollection([]));
         $this->repo->save($guildMember);
 
 
@@ -69,7 +70,7 @@ class GuildMemberRepositoryTest extends TestCase
         $gender2 = new Gender('male');
         $mailAddress2 = new MailAddress('b4002@oic.jp');
         $guildMemberFactory2 = new GuildMemberFactory();
-        $guildMember2 = $guildMemberFactory2->createGuildMember($studentNumber2, $studentName2, $course2, $gender2, $mailAddress2);
+        $guildMember2 = $guildMemberFactory2->createGuildMember($studentNumber2, $studentName2, $course2, $gender2, $mailAddress2,  new PossessionSkillCollection([]));
         $this->repo->save($guildMember2);
 
         $findGuildMember = $this->repo->findByStudentNumber($studentNumber);
@@ -87,7 +88,7 @@ class GuildMemberRepositoryTest extends TestCase
         $gender = new Gender('female');
         $mailAddress = new MailAddress('b5000@oic.jp');
         $guildMemberFactory = new GuildMemberFactory();
-        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress);
+        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress,  new PossessionSkillCollection([]));
         $this->repo->save($guildMember);
 
         $findGuildMember = $this->repo->findByStudentNumber($studentNumber);

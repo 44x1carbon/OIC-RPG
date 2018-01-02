@@ -11,6 +11,7 @@ use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Job\ValueObjects\JobId;
+use App\Domain\PossessionJob\PossessionJobCollection;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Exceptions\DomainException;
 use Illuminate\Database\Eloquent\Model;
@@ -24,14 +25,17 @@ class GuildMemberEloquent extends Model
     protected $factory;
     /* @var CourseRepositoryInterface $courseRepository */
     protected $courseRepository;
-
+    /* @var PossessionSkillEloquent $possessionSkillEloquent */
     protected $possessionSkillEloquent;
+    /* @var PossessionJobEloquent $possessionJobEloquent */
+    protected $possessionJobEloquent;
 
     function __construct()
     {
         $this->factory = app(GuildMemberFactory::class);
         $this->courseRepository = app(CourseRepositoryInterface::class);
         $this->possessionSkillEloquent = new PossessionSkillEloquent();
+        $this->possessionJobEloquent = new PossessionJobEloquent();
     }
 
     public function findByStudentNumber(StudentNumber $studentNumber): ?GuildMemberEloquent
@@ -66,8 +70,11 @@ class GuildMemberEloquent extends Model
 
     public function toEntity(): GuildMember
     {
-        $possessionSkills = $this->possessionSkillEloquent->findByStudentNumber($this->studentNumber());
+        $possessionSkills = $this->possessionSkillEloquent::findByStudentNumber($this->studentNumber());
         $possessionSkillCollection = new PossessionSkillCollection($possessionSkills);
+
+        $possessionJobs = $this->possessionJobEloquent::findByStudentNumber($this->studentNumber());
+        $possessionJobCollection = new PossessionJobCollection($possessionJobs);
 
         $guildMember = $this->factory->createGuildMember(
             $this->studentNumber(),
@@ -75,8 +82,9 @@ class GuildMemberEloquent extends Model
             $this->course(),
             $this->gender(),
             $this->mailAddress(),
-            new JobId($this->favorite_job_id),
-            $possessionSkillCollection
+            new JobId($this->favorite_job_id),            
+            $possessionSkillCollection,
+            $possessionJobCollection
         );
         return $guildMember;
     }

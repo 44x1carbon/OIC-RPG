@@ -14,6 +14,7 @@ use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Eloquents\GuildMemberEloquent;
+use App\Eloquents\PossessionJobEloquent;
 use App\Eloquents\PossessionSkillEloquent;
 
 class GuildMemberEloquentRepositoryImpl implements GuildMemberRepositoryInterface
@@ -47,6 +48,7 @@ class GuildMemberEloquentRepositoryImpl implements GuildMemberRepositoryInterfac
         $guildMemberModel->favorite_job_id = $guildMember->favoriteJobId()->code();
 
         PossessionSkillEloquent::saveManyDomainObject($guildMember->possessionSkills(), $guildMember->studentNumber());
+        PossessionJobEloquent::saveManyDomainObject($guildMember->possessionJobs(), $guildMember->studentNumber());
         return $guildMemberModel->save();
     }
 

@@ -15,7 +15,7 @@ class ProductionType
     private $id;
     private $name;
 
-    public function __construct(ProductionTypeId $id, string $name)
+    public function __construct(string $id, string $name)
     {
         $this->id = $id;
         $this->name = $name;
@@ -26,7 +26,7 @@ class ProductionType
         return $this->name;
     }
 
-    public function id(): ProductionTypeId
+    public function id(): string
     {
         return $this->id;
     }
