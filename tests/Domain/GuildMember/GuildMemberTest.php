@@ -16,7 +16,10 @@ use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\MemberSkillStatus\MemberSkillStatus;
+use App\Domain\MemberSkillStatus\SkillAcquisitionStatus;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
+use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Domain\Skill\Factory\SkillFactory;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
@@ -84,5 +87,32 @@ class GuildMemberTest extends TestCase
 
         $this->assertTrue($possessionSkill->totalExp() + $exp === $afterPossessionSkill->totalExp()
                         && $possessionSkill->skillLevel() !== $afterPossessionSkill->skillLevel());
+    }
+
+    public function testSkillAcquisitionList()
+    {
+        /* テスト対象のGuildMemberを作成 */
+        $allSkill = $this->skillRepo->all();
+        $guildMember = $this->sampleGuildMember();
+        $learnedSkills = array_random($allSkill, 5);
+
+        /* @var Skill $learnedSkill */
+        foreach ($learnedSkills as $learnedSkill) {
+            $guildMember->learnSkill($learnedSkill->skillId());
+        }
+
+        $learnedSkillIds = array_map(function(Skill $skill) {
+            return $skill->skillId();
+        }, $learnedSkills);
+
+        $rightSkillAcquisitionList = array_map(function(Skill $skill) use($learnedSkillIds){
+            if(in_array($skill->skillId(), $learnedSkillIds)) {
+                return new MemberSkillStatus($skill->skillId(), SkillAcquisitionStatus::LEARNED());
+            } else {
+                return new MemberSkillStatus($skill->skillId(), SkillAcquisitionStatus::NOT_LEARNED());
+            }
+        }, $allSkill);
+
+        $this->assertTrue($rightSkillAcquisitionList == $guildMember->skillAcquisitionList());
     }
 }
