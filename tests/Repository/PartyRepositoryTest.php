@@ -38,36 +38,23 @@ class PartyRepositoryTest extends TestCase
 
     function testSave()
     {
-        $party = $this->createPartyEntity("アイデア名", "説明", "abc");
+        $party = $this->sampleParty();
         $this->partyRepository->save($party);
-        $findParty = $this->partyRepository->findById("abc");
+        $findParty = $this->partyRepository->findById($party->id());
 
-        $this->assertTrue($findParty->productionIdea() === $party->productionIdea());
+        $this->assertTrue($findParty->productionIdea() == $party->productionIdea());
     }
 
 
     function testFindById()
     {
-        $party = $this->createPartyEntity("アイデア名1", "説明1");
+        $party = $this->sampleParty();
         $this->partyRepository->save($party);
-        $party2 = $this->createPartyEntity("アイデア名2", "説明2");
+        $party2 = $this->sampleParty();
         $this->partyRepository->save($party2);
         $findParty = $this->partyRepository->findById($party->id());
-
-        $this->partyRepository->findById("hoge");
-        $this->assertTrue(true);
+        $this->assertTrue($findParty->activityEndDate() == $party->activityEndDate());
+        $this->assertTrue(is_null($this->partyRepository->findById("hoge")));
     }
 
-    // テスト用にパーティのEntityを作成してくれるメソッド
-    function createPartyEntity(String $ideaName, String $ideaDescription, String $id = null)
-    {
-        $activityEndDate = new ActivityEndDate(1431670515);
-        $productionType = $this->sampleProductionType();
-        $productionIdea = $this->productionIdeaFactory->createProductionIdea($ideaName, $productionType, $ideaDescription);
-        $partyManagerId = new StudentNumber("B1234");
-        $partyMembers[] = new StudentNumber("B1111");
-        $wantedRoles[] = new WantedRole();
-        $party = $this->partyFactory->createParty($activityEndDate, $productionIdea, $partyManagerId, $partyMembers, $wantedRoles, $id);
-        return $party;
-    }
 }
