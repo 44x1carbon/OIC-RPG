@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\MemberSkillStatus;
+namespace App\Domain\GuildMember\ValueObjects;
 
 /**
  * スキルを取得しているかどうかの状態を表現するドメインモデル
@@ -58,5 +58,13 @@ class SkillAcquisitionStatus
     public function isLearned(): bool
     {
         return $this->status === self::LEARNED;
+    }
+
+    /**
+     * @return string
+     */
+    public function status(): string
+    {
+        return $this->status;
     }
 }

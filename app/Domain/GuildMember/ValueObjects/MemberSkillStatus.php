@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\MemberSkillStatus;
+namespace App\Domain\GuildMember\ValueObjects;
 
 /**
  * GuildMemberのスキル取得状態を表現するドメインモデル
@@ -22,5 +22,21 @@ class MemberSkillStatus
     {
         $this->status = $status;
         $this->skillId = $skillId;
+    }
+
+    /**
+     * @return SkillAcquisitionStatus
+     */
+    public function status(): SkillAcquisitionStatus
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return string
+     */
+    public function skillId(): string
+    {
+        return $this->skillId;
     }
 }
