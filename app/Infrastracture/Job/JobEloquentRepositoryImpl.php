@@ -26,6 +26,13 @@ class JobEloquentRepositoryImpl implements JobRepositoryInterface
         return $jobModel->toEntity();
     }
 
+    public function findByName(string $name): ?Job
+    {
+        return null_safety(JobEloquent::where('job_name', $name)->first(), function(JobEloquent $model) {
+            return $model->toEntity();
+        });
+    }
+
     public function nextId(): JobId
     {
         do{

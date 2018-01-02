@@ -43,7 +43,7 @@ class GuildMemberRegistrationController extends Controller
 
     public function doSchoolInfo(SignUpRequest $request, GuildMemberFacade $guildMemberFacade)
     {
-        $this->sessionSave($request->get('guild_member'), 'guild_member');
+        $this->sessionSave($request->all(), 'guild_member');
 
         $authData = $guildMemberFacade->registerMember(
             $request->studentNumber(),

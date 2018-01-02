@@ -18,5 +18,5 @@ interface CourseRepositoryInterface
 
     public function save(Course $course): bool;
 
-    public function all(): Array;
+    public function all(): array;
 }

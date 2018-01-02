@@ -11,6 +11,7 @@ namespace App\Presentation\Job;
 
 use App\ApplicationService\JobApplicationService;
 use App\Domain\GetCondition\GetCondition;
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Job\JobRepositoryInterface;
 use App\Domain\Job\ValueObjects\JobId;
 
