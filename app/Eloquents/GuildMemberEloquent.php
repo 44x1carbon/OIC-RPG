@@ -82,7 +82,9 @@ class GuildMemberEloquent extends Model
             $this->course(),
             $this->gender(),
             $this->mailAddress(),
-            new JobId($this->favorite_job_id),            
+            null_safety($this->favorite_job_id, function($favorite_job_id) {
+                return new JobId($favorite_job_id);
+            }),
             $possessionSkillCollection,
             $possessionJobCollection
         );
