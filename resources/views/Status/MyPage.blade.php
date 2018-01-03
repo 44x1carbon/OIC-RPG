@@ -10,29 +10,34 @@
     <?php /* @var \App\Infrastracture\GuildMember\GuildMemberViewModel $guildMember */ ?>
     <div class="mypage">
         <div class="mypage-profile">
-            <h2 class="mypage-profile-name">氏名</h2>
+            <h2 class="mypage-profile-name">{{ $guildMember->name }}</h2>
             <div class="mypage-profile-left">
-                <img src="../assets/images/job.png" alt="">
+                <img src="{{ $guildMember->favoriteJob()->characterImagePath() }}" alt="">
             </div><!--profile-left-->
             <div class="mypage-profile-right">
                 <div class="mypage-profile-content">
                     <p>学籍番号</p>
-                    <p>b9999</p>
+                    <p>{{ $guildMember->studentNumber }}</p>
                 </div>
                 <div class="mypage-profile-content">
                     <p>性別</p>
-                    <p>男？</p>
+                    <p>{{ $guildMember->gender->toJa() }}</p>
                 </div>
                 <div class="mypage-profile-content">
                     <p>コース</p>
-                    <p>ITスペシャリスト</p>
+                    <p>{{ $guildMember->course()->name }}</p>
                     <div class="btn-wrap">
                         <button class="btn btn-small">変更</button>
                     </div>
                 </div>
                 <div class="mypage-profile-content">
                     <p>スキル</p>
-                    <p>androidエンジニア</p>
+                    <?php $sortedSkill = $skillStatusListVMHelper->sortLevel($guildMember->skillStatusList()) ?>
+                    <?php /* @var \App\Infrastracture\GuildMember\MemberSkillStatusViewModel $memberSkillStatus */ ?>
+                    @foreach(array_slice($sortedSkill, 0, 5) as $memberSkillStatus)
+
+                        <p>{{ $memberSkillStatus->skill()->name }}: Lv.{{ $memberSkillStatus->possessionSkill->skillLevel }}</p>
+                    @endforeach
                 </div>
             </div><!--profile-right-->
             <div class="mypage-profile-bottom">
@@ -54,7 +59,7 @@
                 @foreach($skillStatusList as $memberSkillStatus)
                     @if($memberSkillStatus->skillAcquisitionStatus->isLearned())
                         <li class="mypage-skill-item">
-                            <p>{{ $memberSkillStatus->skill() }}</p>
+                            <p>{{ $memberSkillStatus->skill()->name }}</p>
                             <p>Lv.{{ $memberSkillStatus->possessionSkill->skillLevel }}</p>
                         </li>
                     @else
