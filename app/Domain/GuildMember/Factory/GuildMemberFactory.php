@@ -48,7 +48,6 @@ class GuildMemberFactory
         $guildMember->setMailAddress($mailAddress);
         $guildMember->setPossessionSkills($possessionSkills ?? new PossessionSkillCollection([]));
         if($favoriteJobId !== null) $guildMember->setFavoriteJob($favoriteJobId);
-        $guildMember->setPossessionSkills($possessionSkills ?? new PossessionSkillCollection([]));
         $guildMember->setPossessionJobs($possessionJobCollection ?? new PossessionJobCollection([]));
 
         if (!GuildMemberSpec::isCompleteItem($guildMember)) throw new DomainException("Error");

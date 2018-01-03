@@ -45,8 +45,7 @@ class  GuildMemberAppService
             $course,
             $gender,
             $mailAddress,
-            $defaultJob->jobId(),
-            new PossessionSkillCollection([])
+            $defaultJob->jobId()
         );
 
         if($this->repository->save($guildMember)) {
