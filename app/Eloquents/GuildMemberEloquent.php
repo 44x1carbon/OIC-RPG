@@ -10,6 +10,7 @@ use App\Domain\GuildMember\Spec\GuildMemberSpec;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\Job\ValueObjects\JobId;
 use App\Domain\PossessionJob\PossessionJobCollection;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Exceptions\DomainException;
@@ -59,7 +60,7 @@ class GuildMemberEloquent extends Model
             $guildMemberModel->course = $guildMember->course();
             $guildMemberModel->gender = $guildMember->gender();
             $guildMemberModel->mailAddress = $guildMember->mailAddress();
-
+            $guildMemberModel->favorite_job_id = $guildMember->favoriteJobId()->code();
             return $guildMemberModel;
         }else{
             // 不完全なEntityだった場合はDomainException
@@ -81,6 +82,9 @@ class GuildMemberEloquent extends Model
             $this->course(),
             $this->gender(),
             $this->mailAddress(),
+            null_safety($this->favorite_job_id, function($favorite_job_id) {
+                return new JobId($favorite_job_id);
+            }),
             $possessionSkillCollection,
             $possessionJobCollection
         );

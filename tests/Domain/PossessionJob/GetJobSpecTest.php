@@ -18,6 +18,7 @@ use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Domain\Skill\Factory\SkillFactory;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Domain\Skill\Skill;
+use Tests\SampleGuildMember;
 use Tests\TestCase;
 
 /**
@@ -67,15 +68,14 @@ class GetJobSpecTest extends TestCase
         $possessionJobs = [];
         $possessionJobCollection = new PossessionJobCollection($possessionJobs);
 
-        $guildMemberFactory = new GuildMemberFactory();
-        $this->guildMember = $guildMemberFactory->createGuildMember(
-            $studentNumber,
-            $studentName,
-            $course,
-            $gender,
-            $mailAddress,
-            $possessionSkillCollection,
-            $possessionJobCollection);
+        $this->guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $studentNumber,
+            SampleGuildMember::studentName => $studentName,
+            SampleGuildMember::gender => $gender,
+            SampleGuildMember::mailAddress => $mailAddress,
+            SampleGuildMember::possessionSkills => $possessionSkillCollection,
+            SampleGuildMember::possessionJobCollection => $possessionJobCollection
+        ]);
 
         $jobId1 = $jobRepo->nextId();
         $androidMasterGetCondition1 = new GetCondition($androidSkill->skillId(), 9);

@@ -15,6 +15,8 @@ interface JobRepositoryInterface
 {
     public function findById(string $code): ?Job;
 
+    public function findByName(string $name): ?Job;
+
     public function nextId(): JobId;
 
     public function save(Job $job): bool;
