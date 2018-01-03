@@ -103,9 +103,10 @@ class GuildMemberTest extends TestCase
             return $skill->skillId();
         }, $learnedSkills);
 
-        $rightSkillAcquisitionList = array_map(function(Skill $skill) use($learnedSkillIds){
+        $rightSkillAcquisitionList = array_map(function(Skill $skill) use($learnedSkillIds, $guildMember){
             if(in_array($skill->skillId(), $learnedSkillIds)) {
-                return new MemberSkillStatus($skill->skillId(), SkillAcquisitionStatus::LEARNED());
+                $possessionSkill = $guildMember->possessionSkills()->findPossessionSkill($skill->skillId());
+                return new MemberSkillStatus($skill->skillId(), SkillAcquisitionStatus::LEARNED(), $possessionSkill);
             } else {
                 return new MemberSkillStatus($skill->skillId(), SkillAcquisitionStatus::NOT_LEARNED());
             }

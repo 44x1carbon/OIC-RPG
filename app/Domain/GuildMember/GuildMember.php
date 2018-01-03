@@ -167,13 +167,14 @@ class GuildMember
         $allSkill = $this->skillRepo->all();
 
         return array_map(function(Skill $skill) {
-            if(is_null($this->possessionSkills()->findPossessionSkill($skill->skillId()))) {
+            $possessionSkill = $this->possessionSkills()->findPossessionSkill($skill->skillId());
+            if(is_null($possessionSkill)) {
                 $status = SkillAcquisitionStatus::NOT_LEARNED();
+                return new MemberSkillStatus($skill->skillId(), $status);
             } else {
                 $status = SkillAcquisitionStatus::LEARNED();
+                return new MemberSkillStatus($skill->skillId(), $status, $possessionSkill);
             }
-
-            return new MemberSkillStatus($skill->skillId(), $status);
         }, $allSkill);
     }
 }
