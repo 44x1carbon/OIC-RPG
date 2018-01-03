@@ -38,6 +38,7 @@ class LoginInfoTest extends \Tests\TestCase
             SampleGuildMember::gender => $gender,
             SampleGuildMember::mailAddress => $mailAddress
         ]);
+      
         $this->repo->save($guildMember);
     }
 
