@@ -38,10 +38,9 @@ class PartyStoreTest extends \Tests\TestCase
         $data = [
             'party' => [
                 'activityEndDate' => '2018-02-12',
-                'roleName' => 'フロントエンドエンジニア',
                 'productionIdea' => [
                     'productionTheme' => 'チーム開発を支援するサービス',
-                    'productionTypeId' => $this->productionTypeRepository->all()[0]->id()->code(),
+                    'productionTypeId' => $this->productionTypeRepository->all()[0]->id(),
                     'ideaDescription' => 'チーム内のコミュニティをITの力で円滑に進められるサービスを制作します',
                 ],
                 'wantedRoleList' => [
@@ -50,6 +49,7 @@ class PartyStoreTest extends \Tests\TestCase
                         'roleName' => 'サーバサイドエンジニア',
                         'referenceJobId' => 1,
                         'frameAmount' => 2,
+                        'managerAssigned' => true,
                     ]
                 ]
             ]

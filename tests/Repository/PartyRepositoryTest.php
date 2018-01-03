@@ -11,9 +11,11 @@ namespace Tests\Repository;
 
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Factory\PartyFactory;
+use App\Domain\Party\Party;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
 use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
+use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\ProductionType\ProductionType;
 use App\Domain\WantedRole\WantedRole;
 use Tests\Sampler;
@@ -23,6 +25,7 @@ class PartyRepositoryTest extends TestCase
 {
     use Sampler;
 
+    /* @var PartyRepositoryInterface $partyRepository */
     protected $partyRepository;
     protected $partyFactory;
     protected $productionIdeaFactory;
@@ -40,9 +43,9 @@ class PartyRepositoryTest extends TestCase
     {
         $party = $this->createPartyEntity("アイデア名", "説明", "abc");
         $this->partyRepository->save($party);
-        $findParty = $this->partyRepository->findById("abc");
+        $findParty = $this->partyRepository->findById($party->id());
 
-        $this->assertTrue($findParty->productionIdea() === $party->productionIdea());
+        $this->assertTrue($findParty->productionIdea() == $party->productionIdea());
     }
 
 
@@ -61,13 +64,10 @@ class PartyRepositoryTest extends TestCase
     // テスト用にパーティのEntityを作成してくれるメソッド
     function createPartyEntity(String $ideaName, String $ideaDescription, String $id = null)
     {
-        $activityEndDate = new ActivityEndDate(1431670515);
-        $productionType = $this->sampleProductionType();
-        $productionIdea = $this->productionIdeaFactory->createProductionIdea($ideaName, $productionType, $ideaDescription);
+        $activityEndDate = new ActivityEndDate('2019-11-11');
         $partyManagerId = new StudentNumber("B1234");
-        $partyMembers[] = new StudentNumber("B1111");
-        $wantedRoles[] = new WantedRole();
-        $party = $this->partyFactory->createParty($activityEndDate, $productionIdea, $partyManagerId, $partyMembers, $wantedRoles, $id);
+        $id = $this->partyRepository->nextId();
+        $party = new Party($id, $activityEndDate, $partyManagerId);
         return $party;
     }
 }

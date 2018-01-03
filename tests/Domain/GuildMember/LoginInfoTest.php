@@ -9,6 +9,8 @@ use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\PassWord;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\PossessionSkill\PossessionSkillCollection;
+use Tests\SampleGuildMember;
 
 /**
  * Created by PhpStorm.
@@ -28,11 +30,15 @@ class LoginInfoTest extends \Tests\TestCase
         $this->repo = app(GuildMemberRepositoryInterface::class);
         $studentNumber = new StudentNumber('B4000');
         $studentName = '新原佑亮';
-        $course = new Course('1','ITスペシャリスト');
         $gender = new Gender('male');
         $mailAddress = new MailAddress('b4000@oic.jp');
-        $guildMemberFactory = new GuildMemberFactory();
-        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress);
+        $guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $studentNumber,
+            SampleGuildMember::studentName => $studentName,
+            SampleGuildMember::gender => $gender,
+            SampleGuildMember::mailAddress => $mailAddress
+        ]);
+      
         $this->repo->save($guildMember);
     }
 
