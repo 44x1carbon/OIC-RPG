@@ -1,6 +1,7 @@
 @extends('Shared._DefaultLayout')
 
 @inject('skillStatusListVMHelper', App\Infrastracture\GuildMember\SkillStatusListVMHelper)
+@inject('jobStatusListVMHelper', App\Infrastracture\GuildMember\JobStatusListVMHelper)
 
 @section('header_title')
     ステータス
@@ -35,7 +36,6 @@
                     <?php $sortedSkill = $skillStatusListVMHelper->sortLevel($guildMember->skillStatusList()) ?>
                     <?php /* @var \App\Infrastracture\GuildMember\MemberSkillStatusViewModel $memberSkillStatus */ ?>
                     @foreach(array_slice($sortedSkill, 0, 5) as $memberSkillStatus)
-
                         <p>{{ $memberSkillStatus->skill()->name }}: Lv.{{ $memberSkillStatus->possessionSkill->skillLevel }}</p>
                     @endforeach
                 </div>
@@ -75,23 +75,70 @@
         <div class="mypage-job">
             <h2>ジョブ</h2>
             <ul class="mypage-job-course-list">
-                <li class="mypage-job-course-item"><a>IT</a></li>
-                <li class="mypage-job-course-item"><a>ゲーム</a></li>
-                <li class="mypage-job-course-item"><a>デザイン</a></li>
-                <li class="mypage-job-course-item"><a>映像</a></li>
-                <li class="mypage-job-course-item"><a>ビジネス</a></li>
+                <?php /* @var \App\Infrastracture\Field\FieldViewModel $field */ ?>
+                @foreach($fields as $field)
+                    <li class="mypage-job-course-item"><a>{{ $field->name }}</a></li>
+                @endforeach
             </ul>
             <ul class="mypage-job-list">
+                <?php $jobStatusList = $jobStatusListVMHelper->groupByField($guildMember->jobStatusList())['it']; ?>
+                <?php /* @var \App\Infrastracture\GuildMember\MemberJobStatusViewModel $memberJobStatus */ ?>
+                @foreach($jobStatusList as $memberJobStatus)
                 <li class="mypage-job-item">
-                    <a class="mypage-job-link">
-                        <div class="mypage-job-pic-mask">イラスト</div>
-                        <div class="mypage-job-content">
-                            <p>ジョブ名</p>
-                            <p>取得済</p>
-                            <p>取得条件</p>
-                        </div>
-                    </a>
+                    @if($memberJobStatus->status->isGettable())
+                        <a class="mypage-job-link">
+                            <div class="mypage-job-pic-mask">
+                                <img src="{{ $memberJobStatus->job()->characterImagePath() }}" alt="">
+                            </div>
+                            <div class="mypage-job-content">
+                                <p>{{ $memberJobStatus->job()->name }}</p>
+                                <p>習得可能</p>
+                                <p>
+                                    取得条件
+                                    <?php /* @var \App\Infrastracture\Job\GetConditionViewModel $condition */ ?>
+                                    @foreach($memberJobStatus->job()->getConditions() as $condition)
+                                        <span>{{ $condition->skill()->name }}: Lv.{{ $condition->requiredLevel }}</span>
+                                    @endforeach
+                                </p>
+                            </div>
+                        </a>
+                    @elseif($memberJobStatus->status->isLearned())
+                        <a class="mypage-job-link">
+                            <div class="mypage-job-pic-mask">
+                                <img src="{{ $memberJobStatus->job()->characterImagePath() }}" alt="">
+                            </div>
+                            <div class="mypage-job-content">
+                                <p>{{ $memberJobStatus->job()->name }}</p>
+                                <p>習得済み</p>
+                                <p>
+                                    取得条件
+                                    <?php /* @var \App\Infrastracture\Job\GetConditionViewModel $condition */ ?>
+                                    @foreach($memberJobStatus->job()->getConditions() as $condition)
+                                        <span>{{ $condition->skill()->name }}: Lv.{{ $condition->requiredLevel }}</span>
+                                    @endforeach
+                                </p>
+                            </div>
+                        </a>
+                    @else
+                        <a class="mypage-job-link">
+                            <div class="mypage-job-pic-mask">
+                                <img src="{{ $memberJobStatus->job()->characterImagePath() }}" alt="">
+                            </div>
+                            <div class="mypage-job-content">
+                                <p>{{ $memberJobStatus->job()->name }}</p>
+                                <p>未習得</p>
+                                <p>
+                                    取得条件
+                                    <?php /* @var \App\Infrastracture\Job\GetConditionViewModel $condition */ ?>
+                                    @foreach($memberJobStatus->job()->getConditions() as $condition)
+                                        <span>{{ $condition->skill()->name }}: Lv.{{ $condition->requiredLevel }}</span>
+                                    @endforeach
+                                </p>
+                            </div>
+                        </a>
+                    @endif
                 </li>
+                @endforeach
             </ul>
         </div>
     </div><!--mypage-->
