@@ -20,6 +20,7 @@ class CreateGuildMembersTable extends Migration
             $table->string('course_id');
             $table->string('gender_type');
             $table->string('email');
+            $table->string('favorite_job_id');
             $table->timestamps();
         });
     }
