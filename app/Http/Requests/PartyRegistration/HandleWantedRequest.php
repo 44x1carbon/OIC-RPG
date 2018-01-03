@@ -71,7 +71,6 @@ class HandleWantedRequest extends FormRequest
         return [$rules];
     }
 
-
     public function isAdd(): bool
     {
         return $this->request->get('handler') === self::ADD;
