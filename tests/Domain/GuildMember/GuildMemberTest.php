@@ -21,6 +21,7 @@ use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Domain\Skill\Factory\SkillFactory;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Domain\Skill\Skill;
+use Tests\SampleGuildMember;
 use Tests\TestCase;
 
 class GuildMemberTest extends TestCase
@@ -56,7 +57,13 @@ class GuildMemberTest extends TestCase
         $possessionSkillCollection = new PossessionSkillCollection($possessionSkills);
 
         $guildMemberFactory = new GuildMemberFactory();
-        $this->guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress, $possessionSkillCollection);
+        $this->guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $studentNumber,
+            SampleGuildMember::studentName => $studentName,
+            SampleGuildMember::gender => $gender,
+            SampleGuildMember::mailAddress => $mailAddress,
+            SampleGuildMember::possessionSkills => $possessionSkillCollection,
+        ]);
     }
 
     public function testLearnSkill()

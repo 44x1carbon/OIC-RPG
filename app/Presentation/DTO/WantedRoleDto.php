@@ -2,6 +2,7 @@
 
 namespace App\Presentation\DTO;
 
+use App\Domain\Job\JobRepositoryInterface;
 use Illuminate\Contracts\Support\Arrayable;
 
 class WantedRoleDto
@@ -19,13 +20,17 @@ class WantedRoleDto
 
     public $managerAssigned;
 
-    function __construct(string $roleName = null, string $remarks = null, string $referenceJobId = null, string $referenceJobName = null, int $frameAmount = null, bool $managerAssigned = false)
+    function __construct(string $roleName = null, string $remarks = null, string $referenceJobId = null, int $frameAmount = null, bool $managerAssigned = false)
     {
+        $jobRepo = app(JobRepositoryInterface::class);
+        $referenceJob = null;
+        if(!is_null($referenceJobId)) $referenceJob = $jobRepo->findById($referenceJobId);
+
         $this->roleName = $roleName;
         $this->remarks = $remarks;
         $this->referenceJobId = $referenceJobId;
         $this->frameAmount = $frameAmount;
-        $this->referenceJobName = $referenceJobName;
+        $this->referenceJobName = null_safety($referenceJob, function($job) { return $job->jobName(); });
         $this->managerAssigned = $managerAssigned;
     }
 

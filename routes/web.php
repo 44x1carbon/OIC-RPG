@@ -23,7 +23,6 @@ Route::get('/sign_up', function() {
    return view('signup');
 });
 
-
 /** サインアップのフロー */
 Route::get('/sign_up/auth_info', GuildMemberRegistrationController::class.'@showAuthInfo')->name('show_sign_up_auth_info');
 Route::post('/sign_up/auth_info', GuildMemberRegistrationController::class.'@doAuthInfo')->name('do_sign_up_auth_info');
@@ -32,7 +31,6 @@ Route::post('/sign_up/profile', GuildMemberRegistrationController::class.'@doPro
 Route::get('/sign_up/school_info', GuildMemberRegistrationController::class.'@showSchoolInfo')->name('show_sign_up_school_info');
 Route::post('/sign_up/school_info', GuildMemberRegistrationController::class.'@doSchoolInfo')->name('do_sign_up_school_info');
 Route::post('/sign_up', SignUpController::class.'@store')->name('post_sign_up');
-
 Route::post('/sign_in', SignInController::class.'@store')->name('post_sign_in');
 
 /** パーティー作成のフロー */
@@ -53,9 +51,7 @@ Route::get('/party/edit', function() {
 });
 
 /** パーティー詳細表示 */
-Route::get('/party/detail', function() {
-    return view('guild.party.detail');
-});
+Route::get('/party/{partyId}/detail', PartyController::class.'@detail');
 
 /** 検索 */
 Route::get('/party/search', PartyController::class.'@search' )->name('search_party');
@@ -66,4 +62,8 @@ Route::get('/party/management/holding', function() {
 });
 Route::get('/party/management/entry', function() {
     return view('guild.party.management.entry');
+});
+
+Route::get('/party/management/applying', function() {
+    return view('guild.party.management.applying');
 });

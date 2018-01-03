@@ -18,7 +18,7 @@ class PartyDto
     /**
      * @return string
      */
-    public function getActivityEndDate(): ?string
+    public function activityEndDate(): ?string
     {
         return $this->activityEndDate;
     }
@@ -34,7 +34,7 @@ class PartyDto
     /**
      * @return ProductionIdeaDto
      */
-    public function getProductionIdeaDto(): ?ProductionIdeaDto
+    public function productionIdeaDto(): ?ProductionIdeaDto
     {
         return $this->productionIdeaDto;
     }
@@ -50,7 +50,7 @@ class PartyDto
     /**
      * @return array
      */
-    public function getWantedRoleDtos(): ?array
+    public function wantedRoleDtos(): ?array
     {
         return $this->wantedRoleDtos;
     }

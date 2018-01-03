@@ -16,7 +16,7 @@ class ProductionTypeDto
     /**
      * @return string
      */
-    public function getId(): string
+    public function id(): string
     {
         return $this->id;
     }
@@ -24,7 +24,7 @@ class ProductionTypeDto
     /**
      * @return string
      */
-    public function getName(): string
+    public function name(): string
     {
         return $this->name;
     }
