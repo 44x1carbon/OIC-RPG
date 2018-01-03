@@ -110,4 +110,19 @@ class FieldEloquentRepositoryImpl implements FieldRepositoryInterface
            return $model->toEntity();
         })->toArray();
     }
+
+    /**
+     * スキルIDからそのジョブが所属しているFieldインスタンスを取得する
+     *
+     * @param string $skillId
+     * @return Field|null
+     */
+    public function findBySkillId(string $skillId): ?Field
+    {
+        $fieldId = FieldSkillIdEloquent::where('skill_id', $skillId)->first()->field_id;
+
+        return null_safety($this->eloquent->find($fieldId), function(FieldEloquent $model) {
+            return $model->toEntity();
+        });
+    }
 }
