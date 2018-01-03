@@ -42,23 +42,6 @@ class PartyRegistrationController extends Controller
         return redirect()->route('show_party_registration_wanted');
     }
 
-    public function showProductionIdea(ProductionTypeRepositoryInterface $productionTypeRepository)
-    {
-        return view('Guild.Party.Registration.ProductionIdea')
-            ->with('productionTypes', $productionTypeRepository->all());
-    }
-
-    public function doProductionIdea(ProductionIdeaRequest $request)
-    {
-        $this->controlSessionDate(function(PartyDto $sessionData) use($request) {
-            $sessionData->setActivityEndDate($request->activityEndDate());
-            $sessionData->setProductionIdeaDto($request->productionIdeaDto());
-            return $sessionData;
-        });
-
-        return redirect()->route('show_party_registration_wanted');
-    }
-
     public function showWanted(JobRepositoryInterface $jobRepository)
     {
         return view('Guild.Party.Registration.Wanted')
@@ -81,29 +64,7 @@ class PartyRegistrationController extends Controller
         });
         return redirect()->route('show_party_confirm');
     }
-
-    public function addWantedRole(WantedRequest $request)
-    {
-
-        return view('Guild.Party.Registration.Wanted')
-            ->with('session', $this->getSessionData());
-    }
-
-    public function handleWanted(HandleWantedRequest $request)
-    {
-        $wantedRequest = WantedRequest::create($request->url(), $request->method(), $request->all() );
-        if($request->isAdd()) return $this->addWantedRole($wantedRequest);
-        if($request->isDone()) return $this->doWanted($wantedRequest);
-    }
-
-    public function doWanted(WantedRequest $request)
-    {
-        $this->controlSessionDate(function(PartyDto $sessionData) use($request) {
-            $sessionData->setWantedRoleDtos($request->wantedRoleDtos());
-            return $sessionData;
-        });
-        return redirect()->route('show_party_confirm');
-    }
+    
 
     public function addWantedRole(WantedRequest $request)
     {
