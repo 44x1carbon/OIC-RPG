@@ -24,15 +24,15 @@ class PartyServiceFacade
     ): string
     {
         $managerId = new StudentNumber($studentNumber);
-        $partyId = $this->servoce->registerParty(new ActivityEndDate($partyDto->activityEndDate), $managerId);
+        $partyId = $this->service->registerParty(new ActivityEndDate($partyDto->activityEndDate), $managerId);
 
         $productionIdeaDto = $partyDto->productionIdeaDto;
-        $this->servoce->updateProductionIdea($partyId, $productionIdeaDto->productionTheme, $productionIdeaDto->productionTypeDto->id, $productionIdeaDto->ideaDescription);
+        $this->service->updateProductionIdea($partyId, $productionIdeaDto->productionTheme, $productionIdeaDto->productionTypeDto->id, $productionIdeaDto->ideaDescription);
 
 
         /* @var WantedRoleDto $wantedRoleDto */
         foreach ($partyDto->wantedRoleDtos as $wantedRoleDto) {
-            $wantedRoleId = $this->servoce->addWantedRole($partyId, $wantedRoleDto->roleName, $wantedRoleDto->referenceJobId, $wantedRoleDto->remarks, $wantedRoleDto->frameAmount);
+            $wantedRoleId = $this->service->addWantedRole($partyId, $wantedRoleDto->roleName, $wantedRoleDto->referenceJobId, $wantedRoleDto->remarks, $wantedRoleDto->frameAmount);
             if($wantedRoleDto->managerAssigned) {
                 $managerRoleId = $wantedRoleId;
             }
