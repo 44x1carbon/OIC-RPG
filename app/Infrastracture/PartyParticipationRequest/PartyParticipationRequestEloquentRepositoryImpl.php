@@ -60,9 +60,9 @@ class PartyParticipationRequestEloquentRepositoryImpl implements PartyParticipat
      *
      * @param string $partyId
      * @param StudentNumber $studentNumber
-     * @return PartyParticipationRequest
+     * @return PartyParticipationRequest|null
      */
-    public function findByPartyIdAndStudentNumber(string $partyId, StudentNumber $studentNumber): PartyParticipationRequest
+    public function findByPartyIdAndStudentNumber(string $partyId, StudentNumber $studentNumber): ?PartyParticipationRequest
     {
         return null_safety($this->eloquent->where('party_id', $partyId)->where('guild_member_id', $studentNumber->code())->first(), function(PartyParticipationRequestEloquent $model) {
             return $model->toEntity();

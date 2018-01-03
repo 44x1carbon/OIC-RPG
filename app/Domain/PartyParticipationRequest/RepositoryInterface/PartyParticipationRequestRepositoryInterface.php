@@ -19,7 +19,7 @@ interface PartyParticipationRequestRepositoryInterface
 
     public function findListByPartyId(string $partyId): array;
 
-    public function findByPartyIdAndStudentNumber(string $partyId, StudentNumber $studentNumber): PartyParticipationRequest;
+    public function findByPartyIdAndStudentNumber(string $partyId, StudentNumber $studentNumber): ?PartyParticipationRequest;
 
     public function save(PartyParticipationRequest $party): bool;
 
