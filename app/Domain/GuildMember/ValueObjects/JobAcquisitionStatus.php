@@ -57,4 +57,28 @@ class JobAcquisitionStatus
     {
         return $this->status;
     }
+
+    /**
+     * @return bool
+     */
+    public function isLearned(): bool
+    {
+        return $this->status == self::LEARNED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNotLearned(): bool
+    {
+        return $this->status == self::NOT_LEARNED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGettable(): bool
+    {
+        return $this->status == self::GETTABLE;
+    }
 }
