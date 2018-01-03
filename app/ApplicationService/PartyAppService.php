@@ -57,7 +57,7 @@ class PartyAppService
     }
 
     /** パーティ参加申請 */
-    public function registerPartyParticipationRequest(
+    public function sendPartyParticipationRequest(
         string $partyId,
         string $wantedRoleId,
         StudentNumber $guildMemberId,

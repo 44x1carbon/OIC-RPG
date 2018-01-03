@@ -19,7 +19,7 @@ use \DateTime;
 class PartyParticipationRequestFacade
 {
     // パーティ参加申請を作成
-    public static function registerPartyParticipationRequest(
+    public static function sendPartyParticipationRequest(
         string $partyId,
         string $wantedRoleId,
         string $guildMemberIdData,
@@ -31,7 +31,7 @@ class PartyParticipationRequestFacade
         /* @var PartyAppService $partyAppService */
         $partyAppService = app(PartyAppService::class);
 
-        return $partyAppService->registerPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), $applicationAtData ? new DateTime($applicationAtData) : null, $reply ? new Reply($reply) : null);
+        return $partyAppService->sendPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), $applicationAtData ? new DateTime($applicationAtData) : null, $reply ? new Reply($reply) : null);
     }
 
     // パーティ参加申請に返信

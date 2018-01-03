@@ -41,11 +41,11 @@ class FindManagementPartyParticipationRequestListTest extends \Tests\TestCase
         $this->party3 = $this->sampleParty(['partyManagerId' => "B4000"]);
         $this->partyRepository->save($this->party3);
 
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party1->id(),"abcd", "B4991");
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party1->id(),"abcd", "B4992");
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party2->id(),"abcd", "B4993");
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party3->id(),"abcd", "B4994");
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party3->id(),"abcd", "B4995");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party1->id(),"abcd", "B4991");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party1->id(),"abcd", "B4992");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party2->id(),"abcd", "B4993");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party3->id(),"abcd", "B4994");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party3->id(),"abcd", "B4995");
     }
 
     public function testSuccess()

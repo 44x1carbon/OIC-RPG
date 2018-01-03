@@ -49,7 +49,7 @@ class PartyMemberAssignTest extends \Tests\TestCase
         $this->party = $this->sampleParty(['partyManagerId' => "B4000"]);
         $this->partyManager = $this->sampleGuildMember(['studentNumber' => "B4000"]);
         $this->partyMember = $this->sampleGuildMember(['studentNumber' => "B4999"]);
-        $this->partyParticipationRequestId = $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party->id(),'1', $this->partyMember->studentNumber()->code());
+        $this->partyParticipationRequestId = $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party->id(),'1', $this->partyMember->studentNumber()->code());
     }
 
     public function testSuccess()
