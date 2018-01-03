@@ -7,6 +7,7 @@ use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Http\Requests\PartyCreateRequest;
 use App\Infrastracture\Party\PartyViewModel;
 use App\Presentation\PartyServiceFacade;
+use Illuminate\Http\Request;
 
 class PartyController extends Controller
 {
@@ -24,6 +25,14 @@ class PartyController extends Controller
         return response($partyId);
     }
 
+    public function search(Request $request, PartyServiceFacade $partyServiceFacade)
+    {
+        $keyword = $request->input('keyword', '');
+        $searchResult = $partyServiceFacade->searchParty($keyword);
+        return view('Guild.Search.Party')
+            ->with('searchResult', $searchResult);
+    }
+  
     public function detail(string $partyId, PartyRepositoryInterface $partyRepository)
     {
         $party = $partyRepository->findById($partyId);

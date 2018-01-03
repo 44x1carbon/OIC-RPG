@@ -10,6 +10,7 @@ class Field
     private $name;
     private $jobIdList;
     private $courseIdList;
+    private $skillIdList;
 
     const DEFAULT_JOB_LIST = [
         '情報処理IT' => '学生(IT)',
@@ -18,11 +19,12 @@ class Field
         'デザイン・Web' => '学生(デザイン)',
     ];
 
-    public function __construct(string $name, array $jobIdList = [], array $courseIdList = [])
+    public function __construct(string $name, array $jobIdList = [], array $courseIdList = [], array $skillIdList = [])
     {
         $this->name = $name;
         $this->jobIdList = $jobIdList;
         $this->courseIdList = $courseIdList;
+        $this->skillIdList = $skillIdList;
     }
 
     /**
@@ -47,6 +49,14 @@ class Field
     public function courseIdList(): array
     {
         return $this->courseIdList;
+    }
+
+    /**
+     * @return array
+     */
+    public function skillIdList(): array
+    {
+        return $this->skillIdList;
     }
 
     public function defaultJob(): Job
@@ -78,5 +88,13 @@ class Field
     public function setCourseIdList(array $courseIdList)
     {
         $this->courseIdList = $courseIdList;
+    }
+
+    /**
+     * @param array $courseIdList
+     */
+    public function setSkillIdList(array $skillIdList)
+    {
+        $this->skillIdList = $skillIdList;
     }
 }
