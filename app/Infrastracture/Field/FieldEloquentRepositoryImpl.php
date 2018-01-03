@@ -8,6 +8,7 @@ use App\Domain\Job\ValueObjects\JobId;
 use App\Eloquents\FieldCourseIdEloquent;
 use App\Eloquents\FieldEloquent;
 use App\Eloquents\FieldJobIdEloquent;
+use App\Eloquents\FieldSkillIdEloquent;
 
 class FieldEloquentRepositoryImpl implements FieldRepositoryInterface
 {
@@ -43,6 +44,14 @@ class FieldEloquentRepositoryImpl implements FieldRepositoryInterface
                 'job_id' => $jobId->code()
             ]);
         }, $field->jobIdList()));
+
+        $model->fieldSkillIds()->delete();
+        $model->fieldSkillIds()->saveMany(array_map(function(string $skillId) use($model) {
+            return new FieldSkillIdEloquent([
+                'field_id' => $model->id,
+                'skill_id' => $skillId
+            ]);
+        }, $field->skillIdList()));
 
         return true;
     }
