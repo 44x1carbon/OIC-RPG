@@ -69,3 +69,8 @@ Route::get('/party/management/entry', function() {
 Route::get('/party/management/applying', function() {
     return view('guild.party.management.applying');
 });
+
+if(env('APP_ENV', 'local') == 'local') {
+    Route::get('/debug/learn_skill', DebugController::class.'@showLearnSkill')->name('show_learn_skill');
+    Route::post('/debug/learn_skill', DebugController::class.'@doLearnSkill');
+}
