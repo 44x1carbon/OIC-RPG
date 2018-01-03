@@ -61,18 +61,18 @@ class PartyAppService
         string $partyId,
         string $wantedRoleId,
         StudentNumber $guildMemberId,
-        DateTime $applicationDateData = null,
+        DateTime $applicationAtData = null,
         Reply $reply = null
     )
     {
         $partyParticipationRequestId = $this->partyParticipationRequestRepository->nextId();
-        $applicationDate = $applicationDateData ? new DateTime($applicationDateData) : null;
+        $applicationAt = $applicationAtData ? new DateTime($applicationAtData) : null;
         $partyParticipationRequest = new PartyParticipationRequest(
                                             $partyParticipationRequestId,
                                             $partyId,
                                             $wantedRoleId,
                                             $guildMemberId,
-                                            $applicationDate ?? null,
+                                            $applicationAt ?? null,
                                             $reply ?? null
                                         );
 

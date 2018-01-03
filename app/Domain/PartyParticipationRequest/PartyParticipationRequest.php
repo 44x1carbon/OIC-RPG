@@ -22,7 +22,7 @@ class PartyParticipationRequest
     protected $partyId;         // 参加したいパーティのID
     protected $wantedRoleId;    // 参加したいパーティ内の役割
     protected $guildMemberId;   // 参加したいギルドメンバーのID
-    protected $applicationDate; // 申請日
+    protected $applicationAt; // 申請日時
     protected $reply;           // 申請への返事VO
 
     public function __construct(
@@ -30,7 +30,7 @@ class PartyParticipationRequest
         string $partyId,
         string $wantedRoleId,
         StudentNumber $guildMemberId,
-        DateTime $applicationDate = null,
+        DateTime $applicationAt = null,
         Reply $reply = null
     )
     {
@@ -38,7 +38,7 @@ class PartyParticipationRequest
         $this->partyId = $partyId;
         $this->wantedRoleId = $wantedRoleId;
         $this->guildMemberId = $guildMemberId;
-        $this->applicationDate = $applicationDate ?? Carbon::now();
+        $this->applicationAt = $applicationAt ?? Carbon::now();
         $this->reply = $reply;
     }
 
@@ -77,9 +77,9 @@ class PartyParticipationRequest
     /**
      * @return Datetime|static
      */
-    public function applicationDate(): Datetime
+    public function applicationAt(): Datetime
     {
-        return $this->applicationDate;
+        return $this->applicationAt;
     }
 
     /**
@@ -123,11 +123,11 @@ class PartyParticipationRequest
     }
 
     /**
-     * @param Datetime $applicationDate
+     * @param Datetime $applicationAt
      */
-    public function setApplicationDate(DateTime $applicationDate)
+    public function setApplicationAt(DateTime $applicationAt)
     {
-        $this->applicationDate = $applicationDate;
+        $this->applicationAt = $applicationAt;
     }
 
     /**

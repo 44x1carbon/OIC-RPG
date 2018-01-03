@@ -23,7 +23,7 @@ class PartyParticipationRequestFacade
         string $partyId,
         string $wantedRoleId,
         string $guildMemberIdData,
-        string $applicationDateData = null,
+        string $applicationAtData = null,
         string $reply = null
     )
     {
@@ -31,7 +31,7 @@ class PartyParticipationRequestFacade
         /* @var PartyAppService $partyAppService */
         $partyAppService = app(PartyAppService::class);
 
-        return $partyAppService->registerPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), $applicationDateData ? new DateTime($applicationDateData) : null, $reply ? new Reply($reply) : null);
+        return $partyAppService->registerPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), $applicationAtData ? new DateTime($applicationAtData) : null, $reply ? new Reply($reply) : null);
     }
 
     // パーティ参加申請に返信
