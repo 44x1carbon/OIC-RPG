@@ -3,12 +3,18 @@
 namespace Tests;
 
 use App\ApplicationService\GuildMemberAppService;
+use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
+use App\Domain\GuildMember\Factory\GuildMemberFactory;
 use App\Domain\GuildMember\GuildMember;
+use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\Gender;
+use App\Domain\GuildMember\ValueObjects\MailAddress;
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Party;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\ProductionType\ProductionType;
 use App\Eloquents\ProductionTypeEloquent;
+use App\Infrastracture\AuthData\AuthData;
 use App\Presentation\GuildMemberFacade;
 use App\Presentation\PartyServiceFacade;
 use Faker\Factory as Faker;
@@ -25,8 +31,12 @@ trait Sampler
 
     public function sampleGuildMember($attr = []): GuildMember
     {
-        /* @var GuildMemberFacade $guildMemberFacade*/
-        $guildMemberFacade = app(GuildMemberFacade::class);
+        /* @var GuildMemberRepositoryInterface $guildMemberRepo*/
+        $guildMemberRepo = app(GuildMemberRepositoryInterface::class);
+        /* @var GuildMemberFactory $guildMemberFactory */
+        $guildMemberFactory = app(GuildMemberFactory::class);
+        /* @var CourseRepositoryInterface $courseRepo */
+        $courseRepo = app(CourseRepositoryInterface::class);
 
         $faker = Faker::create('ja_JP');
 
@@ -35,21 +45,39 @@ trait Sampler
 
         $data = array_merge(
             [
-                "studentNumberData" => $studentNumberData,
-                "studentName" => $faker->name,
-                "courseId" => $faker->randomNumber(1)%2+1,
-                "genderId" => $genderList[$faker->randomNumber(1)%2],
-                "mailAddressData" => $studentNumberData."@oic.jp",
-                "password" => $faker->bothify('????####'),
+                SampleGuildMember::studentNumber            => new StudentNumber($studentNumberData),
+                SampleGuildMember::studentName              => $faker->name,
+                SampleGuildMember::course                   => array_random($courseRepo->all()),
+                SampleGuildMember::gender                   => new Gender($genderList[$faker->randomNumber(1)%2]),
+                SampleGuildMember::mailAddress              => new MailAddress($studentNumberData."@oic.jp"),
+                SampleGuildMember::password                 => $faker->bothify('????####'),
+                SampleGuildMember::favoriteJobId            => null,
+                SampleGuildMember::possessionSkills         => null,
+                SampleGuildMember::possessionJobCollection  => null,
             ],
             $attr
         );
 
 
+        $guildMember = $guildMemberFactory->createGuildMember(
+            $data[SampleGuildMember::studentNumber],
+            $data[SampleGuildMember::studentName],
+            $data[SampleGuildMember::course],
+            $data[SampleGuildMember::gender],
+            $data[SampleGuildMember::mailAddress],
+            $data[SampleGuildMember::favoriteJobId],
+            $data[SampleGuildMember::possessionSkills],
+            $data[SampleGuildMember::possessionJobCollection]
+        );
 
-        $authData = $guildMemberFacade::registerMember($data['studentNumberData'], $data['studentName'], $data['courseId'], $data['genderId'], $data['mailAddressData'], $data['password']);
+        AuthData::create([
+            'email' => $data[SampleGuildMember::mailAddress]->address(),
+            'password' => $data[SampleGuildMember::password]
+        ]);
 
-        return $authData->guildMemberEntity();
+        $guildMemberRepo->save($guildMember);
+
+        return $guildMember;
     }
 
     /**
@@ -82,4 +110,17 @@ trait Sampler
 
         return $partyRepository->findById($partyId);
     }
+}
+
+class SampleGuildMember
+{
+    const studentNumber = 'studentNumber';
+    const studentName = 'studentName';
+    const course = 'course';
+    const gender = 'gender';
+    const mailAddress = 'mailAddress';
+    const password = 'password';
+    const favoriteJobId = 'favoriteJobId';
+    const possessionSkills = 'possessionSkills';
+    const possessionJobCollection = 'possessionJobCollection';
 }
