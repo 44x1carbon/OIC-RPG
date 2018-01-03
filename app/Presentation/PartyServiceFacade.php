@@ -51,8 +51,8 @@ class PartyServiceFacade
 
     }
 
-    public function searchParty(string  $keyword): array
+    public function searchParty(string $keyword = null): array
     {
-        return $this->service->searchParty($keyword);
+        return $this->service->searchParty($keyword ?? '');
     }
 }
