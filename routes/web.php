@@ -45,7 +45,7 @@ Route::post('/guild_member', GuildMemberController::class.'@update')->name('upda
 
 Route::delete('/guild_member/delete', GuildMemberController::class.'@destroy')->name('destroy_guild_member');
 
-Route::get('/me/my_page', GuildMemberController::class.'@myPage')->name('my_page');
+Route::get('/me/my_page', GuildMemberController::class.'@myPage')->name('show_my_page');
 
 /** パーティー編集 */
 Route::get('/party/edit', function() {
