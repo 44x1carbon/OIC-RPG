@@ -11,10 +11,12 @@ namespace App\Http\Controllers;
 
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
+use App\Http\Requests\GetJobRequest;
 use App\Http\Requests\GuildMemberRequest;
 use App\Http\Requests\MyPageRequest;
 use App\Http\ViewComposers\FieldViewModelComposer;
 use App\Infrastracture\GuildMember\GuildMemberViewModel;
+use App\Presentation\PossessionJobServiceFacade;
 
 class GuildMemberController extends Controller
 {
@@ -60,5 +62,12 @@ class GuildMemberController extends Controller
             ->with('guildMember', $guildMember)
             ->with('selectSkillTab', $request->selectSkillTab())
             ->with('selectJobTab', $request->selectJobTab());
+    }
+
+    public function getJob(GetJobRequest $request, GuildMember $loginMember, PossessionJobServiceFacade $serviceFacade)
+    {
+        $serviceFacade->getJob($loginMember->studentNumber()->code(), $request->jobId());
+
+        return response()->redirectTo($request->redirectUrl());
     }
 }
