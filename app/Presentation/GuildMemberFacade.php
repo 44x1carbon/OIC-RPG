@@ -16,12 +16,14 @@ use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\PassWord;
+use App\Domain\Job\ValueObjects\JobId;
 use App\Infrastracture\AuthData\AuthData;
 
 class GuildMemberFacade
 {
-    public function __construct()
+    public function __construct(GuildMemberAppService $guildMemberAppService)
     {
+        $this->guildMemberAppService = $guildMemberAppService;
     }
 
     public static function registerMember(
@@ -47,5 +49,12 @@ class GuildMemberFacade
 
         return $authData;
 
+    }
+
+    public function setupFavoriteJob(string $studentNumber, string $jobId): string
+    {
+        $jobId = $this->guildMemberAppService->setupFavoriteJob(new StudentNumber($studentNumber), new JobId($jobId));
+
+        return $jobId->code();
     }
 }

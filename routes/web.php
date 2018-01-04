@@ -74,6 +74,9 @@ Route::get('/party/management/applying', function() {
 /** ジョブ習得 */
 Route::post('/me/get_job', GuildMemberController::class.'@getJob')->name('do_get_job');
 
+/** お気に入りのジョブの設定 */
+Route::post('/me/favorite_job', GuildMemberController::class.'@setupFavoriteJob')->name('do_favorite_job');
+
 /** デバッグ用 */
 if(env('APP_ENV', 'local') == 'local') {
     Route::get('/debug/learn_skill', DebugController::class.'@showLearnSkill')->name('show_learn_skill');
