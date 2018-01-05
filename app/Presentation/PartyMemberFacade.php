@@ -21,9 +21,9 @@ class PartyMemberFacade
         $this->partyMemberAppService = $partyMemberAppService;
     }
 
-    public function assignPartyMember(string $partyParticipationRequestId , string $partyManagerId)
+    public function assignPartyMember(string $partyId, string $wantedRoleId, string $partyManagerId)
     {
-        $resultPartyMemberId = $this->partyMemberAppService->assignPartyMember($partyParticipationRequestId, new StudentNumber($partyManagerId));
+        $resultPartyMemberId = $this->partyMemberAppService->assignPartyMember($partyId, $wantedRoleId, new StudentNumber($partyManagerId));
         return $resultPartyMemberId;
     }
 }

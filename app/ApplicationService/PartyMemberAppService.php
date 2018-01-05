@@ -26,10 +26,10 @@ class PartyMemberAppService
         $this->partyParticipationRequestRepository = $partyParticipationRequestRepository;
     }
 
-    public function assignPartyMember(string $partyParticipationRequestId, StudentNumber $partyManagerId)
+    public function assignPartyMember(string $partyId, string $wantedRoleId, StudentNumber $partyManagerId)
     {
-        $partyParticipationRequest = $this->partyParticipationRequestRepository->findById($partyParticipationRequestId);
-        $party = $this->partyRepository->findById($partyParticipationRequest->partyId());
+        $partyParticipationRequest = $this->partyParticipationRequestRepository->findByPartyIdAndWantedRoleId($partyId, $wantedRoleId);
+        $party = $this->partyRepository->findById($partyId);
 
         if (!$party->partyManagerId()->equals($partyManagerId)) throw new \Exception('[ApplicationService] Party Member Permission Assign Error');
         if ($partyParticipationRequest->reply() ? $partyParticipationRequest->reply()->isRejection() : false) throw new \Exception('[ApplicationService] Party Member Reply Status Assign Error');
