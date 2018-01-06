@@ -35,6 +35,7 @@ class PartyMemberAppService
         if ($partyParticipationRequest->reply() ? $partyParticipationRequest->reply()->isRejection() : false) throw new \Exception('[ApplicationService] Party Member Reply Status Assign Error');
 
         $party->assignMember($partyParticipationRequest->wantedRoleId(), $partyParticipationRequest->guildMemberId());
+        $this->partyRepository->save($party);
 
         return $partyParticipationRequest->guildMemberId();
     }

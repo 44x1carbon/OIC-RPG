@@ -15,11 +15,13 @@ class PartyAppService
 {
     protected $partyRepository;
     protected $partyParticipationRequestRepository;
+    protected $partyMemberAppService;
 
-    function __construct(PartyRepositoryInterface $partyRepository, PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository)
+    function __construct(PartyRepositoryInterface $partyRepository, PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository, PartyMemberAppService $partyMemberAppService)
     {
         $this->partyRepository = $partyRepository;
         $this->partyParticipationRequestRepository = $partyParticipationRequestRepository;
+        $this->partyMemberAppService = $partyMemberAppService;
     }
 
     public function registerParty(ActivityEndDate $activityEndDate, StudentNumber $managerId, string $roleName): string
@@ -89,6 +91,9 @@ class PartyAppService
         $partyParticipationRequest = $this->partyParticipationRequestRepository->findByPartyIdAndStudentNumber($partyId, $guildMemberId);
         $partyParticipationRequest->setReply($reply);
         $this->partyParticipationRequestRepository->save($partyParticipationRequest);
+
+        // パーティ参加申請への返答が許可だった場合はパーティにメンバーをassign
+        if ($reply->isPermit()) $this->partyMemberAppService->assignPartyMember($partyId, $partyParticipationRequest->wantedRoleId(), $partyManagerId);
 
         return $partyParticipationRequest->id();
     }
