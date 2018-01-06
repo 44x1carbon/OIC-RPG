@@ -53,7 +53,7 @@ class FindManagementPartyParticipationRequestListTest extends \Tests\TestCase
         $findManagementPartyParticipationRequestList = $this->partyParticipationRequestFacade->findManagementPartyParticipationRequestList("B4000");
 
         // パーティIDをキーとして保存されているパーティ参加申請のリストが正しいものが取得できているか
-        $this->assertTrue($findManagementPartyParticipationRequestList[$this->party2->id()][0]->guildMemberId()->code() === "B4993");
+        $this->assertTrue($findManagementPartyParticipationRequestList[2]->guildMemberId()->code() === "B4993");
 
         // 存在しない場合空の配列が返ってくるのを確認
         $this->assertTrue($this->partyParticipationRequestFacade->findManagementPartyParticipationRequestList("B4444") === []);

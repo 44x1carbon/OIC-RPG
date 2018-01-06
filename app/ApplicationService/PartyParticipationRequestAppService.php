@@ -32,7 +32,7 @@ class PartyParticipationRequestAppService
 
         $partyParticipationRequestList = [];
         foreach ($partyList as $party){
-            $partyParticipationRequestList[$party->id()] = $this->partyParticipationRequestRepository->findListByPartyId($party->id());
+            $partyParticipationRequestList = array_merge($partyParticipationRequestList, $this->partyParticipationRequestRepository->findListByPartyId($party->id()));
         }
         return $partyParticipationRequestList;
     }
