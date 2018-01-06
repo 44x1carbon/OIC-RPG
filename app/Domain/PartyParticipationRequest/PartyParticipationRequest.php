@@ -123,17 +123,9 @@ class PartyParticipationRequest
     }
 
     /**
-     * @param Datetime $applicationAt
-     */
-    public function setApplicationAt(DateTime $applicationAt)
-    {
-        $this->applicationAt = $applicationAt;
-    }
-
-    /**
      * @param Reply $Reply
      */
-    public function setReply(Reply $Reply)
+    public function returnReply(Reply $Reply)
     {
         $this->reply = $Reply;
     }
