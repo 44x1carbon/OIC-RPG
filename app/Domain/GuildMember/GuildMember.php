@@ -14,6 +14,7 @@ use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\Course\Course;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
+use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
@@ -30,6 +31,8 @@ class GuildMember
     protected $possessionSkillFactory;
     /* @var \App\Domain\Course\RepositoryInterface\CourseRepositoryInterface */
     protected $courseRepo;
+    /* @var PartyRepositoryInterface $partyRepository*/
+    protected $partyRepository;
     private $studentNumber;
     private $studentName;
     private $courseId;
@@ -41,6 +44,7 @@ class GuildMember
     {
         $this->courseRepo = app(CourseRepositoryInterface::class);
         $this->possessionSkillFactory = app(PossessionSkillFactory::class);
+        $this->partyRepository = app(PartyRepositoryInterface::class);
     }
 
 //  学籍番号VOをセット
@@ -126,5 +130,11 @@ class GuildMember
         $addResultPossessionSkill = PossessionSkill::levelUp($possessionSkill, $addResultPossessionSkill);
 
         return $addResultPossessionSkill;
+    }
+
+    // 管理しているパーティ一覧を取得
+    public function managedParties(): array
+    {
+        return $this->partyRepository->findListByManagerId($this->studentNumber);
     }
 }
