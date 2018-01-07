@@ -6,14 +6,20 @@ use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Party;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
+use App\Domain\PartyParticipationRequest\PartyParticipationRequest;
+use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
+use App\Domain\PartyParticipationRequest\ValueObjects\Reply;
+use \DateTime;
 
 class PartyAppService
 {
     protected $partyRepository;
+    protected $partyParticipationRequestRepository;
 
-    function __construct(PartyRepositoryInterface $partyRepository)
+    function __construct(PartyRepositoryInterface $partyRepository, PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository)
     {
         $this->partyRepository = $partyRepository;
+        $this->partyParticipationRequestRepository = $partyParticipationRequestRepository;
     }
 
     public function registerParty(ActivityEndDate $activityEndDate, StudentNumber $managerId, string $roleName): string
@@ -49,4 +55,30 @@ class PartyAppService
 
         return $party->id();
     }
+
+    /** パーティ参加申請 */
+    public function registerPartyParticipationRequest(
+        string $partyId,
+        string $wantedRoleId,
+        string $guildMemberIdData,
+        DateTime $applicationDateData = null,
+        Reply $reply = null
+    )
+    {
+        $partyParticipationRequestId = $this->partyParticipationRequestRepository->nextId();
+        $applicationDate = $applicationDateData ? new DateTime($applicationDateData) : null;
+        $partyParticipationRequest = new PartyParticipationRequest(
+                                            $partyParticipationRequestId,
+                                            $partyId,
+                                            $wantedRoleId,
+                                            new StudentNumber($guildMemberIdData),
+                                            $applicationDate,
+                                            $reply ? new Reply($reply) : null
+                                        );
+
+        $this->partyParticipationRequestRepository->save($partyParticipationRequest);
+
+        return $partyParticipationRequest->id();
+    }
+
 }
