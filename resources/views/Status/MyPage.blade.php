@@ -84,7 +84,7 @@
                         @else
                             <li class="skill-item not-learned possession-skill">
                                 <span class="possession-skill__name">{{ $memberSkillStatus->skill()->name }}</span>
-                                <span class="possession-skill__status">未取得</span>
+                                <span class="possession-skill__level">未取得</span>
                             </li>
                         @endif
                     @endforeach
