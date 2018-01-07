@@ -4,3 +4,11 @@
 .button{
     color: white;
 }
+
+.button-circle {
+    border-radius: 50%;
+}
+
+.button-blue-gradation {
+    background: linear-gradient(180deg, #0045FF 0%, #000105 97.79%);
+}

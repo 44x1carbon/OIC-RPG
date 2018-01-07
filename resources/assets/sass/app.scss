@@ -1,31 +1,36 @@
-//
-//// Fonts
-//@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-//
-//// Variables
-//@import "variables";
-//
-//// Bootstrap
-//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
 @charset "utf-8";
 
 @import "variables";
 @import "functions";
+@import "temporary";
 /* ---------------------------------------------------------
 Foundation
 --------------------------------------------------------- */
-//@import "foundation/variable";
-//@import "foundation/mixin";
-//@import "foundation/webfont";
-//// @import "foundation/setting";
-//@import "foundation/reset";
+
+@import "foundation/variable";
+@import "foundation/mixin";
+@import "foundation/webfont";
+// @import "foundation/setting";
+@import "foundation/reset";
 
 /* ---------------------------------------------------------
 Layout
 --------------------------------------------------------- */
+
 @import "layout/_header.scss";
 @import "layout/_footer.scss";
+@import "layout/_main.scss";
+
+/* ---------------------------------------------------------
+Component
+--------------------------------------------------------- */
+
+@import "component/_background.scss";
+@import "component/_button.scss";
+@import "component/_flexbox.scss";
+@import "component/_form.scss";
+@import "component/_input.scss";
+@import "component/_font.scss";
 
 /* ---------------------------------------------------------
 Object
@@ -34,3 +39,11 @@ Object
 @import "page/_entry.scss";
 @import "page/_rpg-top.scss";
 @import "page/_guild-top.scss";
+@import "page/_mypage.scss";
+@import "page/_mypage-modal.scss";
+@import "page/_user-entry.scss";
+@import "page/_party-entry.scss";
+@import "page/_party-management.scss";
+@import "page/_detail-party-entry.scss";
+@import "page/_search.scss";
+@import "page/_party-search.scss";
