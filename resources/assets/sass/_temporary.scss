@@ -1,0 +1,20 @@
+.circle {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.float {
+  position: absolute;
+
+  &.pos-right {
+    right: 0;
+  }
+
+  &.pos-left {
+    left: 0;
+  }
+
+  &.pos-top {
+    top: 0;
+  }
+}
