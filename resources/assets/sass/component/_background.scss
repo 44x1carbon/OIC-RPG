@@ -1,0 +1,50 @@
+.background{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+}
+
+//img
+.map{
+  background: url(../assets/images/back.jpeg) no-repeat center center;
+  background-size: cover;
+}
+.chara{
+  background: url(../assets/images/back.png) no-repeat center center;
+  background-size: 150%;
+  left: 40px;
+}
+.opasity{
+  background-color: black;
+  opacity: .7;
+  animation-name: none;
+
+}
+
+.board{
+    background: url(../assets/images/board.jpg) no-repeat;
+    background-size: cover;
+}
+
+//layer
+.layer{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+.layer1{
+  z-index: 0;
+}
+.layer2{
+  z-index: 1;
+}
+.layer3{
+  z-index: 2;
+}
+.layer4{
+  z-index: 3;
+}
