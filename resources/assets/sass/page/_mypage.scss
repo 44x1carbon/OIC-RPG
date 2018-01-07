@@ -1,7 +1,8 @@
+// 共通部分
 .mypage {
+  padding: 0 15px;
   position: relative;
   width: 100%;
-  padding: 0 15px;
 }
 
 .mypage-content {
@@ -9,27 +10,32 @@
   background-size: cover;
   border: solid 1px #BF9C60;
   border-radius: 2px;
+
+  &:not(:last-child) {
+    margin-bottom: 40px;
+  }
 }
 
+/* プロフィール */
 .mypage-profile {
-  position: relative;
   display: grid;
-  grid-template-areas:  'mp-header mp-header'
-                        'mp-left   mp-right'
-                        'mp-bottom mp-bottom';
+  grid-template-areas: 'mp-header mp-header'
+                       'mp-left   mp-right'
+                       'mp-bottom mp-bottom';
   grid-template-columns: 60% 40%;
   grid-template-rows: 40px 300px 100px;
+  position: relative;
 }
 
 .profile-header {
-  grid-area: mp-header;
+  background-image: linear-gradient(180deg, #BF9C60 50.28%, #8A8219 100%);
 
-  background: linear-gradient(180deg, #BF9C60 50.28%, #8A8219 100%);
   border: solid 1px #BF9C60;
-
   font-size: 20px;
-  text-align: center;
+
+  grid-area: mp-header;
   line-height: 40px;
+  text-align: center;
 }
 
 .profile-left {
@@ -52,12 +58,12 @@
   margin-top: 10px;
 
   .info-label {
-    font-size: 14px;
-    padding: 4px;
-    display: inline-block;
-    border-radius: 2px 2px 0px 0px;
     background-color: #A9942E;
     border: solid 2px #BE9B64;
+    border-radius: 2px 2px 0px 0px;
+    display: inline-block;
+    font-size: 14px;
+    padding: 4px;
   }
 
   .info-data {
@@ -130,13 +136,75 @@
   }
 }
 
+/* スキル */
+
 .mypage-skill {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  margin: 30px 0 0;
-  padding: 15px;
-  background: white;
+}
+
+.skill-header {
+  background: linear-gradient(180deg, #BF9C60 50.28%, #8A8219 100%);
+  padding: 8px 2px;
+}
+
+.skill-content {
+  padding: 10px;
+}
+
+.skill-tab {
+  display: flex;
+
+  .skill-tab-item {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0 4px 0;
+    border-collapse: collapse;
+    border-radius: 10px 10px 0 0;
+    color: #000000;
+    text-decoration: none;
+    width: 100%;
+
+    border: solid 1px #BE9B64;
+    background-color: #F3EECE;
+
+    &.active {
+      background-color: #A9942E;
+    }
+  }
+}
+
+.skill-list {
+  border: solid 2px #BE9B64;
+  background-color: #F3EECE;
+
+  padding: 10px;
+}
+
+.skill-item {
+  border: 2px solid #AA9520;
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 10px;
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+
+  &.learned {
+    background: linear-gradient(180deg, #00B93B 16.26%, #000 91%);
+  }
+
+  &.not-learned {
+    background: linear-gradient(180deg, #ddd 16.26%, #333333 91%);
+  }
+
+  &__name {
+    font-size: 16px;
+  }
+
+  &__level, &__status {
+    font-size: 13px;
+    float: right;
+  }
 }
 
 .mypage-skill-course-list {

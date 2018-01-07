@@ -56,36 +56,41 @@
                 </div>
             </div>
         </div><!--profile-->
-        <div class="mypage-skill" id="skill">
-            <h2>スキル</h2>
-            <ul class="mypage-skill-course-list">
-                <?php /* @var \App\Infrastracture\Field\FieldViewModel $field */ ?>
-                @foreach($fields as $field)
-                    <li class="mypage-skill-course-item {{ $field->toKey() == $selectSkillTab? 'active' : '' }}">
-                        <a href="{{ route('show_my_page') . '?skillTab='.$field->toKey().'&jobTab='.$selectJobTab.'#skill' }}">
-                            {{ $field->name }}
+
+        <div class="mypage-skill mypage-content" id="skill">
+            <div class="skill-header">
+                スキル
+            </div>
+            <div class="skill-content">
+                <div class="skill-tab">
+                    <?php /* @var \App\Infrastracture\Field\FieldViewModel $field */ ?>
+                    @foreach($fields as $field)
+                        <a class="skill-tab-item {{ $field->toKey() == $selectSkillTab? 'active' : '' }}"
+                            href="{{ route('show_my_page') . '?skillTab='.$field->toKey().'&jobTab='.$selectJobTab.'#skill' }}">
+                            {{ $field->toShortJa() }}
                         </a>
-                    </li>
-                @endforeach
-            </ul>
-            <!-- mypage-skill-course-list -->
-            <ul class="mypage-skill-list">
-                <?php $skillStatusList = $skillStatusListVMHelper->groupByField($guildMember->skillStatusList())[$selectSkillTab]; ?>
-                <?php /* @var \App\Infrastracture\GuildMember\MemberSkillStatusViewModel $memberSkillStatus */ ?>
-                @foreach($skillStatusList as $memberSkillStatus)
-                    @if($memberSkillStatus->skillAcquisitionStatus->isLearned())
-                        <li class="mypage-skill-item">
-                            <p>{{ $memberSkillStatus->skill()->name }}</p>
-                            <p>Lv.{{ $memberSkillStatus->possessionSkill->skillLevel }}</p>
-                        </li>
-                    @else
-                        <li class="mypage-skill-item">
-                            <p>{{ $memberSkillStatus->skill()->name }}</p>
-                            <p>未取得</p>
-                        </li>
-                    @endif
-                @endforeach
-            </ul>
+                    @endforeach
+                </div>
+
+                <ul class="skill-list">
+                    <?php $skillStatusList = $skillStatusListVMHelper->groupByField($guildMember->skillStatusList())[$selectSkillTab]; ?>
+                    <?php /* @var \App\Infrastracture\GuildMember\MemberSkillStatusViewModel $memberSkillStatus */ ?>
+                    @foreach($skillStatusList as $memberSkillStatus)
+                        @if($memberSkillStatus->skillAcquisitionStatus->isLearned())
+                            <li class="skill-item learned">
+                                <span class="skill-item__name">{{ $memberSkillStatus->skill()->name }}</span>
+                                <span class="skill-item__level">Lv.{{ $memberSkillStatus->possessionSkill->skillLevel }}</span>
+                            </li>
+                        @else
+                            <li class="skill-item not-learned">
+                                <span class="skill-item__name">{{ $memberSkillStatus->skill()->name }}</span>
+                                <span class="skill-item__status">未取得</span>
+                            </li>
+                        @endif
+                    @endforeach
+                </ul>
+            </div>
+
         </div>
         <!-- mypage-skill -->
         <div class="mypage-job" id="job">
