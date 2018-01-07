@@ -10,38 +10,50 @@
 @section('content')
     <?php /* @var \App\Infrastracture\GuildMember\GuildMemberViewModel $guildMember */ ?>
     <div class="mypage">
-        <div class="mypage-profile">
-            <h2 class="mypage-profile-name">{{ $guildMember->name }}</h2>
-            <div class="mypage-profile-left">
-                <img src="{{ $guildMember->favoriteJob()->characterImagePath() }}" alt="">
-            </div><!--profile-left-->
-            <div class="mypage-profile-right">
-                <div class="mypage-profile-content">
-                    <p>学籍番号</p>
-                    <p>{{ $guildMember->studentNumber }}</p>
-                </div>
-                <div class="mypage-profile-content">
-                    <p>性別</p>
-                    <p>{{ $guildMember->gender->toJa() }}</p>
-                </div>
-                <div class="mypage-profile-content">
-                    <p>コース</p>
-                    <p>{{ $guildMember->course()->name }}</p>
-                    <div class="btn-wrap">
-                        <button class="btn btn-small">変更</button>
+        <div class="mypage-profile mypage-content">
+            <div class="profile-header {{ $guildMember->field()->toKey() }}">
+                <h2 class="mypage-profile-name">{{ $guildMember->name }}</h2>
+            </div>
+            <div class="profile-left">
+                <div class="fav-job-info">
+                    <div class="fav-job-img">
+                        <img src="{{ $guildMember->favoriteJob()->characterImagePath() }}" alt="">
+                    </div>
+                    <div class="fav-job-name {{ $guildMember->favoriteJob()->field()->toKey() }}">
+                        {{ $guildMember->favoriteJob()->name }}
                     </div>
                 </div>
-                <div class="mypage-profile-content">
-                    <p>スキル</p>
-                    <?php $sortedSkill = $skillStatusListVMHelper->sortLevel($guildMember->skillStatusList()) ?>
-                    <?php /* @var \App\Infrastracture\GuildMember\MemberSkillStatusViewModel $memberSkillStatus */ ?>
-                    @foreach(array_slice($sortedSkill, 0, 5) as $memberSkillStatus)
-                        <p>{{ $memberSkillStatus->skill()->name }}: Lv.{{ $memberSkillStatus->possessionSkill->skillLevel }}</p>
-                    @endforeach
+            </div><!--profile-left-->
+            <div class="profile-right">
+                <div class="member-info">
+                    <div class="member-info__content member-info__high-order-skills">
+                        <div class="info-label">得意スキル</div>
+                        <ul class="info-data">
+                            <?php $sortedSkill = $skillStatusListVMHelper->sortLevel($guildMember->skillStatusList()) ?>
+                            <?php /* @var \App\Infrastracture\GuildMember\MemberSkillStatusViewModel $memberSkillStatus */ ?>
+                            @foreach(array_slice($sortedSkill, 0, 5) as $memberSkillStatus)
+                                <li class="high-order-skill">
+                                    <span class="high-order-skill__name">{{ $memberSkillStatus->skill()->name }}</span>
+                                    <span class="high-order-skill__level">Lv.<span class="value">{{ $memberSkillStatus->possessionSkill->skillLevel }}</span></span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="member-info__content member-info__high-order-skills">
+                        <div class="info-label">所属コース</div>
+                        <div class="info-data">
+                            {{ $guildMember->course()->name }}
+                        </div>
+                    </div>
                 </div>
             </div><!--profile-right-->
-            <div class="mypage-profile-bottom">
-                <p>自己紹介</p>
+            <div class="profile-bottom">
+                <div class="member-info__content member-info__introduction">
+                    <div class="info-label">自己紹介</div>
+                    <div class="info-data">
+
+                    </div>
+                </div>
             </div>
         </div><!--profile-->
         <div class="mypage-skill" id="skill">

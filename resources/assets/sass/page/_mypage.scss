@@ -4,62 +4,129 @@
   padding: 0 15px;
 }
 
+.mypage-content {
+  background-image: url('/images/back.jpeg');
+  background-size: cover;
+  border: solid 1px #BF9C60;
+  border-radius: 2px;
+}
+
 .mypage-profile {
   position: relative;
-  overflow: hidden;
-  display: flex;
-  width: 100%;
-  padding: 15px;
-  background: white;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-areas:  'mp-header mp-header'
+                        'mp-left   mp-right'
+                        'mp-bottom mp-bottom';
+  grid-template-columns: 60% 40%;
+  grid-template-rows: 40px 300px 100px;
 }
 
-.mypage-profile-name {
-  width: 100%;
-  padding: 6px 0;
+.profile-header {
+  grid-area: mp-header;
+
+  background: linear-gradient(180deg, #BF9C60 50.28%, #8A8219 100%);
+  border: solid 1px #BF9C60;
+
+  font-size: 20px;
   text-align: center;
-  background: gray;
+  line-height: 40px;
 }
 
-.mypage-profile-left {
-  position: relative;
-  width: 50%;
-  height: 360px;
-  img{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 175%;
-    transform: translate(-18%, 0);
+.profile-left {
+  grid-area: mp-left;
+
+  overflow: hidden;
+}
+
+.profile-right {
+  grid-area: mp-right;
+}
+
+.profile-bottom {
+  grid-area: mp-bottom;
+}
+
+
+.member-info__content {
+  margin: 4px;
+  margin-top: 10px;
+
+  .info-label {
+    font-size: 14px;
+    padding: 4px;
+    display: inline-block;
+    border-radius: 2px 2px 0px 0px;
+    background-color: #A9942E;
+    border: solid 2px #BE9B64;
+  }
+
+  .info-data {
+    padding: 4px;
+    font-size: 13px;
+
+    box-sizing: border-box;
+    background-color: #F3EECE;
+    border: solid 2px #BE9B64;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
   }
 }
 
-.mypage-profile-right {
-  z-index: 2;
-  width: 50%;
-  padding: 21px 3px 0 9px;
+.fav-job-info {
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  box-sizing: border-box;
+  background-color: rgba(33, 33, 33, 0.6);
+
+  .fav-job-img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    img {
+      width: auto;
+      height: 100%;
+    }
+  }
+
+  .fav-job-name {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    margin: 0 auto;
+    padding: 8px;
+    box-sizing: border-box;
+    text-align: center;
+    width: 80%;
+
+    background-color: #F3EECE;
+    border: solid 2px #BE9B64;
+    border-radius: 2px;
+  }
 }
 
-.mypage-profile-content {
-  display: flex;
-  margin-bottom: 21px;
-  font-size: 12px;
-  justify-content: space-between;
-  flex-wrap: wrap;
+.member-info__high-order-skills {
+  .high-order-skill {
+    padding: 2px 2px;
+
+    &__level {
+      float: right;
+
+      .value {
+        display: inline-block;
+        width: 2em;
+        text-align: right;
+      }
+    }
+  }
 }
 
-.mypage-profile-bottom {
-  position: absolute;
-  left: 50%;
-  bottom: 30px;
-  width: 90%;
-  height: 100px;
-  margin: 0 auto;
-  background: gray;
-  transform: translateX(-50%);
-  p {
-    padding: 9px;
-    font-size: 12px;
+.member-info__introduction {
+  .info-data {
+    min-height: 4em;
   }
 }
 
