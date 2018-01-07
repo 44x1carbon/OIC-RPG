@@ -6,6 +6,7 @@ namespace App\Infrastracture\GuildMember;
 use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
 use App\Domain\Field\FieldRepositoryInterface;
 use App\Domain\GuildMember\GuildMember;
+use App\Domain\GuildMember\ValueObjects\MemberJobStatus;
 use App\Domain\GuildMember\ValueObjects\MemberSkillStatus;
 use App\Domain\Job\JobRepositoryInterface;
 use App\Domain\PossessionSkill\PossessionSkill;
@@ -28,6 +29,7 @@ class GuildMemberViewModel
     private $course = null;
     private $field = null;
     private $skillStatusList = null;
+    private $jobStatusList = null;
 
 
     /**
@@ -99,6 +101,9 @@ class GuildMemberViewModel
         return $this->field;
     }
 
+    /**
+     * @return array
+     */
     public function skillStatusList(): array
     {
         if(is_null($this->skillStatusList)) {
@@ -108,5 +113,19 @@ class GuildMemberViewModel
         }
 
         return $this->skillStatusList;
+    }
+
+    /**
+     * @return array
+     */
+    public function jobStatusList(): array
+    {
+        if(is_null($this->jobStatusList)) {
+            $this->jobStatusList = array_map(function(MemberJobStatus $status) {
+                return new MemberJobStatusViewModel($status);
+            }, $this->guildMember->jobAcquisitionList());
+        }
+
+        return $this->jobStatusList;
     }
 }
