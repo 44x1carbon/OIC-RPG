@@ -10,11 +10,11 @@
 
 //img
 .map{
-  background: url(../assets/images/back.jpeg) no-repeat center center;
+  background: url(/images/back.jpeg) no-repeat center center;
   background-size: cover;
 }
 .chara{
-  background: url(../assets/images/back.png) no-repeat center center;
+  background: url(/images/back.png) no-repeat center center;
   background-size: 150%;
   left: 40px;
 }
@@ -26,7 +26,7 @@
 }
 
 .board{
-    background: url(../assets/images/board.jpg) no-repeat;
+    background: url(/images/board.jpg) no-repeat;
     background-size: cover;
 }
 
