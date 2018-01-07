@@ -62,4 +62,18 @@ class PossessionSkillTest extends TestCase
 
         $this->assertTrue($resultPossessionSkill->skillLevel() !== $this->possessionSkill->skillLevel());
     }
+
+    public function testRemainingExp()
+    {
+        $allSkills = $this->skillRepo->all();
+        /* @var \App\Domain\Skill\Skill $skill */
+        $skill = array_random($allSkills);
+
+        $guildMember = $this->sampleGuildMember();
+        $guildMember->learnSkill($skill->skillId());
+
+        $possessionSkill = $guildMember->possessionSkills()->findPossessionSkill($skill->skillId());
+
+        $this->assertSame($possessionSkill->remainingExp(), 100);
+    }
 }
