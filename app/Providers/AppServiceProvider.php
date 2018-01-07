@@ -7,7 +7,6 @@ use App\Domain\Field\FieldRepositoryInterface;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\Job\JobRepositoryInterface;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
-use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 use App\Domain\PartyWrittenRequest\RepositoryInterface\PartyWrittenRequestRepositoryInterface;
 use App\Domain\WantedMember\RepositoryInterface\WantedMemberRepositoryInterface;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
@@ -23,7 +22,6 @@ use App\Infrastracture\Field\FieldEloquentRepositoryImpl;
 use App\Infrastracture\Job\JobEloquentRepositoryImpl;
 use App\Infrastracture\Party\PartyEloquentRepositoryImpl;
 use App\Infrastracture\Party\PartyOnMemoryRepositoryImpl;
-use App\Infrastracture\PartyParticipationRequest\PartyParticipationRequestEloquentRepositoryImpl;
 use App\Infrastracture\PartyWrittenRequest\PartyWrittenRequestOnMemoryRepositoryImpl;
 use App\Infrastracture\Skill\SkillEloquentRepositoryImpl;
 use App\Infrastracture\ProductionIdea\ProductionIdeaEloquentRepositoryImpl;
@@ -81,7 +79,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(PartyRepositoryInterface::class, PartyOnMemoryRepositoryImpl::class);
 //        $this->app->singleton(PartyRepositoryInterface::class, PartyOnMemoryRepositoryImpl::class);
         $this->app->singleton(PartyRepositoryInterface::class, PartyEloquentRepositoryImpl::class);
-        $this->app->singleton(PartyParticipationRequestRepositoryInterface::class, PartyParticipationRequestEloquentRepositoryImpl::class);
         $this->app->singleton(PartyWrittenRequestRepositoryInterface::class, PartyWrittenRequestOnMemoryRepositoryImpl::class);
         $this->app->bind(GuildMember::class, function(): ?GuildMember
         {
