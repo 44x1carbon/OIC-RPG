@@ -16,6 +16,22 @@
   }
 }
 
+.possession-skill {
+  padding-bottom: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 2px;
+
+  &__level {
+    float: right;
+    .level__value {
+      display: inline-block;
+      text-align: right;
+      width: 1.5em;
+    }
+  }
+}
+
 /* プロフィール */
 .mypage-profile {
   display: grid;
@@ -137,12 +153,9 @@
 }
 
 /* スキル */
-
-.mypage-skill {
-}
-
 .skill-header {
   background: linear-gradient(180deg, #BF9C60 50.28%, #8A8219 100%);
+  border: solid 2px #BE9B64;
   padding: 8px 2px;
 }
 
@@ -207,43 +220,157 @@
   }
 }
 
-.mypage-skill-course-list {
+// ジョブ
+.job-header {
+  background: linear-gradient(180deg, #BF9C60 50.28%, #8A8219 100%);
+  border: solid 2px #BE9B64;
+  padding: 8px 2px;
+}
+
+.job-content {
+  padding: 10px;
+}
+
+.job-tab {
   display: flex;
+
+  .job-tab-item {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0 4px 0;
+    border-collapse: collapse;
+    border-radius: 10px 10px 0 0;
+    color: #000000;
+    text-decoration: none;
+    width: 100%;
+
+    border: solid 1px #BE9B64;
+    background-color: #F3EECE;
+
+    &.active {
+      background-color: #A9942E;
+    }
+  }
 }
 
-.mypage-skill-course-item {
-  margin-right: 15px;
+.job-list {
+  background-color: #F3EECE;
+  border: solid 2px #BE9B64;
+
+  padding: 10px;
 }
 
-.mypage-skill-list {
+.job-item {
+  background-image: url('/images/back.jpeg');
+  background-size: cover;
+  border: solid 1px #BF9C60;
+  border-radius: 2px;
+  display: grid;
 
+  grid-template-areas: 'j-image  j-info     '
+                       'j-image  j-condition'
+                       'j-image  j-condition'
+                       'j-status j-action   ';
+
+  grid-template-columns: 30% 70%;
+
+  padding: 4px;
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
 }
 
-.mypage-skill-item {
-  display: flex;
-  margin-bottom: 15px;
-  background: gray;
+.job-status-area {
+  align-self: center;
+  grid-area: j-status;
+  justify-self: center;
 }
 
-.mypage-job {
-  position: relative;
-  margin: 30px 0 0;
-  padding: 15px;
-  background: white;
+.job-img-area {
+  padding: 0 2px;
+  grid-area: j-image;
 }
 
-.mypage-job-course-list {
-  display: flex;
+.job-info-area {
+  grid-area: j-info;
 }
 
-.mypage-job-course-item {
-  margin-right: 15px;
+.job-get-condition-area {
+  align-self: end;
+  grid-area: j-condition;
 }
 
-.mypage-job-item {
-  background: gray;
+.job-action-area {
+  align-self: center;
+  grid-area: j-action;
+  justify-self: end;
+  padding: 4px 0;
 }
 
-.mypage-job-link {
-  display: flex;
+.job-img {
+  height: 100%;
+  width: 100%;
+
+  img {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.job-info {
+  &__name {
+    font-size: 14px;
+  }
+}
+
+.job-get-condition {
+  &__label {
+    display: inline-block;
+    background-color: #A9942E;
+    border: solid 2px #BE9B64;
+    border-radius: 2px 2px 0px 0px;
+    font-size: 12px;
+  }
+
+  &__list {
+    background-color: #F3EECE;
+    border: solid 1px #BE9B64;
+
+    font-size: 13px;
+    padding: 1px 2px;
+  }
+}
+
+.job-action {
+  .action__get {
+    button[type=submit] {
+      background: linear-gradient(180deg, #00B93B 16.26%, #000 91%);
+      border: 2px solid #AA9520;
+      border-radius: 2px;
+      color: #ffffff;
+      font-size: 13px;
+      padding: 4px;
+    }
+  }
+
+  .action__favorite {
+    button[type=submit] {
+      background: linear-gradient(180deg, #FFF67F 0%, #F2994A 59.48%);
+      border: 2px solid #AA9520;
+      border-radius: 2px;
+      color: #ffffff;
+      font-size: 13px;
+      padding: 4px;
+
+      &.disable {
+        background: linear-gradient(180deg, #ddd 16.26%, #333333 91%);
+      }
+    }
+  }
+}
+
+.job-status {
+  font-size: 14px;
+  padding: 4px;
 }
