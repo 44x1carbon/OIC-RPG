@@ -1,0 +1,45 @@
+.rpg-top {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.rpg-top-menu-list {
+  margin: 192px 0 0;
+}
+
+.rpg-top-menu-item {
+}
+
+.rpg-top-menu-link {
+  display: block;
+  width: 111px;
+  height: 106px;
+  &.status {
+    background: imgUrl('icon-status.png') no-repeat center center;
+    background-size: 111px 106px;
+  }
+  &.guild {
+    margin-left: 60px;
+    background: imgUrl('icon-guild.png') no-repeat center center;
+    background-size: 111px 106px;
+  }
+  &.raid-battle {
+    background: imgUrl('icon-raid-battle.png') no-repeat center center;
+    background-size: 111px 106px;
+  }
+}
+
+.rpg-top-news{
+  z-index: -1;
+  position: absolute;
+  right: 0;
+  bottom: 50px;
+  width: 90%;
+  height: 150px;
+  background: imgUrl('news-board.png') no-repeat center center;
+  background-size: cover;
+}

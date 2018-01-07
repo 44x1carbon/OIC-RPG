@@ -1,9 +1,36 @@
+//
+//// Fonts
+//@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+//
+//// Variables
+//@import "variables";
+//
+//// Bootstrap
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-// Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@charset "utf-8";
 
-// Variables
 @import "variables";
+@import "functions";
+/* ---------------------------------------------------------
+Foundation
+--------------------------------------------------------- */
+//@import "foundation/variable";
+//@import "foundation/mixin";
+//@import "foundation/webfont";
+//// @import "foundation/setting";
+//@import "foundation/reset";
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+/* ---------------------------------------------------------
+Layout
+--------------------------------------------------------- */
+@import "layout/_header.scss";
+@import "layout/_footer.scss";
+
+/* ---------------------------------------------------------
+Object
+--------------------------------------------------------- */
+
+@import "page/_entry.scss";
+@import "page/_rpg-top.scss";
+@import "page/_guild-top.scss";

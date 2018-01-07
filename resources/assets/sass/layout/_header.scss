@@ -1,0 +1,46 @@
+// header
+.header{
+  width: 100vw;
+  height: 50px;
+  background-color: green;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.header-title{
+  margin: 0 auto;
+  width: 210px;
+  padding: 9px 0;
+  background-color: gray;
+  text-align: center;
+  font-weight: bold;
+}
+
+.header-inner{
+  position: relative;
+  width: 100%;
+}
+
+.header-btn{
+  overflow: hidden;
+  position: absolute;
+  top: 26%;
+  width: 63px;
+  height: 63px;
+  border-radius: 50%;
+  &.top {
+    left: 0;
+    background: imgUrl('icon-top.png') no-repeat center center green;
+    background-size: 45px 45px;
+  }
+  &.menu {
+    right: 0;
+    background: imgUrl('icon-menu.png') no-repeat center center green;
+    background-size: 45px 45px;
+  }
+}
+
