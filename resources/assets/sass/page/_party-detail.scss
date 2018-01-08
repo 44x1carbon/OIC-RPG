@@ -1,0 +1,75 @@
+
+.party-detail {
+  .panel__header {
+    padding-bottom: 0px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 2px;
+  }
+
+  &__body {
+    padding: 10px;
+  }
+}
+
+.wanted-role {
+  &__remarks {
+    margin: 8px 0;
+  }
+
+  &__action {
+    margin-top: 8px;
+  }
+}
+
+.member-list {
+  &__body {
+    flex-wrap: wrap;
+    justify-content: start;
+  }
+
+  .member-item {
+    $divided-num: 4;
+    padding: 4px;
+
+    box-sizing: border-box;
+    display: grid;
+    grid-template-areas: 'mi-role mi-image'
+                         'mi-name mi-name ';
+
+    width: 100% / $divided-num;
+
+    &__role {
+      background-color: #fffa;
+      padding: 2px;
+      font-size: 11px;
+      grid-area: mi-role;
+      writing-mode: vertical-rl;
+    }
+
+    &__image {
+      border-right-color: #fffa;
+      border-right-style: solid;
+      border-right-width: 4px;
+      border-top-color: #fffa;
+      border-top-style: solid;
+      border-top-width: 4px;
+      grid-area: mi-image;
+
+      img {
+        height: auto;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__name {
+      background-color: #fffa;
+      box-sizing: border-box;
+      font-size: 11px;
+      grid-area: mi-name;
+      padding: 2px 0px;
+      text-align: center;
+    }
+  }
+}
