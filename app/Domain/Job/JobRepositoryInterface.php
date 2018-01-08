@@ -22,4 +22,6 @@ interface JobRepositoryInterface
     public function save(Job $job): bool;
 
     public function all(): array;
+
+    public function exceptStudent(): array;
 }

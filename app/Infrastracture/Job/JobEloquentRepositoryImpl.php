@@ -59,4 +59,14 @@ class JobEloquentRepositoryImpl implements JobRepositoryInterface
         });
         return $jobCollection->toArray();
     }
+
+    public function exceptStudent(): array
+    {
+        $jobModels = JobEloquent::where('job_name', 'NOT LIKE', '%学生%')->get();
+
+        $jobCollection = $jobModels->map(function(JobEloquent $eloquent) {
+            return $eloquent->toEntity();
+        });
+        return $jobCollection->toArray();
+    }
 }
