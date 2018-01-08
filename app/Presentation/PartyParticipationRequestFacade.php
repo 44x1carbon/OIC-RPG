@@ -17,8 +17,19 @@ use \DateTime;
 
 class PartyParticipationRequestFacade
 {
+    /* @var PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository */
+    protected $partyParticipationRequestRepository;
+    /* @var PartyAppService $partyAppService */
+    protected $partyAppService;
+
+    public function __construct(PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository, PartyAppService $partyAppService)
+    {
+        $this->partyParticipationRequestRepository = $partyParticipationRequestRepository;
+        $this->partyAppService = $partyAppService;
+    }
+
     // パーティ参加申請を作成
-    public static function registerPartyParticipationRequest(
+    public function registerPartyParticipationRequest(
         string $partyId,
         string $wantedRoleId,
         string $guildMemberIdData,
@@ -26,30 +37,22 @@ class PartyParticipationRequestFacade
         string $reply = null
     )
     {
-        $repository = app(PartyParticipationRequestRepositoryInterface::class);
-        /* @var PartyAppService $partyAppService */
-        $partyAppService = app(PartyAppService::class);
+        $partyParticipationRequestId = $this->partyAppService->registerPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), $applicationDateData ? new DateTime($applicationDateData) : null, $reply ? new Reply($reply) : null);
 
-        $partyParticipationRequestId = $partyAppService->registerPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), $applicationDateData ? new DateTime($applicationDateData) : null, $reply ? new Reply($reply) : null);
-
-        return $repository->findById($partyParticipationRequestId);
+        return $this->partyParticipationRequestRepository->findById($partyParticipationRequestId);
     }
 
     // パーティ参加申請に返信
-    public static function replyPartyParticipationRequest(
+    public function replyPartyParticipationRequest(
         string $partyId,
         string $partyManagerId,
         string $guildMemberId,
         string $replyStatus
     )
     {
-        $repository = app(PartyParticipationRequestRepositoryInterface::class);
-        /* @var PartyAppService $partyAppService */
-        $partyAppService = app(PartyAppService::class);
+        $partyParticipationRequestId = $this->partyAppService->replyPartyParticipationRequest($partyId, new StudentNumber($partyManagerId), new StudentNumber($guildMemberId), new Reply($replyStatus));
 
-        $partyParticipationRequestId = $partyAppService->replyPartyParticipationRequest($partyId, new StudentNumber($partyManagerId), new StudentNumber($guildMemberId), new Reply($replyStatus));
-
-        return $repository->findById($partyParticipationRequestId);
+        return $this->partyParticipationRequestRepository->findById($partyParticipationRequestId);
     }
 
 }
