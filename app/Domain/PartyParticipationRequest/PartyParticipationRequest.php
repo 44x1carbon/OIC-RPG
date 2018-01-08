@@ -123,17 +123,9 @@ class PartyParticipationRequest
     }
 
     /**
-     * @param Datetime $applicationDate
-     */
-    public function setApplicationDate(DateTime $applicationDate)
-    {
-        $this->applicationDate = $applicationDate;
-    }
-
-    /**
      * @param Reply $Reply
      */
-    public function setReply(Reply $Reply)
+    public function returnReply(Reply $Reply)
     {
         $this->reply = $Reply;
     }
