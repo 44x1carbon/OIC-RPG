@@ -58,6 +58,7 @@
 
 .profile-left {
   grid-area: mp-left;
+  height: 100%;
 
   overflow: hidden;
 }
@@ -99,16 +100,19 @@
 }
 
 .fav-job-info {
-  position: relative;
-  overflow: hidden;
-  margin: 10px;
-  box-sizing: border-box;
   background-color: rgba(33, 33, 33, 0.6);
+  box-sizing: border-box;
+  height: 100%;
+  margin: 10px;
+  overflow: hidden;
+  position: relative;
 
   .fav-job-img {
+    background-position: center;
+    background-size: cover;
+    height: 100%;
     position: relative;
     width: 100%;
-    height: 100%;
 
     img {
       width: auto;
