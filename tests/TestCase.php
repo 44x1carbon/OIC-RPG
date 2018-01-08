@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
+    use Sampler;
 
     public function setUp()
     {

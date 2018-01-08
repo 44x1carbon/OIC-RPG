@@ -43,10 +43,25 @@ class HandleWantedRequest extends FormRequest
         return [
             'party.wantedRoleList'    => array_merge(['required', 'array'], $this->onlyDone(['required_manager_assigned']) ),
             'party.wantedRoleList.*.frameAmount' => $this->onlyDone(['required']),
-            'party.wantedRoleList.*.remarks' => $this->onlyDone(['required']),
+            'party.wantedRoleList.*.remarks' => $this->onlyDone([]),
             'party.wantedRoleList.*.roleName' => $this->onlyDone(['required']),
             'party.wantedRoleList.*.referenceJobId' => $this->onlyDone(['required']),
         ];
+    }
+
+    public function messages()
+    {
+        $messages = [
+            'party.wantedRoleList.required_manager_assigned' => '自分の所属する役割を選択してください',
+        ];
+
+        foreach ($this->input('party.wantedRoleList'  ) as $index => $value) {
+            $messages["party.wantedRoleList.$index.frameAmount.required"] = '募集人数は必須です';
+            $messages["party.wantedRoleList.$index.roleName.required"] = '募集役割名は必須です';
+            $messages["party.wantedRoleList.$index.referenceJobId.required"] = '参考ジョブは必須です';
+        }
+
+        return $messages;
     }
 
     private function onlyDone($rules): array
@@ -55,7 +70,6 @@ class HandleWantedRequest extends FormRequest
         if(is_array($rules)) return $rules;
         return [$rules];
     }
-
 
     public function isAdd(): bool
     {

@@ -76,4 +76,11 @@ class WantedMemberList
     {
         return (string) (count($this->all()) + 1);
     }
+
+    public function assignedList(): array
+    {
+        return array_values(array_filter($this->all(), function(WantedMember $wantedMember) {
+            return WantedMemberSpec::isAssigned($wantedMember);
+        }));
+    }
 }

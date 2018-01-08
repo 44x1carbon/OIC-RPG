@@ -17,6 +17,7 @@ use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Domain\Skill\Factory\SkillFactory;
 use App\Presentation\PossessionJobServiceFacade;
+use Tests\SampleGuildMember;
 use Tests\TestCase;
 
 /**
@@ -58,7 +59,6 @@ class PossessionJobServiceFacadeTest extends TestCase
 
         $studentNumber = new StudentNumber('B4300');
         $studentName = '新原佑亮';
-        $course = new Course('1','ITスペシャリスト');
         $gender = new Gender('male');
         $mailAddress = new MailAddress('b4000@oic.jp');
 
@@ -71,16 +71,15 @@ class PossessionJobServiceFacadeTest extends TestCase
         $possessionJobs = [];
         $possessionJobCollection = new PossessionJobCollection($possessionJobs);
 
-        $guildMemberFactory = new GuildMemberFactory();
-        $this->guildMember = $guildMemberFactory->createGuildMember(
-            $studentNumber,
-            $studentName,
-            $course,
-            $gender,
-            $mailAddress,
-            $possessionSkillCollection,
-            $possessionJobCollection
-        );
+        $this->guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $studentNumber,
+            SampleGuildMember::studentName => $studentName,
+            SampleGuildMember::gender => $gender,
+            SampleGuildMember::mailAddress => $mailAddress,
+            SampleGuildMember::possessionSkills => $possessionSkillCollection,
+            SampleGuildMember::possessionJobCollection => $possessionJobCollection
+        ]);
+
         $this->guildMemberRepo->save($this->guildMember);
     }
 

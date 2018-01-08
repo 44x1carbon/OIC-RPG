@@ -43,7 +43,7 @@ class JobRepositoryTest extends TestCase
 
         $this->job = new Job(
             $jobId,
-            'サーバーサイドマスター',
+            'サーバーサイドマスター1',
             'hoge\hogehoge',
             $getConditionArray);
 
@@ -56,7 +56,7 @@ class JobRepositoryTest extends TestCase
 
         $this->job1 = new Job(
             $jobId1,
-            'サーバーサイドマスター',
+            'サーバーサイドマスター2',
             'hoge\hogehoge',
             $getConditionArray);
 
@@ -70,6 +70,14 @@ class JobRepositoryTest extends TestCase
         $this->assertTrue($result->jobId()->code() === $this->job->jobId()->code()
                                    && $result->jobName() === $this->job->jobName()
                                    && $result->imagePath() === $this->job->imagePath());
+    }
+
+    public function testFindByName()
+    {
+        $result = $this->jobRepository->findByName($this->job->jobName());
+        $this->assertTrue($result->jobId()->code() === $this->job->jobId()->code()
+            && $result->jobName() === $this->job->jobName()
+            && $result->imagePath() === $this->job->imagePath());
     }
 
     public function testNextId()

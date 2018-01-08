@@ -64,6 +64,7 @@ class PartyRegistrationController extends Controller
         });
         return redirect()->route('show_party_confirm');
     }
+    
 
     public function addWantedRole(WantedRequest $request)
     {
