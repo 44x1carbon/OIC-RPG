@@ -12,7 +12,8 @@ namespace App\Http\Controllers;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Http\Requests\GuildMemberRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Http\ViewComposers\FieldViewModelComposer;
+use App\Infrastracture\GuildMember\GuildMemberViewModel;
 
 class GuildMemberController extends Controller
 {
@@ -45,5 +46,16 @@ class GuildMemberController extends Controller
         }else{
             return back();
         }
+    }
+
+    public function myPage(GuildMember $loginMember)
+    {
+        $guildMember = new GuildMemberViewModel($loginMember);
+        $guildMember->skillStatusList();
+        $viewFactory = view();
+        $viewFactory->composer('*', FieldViewModelComposer::class);
+
+        return $viewFactory->make('Status.MyPage')
+            ->with('guildMember', $guildMember);
     }
 }

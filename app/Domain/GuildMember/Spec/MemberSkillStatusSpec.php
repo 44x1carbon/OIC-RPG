@@ -24,7 +24,7 @@ class MemberSkillStatusSpec
      */
     public static function instantiatedNotLearned(MemberSkillStatus $status): bool
     {
-        return in_array(false, [
+        return !in_array(false, [
             is_null($status->possessionSkill()),
         ]);
 
@@ -37,7 +37,7 @@ class MemberSkillStatusSpec
      */
     public static function instantiatedLearned(MemberSkillStatus $status): bool
     {
-        return in_array(false, [
+        return !in_array(false, [
             !is_null($status->possessionSkill()),
         ]);
 
