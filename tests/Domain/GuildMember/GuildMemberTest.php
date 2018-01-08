@@ -10,14 +10,21 @@ namespace tests\Domain\GuildMember;
 
 
 use App\Domain\Course\Course;
+use App\Domain\GetCondition\GetCondition;
 use App\Domain\GuildMember\Factory\GuildMemberFactory;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\ValueObjects\Gender;
+use App\Domain\GuildMember\ValueObjects\JobAcquisitionStatus;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
+use App\Domain\GuildMember\ValueObjects\MemberJobStatus;
 use App\Domain\GuildMember\ValueObjects\MemberSkillStatus;
 use App\Domain\GuildMember\ValueObjects\SkillAcquisitionStatus;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\Job\Job;
+use App\Domain\PossessionJob\PossessionJob;
+use App\Domain\PossessionJob\PossessionJobCollection;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
+use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Domain\Skill\Factory\SkillFactory;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
@@ -113,5 +120,59 @@ class GuildMemberTest extends TestCase
         }, $allSkill);
 
         $this->assertTrue($rightSkillAcquisitionList == $guildMember->skillAcquisitionList());
+    }
+
+    public function testJobAcquisitionList()
+    {
+        $studentNumber = new StudentNumber('B4080');
+
+        $learnedJobs = [
+            $this->jobRepo()->findByName('Webエンジニア'),
+            $this->jobRepo()->findByName('ネットワークエンジニア'),
+        ];
+
+        $gettableJobs = [
+            $this->jobRepo()->findByName('ゲームプログラマー'),
+            $this->jobRepo()->findByName('ゲームグラフィッカー'),
+        ];
+
+        $learnedPossessionJobs = array_map(function(Job $job) use($studentNumber){
+            return new PossessionJob($studentNumber, $job->jobId());
+        }, $learnedJobs);
+
+        /* gettableJobsをPossessionSkillの配列に変換し、１次元配列化 */
+        $possessionSkills = array_flatten(array_map(function(Job $job) use($studentNumber){
+            /* JobのGetConditionsからPossessionSkillに変換 */
+            return array_map(function(GetCondition $condition) use($studentNumber){
+                return new PossessionSkill(
+                    $studentNumber,
+                    $condition->skillId(),
+                    $condition->requiredLevel(),
+                    PossessionSkill::LEVEL_UP_INTERVAL * $condition->requiredLevel()
+                );
+            }, $job->getConditions());
+        }, $gettableJobs));
+
+        $guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $studentNumber,
+            SampleGuildMember::possessionSkills => new PossessionSkillCollection($possessionSkills),
+            SampleGuildMember::possessionJobCollection => new PossessionJobCollection($learnedPossessionJobs)
+        ]);
+
+        $learnedJobIds = array_map(function(Job $job) { return $job->jobId()->code(); }, $learnedJobs);
+        $gettableJobIds = array_map(function(Job $job) { return $job->jobId()->code(); }, $gettableJobs);
+
+        /* @var MemberJobStatus $memberJobStatus */
+        foreach ($guildMember->jobAcquisitionList() as $memberJobStatus) {
+            if(in_array($memberJobStatus->jobId()->code(), $learnedJobIds)) {
+                $this->assertTrue($memberJobStatus->status() == JobAcquisitionStatus::learned());
+            }
+            else if(in_array($memberJobStatus->jobId()->code(), $gettableJobIds)) {
+                $this->assertTrue($memberJobStatus->status() == JobAcquisitionStatus::gettable());
+            }
+            else {
+                $this->assertTrue($memberJobStatus->status() == JobAcquisitionStatus::notLearned());
+            }
+        }
     }
 }
