@@ -37,4 +37,9 @@ class PartyParticipationRequestAppService
         return $partyParticipationRequestList;
     }
 
+    public function findStudentNumberPartyParticipationRequestList(StudentNumber $studentNumber)
+    {
+        return $this->partyParticipationRequestRepository->findListByStudentNumber($studentNumber);
+    }
+
 }
