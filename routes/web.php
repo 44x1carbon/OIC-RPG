@@ -78,4 +78,4 @@ if(env('APP_ENV', 'local') == 'local') {
 Route::get('/', function(\App\Domain\GuildMember\GuildMember $loginMember) {
    return view('Top')
        ->with('guildMember', new \App\Infrastracture\GuildMember\GuildMemberViewModel($loginMember));
-});
+})->name('top');
