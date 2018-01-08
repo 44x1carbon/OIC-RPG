@@ -93,7 +93,7 @@ class PartyAppService
         $this->partyParticipationRequestRepository->save($partyParticipationRequest);
 
         // パーティ参加申請への返答が許可だった場合はパーティにメンバーをassign
-        if ($reply->isPermit()) $this->partyMemberAppService->assignPartyMember($partyId, $partyParticipationRequest->wantedRoleId(), $partyManagerId);
+        if ($reply->isPermit()) $this->partyMemberAppService->assignPartyMember($partyId, $partyParticipationRequest->wantedRoleId(), $partyManagerId, $guildMemberId);
 
         return $partyParticipationRequest->id();
     }
