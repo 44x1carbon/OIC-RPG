@@ -1,0 +1,28 @@
+//variable ****/
+// color
+$tw: #5b99c5;
+$fb: #31548b;
+$line: #00c300;
+$purple: #3e2b63;
+$orange: #e76f51;
+$lorange: #fdf0ed;
+$blue: #00a0e9;
+$dblue: #2454a5;
+$lgray: #eeeeee;
+$gray: #b8b8b8;
+$dgray: #686868;
+$green: #2e9689;
+$red: #e90000;
+// fonts
+$baseFont:-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", YuGothic, "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo, sans-serif;
+
+// breakpoint
+$bp_i5: 320px;
+$bp_i6: 375px;
+$bp_sp_h: 568px;
+$bp_tab_v: 768px;
+$bp_tab_h: 980px;
+$bp_pc: 1080px;
+$bp_lpc: 1280px;
+//retina
+$retina: "only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)";
