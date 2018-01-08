@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call(SkillSeeder::class);
         $this->call(JobSeeder::class);
         $this->call(CourseSeeder::class);
-        $this->call(GuildMemberSeeder::class);
+        if(env('APP_ENV') == 'local') {
+            $this->call(GuildMemberSeeder::class);
+            $this->call(PartySeeder::class);
+        }
     }
 }
