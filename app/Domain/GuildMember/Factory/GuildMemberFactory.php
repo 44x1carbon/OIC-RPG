@@ -40,7 +40,6 @@ class GuildMemberFactory
         PossessionSkillCollection $possessionSkills = null,
         PossessionJobCollection $possessionJobCollection = null
     ): GuildMember {
-
         $guildMember = new GuildMember();
         $guildMember->setStudentNumber($studentNumber);
         $guildMember->setStudentName($studentName);

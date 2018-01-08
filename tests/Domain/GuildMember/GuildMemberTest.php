@@ -12,9 +12,10 @@ namespace tests\Domain\GuildMember;
 use App\Domain\Course\Course;
 use App\Domain\GuildMember\Factory\GuildMemberFactory;
 use App\Domain\GuildMember\GuildMember;
-use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
+use App\Domain\GuildMember\ValueObjects\MemberSkillStatus;
+use App\Domain\GuildMember\ValueObjects\SkillAcquisitionStatus;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
@@ -84,5 +85,33 @@ class GuildMemberTest extends TestCase
 
         $this->assertTrue($possessionSkill->totalExp() + $exp === $afterPossessionSkill->totalExp()
                         && $possessionSkill->skillLevel() !== $afterPossessionSkill->skillLevel());
+    }
+
+    public function testSkillAcquisitionList()
+    {
+        /* テスト対象のGuildMemberを作成 */
+        $allSkill = $this->skillRepo->all();
+        $guildMember = $this->sampleGuildMember();
+        $learnedSkills = array_random($allSkill, 5);
+
+        /* @var Skill $learnedSkill */
+        foreach ($learnedSkills as $learnedSkill) {
+            $guildMember->learnSkill($learnedSkill->skillId());
+        }
+
+        $learnedSkillIds = array_map(function(Skill $skill) {
+            return $skill->skillId();
+        }, $learnedSkills);
+
+        $rightSkillAcquisitionList = array_map(function(Skill $skill) use($learnedSkillIds, $guildMember){
+            if(in_array($skill->skillId(), $learnedSkillIds)) {
+                $possessionSkill = $guildMember->possessionSkills()->findPossessionSkill($skill->skillId());
+                return new MemberSkillStatus($skill->skillId(), SkillAcquisitionStatus::LEARNED(), $possessionSkill);
+            } else {
+                return new MemberSkillStatus($skill->skillId(), SkillAcquisitionStatus::NOT_LEARNED());
+            }
+        }, $allSkill);
+
+        $this->assertTrue($rightSkillAcquisitionList == $guildMember->skillAcquisitionList());
     }
 }
