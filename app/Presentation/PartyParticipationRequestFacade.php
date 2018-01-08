@@ -37,7 +37,20 @@ class PartyParticipationRequestFacade
         string $reply = null
     )
     {
-        $partyParticipationRequestId = $this->partyAppService->registerPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), new DateTime($applicationDateData), new Reply($reply));
+        $partyParticipationRequestId = $this->partyAppService->registerPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), $applicationDateData ? new DateTime($applicationDateData) : null, $reply ? new Reply($reply) : null);
+
+        return $this->partyParticipationRequestRepository->findById($partyParticipationRequestId);
+    }
+
+    // パーティ参加申請に返信
+    public function replyPartyParticipationRequest(
+        string $partyId,
+        string $partyManagerId,
+        string $guildMemberId,
+        string $replyStatus
+    )
+    {
+        $partyParticipationRequestId = $this->partyAppService->replyPartyParticipationRequest($partyId, new StudentNumber($partyManagerId), new StudentNumber($guildMemberId), new Reply($replyStatus));
 
         return $this->partyParticipationRequestRepository->findById($partyParticipationRequestId);
     }

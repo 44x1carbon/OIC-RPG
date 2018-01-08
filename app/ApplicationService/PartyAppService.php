@@ -60,7 +60,7 @@ class PartyAppService
     public function registerPartyParticipationRequest(
         string $partyId,
         string $wantedRoleId,
-        string $guildMemberIdData,
+        StudentNumber $guildMemberId,
         DateTime $applicationDateData = null,
         Reply $reply = null
     )
@@ -71,9 +71,9 @@ class PartyAppService
                                             $partyParticipationRequestId,
                                             $partyId,
                                             $wantedRoleId,
-                                            new StudentNumber($guildMemberIdData),
-                                            $applicationDate,
-                                            $reply ? new Reply($reply) : null
+                                            $guildMemberId,
+                                            $applicationDate ?? null,
+                                            $reply ?? null
                                         );
 
         $this->partyParticipationRequestRepository->save($partyParticipationRequest);
@@ -81,4 +81,15 @@ class PartyAppService
         return $partyParticipationRequest->id();
     }
 
+    public function replyPartyParticipationRequest(string $partyId, StudentNumber $partyManagerId, StudentNumber $guildMemberId, Reply $reply)
+    {
+        $party = $this->partyRepository->findById($partyId);
+        if (!$party->partyManagerId()->equals($partyManagerId)) throw new \Exception('[ApplicationService] Party Participation Request Reply Error');
+
+        $partyParticipationRequest = $this->partyParticipationRequestRepository->findByPartyIdAndStudentNumber($partyId, $guildMemberId);
+        $partyParticipationRequest->setReply($reply);
+        $this->partyParticipationRequestRepository->save($partyParticipationRequest);
+
+        return $partyParticipationRequest->id();
+    }
 }
