@@ -19,7 +19,6 @@ class ReplySpec
     {
         //受け取った値が利用可能か判定
         //Replyのリストと受け取り値を判定
-        $list = Reply::STATUS_LIST;
-        return in_array($status,$list);
+        return in_array($status, Reply::STATUS_LIST);
     }
 }
