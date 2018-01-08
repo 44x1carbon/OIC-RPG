@@ -88,7 +88,7 @@ class PartyMemberAssignTest extends \Tests\TestCase
         $partyParticipationRequest = $this->partyParticipationRequestRepository->findById($this->partyParticipationRequestId);
         $this->party->addWantedFrame('1',1);
         $this->partyRepoitory->save($this->party);
-        $partyParticipationRequest->setReply(new Reply('rejection'));
+        $partyParticipationRequest->returnReply(new Reply('rejection'));
         $this->partyParticipationRequestRepository->save($partyParticipationRequest);
         $this->partyMemberFacade->assignPartyMember($this->party->id(), '1', "B4000");
     }

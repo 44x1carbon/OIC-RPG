@@ -27,7 +27,6 @@ class PartyParticipationRequestFacade
         string $reply = null
     )
     {
-        $repository = app(PartyParticipationRequestRepositoryInterface::class);
         /* @var PartyAppService $partyAppService */
         $partyAppService = app(PartyAppService::class);
 
@@ -42,7 +41,6 @@ class PartyParticipationRequestFacade
         string $replyStatus
     )
     {
-        $repository = app(PartyParticipationRequestRepositoryInterface::class);
         /* @var PartyAppService $partyAppService */
         $partyAppService = app(PartyAppService::class);
 

@@ -89,7 +89,7 @@ class PartyAppService
         if (!$party->isPartyManagerId($partyManagerId)) throw new \Exception('[ApplicationService] Party Participation Request Reply Error');
 
         $partyParticipationRequest = $this->partyParticipationRequestRepository->findByPartyIdAndStudentNumber($partyId, $guildMemberId);
-        $partyParticipationRequest->setReply($reply);
+        $partyParticipationRequest->returnReply($reply);
         $this->partyParticipationRequestRepository->save($partyParticipationRequest);
 
         // パーティ参加申請への返答が許可だった場合はパーティにメンバーをassign
