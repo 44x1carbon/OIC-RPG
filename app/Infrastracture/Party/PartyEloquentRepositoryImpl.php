@@ -9,6 +9,7 @@
 namespace App\Infrastracture\Party;
 
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Party;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\WantedMember\WantedMember;
@@ -33,6 +34,13 @@ class PartyEloquentRepositoryImpl implements PartyRepositoryInterface
         return null_safety($this->eloquent->where('party_id', $id)->first(), function(PartyEloquent $model) {
             return $model->toEntity();
         });
+    }
+
+    public function findListByManagerId(StudentNumber $managerId): ?array
+    {
+        return $this->eloquent->where('manager_id', $managerId->code())->get()->map(function(PartyEloquent $model) {
+            return $model->toEntity();
+        })->toArray();
     }
 
     public function save(Party $party): bool

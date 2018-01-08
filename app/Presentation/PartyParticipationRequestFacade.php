@@ -10,6 +10,7 @@ namespace App\Presentation;
 
 
 use App\ApplicationService\PartyAppService;
+use App\ApplicationService\PartyParticipationRequestAppService;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 use App\Domain\PartyParticipationRequest\ValueObjects\Reply;
@@ -53,6 +54,17 @@ class PartyParticipationRequestFacade
         $partyParticipationRequestId = $this->partyAppService->replyPartyParticipationRequest($partyId, new StudentNumber($partyManagerId), new StudentNumber($guildMemberId), new Reply($replyStatus));
 
         return $this->partyParticipationRequestRepository->findById($partyParticipationRequestId);
+    }
+
+    // 自分が管理しているパーティの参加申請一覧を取得
+    public static function findManagementPartyParticipationRequestList(string $managementId)
+    {
+        /* @var PartyParticipationRequestAppService $partyParticipationRequestAppService */
+        $partyParticipationRequestAppService = app(PartyParticipationRequestAppService::class);
+
+        $partyParticipationRequestList = $partyParticipationRequestAppService->findManagementPartyParticipationRequestList(new StudentNumber($managementId));
+
+        return $partyParticipationRequestList;
     }
 
 }
