@@ -1,9 +1,5 @@
 @charset "utf-8";
-@import '~mathsass/dist/math';
 
-@import "variables";
-@import "functions";
-@import "temporary";
 /* ---------------------------------------------------------
 Foundation
 --------------------------------------------------------- */
@@ -31,7 +27,6 @@ Component
 @import "component/_flexbox.scss";
 @import "component/_form.scss";
 @import "component/_input.scss";
-@import "component/_font.scss";
 
 /* ---------------------------------------------------------
 Object

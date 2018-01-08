@@ -15,4 +15,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .sourceMaps();
 
+mix.copy('resources/assets/images', 'public/images');
+
 mix.webpackConfig({ devtool: "inline-source-map" });
