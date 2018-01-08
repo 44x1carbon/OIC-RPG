@@ -21,7 +21,7 @@
                     <div class="item form-item">
                         <h4 class="form-item-title">役割名</h4>
                         <input type="text" class="input" name="party[wantedRoleList][{{$index}}][roleName]" value="{{ $wantedRole->roleName }}"><!-- 役割名 -->
-                        <input type="checkbox" name="party[wantedRoleList][{{$index}}][managerAssigned]">この役職に自分も所属する
+                        <input type="checkbox" name="party[wantedRoleList][{{$index}}][managerAssigned]" {{ $wantedRole->managerAssigned()? 'checked' : '' }}>この役職に自分も所属する
                         @foreach($errors->get("party.wantedRoleList.$index.roleName") as $message)
                             <p>{{ $message }}</p>
                         @endforeach
@@ -31,7 +31,7 @@
                         <select id="" name="party[wantedRoleList][{{$index}}][referenceJobId]"><!-- 参考ジョブ -->
                             <?php /* @var \App\Domain\Job\Job $job */ ?>
                             @foreach($allJob as $job)
-                                <option value="{{ $job->jobId()->code() }}">{{ $job->jobName() }}</option>
+                                <option value="{{ $job->jobId()->code() }}" {{ $wantedRole->referenceJobId() == $job->jobId()->code()? 'selected' : '' }}>{{ $job->jobName() }}</option>
                             @endforeach
                         </select>
                         @foreach($errors->get("party.wantedRoleList.$index.referenceJobId") as $message)
@@ -40,7 +40,7 @@
                     </div><!-- item -->
                     <div class="item form-item">
                         <h4 class="form-item-title">人数</h4>
-                        <input type="number" class="input input-large" name="party[wantedRoleList][{{$index}}][frameAmount]"><!--　人数 -->
+                        <input type="number" class="input input-large" name="party[wantedRoleList][{{$index}}][frameAmount]" value="{{ $wantedRole->frameAmount() }}><!--　人数 -->
                         <p>※自分も含む人数を記載してください</p>
                         @foreach($errors->get("party.wantedRoleList.$index.frameAmount") as $message)
                             <p>{{ $message }}</p>
@@ -48,7 +48,7 @@
                     </div><!-- item -->
                     <div class="item form-item">
                         <h4 class="form-item-title">備考</h4>
-                        <input type="textarea" class="input" name="party[wantedRoleList][{{$index}}][remarks]"><!-- 備考 -->
+                        <input type="textarea" class="input" name="party[wantedRoleList][{{$index}}][remarks]" value="{{ $wantedRole->remarks() }}><!-- 備考 -->
                         @foreach($errors->get("party.wantedRoleList.$index.remarks") as $message)
                             <p>{{ $message }}</p>
                         @endforeach
