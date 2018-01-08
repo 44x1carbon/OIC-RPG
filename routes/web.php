@@ -67,3 +67,8 @@ Route::get('/party/management/entry', function() {
 Route::get('/party/management/applying', function() {
     return view('guild.party.management.applying');
 });
+
+Route::get('/', function(\App\Domain\GuildMember\GuildMember $loginMember) {
+   return view('Top')
+       ->with('guildMember', new \App\Infrastracture\GuildMember\GuildMemberViewModel($loginMember));
+});

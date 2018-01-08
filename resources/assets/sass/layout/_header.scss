@@ -13,11 +13,12 @@ $header-height: 50px;
   z-index: 9999;
 }
 
+$side-content-width: 70px;
 .header-content {
   position: relative;
   height: 100%;
 
-  $side-content-width: 80px;
+
   &.left {
     width: $side-content-width;
   }
@@ -54,11 +55,11 @@ $header-height: 50px;
   position: relative;
   background: linear-gradient(180deg, rgba(102, 60, 6, 0) 0%, #0C0400 55.25%);
 
-  $size: 80px;
-  top: $header-height - ($size/2);
+  $size: $side-content-width;
+  top: ($size/8);
   height: $size;
   width: $size;
-
+  font-size: 13px;
   padding: 10px;
 
   .btn {

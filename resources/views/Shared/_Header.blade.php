@@ -2,7 +2,7 @@
     <div class="header-content left">
         <div class="header-btn circle float">
             <div class="btn btn-circle btn-gloss btn-head-nav font-white">
-                Top
+                Home
             </div>
         </div>
     </div>
