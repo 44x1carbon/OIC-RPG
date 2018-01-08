@@ -31,7 +31,6 @@ class GuildMemberViewModel
     private $skillStatusList = null;
     private $jobStatusList = null;
 
-
     /**
      * GuildMemberViewModel constructor.
      * @param GuildMember $guildMember

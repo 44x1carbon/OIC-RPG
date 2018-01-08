@@ -40,6 +40,7 @@ class GuildMember
     protected $skillRepo;
     /* @var JobRepositoryInterface $jobRepo */
     protected $jobRepo;
+
     private $studentNumber;
     private $studentName;
     private $courseId;
