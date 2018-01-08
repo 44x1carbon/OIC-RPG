@@ -33,6 +33,7 @@ class PartyWrittenRequestTest extends TestCase
         $this->partyWrittenRequestFactory = app(PartyWrittenRequestFactory::class);
     }
 
+/* partyWrittenRequest自体利用されていないため一時的にコメントアウト
     public function testSave()
     {
         $applicantId = new StudentNumber("B1111");
@@ -72,4 +73,5 @@ class PartyWrittenRequestTest extends TestCase
         // 指定したIDがなかった場合にnullが帰るかどうか
         $this->assertTrue($this->partyWrittenRequestRepository->findById('80') === null);
     }
+*/
 }
