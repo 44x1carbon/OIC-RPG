@@ -10,10 +10,11 @@ namespace App\Domain\GuildMember;
 
 use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
+use App\Domain\GuildMember\ValueObjects\MemberSkillStatus;
+use App\Domain\GuildMember\ValueObjects\SkillAcquisitionStatus;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\Course\Course;
-use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\Job\Job;
 use App\Domain\Job\ValueObjects\JobId;
 use App\Domain\PossessionJob\PossessionJob;
@@ -21,11 +22,8 @@ use App\Domain\PossessionJob\PossessionJobCollection;
 use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
 use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
-use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
-use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
-use ArrayObject;
-use Illuminate\Support\Facades\Mail;
-use PhpParser\Node\Scalar\String_;
+use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
+use App\Domain\Skill\Skill;
 
 
 class GuildMember
@@ -34,6 +32,8 @@ class GuildMember
     protected $possessionSkillFactory;
     /* @var \App\Domain\Course\RepositoryInterface\CourseRepositoryInterface */
     protected $courseRepo;
+    /* @var SkillRepositoryInterface $skillRepo */
+    protected $skillRepo;
     private $studentNumber;
     private $studentName;
     private $courseId;
@@ -47,6 +47,7 @@ class GuildMember
     {
         $this->courseRepo = app(CourseRepositoryInterface::class);
         $this->possessionSkillFactory = app(PossessionSkillFactory::class);
+        $this->skillRepo = app(SkillRepositoryInterface::class);
     }
 
 //  学籍番号VOをセット
@@ -159,5 +160,21 @@ class GuildMember
         $addResultPossessionSkill = PossessionSkill::levelUp($possessionSkill, $addResultPossessionSkill);
 
         return $addResultPossessionSkill;
+    }
+
+    public function skillAcquisitionList(): array
+    {
+        $allSkill = $this->skillRepo->all();
+
+        return array_map(function(Skill $skill) {
+            $possessionSkill = $this->possessionSkills()->findPossessionSkill($skill->skillId());
+            if(is_null($possessionSkill)) {
+                $status = SkillAcquisitionStatus::NOT_LEARNED();
+                return new MemberSkillStatus($skill->skillId(), $status);
+            } else {
+                $status = SkillAcquisitionStatus::LEARNED();
+                return new MemberSkillStatus($skill->skillId(), $status, $possessionSkill);
+            }
+        }, $allSkill);
     }
 }
