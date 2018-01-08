@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="footer-content left">
         <div class="footer-btn-area circle float">
-            <div class="back-btn btn btn-circle btn-gloss font-white">
+            <div class="footer-btn btn btn-circle btn-gloss font-white">
                 Back
             </div>
         </div>
