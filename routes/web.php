@@ -79,3 +79,7 @@ Route::get('/', function(\App\Domain\GuildMember\GuildMember $loginMember) {
    return view('Top')
        ->with('guildMember', new \App\Infrastracture\GuildMember\GuildMemberViewModel($loginMember));
 })->name('top');
+
+Route::get('/guild', function() {
+    return view('Guild.Top');
+})->name('show_guild');

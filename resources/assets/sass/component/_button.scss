@@ -12,6 +12,13 @@
     border-radius: 3px;
     color: #fff;
   }
+
+  &.mod-red {
+    background: linear-gradient(180deg, #E43F46 0%, #A12B30 100%);
+    border: 3px solid #C39300;
+    border-radius: 3px;
+    color: #fff;
+  }
 }
 
 .btn-wrap{

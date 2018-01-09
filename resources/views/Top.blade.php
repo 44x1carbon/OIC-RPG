@@ -14,7 +14,7 @@
         </div>
         <ul class="rpg-top-menu-list">
             <li class="rpg-top-menu-item">
-                <a href="#" class="rpg-top-menu-link guild">
+                <a href="{{ route('show_guild') }}" class="rpg-top-menu-link guild">
                     <div class="menu__name">
                         ギルド
                     </div>
