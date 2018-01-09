@@ -41,3 +41,10 @@
     transform: rotateZ(45deg) scaleY(0.8);
   }
 }
+
+.btn-next {
+  position: absolute;
+  bottom: 0;
+  color: white;
+  background: linear-gradient(180deg, #10A8FF 45.86%, #0E3D58 100%);
+}
