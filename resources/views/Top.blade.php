@@ -21,7 +21,7 @@
                 </a>
             </li>
             <li class="rpg-top-menu-item">
-                <a href="#" class="rpg-top-menu-link status">
+                <a href="{{ route('my_page') }}" class="rpg-top-menu-link status">
                     <div class="menu__name">
                         ステータス
                     </div>
