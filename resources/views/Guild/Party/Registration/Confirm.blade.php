@@ -1,7 +1,7 @@
 @extends('Shared._DefaultLayout')
 
 @section('header_title')
-    Confirm
+    パーティー登録
 @endsection
 
 @section('content')
