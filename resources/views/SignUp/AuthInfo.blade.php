@@ -33,7 +33,7 @@
                         <p class="error form-error">※{{ $message }}</p>
                     @endforeach
                 </div><!-- item -->
-                <div class="btn-wrap row flex-end-side flex-end-length">
+                <div class="btn-wrap row flex-end-side flex-end-length mt-auto">
                     <button class="btn btn-next" type="submit">次へ</button>
                 </div>
             </form>

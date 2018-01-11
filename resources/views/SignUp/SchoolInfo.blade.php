@@ -15,7 +15,7 @@
             <h2 class="entry-title">ギルドメンバー登録</h2>
         </div><!-- main-heading -->
         <div class="entry-body body-color">
-            <form class="form" action="{{ route('do_sign_up_school_info') }}" method="post">
+            <form class="form entry-form" action="{{ route('do_sign_up_school_info') }}" method="post">
                 {{ csrf_field() }}
                 <div class="item form-item">
                     <h3 class="form-item-title">学籍番号</h3>
@@ -24,10 +24,9 @@
                         <p class="error form-error">※{{ $message }}</p>
                     @endforeach
                 </div>
-
                 <div class="item form-item">
                     <h3 class="form-item-title">コース</h3>
-                    <select name="course_id"><!-- コース -->
+                    <select name="course_id" class="input"><!-- コース -->
                         @foreach($courses as $course)
                             <option value="{{ $course->id() }}">{{ $course->courseName() }}</option>
                         @endforeach
@@ -36,10 +35,9 @@
                         <p class="error form-error">※{{ $message }}</p>
                     @endforeach
                 </div>
-                <div class="btn-wrap row flex-end-length flex-center-length">
+                <div class="btn-wrap row flex-end-length flex-center-length mt-auto">
                     <button class="btn btn-register" type="submit">登録</button>
                 </div>
-
                 {{-- 全データを一度に送るためにセッションから持ってくる --}}
                 <input type="hidden" name="name" value="{{ $session['name'] }}">
                 <input type="hidden" name="mail_address" value="{{ $session['mail_address'] }}">

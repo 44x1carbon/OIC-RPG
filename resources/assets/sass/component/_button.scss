@@ -26,7 +26,6 @@
 
 .btn-gloss {
   box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.6) inset;
-
   &:after {
     content: "";
     display: block;
@@ -43,8 +42,11 @@
 }
 
 .btn-next {
-  position: absolute;
-  bottom: 0;
   color: white;
   background: linear-gradient(180deg, #10A8FF 45.86%, #0E3D58 100%);
+}
+
+.btn-register {
+  color: white;
+  background: linear-gradient(180deg, #F2994A 45.86%, #EB5757 100%);
 }
