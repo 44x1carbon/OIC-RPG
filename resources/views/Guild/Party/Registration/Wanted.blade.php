@@ -1,7 +1,7 @@
 @extends('Shared._DefaultLayout')
 
 @section('header_title')
-    Wanted
+    パーティー登録
 @endsection
 
 @section('content')
@@ -40,7 +40,7 @@
                     </div><!-- item -->
                     <div class="item form-item">
                         <h4 class="form-item-title">人数</h4>
-                        <input type="number" class="input input-large" name="party[wantedRoleList][{{$index}}][frameAmount]" value="{{ $wantedRole->frameAmount() }}><!--　人数 -->
+                        <input type="number" class="input input-large" name="party[wantedRoleList][{{$index}}][frameAmount]" value="{{ $wantedRole->frameAmount() }}"><!--　人数 -->
                         <p>※自分も含む人数を記載してください</p>
                         @foreach($errors->get("party.wantedRoleList.$index.frameAmount") as $message)
                             <p>{{ $message }}</p>
@@ -48,7 +48,7 @@
                     </div><!-- item -->
                     <div class="item form-item">
                         <h4 class="form-item-title">備考</h4>
-                        <input type="textarea" class="input" name="party[wantedRoleList][{{$index}}][remarks]" value="{{ $wantedRole->remarks() }}><!-- 備考 -->
+                        <input type="textarea" class="input" name="party[wantedRoleList][{{$index}}][remarks]" value="{{ $wantedRole->remarks() }}"><!-- 備考 -->
                         @foreach($errors->get("party.wantedRoleList.$index.remarks") as $message)
                             <p>{{ $message }}</p>
                         @endforeach
