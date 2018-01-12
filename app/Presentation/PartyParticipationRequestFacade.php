@@ -8,13 +8,11 @@
 
 namespace App\Presentation;
 
-
 use App\ApplicationService\PartyAppService;
 use App\ApplicationService\PartyParticipationRequestAppService;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 use App\Domain\PartyParticipationRequest\ValueObjects\Reply;
-use \DateTime;
 
 class PartyParticipationRequestFacade
 {
@@ -44,13 +42,12 @@ class PartyParticipationRequestFacade
 
     // パーティ参加申請に返信
     public function replyPartyParticipationRequest(
-        string $partyId,
+        string $partyParticipationRequestId,
         string $partyManagerId,
-        string $guildMemberId,
         string $replyStatus
     )
     {
-        $partyParticipationRequest = $this->partyParticipationRequestRepo->findByPartyIdAndStudentNumber($partyId, new StudentNumber($guildMemberId));
+        $partyParticipationRequest = $this->partyParticipationRequestRepo->findById($partyParticipationRequestId);
         return $this->partyAppService->replyPartyParticipationRequest($partyParticipationRequest->id(), new StudentNumber($partyManagerId), new Reply($replyStatus));
     }
 

@@ -3,7 +3,6 @@
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 use App\Presentation\PartyParticipationRequestFacade;
-use Tests\Sampler;
 
 /**
  * Created by PhpStorm.
@@ -39,9 +38,9 @@ class ReplyPartyParticipationRequestTest extends \Tests\TestCase
     {
         $this->party->addWantedFrame('1', 1);
         $this->partyRepository->save($this->party);
-        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party->id(), "1", "B4999");
+        $partyParticipationRequestId = $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party->id(), "1", "B4999");
 
-        $replyPartyParticipationRequestId = $this->partyParticipationRequestFacade->replyPartyParticipationRequest($this->party->id(), $this->party->partyManagerId()->code(), "B4999", "permit");
+        $replyPartyParticipationRequestId = $this->partyParticipationRequestFacade->replyPartyParticipationRequest($partyParticipationRequestId, $this->party->partyManagerId()->code(), "permit");
         $partyParticipationRequest = $this->partyParticipationRequestRepository->findById($replyPartyParticipationRequestId);
 
         $newParty = $this->partyRepository->findById($this->party->id());
@@ -59,9 +58,9 @@ class ReplyPartyParticipationRequestTest extends \Tests\TestCase
     {
         $this->party->addWantedFrame('1', 1);
         $this->partyRepository->save($this->party);
-        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party->id(), "1", "B4999");
+        $partyParticipationRequestId = $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party->id(), "1", "B4999");
 
-        $replyPartyParticipationRequestId = $this->partyParticipationRequestFacade->replyPartyParticipationRequest($this->party->id(), $this->party->partyManagerId()->code(), "B4999", "rejection");
+        $replyPartyParticipationRequestId = $this->partyParticipationRequestFacade->replyPartyParticipationRequest($partyParticipationRequestId, $this->party->partyManagerId()->code(), "rejection");
         $partyParticipationRequest = $this->partyParticipationRequestRepository->findById($replyPartyParticipationRequestId);
 
         $newParty = $this->partyRepository->findById($this->party->id());
@@ -81,8 +80,8 @@ class ReplyPartyParticipationRequestTest extends \Tests\TestCase
      */
     public function testManagerIdFail()
     {
-        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party->id(),"abcd", "B4999");
+        $replyPartyParticipationRequestId = $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party->id(),"abcd", "B4999");
 
-        $this->partyParticipationRequestFacade->replyPartyParticipationRequest($this->party->id(), "B5000","B4999","permit");
+        $this->partyParticipationRequestFacade->replyPartyParticipationRequest($replyPartyParticipationRequestId, "B5000","permit");
     }
 }
