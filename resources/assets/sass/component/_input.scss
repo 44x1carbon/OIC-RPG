@@ -11,6 +11,7 @@ input:focus::-moz-placeholder {
 } 
 
 .radio-name{
+  font-size: 15px;
   color:white;
 }
 
@@ -23,6 +24,7 @@ input:focus::-moz-placeholder {
 .input{
   width: 100%;
   height: 30px;
+  font-size: 12px;
   border: solid 1px;
   border-radius: 7px;
   text-indent: 6px;
@@ -33,7 +35,7 @@ input:focus::-moz-placeholder {
 }
 
 .textarea {
-  height: 100px;
+  height: 70px;
   padding: 6px 3px;
 }
 
