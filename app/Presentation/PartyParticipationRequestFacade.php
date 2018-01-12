@@ -36,12 +36,10 @@ class PartyParticipationRequestFacade
     public function sendPartyParticipationRequest(
         string $partyId,
         string $wantedRoleId,
-        string $guildMemberIdData,
-        string $applicationAtData = null,
-        string $reply = null
+        string $guildMemberIdData
     )
     {
-        return $this->partyAppService->sendPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData), $applicationAtData ? new DateTime($applicationAtData) : null, $reply ? new Reply($reply) : null);
+        return $this->partyAppService->sendPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData));
     }
 
     // パーティ参加申請に返信

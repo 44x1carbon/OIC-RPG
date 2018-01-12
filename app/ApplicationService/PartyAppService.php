@@ -62,20 +62,15 @@ class PartyAppService
     public function sendPartyParticipationRequest(
         string $partyId,
         string $wantedRoleId,
-        StudentNumber $guildMemberId,
-        DateTime $applicationAtData = null,
-        Reply $reply = null
+        StudentNumber $guildMemberId
     )
     {
         $partyParticipationRequestId = $this->partyParticipationRequestRepository->nextId();
-        $applicationAt = $applicationAtData ? new DateTime($applicationAtData) : null;
         $partyParticipationRequest = new PartyParticipationRequest(
                                             $partyParticipationRequestId,
                                             $partyId,
                                             $wantedRoleId,
-                                            $guildMemberId,
-                                            $applicationAt ?? null,
-                                            $reply ?? null
+                                            $guildMemberId
                                         );
 
         $this->partyParticipationRequestRepository->save($partyParticipationRequest);
