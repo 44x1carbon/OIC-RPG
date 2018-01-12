@@ -16,16 +16,15 @@ class ProductionTypeFactory
         $this->productionTypeRepository = $productionTypeRepository;
     }
 
-    public function createProductionType(string $productionTypeName, ProductionTypeId $productionTypeId = null):ProductionType
+    public function createProductionType(string $productionTypeName, string $productionTypeId = null):ProductionType
     {
         return new ProductionType($productionTypeId ?? $this->makeId(), $productionTypeName);
     }
 
-    public function makeId(): ProductionTypeId
+    public function makeId(): string
     {
         do {
-            $code = RandomStringGenerator::makeLowerCase(2);
-            $id = new ProductionTypeId($code);
+            $id = RandomStringGenerator::makeLowerCase(2);
         } while($this->productionTypeRepository->findById($id));
 
         return $id;

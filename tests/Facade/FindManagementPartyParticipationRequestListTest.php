@@ -16,8 +16,6 @@ use Tests\Sampler;
  */
 class FindManagementPartyParticipationRequestListTest extends \Tests\TestCase
 {
-    use Sampler;
-
     /* @var PartyParticipationRequestFacade $partyParticipationRequestFacade */
     protected $partyParticipationRequestFacade;
     /* @var PartyRepositoryInterface $partyRepository */
@@ -41,11 +39,11 @@ class FindManagementPartyParticipationRequestListTest extends \Tests\TestCase
         $this->party3 = $this->sampleParty(['partyManagerId' => "B4000"]);
         $this->partyRepository->save($this->party3);
 
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party1->id(),"abcd", "B4991");
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party1->id(),"abcd", "B4992");
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party2->id(),"abcd", "B4993");
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party3->id(),"abcd", "B4994");
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest($this->party3->id(),"abcd", "B4995");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party1->id(),"abcd", "B4991");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party1->id(),"abcd", "B4992");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party2->id(),"abcd", "B4993");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party3->id(),"abcd", "B4994");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest($this->party3->id(),"abcd", "B4995");
     }
 
     public function testSuccess()
@@ -53,7 +51,7 @@ class FindManagementPartyParticipationRequestListTest extends \Tests\TestCase
         $findManagementPartyParticipationRequestList = $this->partyParticipationRequestFacade->findManagementPartyParticipationRequestList("B4000");
 
         // パーティIDをキーとして保存されているパーティ参加申請のリストが正しいものが取得できているか
-        $this->assertTrue($findManagementPartyParticipationRequestList[$this->party2->id()][0]->guildMemberId()->code() === "B4993");
+        $this->assertTrue($findManagementPartyParticipationRequestList[2]->guildMemberId()->code() === "B4993");
 
         // 存在しない場合空の配列が返ってくるのを確認
         $this->assertTrue($this->partyParticipationRequestFacade->findManagementPartyParticipationRequestList("B4444") === []);

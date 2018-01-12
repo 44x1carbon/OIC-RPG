@@ -2,23 +2,36 @@
 
 namespace App\Presentation\DTO;
 
+use App\Domain\Job\JobRepositoryInterface;
+use Illuminate\Contracts\Support\Arrayable;
+
 class WantedRoleDto
 {
     // 募集役割名
-    private $roleName;
+    public $roleName;
     // 備考
-    private $remarks;
+    public $remarks;
     // 参考ジョブID
-    private $referenceJobId;
+    public $referenceJobId;
+    // 参考ジョブ名
+    public $referenceJobName;
     // 枠数
-    private $frameAmount;
+    public $frameAmount;
 
-    function __construct(string $roleName, string $remarks, string $referenceJobId, int $frameAmount)
+    public $managerAssigned;
+
+    function __construct(string $roleName = null, string $remarks = null, string $referenceJobId = null, int $frameAmount = null, bool $managerAssigned = false)
     {
+        $jobRepo = app(JobRepositoryInterface::class);
+        $referenceJob = null;
+        if(!is_null($referenceJobId)) $referenceJob = $jobRepo->findById($referenceJobId);
+
         $this->roleName = $roleName;
         $this->remarks = $remarks;
         $this->referenceJobId = $referenceJobId;
         $this->frameAmount = $frameAmount;
+        $this->referenceJobName = null_safety($referenceJob, function($job) { return $job->jobName(); });
+        $this->managerAssigned = $managerAssigned;
     }
 
     /**
@@ -26,7 +39,7 @@ class WantedRoleDto
      */
     public function roleName(): string
     {
-        return $this->roleName;
+        return $this->roleName ?? '';
     }
 
     /**
@@ -34,7 +47,7 @@ class WantedRoleDto
      */
     public function remarks(): string
     {
-        return $this->remarks;
+        return $this->remarks ?? '';
     }
 
     /**
@@ -42,7 +55,7 @@ class WantedRoleDto
      */
     public function referenceJobId(): string
     {
-        return $this->referenceJobId;
+        return $this->referenceJobId ?? '';
     }
 
     /**
@@ -50,6 +63,16 @@ class WantedRoleDto
      */
     public function frameAmount(): int
     {
-        return $this->frameAmount;
+        return $this->frameAmount ?? 0;
     }
+
+    /**
+     * @return bool
+     */
+    public function managerAssigned(): bool
+    {
+        return $this->managerAssigned ?? false;
+    }
+
+
 }

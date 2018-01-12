@@ -56,13 +56,27 @@ class PartyParticipationRequestEloquentRepositoryImpl implements PartyParticipat
     }
 
     /**
+     * 渡したPartyIdとwantedRoleIdを元にパーティ参加申請を取得
+     *
+     * @param string $partyId
+     * @param string $wantedRoleId
+     * @return PartyParticipationRequest|null
+     */
+    public function findByPartyIdAndWantedRoleId(string $partyId, string $wantedRoleId): ?PartyParticipationRequest
+    {
+        return null_safety($this->eloquent->where('party_id', $partyId)->where('wanted_role_id', $wantedRoleId)->first(), function(PartyParticipationRequestEloquent $model) {
+            return $model->toEntity();
+        });
+    }
+
+    /**
      * 渡したPartyIdとStudentNumberを元にParty参加申請を取得
      *
      * @param string $partyId
      * @param StudentNumber $studentNumber
-     * @return PartyParticipationRequest
+     * @return PartyParticipationRequest|null
      */
-    public function findByPartyIdAndStudentNumber(string $partyId, StudentNumber $studentNumber): PartyParticipationRequest
+    public function findByPartyIdAndStudentNumber(string $partyId, StudentNumber $studentNumber): ?PartyParticipationRequest
     {
         return null_safety($this->eloquent->where('party_id', $partyId)->where('guild_member_id', $studentNumber->code())->first(), function(PartyParticipationRequestEloquent $model) {
             return $model->toEntity();

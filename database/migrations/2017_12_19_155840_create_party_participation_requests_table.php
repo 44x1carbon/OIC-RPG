@@ -19,7 +19,7 @@ class CreatePartyParticipationRequestsTable extends Migration
             $table->string('party_id');
             $table->string('wanted_role_id');
             $table->string('guild_member_id');
-            $table->date('application_date');
+            $table->date('application_at');
             $table->string('reply')->nullable();
             $table->timestamps();
         });

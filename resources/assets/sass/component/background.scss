@@ -1,0 +1,38 @@
+.background{
+    //position: relative;
+    //width: 375px;
+    //height: 567px; 
+
+    //@import './hoge.scss';
+}
+
+.background .layer-map{
+    background-image: imgUrl("back.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.background .layer-chara{
+    background-image: imgUrl("back.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}    
+.background .layer-filter{
+    background-color: rgba(75, 45, 7, 0.6);
+}
+.background .layer{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 577px;
+    position: absolute;
+}
+.background .layer-z1{
+    z-index: 0;
+}
+.background .layer-z2{
+    z-index: 1;
+}
+.background .layer-z3{
+    z-index: 2;
+}
+

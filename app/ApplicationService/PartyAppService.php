@@ -5,6 +5,7 @@ namespace App\ApplicationService;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Party;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
+use App\Domain\Party\Spec\PartySpec;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
 use App\Domain\PartyParticipationRequest\PartyParticipationRequest;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
@@ -15,20 +16,19 @@ class PartyAppService
 {
     protected $partyRepository;
     protected $partyParticipationRequestRepository;
+    protected $partyMemberAppService;
 
-    function __construct(PartyRepositoryInterface $partyRepository, PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository)
+    function __construct(PartyRepositoryInterface $partyRepository, PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository, PartyMemberAppService $partyMemberAppService)
     {
         $this->partyRepository = $partyRepository;
         $this->partyParticipationRequestRepository = $partyParticipationRequestRepository;
+        $this->partyMemberAppService = $partyMemberAppService;
     }
 
-    public function registerParty(ActivityEndDate $activityEndDate, StudentNumber $managerId, string $roleName): string
+    public function registerParty(ActivityEndDate $activityEndDate, StudentNumber $managerId): string
     {
         $partyId = $this->partyRepository->nextId();
         $party = new Party($partyId, $activityEndDate, $managerId);
-        $wantedRoleId = $party->addWantedRole($roleName);
-        $party->addWantedFrame($wantedRoleId, 1);
-        $party->assignMember($wantedRoleId, $managerId);
 
         $this->partyRepository->save($party);
 
@@ -45,7 +45,7 @@ class PartyAppService
         return $party->id();
     }
 
-    public function addWantedRole(string $partyId, string $roleName, string $jobId = null, string $remarks = null, int $frameAmount)
+    public function addWantedRole(string $partyId, string $roleName, string $jobId = null, string $remarks = null, int $frameAmount): string
     {
         $party = $this->partyRepository->findById($partyId);
         $wantedRoleId = $party->addWantedRole($roleName, $jobId, $remarks);
@@ -53,27 +53,36 @@ class PartyAppService
 
         $this->partyRepository->save($party);
 
-        return $party->id();
+        return $wantedRoleId;
+    }
+
+    public function searchParty(string $keyword): array
+    {
+        $allParty = $this->partyRepository->all();
+        $releasedParty = array_filter($allParty, function(Party $party) {
+            //return $party->released();
+            return true;
+        });
+        $matchedParty = array_filter($releasedParty, function(Party $party) use($keyword){
+            return PartySpec::isKeywordMatch($party, $keyword);
+        });
+
+        return array_values($matchedParty);
     }
 
     /** パーティ参加申請 */
-    public function registerPartyParticipationRequest(
+    public function sendPartyParticipationRequest(
         string $partyId,
         string $wantedRoleId,
-        StudentNumber $guildMemberId,
-        DateTime $applicationDateData = null,
-        Reply $reply = null
+        StudentNumber $guildMemberId
     )
     {
         $partyParticipationRequestId = $this->partyParticipationRequestRepository->nextId();
-        $applicationDate = $applicationDateData ? new DateTime($applicationDateData) : null;
         $partyParticipationRequest = new PartyParticipationRequest(
                                             $partyParticipationRequestId,
                                             $partyId,
                                             $wantedRoleId,
-                                            $guildMemberId,
-                                            $applicationDate ?? null,
-                                            $reply ?? null
+                                            $guildMemberId
                                         );
 
         $this->partyParticipationRequestRepository->save($partyParticipationRequest);
@@ -81,14 +90,18 @@ class PartyAppService
         return $partyParticipationRequest->id();
     }
 
-    public function replyPartyParticipationRequest(string $partyId, StudentNumber $partyManagerId, StudentNumber $guildMemberId, Reply $reply)
+    public function replyPartyParticipationRequest(string $partyParticipationRequestId, StudentNumber $partyManagerId, Reply $reply)
     {
-        $party = $this->partyRepository->findById($partyId);
-        if (!$party->partyManagerId()->equals($partyManagerId)) throw new \Exception('[ApplicationService] Party Participation Request Reply Error');
+        $partyParticipationRequest = $this->partyParticipationRequestRepository->findById($partyParticipationRequestId);
+        $party = $this->partyRepository->findById($partyParticipationRequest->partyId());
 
-        $partyParticipationRequest = $this->partyParticipationRequestRepository->findByPartyIdAndStudentNumber($partyId, $guildMemberId);
-        $partyParticipationRequest->setReply($reply);
+        if (!$party->isPartyManagerId($partyManagerId)) throw new \Exception('[ApplicationService] Party Participation Request Reply Error');
+
+        $partyParticipationRequest->returnReply($reply);
         $this->partyParticipationRequestRepository->save($partyParticipationRequest);
+
+        // パーティ参加申請への返答が許可だった場合はパーティにメンバーをassign
+        if ($reply->isPermit()) $this->partyMemberAppService->assignPartyMember($partyParticipationRequest->partyId(), $partyParticipationRequest->wantedRoleId(), $partyManagerId, $partyParticipationRequest->guildMemberId());
 
         return $partyParticipationRequest->id();
     }

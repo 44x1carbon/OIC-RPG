@@ -21,8 +21,6 @@ use Tests\TestCase;
 
 class PartyWrittenRequestTest extends TestCase
 {
-    use Sampler;
-
     protected $partyWrittenRequestRepository;
     protected $partyWrittenRequestFactory;
 

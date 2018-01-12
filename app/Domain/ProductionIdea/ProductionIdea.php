@@ -49,6 +49,12 @@ class ProductionIdea
         return $this->productionTypeId;
     }
 
+    public function productionType(): ProductionType
+    {
+        $productionTypeRepo = app(ProductionTypeRepositoryInterface::class);
+        return $productionTypeRepo->findById($this->productionTypeId);
+    }
+
     public function ideaDescription(): ?string
     {
         return $this->ideaDescription;

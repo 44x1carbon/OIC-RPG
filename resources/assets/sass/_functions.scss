@@ -1,0 +1,5 @@
+@import "variables";
+
+@function imgUrl($file-name) {
+  @return url($image-base-path + $file-name)
+}

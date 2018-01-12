@@ -14,6 +14,7 @@ use App\Domain\PossessionSkill\Service\PossessionSkillDomainService;
 use App\Domain\Skill\Factory\SkillFactory;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Domain\Skill\Skill;
+use Tests\SampleGuildMember;
 
 /**
  * Created by PhpStorm.
@@ -46,7 +47,6 @@ class PossessionSkillApplicationServiceTest extends \Tests\TestCase
 
         $this->studentNumber = new StudentNumber('B4300');
         $studentName = '新原佑亮';
-        $course = new Course('1','ITスペシャリスト');
         $gender = new Gender('male');
         $mailAddress = new MailAddress('b4000@oic.jp');
         $possessionSkills = [];
@@ -55,8 +55,14 @@ class PossessionSkillApplicationServiceTest extends \Tests\TestCase
         $possessionSkills[] = $possessionSkill;
         $possessionSkillCollection = new PossessionSkillCollection($possessionSkills);
 
-        $guildMemberFactory = new GuildMemberFactory();
-        $guildMember = $guildMemberFactory->createGuildMember($this->studentNumber, $studentName, $course, $gender, $mailAddress, $possessionSkillCollection);
+        $guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $this->studentNumber,
+            SampleGuildMember::studentName => $studentName,
+            SampleGuildMember::gender => $gender,
+            SampleGuildMember::mailAddress => $mailAddress,
+            SampleGuildMember::possessionSkills => $possessionSkillCollection,
+        ]);
+
         $this->guildMemberRepo->save($guildMember);
     }
 

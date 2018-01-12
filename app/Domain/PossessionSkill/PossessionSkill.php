@@ -90,4 +90,13 @@ class PossessionSkill
 
         return $afterPossessionSkill;
     }
+
+    /**
+     * レベルアップに必要な残りの経験値量
+     * @return int
+     */
+    public function remainingExp(): int
+    {
+        return self::LEVEL_UP_INTERVAL - $this->totalExp % self::LEVEL_UP_INTERVAL;
+    }
 }

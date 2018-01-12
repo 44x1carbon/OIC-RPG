@@ -29,6 +29,7 @@ class AuthData extends \App\User
         $user = self::where([
             'email' => $info->address()->address()
         ])->firstOrFail();
+
         if(!Hash::check($info->password()->password(), $user->password)) throw new NotFoundResourceException();
         return $user;
     }

@@ -41,7 +41,7 @@ class PartyParticipationRequestEloquent extends Model
         $this->party_id = $partyParticipationRequest->partyId();
         $this->wanted_role_id = $partyParticipationRequest->wantedRoleId();
         $this->guild_member_id = $partyParticipationRequest->guildMemberId()->code();
-        $this->application_date = $partyParticipationRequest->applicationDate();
+        $this->application_at = $partyParticipationRequest->applicationAt();
         $this->reply = null_safety($partyParticipationRequest->reply(), function(Reply $reply) {
             return $reply->status();
         });
@@ -56,7 +56,7 @@ class PartyParticipationRequestEloquent extends Model
             $this->party_id,
             $this->wanted_role_id,
             new StudentNumber($this->guild_member_id),
-            new DateTime($this->application_date),
+            new DateTime($this->application_at),
             null_safety($this->reply, function($reply) {
                 return new Reply($reply);
             })

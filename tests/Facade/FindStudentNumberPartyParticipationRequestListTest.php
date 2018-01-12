@@ -16,8 +16,6 @@ use Tests\TestCase;
  */
 class FindStudentNumberPartyParticipationRequestListTest extends TestCase
 {
-    use Sampler;
-
     /* @var PartyParticipationRequestFacade $partyParticipationRequestFacade */
     protected $partyParticipationRequestFacade;
 
@@ -27,11 +25,11 @@ class FindStudentNumberPartyParticipationRequestListTest extends TestCase
 
         $this->partyParticipationRequestFacade = app(PartyParticipationRequestFacade::class);
 
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest("abcd1","w1", "B4999");
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest("abcd2","w2", "B4999");
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest("abcd3","w3", "B4999");
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest("abcd4","w4", "B4000");
-        $this->partyParticipationRequestFacade->registerPartyParticipationRequest("abcd1","w5", "B4999");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest("abcd1","w1", "B4999");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest("abcd2","w2", "B4999");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest("abcd3","w3", "B4999");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest("abcd4","w4", "B4000");
+        $this->partyParticipationRequestFacade->sendPartyParticipationRequest("abcd1","w5", "B4999");
     }
 
     public function testSuccess()

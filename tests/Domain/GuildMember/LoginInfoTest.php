@@ -1,15 +1,12 @@
 <?php
 
-use App\Domain\Course\Course;
-use App\Domain\GuildMember\Factory\GuildMemberFactory;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
-use App\Domain\GuildMember\Spec\GuildMemberSpec;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\PassWord;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
-use Tests\Sampler;
+use Tests\SampleGuildMember;
 
 /**
  * Created by PhpStorm.
@@ -20,8 +17,6 @@ use Tests\Sampler;
 
 class LoginInfoTest extends \Tests\TestCase
 {
-    use Sampler;
-
     /* @var GuildMemberRepositoryInterface $repo */
     protected $repo;
 
@@ -31,7 +26,19 @@ class LoginInfoTest extends \Tests\TestCase
 
         $this->repo = app(GuildMemberRepositoryInterface::class);
 
-        $guildMember = $this->sampleGuildMember(['studentNumber' => 'B4000', 'mailAddress' => 'B4000@oic.jp', 'password' => 'Abcdefg1']);
+        $studentNumber = new StudentNumber('B4000');
+        $studentName = '新原佑亮';
+        $gender = new Gender('male');
+        $mailAddress = new MailAddress('B4000@oic.jp');
+        $password = new PassWord('Abcdefg1');
+        $guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $studentNumber,
+            SampleGuildMember::studentName => $studentName,
+            SampleGuildMember::gender => $gender,
+            SampleGuildMember::mailAddress => $mailAddress,
+            SampleGuildMember::password => $password,
+        ]);
+
         $this->repo->save($guildMember);
     }
 
@@ -47,7 +54,7 @@ class LoginInfoTest extends \Tests\TestCase
 
     function testFail()
     {
-        $mailAddress = new MailAddress('b3000@oic.jp');
+        $mailAddress = new MailAddress('B3000@oic.jp');
         $passWord = new PassWord('Abcdefg1');
         $loginInfo = new LoginInfo($mailAddress, $passWord);
         $this->assertTrue($this->repo->findByLoginInfo($loginInfo) == null);

@@ -16,11 +16,9 @@ use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
-use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
-use App\Domain\PossessionSkill\PossessionSkillCollection;
-use App\Domain\Skill\Factory\SkillFactory;
-use App\Domain\Skill\Skill;
+use Tests\SampleGuildMember;
 use Tests\TestCase;
+use App\Domain\PossessionSkill\PossessionSkillCollection;
 
 class GuildMemberRepositoryTest extends TestCase
 {
@@ -54,16 +52,16 @@ class GuildMemberRepositoryTest extends TestCase
     {
         $studentNumber = new StudentNumber('B4000');
         $studentName = '新原佑亮';
-        $course = new Course('1', 'ITスペシャリスト');
         $gender = new Gender('male');
         $mailAddress = new MailAddress('b4000@oic.jp');
-        $guildMemberFactory = new GuildMemberFactory();
-        $possessionSkills = [];
-        $possessionSkillFactory = new PossessionSkillFactory();
-        $possessionSkill = $possessionSkillFactory->createPossessionSkill($this->skill->skillId(), $studentNumber);
-        $possessionSkills[] = $possessionSkill;
-        $possessionSkillCollection = new PossessionSkillCollection($possessionSkills);
-        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress, $possessionSkillCollection);
+
+        $guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $studentNumber,
+            SampleGuildMember::studentName => $studentName,
+            SampleGuildMember::gender => $gender,
+            SampleGuildMember::mailAddress => $mailAddress,
+        ]);
+
         $this->repo->save($guildMember);
         $this->assertTrue(true);
     }
@@ -72,36 +70,33 @@ class GuildMemberRepositoryTest extends TestCase
     {
         $studentNumber = new StudentNumber('B4001');
         $studentName = 'やまごん';
-        $course = new Course('2', '映像コース');
         $gender = new Gender('female');
         $mailAddress = new MailAddress('b4001@oic.jp');
-        $guildMemberFactory = new GuildMemberFactory();
-        $possessionSkills = [];
-        $possessionSkillFactory = new PossessionSkillFactory();
-        $possessionSkill = $possessionSkillFactory->createPossessionSkill($this->skill->skillId(), $studentNumber);
-        $possessionSkills[] = $possessionSkill;
-        $possessionSkillCollection = new PossessionSkillCollection($possessionSkills);
-        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress, $possessionSkillCollection);
+        $guildMember = $guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $studentNumber,
+            SampleGuildMember::studentName => $studentName,
+            SampleGuildMember::gender => $gender,
+            SampleGuildMember::mailAddress => $mailAddress,
+        ]);
         $this->repo->save($guildMember);
 
 
         $studentNumber2 = new StudentNumber('B4002');
         $studentName2 = 'よっしー';
-        $course2 = new Course('3', 'ほげほげコース');
         $gender2 = new Gender('male');
         $mailAddress2 = new MailAddress('b4002@oic.jp');
-        $guildMemberFactory2 = new GuildMemberFactory();
-        $possessionSkills2 = [];
-        $possessionSkill2 = $possessionSkillFactory->createPossessionSkill($this->skill->skillId(), $studentNumber2);
-        $possessionSkills2[] = $possessionSkill2;
-        $possessionSkillCollection2 = new PossessionSkillCollection($possessionSkills2);
-        $guildMember2 = $guildMemberFactory2->createGuildMember($studentNumber2, $studentName2, $course2, $gender2, $mailAddress2, $possessionSkillCollection2);
+        $guildMember2 = $guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $studentNumber2,
+            SampleGuildMember::studentName => $studentName2,
+            SampleGuildMember::gender => $gender2,
+            SampleGuildMember::mailAddress => $mailAddress2,
+        ]);
         $this->repo->save($guildMember2);
 
-        $findGuildMember = $this->repo->findByStudentNumber($studentNumber);
+        $findGuildMember = $this->repo->findByStudentNumber($guildMember->studentNumber());
         //dd($findGuildMember);
-        $result = $findGuildMember->studentNumber() == $studentNumber && $findGuildMember->studentName() == $studentName &&
-            $findGuildMember->course() == $course && $findGuildMember->gender() == $gender && $findGuildMember->mailAddress() == $mailAddress;
+        $result = $findGuildMember->studentNumber() == $guildMember->studentNumber() && $findGuildMember->studentName() == $guildMember->studentName() &&
+            $findGuildMember->course() == $guildMember->course() && $findGuildMember->gender() == $guildMember->gender() && $findGuildMember->mailAddress() == $guildMember->mailAddress();
         $this->assertTrue($result);
     }
 
@@ -109,21 +104,19 @@ class GuildMemberRepositoryTest extends TestCase
     {
         $studentNumber = new StudentNumber('B5000');
         $studentName = 'くさかべ';
-        $course = new Course('1', 'ITスペシャリスト');
         $gender = new Gender('female');
         $mailAddress = new MailAddress('b5000@oic.jp');
-        $possessionSkills = [];
-        $possessionSkillFactory = new PossessionSkillFactory();
-        $possessionSkill = $possessionSkillFactory->createPossessionSkill($this->skill->skillId(), $studentNumber);
-        $possessionSkills[] = $possessionSkill;
-        $possessionSkillCollection = new PossessionSkillCollection($possessionSkills);
-        $guildMemberFactory = new GuildMemberFactory();
-        $guildMember = $guildMemberFactory->createGuildMember($studentNumber, $studentName, $course, $gender, $mailAddress, $possessionSkillCollection);
+        $guildMember = $guildMember = $this->sampleGuildMember([
+            SampleGuildMember::studentNumber => $studentNumber,
+            SampleGuildMember::studentName => $studentName,
+            SampleGuildMember::gender => $gender,
+            SampleGuildMember::mailAddress => $mailAddress,
+        ]);
         $this->repo->save($guildMember);
 
-        $findGuildMember = $this->repo->findByStudentNumber($studentNumber);
+        $findGuildMember = $this->repo->findByStudentNumber($guildMember->studentNumber());
         $this->repo->delete($guildMember);
-        $findDeleteGuildMember = $this->repo->findByStudentNumber($studentNumber);
+        $findDeleteGuildMember = $this->repo->findByStudentNumber($guildMember->studentNumber());
 
         // DBから取得できたIDが削除して取れなくなってnullを返していることをチェック
         $this->assertTrue(isset($findGuildMember)&&is_null($findDeleteGuildMember));
