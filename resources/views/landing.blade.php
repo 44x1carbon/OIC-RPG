@@ -11,8 +11,8 @@
     </div><!-- background -->
     <div class="landing layer3">
         <div class="btn-wrap column flex-center">
-          <a class="btn btn-large mod-blue marginb">ログイン</a>
-          <a class="btn btn-large mod-green">新規登録</a>
+          <a class="btn btn-large mod-blue marginb" href="{{ route('show_sign_in') }}">ログイン</a>
+          <a class="btn btn-large mod-green" href="{{ route('show_sign_up_auth_info') }}">新規登録</a>
         </div>
     </div>
 @endsection
