@@ -23,8 +23,6 @@ use Tests\TestCase;
 
 class PartyRepositoryTest extends TestCase
 {
-    use Sampler;
-
     /* @var PartyRepositoryInterface $partyRepository */
     protected $partyRepository;
     protected $partyFactory;
@@ -41,7 +39,7 @@ class PartyRepositoryTest extends TestCase
 
     function testSave()
     {
-        $party = $this->createPartyEntity("アイデア名", "説明", "abc");
+        $party = $this->sampleParty();
         $this->partyRepository->save($party);
         $findParty = $this->partyRepository->findById($party->id());
 
@@ -51,23 +49,13 @@ class PartyRepositoryTest extends TestCase
 
     function testFindById()
     {
-        $party = $this->createPartyEntity("アイデア名1", "説明1");
+        $party = $this->sampleParty();
         $this->partyRepository->save($party);
-        $party2 = $this->createPartyEntity("アイデア名2", "説明2");
+        $party2 = $this->sampleParty();
         $this->partyRepository->save($party2);
         $findParty = $this->partyRepository->findById($party->id());
-
-        $this->partyRepository->findById("hoge");
-        $this->assertTrue(true);
+        $this->assertTrue($findParty->activityEndDate() == $party->activityEndDate());
+        $this->assertTrue(is_null($this->partyRepository->findById("hoge")));
     }
 
-    // テスト用にパーティのEntityを作成してくれるメソッド
-    function createPartyEntity(String $ideaName, String $ideaDescription, String $id = null)
-    {
-        $activityEndDate = new ActivityEndDate('2019-11-11');
-        $partyManagerId = new StudentNumber("B1234");
-        $id = $this->partyRepository->nextId();
-        $party = new Party($id, $activityEndDate, $partyManagerId);
-        return $party;
-    }
 }

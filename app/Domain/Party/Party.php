@@ -82,6 +82,11 @@ class Party
         return $filterArr[0];
     }
 
+    public function isPartyManagerId(StudentNumber $partyManagerId)
+    {
+        return $this->partyManagerId->equals($partyManagerId);
+    }
+
     private function nextWantedRoleId(): string
     {
         return (string) (count($this->wantedRoles) + 1);
