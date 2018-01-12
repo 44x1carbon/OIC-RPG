@@ -36,7 +36,7 @@
                     @endforeach
                 </div>
                 <div class="btn-wrap row flex-end-length flex-center-length mt-auto">
-                    <button class="btn btn-register" type="submit">登録</button>
+                    <button class="btn mod-orange" type="submit">登録</button>
                 </div>
                 {{-- 全データを一度に送るためにセッションから持ってくる --}}
                 <input type="hidden" name="name" value="{{ $session['name'] }}">

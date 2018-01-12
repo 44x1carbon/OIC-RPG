@@ -12,5 +12,12 @@
         </main>
         @component('Shared._footer')
         @endcomponent
+        {{--<script>--}}
+            {{--document.body.onclick = function () {--}}
+                {{--console.log('hoge')--}}
+                {{--document.body.webkitRequestFullscreen();--}}
+            {{--}--}}
+            {{--document.body.click();--}}
+        {{--</script>--}}
     </body>
 </html>

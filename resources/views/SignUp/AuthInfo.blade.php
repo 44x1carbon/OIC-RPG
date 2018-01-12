@@ -34,7 +34,7 @@
                     @endforeach
                 </div><!-- item -->
                 <div class="btn-wrap row flex-end-side flex-end-length mt-auto">
-                    <button class="btn btn-next" type="submit">次へ</button>
+                    <button class="btn mod-blue" type="submit">次へ</button>
                 </div>
             </form>
             <!-- form -->

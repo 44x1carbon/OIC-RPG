@@ -7,6 +7,25 @@
   align-items: center;
   position: relative;
   font-size: 12px;
+
+  &.mod-orange {
+    background: linear-gradient(180deg, #F2994A 45.86%, #EB5757 100%);
+    border-radius: 3px;
+    color: #fff;
+  }
+
+  &.mod-red {
+    background: linear-gradient(180deg, #E43F46 0%, #A12B30 100%);
+    border: 3px solid #C39300;
+    border-radius: 3px;
+    color: #fff;
+  }
+
+  &.mod-blue {
+    color: white;
+    background: linear-gradient(180deg, #10A8FF 45.86%, #0E3D58 100%);
+    border-radius: 3px;
+  }
 }
 
 .btn-wrap{
@@ -40,14 +59,4 @@
     filter: blur(2px);
     transform: rotateZ(45deg) scaleY(0.8);
   }
-}
-
-.btn-next {
-  color: white;
-  background: linear-gradient(180deg, #10A8FF 45.86%, #0E3D58 100%);
-}
-
-.btn-register {
-  color: white;
-  background: linear-gradient(180deg, #F2994A 45.86%, #EB5757 100%);
 }

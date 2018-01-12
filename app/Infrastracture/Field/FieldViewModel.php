@@ -68,4 +68,30 @@ class FieldViewModel
 
         return $this->jobs;
     }
+
+    /**
+     * @return string
+     */
+    public function toEn(): string
+    {
+        switch ($this->name) {
+            case '情報処理IT': return 'IT'; break;
+            case 'ゲーム': return 'Game'; break;
+            case 'CG・映像・アニメーション': return 'Movie'; break;
+            case 'デザイン・Web': return 'Design'; break;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function toKey(): string
+    {
+        switch ($this->name) {
+            case '情報処理IT': return 'it'; break;
+            case 'ゲーム': return 'game'; break;
+            case 'CG・映像・アニメーション': return 'movie'; break;
+            case 'デザイン・Web': return 'design'; break;
+        }
+    }
 }

@@ -21,12 +21,18 @@ class FieldEloquent extends Model
         return $this->hasMany(FieldJobIdEloquent::class, 'field_id');
     }
 
+    public function fieldSkillIds()
+    {
+        return $this->hasMany(FieldSkillIdEloquent::class, 'field_id');
+    }
+
     public function toEntity(): Field
     {
         return new Field(
             $this->name,
             $this->jobIdsToVo(),
-            $this->courseIdsToVo()
+            $this->courseIdsToVo(),
+            $this->skillIdsToVo()
         );
     }
 
@@ -42,5 +48,12 @@ class FieldEloquent extends Model
         return $this->fieldCourseIds->map(function(FieldCourseIdEloquent $model) {
             return $model->toVo();
         })->toArray() ?? [];
+    }
+
+    private function skillIdsToVo(): array
+    {
+        return $this->fieldSkillIds->map(function(FieldSkillIdEloquent $model) {
+                return $model->toVo();
+            })->toArray() ?? [];
     }
 }

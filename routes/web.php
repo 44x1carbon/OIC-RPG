@@ -45,13 +45,15 @@ Route::post('/guild_member', GuildMemberController::class.'@update')->name('upda
 
 Route::delete('/guild_member/delete', GuildMemberController::class.'@destroy')->name('destroy_guild_member');
 
+Route::get('/me/my_page', GuildMemberController::class.'@myPage')->name('my_page');
+
 /** パーティー編集 */
 Route::get('/party/edit', function() {
     return view('guild.party.edit');
 });
 
 /** パーティー詳細表示 */
-Route::get('/party/{partyId}/detail', PartyController::class.'@detail');
+Route::get('/party/{partyId}/detail', PartyController::class.'@detail')->name('show_party_detail');
 
 /** 検索 */
 Route::get('/party/search', PartyController::class.'@search' )->name('search_party');
@@ -68,7 +70,16 @@ Route::get('/party/management/applying', function() {
     return view('guild.party.management.applying');
 });
 
+if(env('APP_ENV', 'local') == 'local') {
+    Route::get('/debug/learn_skill', DebugController::class.'@showLearnSkill')->name('show_learn_skill');
+    Route::post('/debug/learn_skill', DebugController::class.'@doLearnSkill');
+}
+
 Route::get('/', function(\App\Domain\GuildMember\GuildMember $loginMember) {
    return view('Top')
        ->with('guildMember', new \App\Infrastracture\GuildMember\GuildMemberViewModel($loginMember));
-});
+})->name('top');
+
+Route::get('/guild', function() {
+    return view('Guild.Top');
+})->name('show_guild');

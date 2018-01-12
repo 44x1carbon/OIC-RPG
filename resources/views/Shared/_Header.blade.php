@@ -1,9 +1,9 @@
 <header class="header">
     <div class="header-content left">
         <div class="header-btn circle float">
-            <div class="btn btn-circle btn-gloss btn-head-nav font-white">
+            <a class="btn btn-circle btn-gloss btn-head-nav font-white" href="{{ route('top') }}">
                 Home
-            </div>
+            </a>
         </div>
     </div>
 
