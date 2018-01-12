@@ -44,6 +44,6 @@ class PartyStoreTest extends \Tests\TestCase
 
         $response = $this->post(route('store_party'), $data);
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
     }
 }
