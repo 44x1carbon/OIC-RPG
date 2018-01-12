@@ -15,7 +15,11 @@ interface ProductionTypeRepositoryInterface
 {
     public function findByName(String $name): ?ProductionType;
 
+    public function findById(string $id): ?ProductionType;
+
     public function save(ProductionType $productionType): bool;
 
     public function all(): array;
+
+    public function nextId(): string;
 }

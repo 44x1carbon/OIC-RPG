@@ -32,8 +32,7 @@ class GuildMemberFacade
         string $courseId,
         string $genderId,
         string $mailAddressData,
-        string $password,
-        array $possessionSkillDatas
+        string $password
     ): AuthData
     {
         $courseRepository = app(CourseRepositoryInterface::class);
@@ -47,19 +46,9 @@ class GuildMemberFacade
         $gender = new Gender($genderId);
         $mailAddress = new MailAddress($mailAddressData);
 
-        $possessionSkillList = [];
-        foreach ($possessionSkillDatas as $possessionSkillData){
-            // TODO FacadeにPossessionSkillsの中身が連想配列ではなくDTOになった場合は変更する
-            $possessionSkillList[] = $possessionSkillFactory->createPossessionSkill(
-                                        $possessionSkillData['skillId'],
-                                        new StudentNumber($possessionSkillData['studentNumber'])
-                                    );
-        }
-
-        $possessionSkills = new PossessionSkillCollection($possessionSkillList);
         $loginInfo = new LoginInfo($mailAddress, new Password($password));
 
-        $authData = $guildMemberAppService->registerMember($studentNumber, $studentName , $course, $gender, $mailAddress, $possessionSkills, $loginInfo);
+        $authData = $guildMemberAppService->registerMember($studentNumber, $studentName , $course, $gender, $mailAddress, $loginInfo);
 
         return $authData;
 

@@ -3,6 +3,7 @@
 namespace App\ApplicationService;
 
 use App\Domain\Course\Course;
+use App\Domain\Field\FieldRepositoryInterface;
 use App\Domain\GuildMember\Factory\GuildMemberFactory;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\Gender;
@@ -18,10 +19,11 @@ class  GuildMemberAppService
     protected $factory;
     protected $repository;
 
-    function __construct(GuildMemberFactory $factory, GuildMemberRepositoryInterface $repository)
+    function __construct(GuildMemberFactory $factory, GuildMemberRepositoryInterface $repository, FieldRepositoryInterface $fieldRepository)
     {
         $this->factory = $factory;
         $this->repository = $repository;
+        $this->fieldRepository = $fieldRepository;
     }
 
 
@@ -31,17 +33,19 @@ class  GuildMemberAppService
         Course $course,
         Gender $gender,
         MailAddress $mailAddress,
-        PossessionSkillCollection $possessionSkills,
         LoginInfo $loginInfo
     )
     {
+        $field = $this->fieldRepository->findByCourseId($course->id());
+        $defaultJob = $field->defaultJob();
+
         $guildMember = $this->factory->createGuildMember(
             $studentNumber,
             $studentName,
             $course,
             $gender,
             $mailAddress,
-            $possessionSkills
+            $defaultJob->jobId()
         );
 
         if($this->repository->save($guildMember)) {

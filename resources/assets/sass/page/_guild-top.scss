@@ -1,0 +1,28 @@
+.guild-back {
+  background-image: url('/images/guild-top-back.jpg');
+  background-size: cover;
+  background-position-x: 60%;
+  background-repeat: no-repeat;
+}
+
+.guild-top {
+  height: 100%;
+
+  &__menu {
+    bottom: 80px;
+    left: 20px;
+    position: fixed;
+
+    .btn {
+      padding: 20px;
+      width: auto;
+
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+    }
+    /*.menu__cell {
+      padding: 20px 10px;
+    }*/
+  }
+}

@@ -1,107 +1,81 @@
 @extends('Shared._DefaultLayout')
 
 @section('header_title')
-    Detail
+    パーティー詳細
 @endsection
 
 @section('content')
+<?php /* @var \App\Infrastracture\Party\PartyViewModel $party */?>
 <div class="background">
     <div class="layer layer1 board"></div>
 </div><!-- background -->
-<div class="detail-party layer2">
-    <div class="detail-party_header">
-        <h2 class="detail-party_title">テーマ</h2>
-    </div><!-- detail-party_header -->
-    <div class="detail-party_body">
-        <div class="detail-party_idea　detail-party_item-wrap">
-            <div class="detail-party_item">
-                <h3 class="detail-party_item-title">種類</h3>
-                <p class="detail-party_item-content">内容</p>
+<div class="party-detail content">
+    <div class="party-detail__header content__header">
+        <p>
+            {{ $party->productionIdea()->productionTheme }}
+        </p>
+    </div>
+    <div class="party-detail__body content__body">
+        <div class="panel">
+            <div class="panel__header mod-border">詳細</div>
+            <p class="panel__body mod-light-filter">
+                {{ $party->productionIdea()->ideaDiscription }}
+            </p>
+        </div>
+        <div class="panel">
+            <div class="panel__header mod-border">制作物の種類</div>
+            <div class="panel__body mod-light-filter">
+                {{ $party->productionIdea()->productionType->name }}
             </div>
-            <div class="detail-party_item">
-                <h3 class="detail-party_item-title">説明</h3>
-                <p class="detail-party_item-content">内容</p>
+        </div>
+        <div class="panel">
+            <div class="panel__header mod-border">
+                活動期間
             </div>
-        </div><!-- detail-party_idea -->
-        <div class="detail-party_recruitment detail-party_item-wrap">
-            <div class="detail-party_item">
-                <h3 class="detail-party_item-title">活動期間</h3>
-                <p class="detail-party_item-content">内容</p>
+            <div class="panel__body mod-light-filter">
+                {{ $party->activityEndDate->format('Y/m/d') }}まで
             </div>
-            <div class="detail-party_item">
-                <h3 class="detail-party_item-title">募集内容</h3>
-                <p class="detail-party_item-content">内容</p>
+        </div>
+
+        <div class="panel">
+            <div class="panel__header mod-border">
+                募集内容
             </div>
-            <div class="detail-party_item">
-                <div class="detail-party_item-content">
-                    <div class="detail-party_role-list">
-                        <div class="detail-party_list-item">
-                            <h3 class="detail-party_item-title">募集役割</h3>
-                            <div class="job-wrap"><!-- クラス名仮 -->
-                                <p>参考ジョブ名</p>
-                                <p>人数</p>
-                            </div>
+            <?php /* @var \App\Infrastracture\WantedRole\WantedRoleViewModel $wantedRole */ ?>
+            @foreach($party->wantedRoles() as $wantedRole)
+                <div class="wanted-role panel__body mod-light-filter panel">
+                    <div class="wanted-role__name panel__header">{{ $wantedRole->roleName }}</div>
+
+                    <div class="wanted-role__info panel__body">
+                        <p class="wanted-role__remarks">
+                            {{ $wantedRole->remarks }}
+                        </p>
+                        <div class="wanted-role__reference-job">希望ジョブ: {{ $wantedRole->referenceJob()->name }}</div>
+                        <div class="wanted-role__frame">
+                            募集枠: 残り{{ $wantedRole->assignableFrameNum }}枠({{ $wantedRole->assignedFrameNum }}/{{ $wantedRole->totalFrameNum }})
                         </div>
-                        <div class="detail-party_list-item">
-                            <h3 class="detail-party_item-title">募集役割</h3>
-                            <div class="job-wrap"><!-- クラス名仮 -->
-                                <p>参考ジョブ名</p>
-                                <p>人数</p>
-                            </div>
+
+                        <div class="wanted-role__action flex-area mod-center">
+                            <button class="btn mod-orange">参加したい！</button>
                         </div>
-                    </div><!-- detail-party_role-list -->
-                </div><!-- detail-party_item-content -->
-            </div><!-- detail-party_item -->
-        </div><!-- detail-party_recruitment -->
-        <div class="detail-party_member detail-party_item-wrap">
-            <h3 class="detail-party_member-title">メンバー</h3>
-            <div class="detail-party_member-content">
-                <div class="detail-party_member-list">
-                    <div class="detail-party_list-item member-item">
-                        <img src="../assets/images/icon.jpg" class="member-icon">
-                        <p>名前</p>
-                        <p>役割</p>
                     </div>
-                    <div class="detail-party_list-item member-item">
-                        <img src="../assets/images/icon.jpg" class="member-icon">
-                        <p>名前</p>
-                        <p>役割</p>
+                </div>
+            @endforeach
+        </div>
+        <div class="member-list panel">
+            <div class="member-list__header panel__header mod-border">パーティーメンバー</div>
+            <div class="member-list__body flex-area panel__body mod-no-padding">
+                <?php /* @var \App\Infrastracture\Party\PartyMemberInfoViewModel $partyMemberInfo */ ?>
+                @foreach($party->partyMemberInfos() as $partyMemberInfo)
+                    <div class="member-item">
+                        <div class="member-item__role">{{ $partyMemberInfo->assigneeRole->roleName }}</div>
+                        <div class="member-item__image">
+                            <img src="{{ $partyMemberInfo->member()->favoriteJob()->mypImagePath() }}" class="member-icon">
+                        </div>
+                        <div class="member-item__name">{{ $partyMemberInfo->member()->name }}</div>
                     </div>
-                    <div class="detail-party_list-item member-item">
-                        <img src="../assets/images/icon.jpg" class="member-icon">
-                        <p>名前</p>
-                        <p>役割</p>
-                    </div>
-                    <div class="detail-party_list-item member-item">
-                        <img src="../assets/images/icon.jpg" class="member-icon">
-                        <p>名前</p>
-                        <p>役割</p>
-                    </div>
-                    <div class="detail-party_list-item member-item">
-                        <img src="../assets/images/icon.jpg" class="member-icon">
-                        <p>名前</p>
-                        <p>役割</p>
-                    </div>
-                    <div class="detail-party_list-item member-item">
-                        <img src="../assets/images/icon.jpg" class="member-icon">
-                        <p>名前</p>
-                        <p>役割</p>
-                    </div>
-                    <div class="detail-party_list-item member-item">
-                        <img src="../assets/images/icon.jpg" class="member-icon">
-                        <p>名前</p>
-                        <p>役割</p>
-                    </div>
-                    <div class="detail-party_list-item member-item">
-                        <img src="../assets/images/icon.jpg" class="member-icon">
-                        <p>名前</p>
-                        <p>役割</p>
-                    </div>
-                </div><!-- detail-party_member-list -->
-            </div><!-- detail-party_member-content -->
-        </div><!-- detail-party_member -->
-        <div class="detail-btn-wrap btn-wrap row flex-center-length">
-            <a href="#"><button class="btn entry-button">参加申請</button></a>
+                @endforeach
+            </div>
         </div>
     </div><!-- detail-party_body -->
 </div><!-- detail-party -->

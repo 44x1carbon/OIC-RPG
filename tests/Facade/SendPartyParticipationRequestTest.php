@@ -14,8 +14,6 @@ use Tests\Sampler;
 
 class SendPartyParticipationRequestTest extends \Tests\TestCase
 {
-    use Sampler;
-
     /* @var PartyParticipationRequestFacade $partyParticipationRequestFacade*/
     protected $partyParticipationRequestFacade;
     /* @var PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository */

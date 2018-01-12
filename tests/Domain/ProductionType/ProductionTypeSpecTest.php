@@ -17,7 +17,6 @@ use Tests\TestCase;
 
 class ProductionTypeSpecTest extends TestCase
 {
-    use Sampler;
     protected $repo;
 
     public function setUp()

@@ -26,6 +26,13 @@ class JobEloquentRepositoryImpl implements JobRepositoryInterface
         return $jobModel->toEntity();
     }
 
+    public function findByName(string $name): ?Job
+    {
+        return null_safety(JobEloquent::where('job_name', $name)->first(), function(JobEloquent $model) {
+            return $model->toEntity();
+        });
+    }
+
     public function nextId(): JobId
     {
         do{
@@ -46,6 +53,16 @@ class JobEloquentRepositoryImpl implements JobRepositoryInterface
     public function all(): array
     {
         $jobModels = JobEloquent::all();
+
+        $jobCollection = $jobModels->map(function(JobEloquent $eloquent) {
+            return $eloquent->toEntity();
+        });
+        return $jobCollection->toArray();
+    }
+
+    public function exceptStudent(): array
+    {
+        $jobModels = JobEloquent::where('job_name', 'NOT LIKE', '%学生%')->get();
 
         $jobCollection = $jobModels->map(function(JobEloquent $eloquent) {
             return $eloquent->toEntity();

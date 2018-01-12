@@ -2,34 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Guild\Service\GuildService;
 use App\Domain\GuildMember\GuildMember;
-use App\Domain\PartyWrittenRequest\Factory\PartyWrittenRequestFactory;
-use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
+use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Http\Requests\PartyCreateRequest;
+use App\Infrastracture\Party\PartyViewModel;
 use App\Presentation\PartyServiceFacade;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class PartyController extends Controller
 {
     public function store(
         PartyCreateRequest $request,
         PartyServiceFacade $partyServiceFacade,
-        PartyWrittenRequestFactory $partyWrittenRequestFactory,
         GuildMember $loginMember
     )
     {
         $partyId = $partyServiceFacade->registerParty(
-            $request->activityEndDate(),
             $loginMember->studentNumber()->code(),
-            $request->roleName(),
-            $request->productionTheme(),
-            $request->productionTypeId(),
-            $request->ideDescription(),
-            $request->wantedRoleList()
+            $request->partyDto()
         );
+        session()->forget('party');
 
-        return response($partyId);
+        return redirect()->route('show_party_detail', ['partyId' => $partyId]);
+    }
+
+    public function search(Request $request, PartyServiceFacade $partyServiceFacade)
+    {
+        $keyword = $request->input('keyword', '');
+        $searchResult = $partyServiceFacade->searchParty($keyword);
+        return view('Guild.Search.Party')
+            ->with('searchResult', $searchResult);
+    }
+  
+    public function detail(string $partyId, PartyRepositoryInterface $partyRepository)
+    {
+        $party = $partyRepository->findById($partyId);
+
+        return view('Guild.Party.Detail')
+            ->with('party', new PartyViewModel($party));
     }
 }

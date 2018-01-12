@@ -11,9 +11,11 @@ namespace Tests\Repository;
 
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Factory\PartyFactory;
+use App\Domain\Party\Party;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
 use App\Domain\ProductionIdea\Factory\ProductionIdeaFactory;
+use App\Domain\ProductionIdea\ProductionIdea;
 use App\Domain\ProductionType\ProductionType;
 use App\Domain\WantedRole\WantedRole;
 use Tests\Sampler;
@@ -21,8 +23,7 @@ use Tests\TestCase;
 
 class PartyRepositoryTest extends TestCase
 {
-    use Sampler;
-
+    /* @var PartyRepositoryInterface $partyRepository */
     protected $partyRepository;
     protected $partyFactory;
     protected $productionIdeaFactory;

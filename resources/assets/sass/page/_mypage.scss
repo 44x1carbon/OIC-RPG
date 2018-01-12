@@ -1,0 +1,114 @@
+.mypage {
+  position: relative;
+  width: 100%;
+  padding: 0 15px;
+}
+
+.mypage-profile {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  padding: 15px;
+  background: white;
+  flex-wrap: wrap;
+}
+
+.mypage-profile-name {
+  width: 100%;
+  padding: 6px 0;
+  text-align: center;
+  background: gray;
+}
+
+.mypage-profile-left {
+  position: relative;
+  width: 50%;
+  height: 360px;
+  img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 175%;
+    transform: translate(-18%, 0);
+  }
+}
+
+.mypage-profile-right {
+  z-index: 2;
+  width: 50%;
+  padding: 21px 3px 0 9px;
+}
+
+.mypage-profile-content {
+  display: flex;
+  margin-bottom: 21px;
+  font-size: 12px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.mypage-profile-bottom {
+  position: absolute;
+  left: 50%;
+  bottom: 30px;
+  width: 90%;
+  height: 100px;
+  margin: 0 auto;
+  background: gray;
+  transform: translateX(-50%);
+  p {
+    padding: 9px;
+    font-size: 12px;
+  }
+}
+
+.mypage-skill {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin: 30px 0 0;
+  padding: 15px;
+  background: white;
+}
+
+.mypage-skill-course-list {
+  display: flex;
+}
+
+.mypage-skill-course-item {
+  margin-right: 15px;
+}
+
+.mypage-skill-list {
+
+}
+
+.mypage-skill-item {
+  display: flex;
+  margin-bottom: 15px;
+  background: gray;
+}
+
+.mypage-job {
+  position: relative;
+  margin: 30px 0 0;
+  padding: 15px;
+  background: white;
+}
+
+.mypage-job-course-list {
+  display: flex;
+}
+
+.mypage-job-course-item {
+  margin-right: 15px;
+}
+
+.mypage-job-item {
+  background: gray;
+}
+
+.mypage-job-link {
+  display: flex;
+}

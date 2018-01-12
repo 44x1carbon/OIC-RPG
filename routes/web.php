@@ -23,7 +23,6 @@ Route::get('/sign_up', function() {
    return view('signup');
 });
 
-
 /** サインアップのフロー */
 Route::get('/sign_up/auth_info', GuildMemberRegistrationController::class.'@showAuthInfo')->name('show_sign_up_auth_info');
 Route::post('/sign_up/auth_info', GuildMemberRegistrationController::class.'@doAuthInfo')->name('do_sign_up_auth_info');
@@ -32,12 +31,13 @@ Route::post('/sign_up/profile', GuildMemberRegistrationController::class.'@doPro
 Route::get('/sign_up/school_info', GuildMemberRegistrationController::class.'@showSchoolInfo')->name('show_sign_up_school_info');
 Route::post('/sign_up/school_info', GuildMemberRegistrationController::class.'@doSchoolInfo')->name('do_sign_up_school_info');
 Route::post('/sign_up', SignUpController::class.'@store')->name('post_sign_up');
-
 Route::post('/sign_in', SignInController::class.'@store')->name('post_sign_in');
 
 /** パーティー作成のフロー */
 Route::get('/party/registration/production_idea', PartyRegistrationController::class.'@showProductionIdea')->name('show_party_registration_production_idea');
+Route::post('/party/registration/production_idea', PartyRegistrationController::class.'@doProductionIdea')->name('do_party_registration_production_idea');
 Route::get('/party/registration/wanted', PartyRegistrationController::class.'@showWanted')->name('show_party_registration_wanted');
+Route::post('/party/registration/wanted', PartyRegistrationController::class.'@handleWanted')->name('do_party_registration_wanted');
 Route::get('/party/registration/confirm', PartyRegistrationController::class.'@showConfirm')->name('show_party_confirm');
 Route::post('/party', PartyController::class.'@store')->name('store_party');
 
@@ -45,20 +45,18 @@ Route::post('/guild_member', GuildMemberController::class.'@update')->name('upda
 
 Route::delete('/guild_member/delete', GuildMemberController::class.'@destroy')->name('destroy_guild_member');
 
+Route::get('/me/my_page', GuildMemberController::class.'@myPage')->name('my_page');
+
 /** パーティー編集 */
 Route::get('/party/edit', function() {
     return view('guild.party.edit');
 });
 
 /** パーティー詳細表示 */
-Route::get('/party/detail', function() {
-    return view('guild.party.detail');
-});
+Route::get('/party/{partyId}/detail', PartyController::class.'@detail')->name('show_party_detail');
 
 /** 検索 */
-Route::get('/search', function() {
-    return view('guild.search.party');
-});
+Route::get('/party/search', PartyController::class.'@search' )->name('search_party');
 
 /** パーティー管理 */
 Route::get('/party/management/holding', function() {
@@ -68,3 +66,20 @@ Route::get('/party/management/entry', function() {
     return view('guild.party.management.entry');
 });
 
+Route::get('/party/management/applying', function() {
+    return view('guild.party.management.applying');
+});
+
+if(env('APP_ENV', 'local') == 'local') {
+    Route::get('/debug/learn_skill', DebugController::class.'@showLearnSkill')->name('show_learn_skill');
+    Route::post('/debug/learn_skill', DebugController::class.'@doLearnSkill');
+}
+
+Route::get('/', function(\App\Domain\GuildMember\GuildMember $loginMember) {
+   return view('Top')
+       ->with('guildMember', new \App\Infrastracture\GuildMember\GuildMemberViewModel($loginMember));
+})->name('top');
+
+Route::get('/guild', function() {
+    return view('Guild.Top');
+})->name('show_guild');

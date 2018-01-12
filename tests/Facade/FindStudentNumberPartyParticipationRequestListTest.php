@@ -16,8 +16,6 @@ use Tests\TestCase;
  */
 class FindStudentNumberPartyParticipationRequestListTest extends TestCase
 {
-    use Sampler;
-
     /* @var PartyParticipationRequestFacade $partyParticipationRequestFacade */
     protected $partyParticipationRequestFacade;
 

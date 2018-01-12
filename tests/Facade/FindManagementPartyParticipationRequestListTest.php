@@ -16,8 +16,6 @@ use Tests\Sampler;
  */
 class FindManagementPartyParticipationRequestListTest extends \Tests\TestCase
 {
-    use Sampler;
-
     /* @var PartyParticipationRequestFacade $partyParticipationRequestFacade */
     protected $partyParticipationRequestFacade;
     /* @var PartyRepositoryInterface $partyRepository */
