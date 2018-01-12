@@ -83,3 +83,7 @@ Route::get('/', function(\App\Domain\GuildMember\GuildMember $loginMember) {
 Route::get('/guild', function() {
     return view('Guild.Top');
 })->name('show_guild');
+
+Route::get('/landing', function(){
+    return view('landing');
+});

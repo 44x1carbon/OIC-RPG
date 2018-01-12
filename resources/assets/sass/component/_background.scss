@@ -22,7 +22,6 @@
   background-color: black;
   opacity: .7;
   animation-name: none;
-
 }
 
 .board{
@@ -30,6 +29,10 @@
     background-size: cover;
 }
 
+.poster {
+    background: url(/images/TapStart.png) no-repeat center center;
+    background-size: 100%;
+}
 //layer
 .layer{
   position: absolute;

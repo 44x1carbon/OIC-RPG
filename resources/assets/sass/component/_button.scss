@@ -26,6 +26,16 @@
     background: linear-gradient(180deg, #10A8FF 45.86%, #0E3D58 100%);
     border-radius: 3px;
   }
+
+  &.mod-green {
+    color: white;
+    background: linear-gradient(180deg, #39A869 49.17%, #003705 100%);
+    border-radius: 3px;
+  }
+
+  &.marginb {
+    margin-bottom: 24px;
+  }
 }
 
 .btn-wrap{
@@ -34,6 +44,12 @@
 
 .btn-small {
   width: 55px;
+}
+
+.btn-large {
+  width: 110px;
+  height: 30px;
+  font-size: 15px;
 }
 
 .btn-circle {
