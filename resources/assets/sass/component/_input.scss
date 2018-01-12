@@ -11,14 +11,15 @@ input:focus::-moz-placeholder {
 } 
 
 .radio-name{
-  font-size: 15px;
+  margin-right: 6px;
+  font-size: 12px;
   color:white;
 }
 
-.radio-btn-large {
-   -webkit-transform: scale(1.5);
-   transform: scale(1.5);
-   margin-left: 6px;
+.radio-group {
+  display: flex;
+  margin-right: 12px;
+  align-item: center;
 }
 
 .input{

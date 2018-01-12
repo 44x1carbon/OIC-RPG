@@ -30,7 +30,7 @@
                 </div>
                 <div class="item form-item">
                     <h3 class="form-item-title">性別</h3>
-                    <div class="radio-wrap row justify-space-around"><!-- 性別 -->
+                    <div class="radio-wrap row"><!-- 性別 -->
                         <div class="radio-group">
                             <label class="radio-name" for="man">男</label>
                             <input type="radio" class="radio-btn-large" name="guild_member[gender]" value="{{ Gender::MALE  }}" id="man" checked>

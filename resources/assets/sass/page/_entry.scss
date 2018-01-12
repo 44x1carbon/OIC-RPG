@@ -4,36 +4,33 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 80%;
-  margin: auto;
+  width: 64%;
   transform: translate(-50%, -50%);
 }
 
 .entry-header{
-  padding: 12px 0;
+  padding: 12px 18px;
   border: 1px solid #C39300;
   border-style: ridge ridge none;
+  background: #5A3A1A;
 }
 
 .entry-body{
   position: relative;
-  height: 320px;
-  padding: 18px 21px;
+  height: 309px;
+  padding: 12px 18px;
   border: 1px solid #C39300;
   border-radius: 0 0 5px 5px;
 }
 
 .entry-title {
-  font-size: 18px;
-  text-align: center;
+  font-size: 15px;
+  color: white;
 }
 
 .entry-form {
   position: relative;
   height: 100%;
-  .form-item {
-    padding: 0 18px;
-  }
 }
 
 * {
