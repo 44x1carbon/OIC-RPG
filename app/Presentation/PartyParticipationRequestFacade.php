@@ -22,11 +22,14 @@ class PartyParticipationRequestFacade
     protected $partyAppService;
     /* @var PartyParticipationRequestAppService $partyParticipationRequestAppService */
     protected $partyParticipationRequestAppService;
+    /* @var PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepo */
+    protected $partyParticipationRequestRepo;
 
-    public function __construct(PartyAppService $partyAppService, PartyParticipationRequestAppService $partyParticipationRequestAppService)
+    public function __construct(PartyAppService $partyAppService, PartyParticipationRequestAppService $partyParticipationRequestAppService, PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepo)
     {
         $this->partyAppService = $partyAppService;
         $this->partyParticipationRequestAppService = $partyParticipationRequestAppService;
+        $this->partyParticipationRequestRepo = $partyParticipationRequestRepo;
     }
 
     // パーティ参加申請を作成
@@ -49,7 +52,8 @@ class PartyParticipationRequestFacade
         string $replyStatus
     )
     {
-        return $this->partyAppService->replyPartyParticipationRequest($partyId, new StudentNumber($partyManagerId), new StudentNumber($guildMemberId), new Reply($replyStatus));
+        $partyParticipationRequest = $this->partyParticipationRequestRepo->findByPartyIdAndStudentNumber($partyId, new StudentNumber($guildMemberId));
+        return $this->partyAppService->replyPartyParticipationRequest($partyParticipationRequest->id(), new StudentNumber($partyManagerId), new Reply($replyStatus));
     }
 
     // 自分が管理しているパーティの参加申請一覧を取得

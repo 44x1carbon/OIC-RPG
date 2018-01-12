@@ -83,17 +83,18 @@ class PartyAppService
         return $partyParticipationRequest->id();
     }
 
-    public function replyPartyParticipationRequest(string $partyId, StudentNumber $partyManagerId, StudentNumber $guildMemberId, Reply $reply)
+    public function replyPartyParticipationRequest(string $partyParticipationRequestId, StudentNumber $partyManagerId, Reply $reply)
     {
-        $party = $this->partyRepository->findById($partyId);
+        $partyParticipationRequest = $this->partyParticipationRequestRepository->findById($partyParticipationRequestId);
+        $party = $this->partyRepository->findById($partyParticipationRequest->partyId());
+
         if (!$party->isPartyManagerId($partyManagerId)) throw new \Exception('[ApplicationService] Party Participation Request Reply Error');
 
-        $partyParticipationRequest = $this->partyParticipationRequestRepository->findByPartyIdAndStudentNumber($partyId, $guildMemberId);
         $partyParticipationRequest->returnReply($reply);
         $this->partyParticipationRequestRepository->save($partyParticipationRequest);
 
         // パーティ参加申請への返答が許可だった場合はパーティにメンバーをassign
-        if ($reply->isPermit()) $this->partyMemberAppService->assignPartyMember($partyId, $partyParticipationRequest->wantedRoleId(), $partyManagerId, $guildMemberId);
+        if ($reply->isPermit()) $this->partyMemberAppService->assignPartyMember($partyParticipationRequest->partyId(), $partyParticipationRequest->wantedRoleId(), $partyManagerId, $partyParticipationRequest->guildMemberId());
 
         return $partyParticipationRequest->id();
     }
