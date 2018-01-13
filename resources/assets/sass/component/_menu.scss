@@ -1,0 +1,40 @@
+.menu {
+  position: absolute;
+  width: 100vw;
+  height: calc(100vh - 90px);
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 50px;
+  left: 0;
+  z-index: -100;
+  color: #ffffff;
+  padding: 40px 20px;
+  opacity: 0;
+  transition: 0.5s;
+
+  &.show {
+    z-index: 200;
+    opacity: 1;
+    display: block;
+    transition: 0.5s;
+  }
+
+  .panel {
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+  }
+
+  .menu-links {
+    justify-content: space-between;
+  }
+
+  &__link {
+    display: block;
+    width: 115px;
+    text-align: center;
+    border: 2px solid #AA9520;
+    background: linear-gradient(180deg, #F2994A 45.86%, #EB5757 100%);
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+}

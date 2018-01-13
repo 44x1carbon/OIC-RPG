@@ -17,7 +17,7 @@
         </div>
         <!-- main-heading -->
         <div class="entry-body body-color">
-            <form class="form" action="{{ route('do_sign_up_auth_info') }}" method="post">
+            <form class="form entry-form" action="{{ route('do_sign_up_auth_info') }}" method="post">
                 {{ csrf_field() }}
                 <div class="item form-item">
                     <h3 class="form-item-title">メールアドレス</h3>
@@ -33,8 +33,8 @@
                         <p class="error form-error">※{{ $message }}</p>
                     @endforeach
                 </div><!-- item -->
-                <div class="btn-wrap row flex-end-side flex-end-length">
-                    <button class="btn btn-next" type="submit">次へ</button>
+                <div class="btn-wrap row flex-end-side flex-end-length mt-auto">
+                    <button class="btn mod-blue" type="submit">次へ</button>
                 </div>
             </form>
             <!-- form -->

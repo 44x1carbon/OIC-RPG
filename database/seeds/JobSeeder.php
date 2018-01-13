@@ -66,6 +66,13 @@ class JobSeeder extends Seeder
                         [ 'デッサン', 3 ], [ 'モーション', 3 ], [ '色彩', 3 ],
                     ]
                 ],
+                [
+                    'name' => 'ゲームプランナー',
+                    'path' => 'game_planner',
+                    'conditions' => [
+                        [ 'Unity', 3 ], [ 'モーション', 3 ], [ 'マーケティング', 3 ],
+                    ]
+                ],
             ],
             'CG・映像・アニメーション' => [
                 [

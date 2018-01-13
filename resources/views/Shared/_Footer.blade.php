@@ -1,9 +1,9 @@
 <footer class="footer">
     <div class="footer-content left">
         <div class="footer-btn-area circle float">
-            <div class="footer-btn btn btn-circle btn-gloss font-white">
+            <a class="footer-btn btn btn-circle btn-gloss font-white" href="javascript:history.back()">
                 Back
-            </div>
+            </a>
         </div>
     </div>
     <div class="footer-content center"></div>

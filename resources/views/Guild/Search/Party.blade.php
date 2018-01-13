@@ -28,7 +28,7 @@
                 <?php /* @var App\Domain\Party\Party $party */ ?>
                 @foreach($searchResult as $index => $party)
                     <li class="search_list-item">
-                        <a href="#" class="list-item-link">
+                        <a href="{{ route('show_party_detail', ['partyId' => $party->id()]) }}" class="list-item-link">
                             <div class="search_list-item-header">
                                 <h3 class="search_list-item-title">{{ $party->productionIdea()->productionTheme() }}</h3>
                             </div>

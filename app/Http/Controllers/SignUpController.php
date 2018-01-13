@@ -25,7 +25,8 @@ class SignUpController extends Controller
             $request->courseId(),
             $request->genderId(),
             $request->mailAddress(),
-            $request->password()
+            $request->password(),
+            []
         );
         Auth::login($authData);
     }

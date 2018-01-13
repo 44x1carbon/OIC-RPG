@@ -31,6 +31,9 @@ Route::post('/sign_up/profile', GuildMemberRegistrationController::class.'@doPro
 Route::get('/sign_up/school_info', GuildMemberRegistrationController::class.'@showSchoolInfo')->name('show_sign_up_school_info');
 Route::post('/sign_up/school_info', GuildMemberRegistrationController::class.'@doSchoolInfo')->name('do_sign_up_school_info');
 Route::post('/sign_up', SignUpController::class.'@store')->name('post_sign_up');
+Route::get('/sign_in', function() {
+    return view('SignIn');
+})->name('show_sign_in');
 Route::post('/sign_in', SignInController::class.'@store')->name('post_sign_in');
 
 /** パーティー作成のフロー */
@@ -53,7 +56,7 @@ Route::get('/party/edit', function() {
 });
 
 /** パーティー詳細表示 */
-Route::get('/party/{partyId}/detail', PartyController::class.'@detail');
+Route::get('/party/{partyId}/detail', PartyController::class.'@detail')->name('show_party_detail');
 
 /** 検索 */
 Route::get('/party/search', PartyController::class.'@search' )->name('search_party');
@@ -75,7 +78,15 @@ if(env('APP_ENV', 'local') == 'local') {
     Route::post('/debug/learn_skill', DebugController::class.'@doLearnSkill');
 }
 
-Route::get('/', function(\App\Domain\GuildMember\GuildMember $loginMember) {
+Route::get('/top', function(\App\Domain\GuildMember\GuildMember $loginMember) {
    return view('Top')
        ->with('guildMember', new \App\Infrastracture\GuildMember\GuildMemberViewModel($loginMember));
+})->name('top');
+
+Route::get('/guild', function() {
+    return view('Guild.Top');
+})->name('show_guild');
+
+Route::get('/', function(){
+    return view('landing');
 });

@@ -21,8 +21,9 @@ class PartyController extends Controller
             $loginMember->studentNumber()->code(),
             $request->partyDto()
         );
+        session()->forget('party');
 
-        return response($partyId);
+        return redirect()->route('show_party_detail', ['partyId' => $partyId]);
     }
 
     public function search(Request $request, PartyServiceFacade $partyServiceFacade)

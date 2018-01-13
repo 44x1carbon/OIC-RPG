@@ -37,7 +37,7 @@ interface FieldRepositoryInterface
     public function findByJobId(JobId $jobId): ?Field;
 
     /**
-     * スキルIDからそのジョブが所属しているFieldインスタンスを取得する
+     * スキルIDからそのスキルが所属しているFieldインスタンスを取得する
      *
      * @param string $skillId
      * @return Field|null
