@@ -30,6 +30,7 @@ use App\Domain\PossessionSkill\PossessionSkill;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Domain\Skill\Skill;
+use App\Exceptions\DomainException;
 
 
 class GuildMember
@@ -145,6 +146,7 @@ class GuildMember
 
     public function setFavoriteJob(JobId $jobId)
     {
+        if(is_null($this->possessionJobs()->findPossessionJob($jobId))) throw new DomainException("{$jobId->code()} not learned");
         $this->favoriteJobId = $jobId;
     }
 

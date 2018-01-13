@@ -101,6 +101,14 @@
                             <div class="mypage-job-content">
                                 <p>{{ $memberJobStatus->job()->name }}</p>
                                 <p>習得可能</p>
+                                <div>
+                                    <form action="{{ route('do_get_job') }}" method="post">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="jobId" value="{{ $memberJobStatus->job()->id }}">
+                                        <input type="hidden" name="redirectUrl" value="{{ route('show_my_page') . '?skillTab='.$selectSkillTab.'&jobTab='.$selectJobTab.'#job' }}">
+                                        <button type="submit">習得</button>
+                                    </form>
+                                </div>
                                 <p>
                                     取得条件
                                     <?php /* @var \App\Infrastracture\Job\GetConditionViewModel $condition */ ?>
@@ -118,6 +126,14 @@
                             <div class="mypage-job-content">
                                 <p>{{ $memberJobStatus->job()->name }}</p>
                                 <p>習得済み</p>
+                                <div>
+                                    <form action="{{ route('do_favorite_job') }}" method="post">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="jobId" value="{{ $memberJobStatus->job()->id }}">
+                                        <input type="hidden" name="redirectUrl" value="{{ route('show_my_page') . '?skillTab='.$selectSkillTab.'&jobTab='.$selectJobTab.'#job' }}">
+                                        <button type="submit">お気に入り</button>
+                                    </form>
+                                </div>
                                 <p>
                                     取得条件
                                     <?php /* @var \App\Infrastracture\Job\GetConditionViewModel $condition */ ?>
