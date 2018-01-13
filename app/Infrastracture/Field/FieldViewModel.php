@@ -94,4 +94,17 @@ class FieldViewModel
             case 'デザイン・Web': return 'design'; break;
         }
     }
+
+    /**
+     * @return string
+     */
+    public function toShortJa(): string
+    {
+        switch ($this->name) {
+            case '情報処理IT': return '情報'; break;
+            case 'ゲーム': return 'ゲーム'; break;
+            case 'CG・映像・アニメーション': return '映像'; break;
+            case 'デザイン・Web': return 'デザイン'; break;
+        }
+    }
 }

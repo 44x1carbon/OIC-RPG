@@ -74,6 +74,7 @@ Route::get('/party/management/applying', function() {
     return view('guild.party.management.applying');
 });
 
+
 /** ジョブ習得 */
 Route::post('/me/get_job', GuildMemberController::class.'@getJob')->name('do_get_job');
 

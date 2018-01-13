@@ -70,6 +70,14 @@ class JobViewModel
     }
 
     /**
+     * @return string
+     */
+    public function silhouettePath(): string
+    {
+        return asset("/images/job/silhouette/$this->path.png");
+    }
+
+    /**
      * @return FieldViewModel
      */
     public function field(): FieldViewModel
