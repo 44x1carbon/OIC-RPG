@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   z-index: -1;
 }
@@ -14,15 +14,13 @@
   background-size: cover;
 }
 .chara{
-  background: url(/images/back.png) no-repeat center center;
-  background-size: 150%;
-  left: 40px;
+  background: url(/images/TapStart.png) no-repeat center center;
+  background-size: contain;
 }
 .opasity{
   background-color: black;
   opacity: .7;
   animation-name: none;
-
 }
 
 .board{
@@ -30,11 +28,28 @@
     background-size: cover;
 }
 
+.poster {
+    background: url(/images/TapStart.png) no-repeat center center;
+    background-size: 100%;
+}
 //layer
 .layer{
   position: absolute;
   width: 100vw;
   height: 100vh;
+
+  &.mod-character {
+    img {
+      position: absolute;
+      bottom: 40px;
+      height: auto;
+      width: 100%;
+    }
+
+    &.mod-right {
+      right: -30px;
+    }
+  }
 }
 .layer1{
   z-index: 0;

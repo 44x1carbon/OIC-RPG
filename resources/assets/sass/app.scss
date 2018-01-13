@@ -18,9 +18,11 @@ Foundation
 Layout
 --------------------------------------------------------- */
 
+@import "layout/_page.scss";
 @import "layout/_header.scss";
 @import "layout/_footer.scss";
 @import "layout/_main.scss";
+@import "layout/_common.scss";
 
 /* ---------------------------------------------------------
 Component
@@ -32,6 +34,9 @@ Component
 @import "component/_form.scss";
 @import "component/_input.scss";
 @import "component/_font.scss";
+@import "component/_color.scss";
+@import "component/_margin.scss";
+@import "component/_menu.scss";
 
 /* ---------------------------------------------------------
 Object
@@ -42,9 +47,9 @@ Object
 @import "page/_guild-top.scss";
 @import "page/_mypage.scss";
 @import "page/_mypage-modal.scss";
-@import "page/_user-entry.scss";
 @import "page/_party-entry.scss";
 @import "page/_party-management.scss";
-@import "page/_detail-party-entry.scss";
+@import "page/_party-detail.scss";
 @import "page/_search.scss";
 @import "page/_party-search.scss";
+@import "page/_landing.scss";

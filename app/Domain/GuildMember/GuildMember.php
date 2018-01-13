@@ -17,6 +17,8 @@ use App\Domain\GuildMember\ValueObjects\SkillAcquisitionStatus;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\Course\Course;
+use App\Domain\GuildMember\ValueObjects\LoginInfo;
+use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\Job\Job;
 use App\Domain\Job\JobRepositoryInterface;
 use App\Domain\Job\ValueObjects\JobId;
@@ -37,10 +39,13 @@ class GuildMember
     protected $possessionSkillFactory;
     /* @var \App\Domain\Course\RepositoryInterface\CourseRepositoryInterface */
     protected $courseRepo;
+    /* @var PartyRepositoryInterface $partyRepository*/
+    protected $partyRepository;
     /* @var SkillRepositoryInterface $skillRepo */
     protected $skillRepo;
     /* @var JobRepositoryInterface $jobRepo */
     protected $jobRepo;
+
     private $studentNumber;
     private $studentName;
     private $courseId;
@@ -54,6 +59,7 @@ class GuildMember
     {
         $this->courseRepo = app(CourseRepositoryInterface::class);
         $this->possessionSkillFactory = app(PossessionSkillFactory::class);
+        $this->partyRepository = app(PartyRepositoryInterface::class);
         $this->skillRepo = app(SkillRepositoryInterface::class);
         $this->jobRepo = app(JobRepositoryInterface::class);
     }
@@ -169,6 +175,12 @@ class GuildMember
         $addResultPossessionSkill = PossessionSkill::levelUp($possessionSkill, $addResultPossessionSkill);
 
         return $addResultPossessionSkill;
+    }
+
+    // 管理しているパーティ一覧を取得
+    public function managedParties(): array
+    {
+        return $this->partyRepository->findListByManagerId($this->studentNumber);
     }
 
     public function skillAcquisitionList(): array

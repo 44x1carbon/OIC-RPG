@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Domain\PartyWrittenRequest\ValueObject\WantedRoleInfo;
+use App\Domain\ProductionType\ProductionType;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
 use App\Domain\WantedMember\ValueObjects\WantedRole;
 use App\Presentation\DTO\PartyDto;

@@ -17,6 +17,8 @@ use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\PassWord;
 use App\Domain\Job\ValueObjects\JobId;
+use App\Domain\PossessionSkill\Factory\PossessionSkillFactory;
+use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Infrastracture\AuthData\AuthData;
 
 class GuildMemberFacade
@@ -38,11 +40,14 @@ class GuildMemberFacade
         $courseRepository = app(CourseRepositoryInterface::class);
         /* @var GuildMemberAppService $guildMemberAppService*/
         $guildMemberAppService = app(GuildMemberAppService::class);
+        /* @var PossessionSkillFactory $possessionSkillFactory */
+        $possessionSkillFactory = app(PossessionSkillFactory::class);
 
         $studentNumber = new StudentNumber($studentNumberData);
         $course = $courseRepository->findById($courseId);
         $gender = new Gender($genderId);
         $mailAddress = new MailAddress($mailAddressData);
+
         $loginInfo = new LoginInfo($mailAddress, new Password($password));
 
         $authData = $guildMemberAppService->registerMember($studentNumber, $studentName , $course, $gender, $mailAddress, $loginInfo);

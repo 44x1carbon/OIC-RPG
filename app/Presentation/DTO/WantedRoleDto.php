@@ -39,7 +39,7 @@ class WantedRoleDto
      */
     public function roleName(): string
     {
-        return $this->roleName;
+        return $this->roleName ?? '';
     }
 
     /**
@@ -47,7 +47,7 @@ class WantedRoleDto
      */
     public function remarks(): string
     {
-        return $this->remarks;
+        return $this->remarks ?? '';
     }
 
     /**
@@ -55,7 +55,7 @@ class WantedRoleDto
      */
     public function referenceJobId(): string
     {
-        return $this->referenceJobId;
+        return $this->referenceJobId ?? '';
     }
 
     /**
@@ -63,6 +63,16 @@ class WantedRoleDto
      */
     public function frameAmount(): int
     {
-        return $this->frameAmount;
+        return $this->frameAmount ?? 0;
     }
+
+    /**
+     * @return bool
+     */
+    public function managerAssigned(): bool
+    {
+        return $this->managerAssigned ?? false;
+    }
+
+
 }

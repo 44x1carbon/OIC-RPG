@@ -7,6 +7,7 @@
         @component('Shared._Header')
             @yield('header_title')
         @endcomponent
+        @include('Shared._Menu')
         <main class="main">
             @yield('content')
         </main>
