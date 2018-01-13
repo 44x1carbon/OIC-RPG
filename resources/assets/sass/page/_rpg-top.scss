@@ -1,0 +1,136 @@
+.rpg-top {
+  height: 100vh;
+  left: 0;
+  padding-top: 40px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.character-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.rpg-top-menu-list {
+  border-radius: 100%;
+  bottom: 100px;
+  margin-left: 10px;
+  position: fixed;
+
+  &:after {
+    content: '';
+    z-index: -1;
+    top: -36px;
+    left: -232px;
+    display: block;
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    transform: rotateZ(45deg);
+    background-color: #fffc;
+    border: 10px solid #AA9520;
+  }
+}
+
+$item-size: 80px;
+.rpg-top-menu-item {
+  height: $item-size;
+  position: relative;
+  width: $item-size;
+
+  &:nth-child(1) {
+    margin-left: 10px;
+  }
+
+  &:nth-child(2) {
+    margin-left: 90px;
+  }
+
+  &:nth-child(3) {
+    margin-left: 10px;
+  }
+
+  .menu__name {
+    background-color: #EBAA57;
+    border-radius: 8px;
+    bottom: 10px;
+    box-sizing: border-box;
+    color: #000000;
+    font-size: 12px;
+    left: 0px;
+    padding: 2px;
+    position: absolute;
+    text-align: center;
+    width: $item-size;
+  }
+
+  &.disabled {
+    opacity: 0;
+  }
+}
+
+.rpg-top-menu-link {
+  background-color: #EB5757;
+  border: 3px solid #C39300;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: block;
+  border-radius: 100%;
+  height: 100%;
+  width: 100%;
+
+  background-position: center;
+  background-size: 85%;
+  background-repeat: no-repeat;
+
+  &.status {
+    background-image: url('/images/top-icon-status.png');
+  }
+
+  &.guild {
+    background-image: url('/images/top-icon-guild.png');
+  }
+
+  &.raid-battle {
+    background-image: url('/images/top-icon-raid-battle.png');
+  }
+}
+
+.rpg-top-news{
+  z-index: -1;
+  position: fixed;
+  right: 0;
+  bottom: 40px;
+  width: 90%;
+  height: 150px;
+  background: imgUrl('news-board.png') no-repeat center center;
+  background-size: cover;
+}
+
+.news {
+  position: fixed;
+  bottom: 60px;
+  right: 10px;
+
+  .news__header {
+    font-size: 12px;
+    padding: 2px 2px 0px 2px;
+    background-color: #A9942E;
+    border: 2px solid #AA9520;
+    border-radius: 2px 2px 0 0;
+    display: inline-block;
+  }
+
+  .news__body {
+    background-color: #F3EECE;
+    border: 2px solid #AA9520;
+    padding: 4px;
+    font-size: 12px;
+    width: 230px;
+    height: 5em;
+    line-height: 14px;
+  }
+}

@@ -62,7 +62,7 @@ class WantedMember
         $this->officerId = $officerId;
     }
 
-    public function assign($memberId)
+    public function assign(StudentNumber $memberId)
     {
         $this->officerId = $memberId;
     }

@@ -1,0 +1,32 @@
+.row{
+    display: flex;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-end-length{
+    align-items: flex-end;
+}
+
+.flex-end-side{
+    justify-content: flex-end;
+}
+
+.flex-center{
+    align-items: center;
+}
+
+.flex-center-length{
+    justify-content: center;
+}
+
+.flex-while{
+    justify-content: space-between;
+}
+
+.justify-space-around {
+    justify-content: space-around;
+}
