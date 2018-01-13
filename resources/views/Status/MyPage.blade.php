@@ -44,17 +44,21 @@
                 <p>自己紹介</p>
             </div>
         </div><!--profile-->
-        <div class="mypage-skill">
+        <div class="mypage-skill" id="skill">
             <h2>スキル</h2>
             <ul class="mypage-skill-course-list">
                 <?php /* @var \App\Infrastracture\Field\FieldViewModel $field */ ?>
                 @foreach($fields as $field)
-                    <li class="mypage-skill-course-item"><a>{{ $field->name }}</a></li>
+                    <li class="mypage-skill-course-item {{ $field->toKey() == $selectSkillTab? 'active' : '' }}">
+                        <a href="{{ route('show_my_page') . '?skillTab='.$field->toKey().'&jobTab='.$selectJobTab.'#skill' }}">
+                            {{ $field->name }}
+                        </a>
+                    </li>
                 @endforeach
             </ul>
             <!-- mypage-skill-course-list -->
             <ul class="mypage-skill-list">
-                <?php $skillStatusList = $skillStatusListVMHelper->groupByField($guildMember->skillStatusList())['it']; ?>
+                <?php $skillStatusList = $skillStatusListVMHelper->groupByField($guildMember->skillStatusList())[$selectSkillTab]; ?>
                 <?php /* @var \App\Infrastracture\GuildMember\MemberSkillStatusViewModel $memberSkillStatus */ ?>
                 @foreach($skillStatusList as $memberSkillStatus)
                     @if($memberSkillStatus->skillAcquisitionStatus->isLearned())
@@ -72,16 +76,20 @@
             </ul>
         </div>
         <!-- mypage-skill -->
-        <div class="mypage-job">
+        <div class="mypage-job" id="job">
             <h2>ジョブ</h2>
             <ul class="mypage-job-course-list">
                 <?php /* @var \App\Infrastracture\Field\FieldViewModel $field */ ?>
                 @foreach($fields as $field)
-                    <li class="mypage-job-course-item"><a>{{ $field->name }}</a></li>
+                    <li class="mypage-job-course-item {{ $field->toKey() == $selectSkillTab? 'active' : '' }}">
+                        <a href="{{ route('show_my_page') . '?skillTab='.$selectSkillTab.'&jobTab='.$field->toKey().'#job' }}">
+                            {{ $field->name }}
+                        </a>
+                    </li>
                 @endforeach
             </ul>
             <ul class="mypage-job-list">
-                <?php $jobStatusList = $jobStatusListVMHelper->groupByField($guildMember->jobStatusList())['it']; ?>
+                <?php $jobStatusList = $jobStatusListVMHelper->groupByField($guildMember->jobStatusList())[$selectJobTab]; ?>
                 <?php /* @var \App\Infrastracture\GuildMember\MemberJobStatusViewModel $memberJobStatus */ ?>
                 @foreach($jobStatusList as $memberJobStatus)
                 <li class="mypage-job-item">
