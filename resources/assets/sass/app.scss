@@ -1,6 +1,10 @@
 @charset "utf-8";
 @import '~mathsass/dist/math';
 
+body {
+    background-color: #333;
+}
+
 @import "variables";
 @import "functions";
 @import "temporary";

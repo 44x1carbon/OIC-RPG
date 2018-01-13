@@ -29,9 +29,9 @@
     <div class="panel">
         <div class="panel__header mod-border">ステータス</div>
         <div class="menu-links panel__body mod-no-padding flex-area">
-            <a href="{{ route('my_page') }}" class="menu__link">プロフィール</a>
-            <a href="{{ route('my_page').'#skill' }}" class="menu__link">スキル</a>
-            <a href="{{ route('my_page').'#job' }}" class="menu__link">ジョブ</a>
+            <a href="{{ route('show_my_page') }}" class="menu__link">プロフィール</a>
+            <a href="{{ route('show_my_page').'#skill' }}" class="menu__link">スキル</a>
+            <a href="{{ route('show_my_page').'#job' }}" class="menu__link">ジョブ</a>
         </div>
     </div>
 </div>
