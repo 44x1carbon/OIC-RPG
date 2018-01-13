@@ -16,8 +16,7 @@
             </div>
             <div class="profile-left">
                 <div class="fav-job-info">
-                    <div class="fav-job-img">
-                        <img src="{{ $guildMember->favoriteJob()->characterImagePath() }}" alt="">
+                    <div class="fav-job-img" style="background-image: url('{{ $guildMember->favoriteJob()->characterImagePath() }}')">
                     </div>
                     <div class="fav-job-name {{ $guildMember->favoriteJob()->field()->toKey() }}">
                         {{ $guildMember->favoriteJob()->name }}
