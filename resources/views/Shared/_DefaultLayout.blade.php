@@ -7,17 +7,11 @@
         @component('Shared._Header')
             @yield('header_title')
         @endcomponent
+        @include('Shared._Menu')
         <main class="main">
             @yield('content')
         </main>
         @component('Shared._footer')
         @endcomponent
-        {{--<script>--}}
-            {{--document.body.onclick = function () {--}}
-                {{--console.log('hoge')--}}
-                {{--document.body.webkitRequestFullscreen();--}}
-            {{--}--}}
-            {{--document.body.click();--}}
-        {{--</script>--}}
     </body>
 </html>

@@ -15,7 +15,7 @@
 
     <div class="header-content right">
         <div class="header-btn circle float">
-            <div class="btn btn-circle btn-gloss btn-head-nav font-white">
+            <div class="menu-btn btn btn-circle btn-gloss btn-head-nav font-white">
                 Menu
             </div>
         </div>
