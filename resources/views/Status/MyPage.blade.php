@@ -115,11 +115,11 @@
                             <div class="job-img-area">
                                 <div class="job-img">
                                     @if($memberJobStatus->status->isGettable())
-                                        <img src="{{ $memberJobStatus->job()->characterImagePath() }}" alt="">
+                                        <img src="{{ $memberJobStatus->job()->silhouettePath() }}" alt="">
                                     @elseif($memberJobStatus->status->isLearned())
                                         <img src="{{ $memberJobStatus->job()->characterImagePath() }}" alt="">
                                     @else
-                                        <img src="{{ $memberJobStatus->job()->characterImagePath() }}" alt="">
+                                        <img src="{{ $memberJobStatus->job()->silhouettePath() }}" alt="">
                                     @endif
                                 </div>
                             </div>
