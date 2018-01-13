@@ -1,0 +1,81 @@
+.party-list {
+  margin: 21px auto 0;
+}
+
+.party-list-item {
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.party {}
+
+.party-header {
+  padding: 6px;
+  background: linear-gradient(180deg, #BF9C60 24.86%, #8A8219 100%);
+}
+
+.party-type {
+  margin-bottom: 3px;
+  font-size: 14px;
+}
+
+.party-theme {
+  font-size: 17px;
+  line-height: 1.2;
+}
+
+.party-body {
+  padding: 6px;
+}
+
+.party-body-title {
+    padding: 6px 0 3px;
+    font-size: 15px;
+    border-bottom: 2px solid black;
+}
+
+.party-wanted_role-list {
+  padding: 12px 0 0;
+}
+
+.party-wanted_role-item {
+    margin-bottom: 12px;
+    &.before::before {
+      content: '';
+      overflow: hidden;
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      margin-right: 9px;
+      background: black;
+      border-radius: 50%;
+    }
+}
+
+.party-wanted_role-name {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.party-wanted_role-reference_job {
+    font-size: 13px;
+}
+
+.party-wanted_role-status {
+    width: 45px;
+    height: 25px;
+    padding: 6px 0;
+    margin-left: auto;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    border-radius: 3px;
+    &.mod-red {
+        background: #EB5757;
+        border: 1px solid #EB3F3F;
+    }
+    &.mod-green {
+        background: #27AE60;
+        border: 1px solid #219653;
+    }
+}
