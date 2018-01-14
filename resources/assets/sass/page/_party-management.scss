@@ -4,95 +4,78 @@
 }
 
 .party-management-nav-link {
+  width: 33.3%;
   padding: 6px 15px;
+  text-align: center;
+  background: #fffcdb;
+  border: 1px solid #9C4E19;
+  border-radius: 5px 5px 0 0;
+  &.active {
+    background: #B6AD45;
+  }
+}
+
+.party-management {
+  overflow: hidden;
+  padding: 0 18px;
+  background: #fffcdb;
+  border: 1px solid #9C4E19;
+  border-radius: 0 0 5px 5px;
+}
+
+.party-management-list {
+  margin: 12px 0 !important;
+}
+
+.party-management-item {
   border: 1px solid black;
-  background: gray;
+  border-radius: 5px;
 }
 
 .applicant-list-move {
   display: block;
-  width: 56%;
   margin: 15px auto 0;
   padding: 6px 0;
   text-align: center;
-  background: gray;
-  border: 1px solid black;
+  background: linear-gradient(180deg, #F2C94C 52.49%, #857730 100%);
+  border: 1px solid #7F2509;
+}
+.party-management-title {
+  margin: 12px 0;
+  font-size: 15px;
 }
 
-.party-management-list {
-  margin: 30px 0 0;
+.party-management-body {
+  padding: 0 !important;
 }
 
-.party-management-item {
-  display: flex;
-  width: 85%;
-  margin: 0 auto;
-  background: gray;
-  border: 1px solid black;
+.party-recruiting-status {
+    display :flex;
+    padding: 6px;
+    align-items: center;
+    justify-content: center;
+    &.mod-yellow {
+        background: #F2C94C;
+        border-right: 1px solid #947A29;
+    }
 }
 
-.party-management-holding-item-left {
-  width: 37%;
-  padding: 6px;
-  text-align: center;
-  border-right: 1px solid black;
-  p {
-    padding: 6px 15px;
-    margin: 0 0 15px;
-    border: 1px solid black;
-  }
-  a{
-    display: block;
-    padding: 6px 15px;
-    border: 1px solid black;
-  }
+.party-management-body-title {
+    font-size: 16px;
 }
 
-.party-management-holding-item-right {
-  width: 63%;
-  text-align: center;
+.party-management-body-content {
+    padding: 18px 12px;
+    p {
+      font-size: 13px;
+      span {
+        margin-left: 6px;
+      }
+    }
 }
 
-.party-dissolution {
-  padding: 6px 15px;
-  border: 1px solid black;
+.party-management-detail {
+    &.marginb {
+      margin-bottom: 9px;
+    }
 }
-
-.party-management-join-item-left {
-  width: 63%;
-  padding: 15px;
-  border-right: 1px solid black;
-  p:first-child {
-    margin: 0 0 15px;
-  }
-}
-
-.party-management-join-item-right {
-  display: flex;
-  width: 37%;
-  justify-content: center;
-  align-items: center;
-}
-
-.party-exit-btn {
-  padding: 6px 15px;
-}
-
-.party-management-applying-item-left {
-  width: 63%;
-  padding: 15px;
-  border-right: 1px solid black;
-  p:first-child {
-    margin: 0 0 15px;
-  }
-}
-
-.party-management-applying-item-right {
-  display: flex;
-  width: 37%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-
