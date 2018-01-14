@@ -37,9 +37,11 @@ use App\Infrastracture\GuildMember\GuildMemberOnMemoryRepositoryImpl;
 use App\Infrastracture\Skill\SkillOnMemoryRepositoryImpl;
 use App\Domain\PossessionSkill\RepositoryInterface\PossessionSkillRepositoryInterface;
 use App\Infrastracture\WantedRole\WantedRoleEloquentRepositoryImpl;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Infrastracture\WantedRole\WantedRoleOnMemoryRepositoryImpl;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -49,9 +51,12 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(UrlGenerator $url)
     {
-        //
+        if(env('REDIRECT_HTTPS'))
+        {
+            URL::forceScheme('https');
+        }
     }
 
     /**
@@ -61,6 +66,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
         $monolog = Log::getMonolog();
         $monolog->pushHandler(new \Monolog\Handler\StreamHandler('php://stderr'));
 

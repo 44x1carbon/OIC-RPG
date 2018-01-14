@@ -1,3 +1,5 @@
+@inject('skillStatusListVMHelper', App\Infrastracture\GuildMember\SkillStatusListVMHelper)
+
 <div class="mypage-skill mypage-content" id="skill">
     <div class="skill-header">
         スキル
@@ -7,7 +9,7 @@
             <?php /* @var \App\Infrastracture\Field\FieldViewModel $field */ ?>
             @foreach($fields as $field)
                 <a class="skill-tab-item {{ $field->toKey() == $selectSkillTab? 'active' : '' }}"
-                   href="{{ route('show_my_page') . '?skillTab='.$field->toKey().'&jobTab='.$selectJobTab.'#skill' }}">
+                   href="{{ '?skillTab='.$field->toKey().'&jobTab='.$selectJobTab.'#skill' }}">
                     {{ $field->toShortJa() }}
                 </a>
             @endforeach

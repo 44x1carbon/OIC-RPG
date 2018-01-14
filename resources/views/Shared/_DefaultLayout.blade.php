@@ -11,7 +11,7 @@
         <main class="main">
             @yield('content')
         </main>
-        @component('Shared._footer')
+        @component('Shared._Footer')
         @endcomponent
     </body>
 </html>

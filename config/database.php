@@ -1,5 +1,7 @@
 <?php
 
+$clear_url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+
 return [
 
     /*
@@ -30,7 +32,6 @@ return [
     | choice installed on your machine before you begin development.
     |
     */
-
     'connections' => [
 
         'testing' => [
@@ -82,6 +83,17 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
+        ],
+
+        'herokumysql' => [
+            'driver'    => 'mysql',
+            'host'      => $clear_url["host"],
+            'database'  => substr($clear_url["path"], 1),
+            'username'  => $clear_url["user"],
+            'password'  => $clear_url["pass"],
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
         ],
 
     ],

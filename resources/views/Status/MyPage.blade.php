@@ -1,8 +1,5 @@
 @extends('Shared._DefaultLayout')
 
-@inject('skillStatusListVMHelper', App\Infrastracture\GuildMember\SkillStatusListVMHelper)
-@inject('jobStatusListVMHelper', App\Infrastracture\GuildMember\JobStatusListVMHelper)
-
 @section('header_title')
     ステータス
 @endsection

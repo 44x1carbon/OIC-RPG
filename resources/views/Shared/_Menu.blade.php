@@ -19,8 +19,7 @@
     <div class="panel">
         <div class="panel__header mod-border">参加申請</div>
         <div class="menu-links panel__body mod-no-padding flex-area">
-            {{--<a href="{{ route('') }}" class="menu__link">申請者一覧</a>--}}
-            <a href="#" class="menu__link">申請者一覧</a>
+            <a href="{{ route('shoe_participation_request_list') }}" class="menu__link">申請者一覧</a>
         </div>
     </div>
     <div class="panel">

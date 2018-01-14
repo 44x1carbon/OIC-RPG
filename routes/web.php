@@ -73,6 +73,10 @@ Route::get('/party/management/holding',PartyManagedController::class.'@holding')
 Route::get('/party/management/entry',PartyManagedController::class.'@entry')->name('entry_party');
 Route::get('/party/management/applying',PartyManagedController::class.'@applying')->name('applying_party');
 
+Route::get('/party/management/participation_request_list', GuildMemberController::class.'@managedPartyParticipationRequestList')
+    ->name('shoe_participation_request_list');
+
+
 /** ジョブ習得 */
 Route::post('/me/get_job', GuildMemberController::class.'@getJob')->name('do_get_job');
 
@@ -99,3 +103,6 @@ Route::get('/guild', function() {
 Route::get('/', function(){
     return view('landing');
 });
+
+Route::post('/participation_request/{partyParticipationRequestId}/reply', PartyParticipationRequestController::class.'@reply')
+    ->name('do_reply');

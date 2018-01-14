@@ -11,7 +11,9 @@ namespace App\ApplicationService;
 
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
+use App\Domain\PartyParticipationRequest\PartyParticipationRequest;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
+use App\Domain\PartyParticipationRequest\Spec\PartyParticipationRequestSpec;
 
 class PartyParticipationRequestAppService
 {
@@ -34,7 +36,11 @@ class PartyParticipationRequestAppService
         foreach ($partyList as $party){
             $partyParticipationRequestList = array_merge($partyParticipationRequestList, $this->partyParticipationRequestRepository->findListByPartyId($party->id()));
         }
-        return $partyParticipationRequestList;
+
+        $noReplyPartyParticipationRequestList = array_filter($partyParticipationRequestList, function(PartyParticipationRequest $request) {
+            return !PartyParticipationRequestSpec::alreadyReply($request);
+        });
+        return $noReplyPartyParticipationRequestList;
     }
 
     public function findStudentNumberPartyParticipationRequestList(StudentNumber $studentNumber)

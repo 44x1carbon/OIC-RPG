@@ -13,13 +13,16 @@ use App\ApplicationService\GuildMemberAppService;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\PartyParticipationRequest\PartyParticipationRequest;
 use App\Http\Requests\FavoriteJobRequest;
 use App\Http\Requests\GetJobRequest;
 use App\Http\Requests\GuildMemberRequest;
 use App\Http\Requests\MyPageRequest;
 use App\Http\ViewComposers\FieldViewModelComposer;
 use App\Infrastracture\GuildMember\GuildMemberViewModel;
+use App\Infrastracture\PartyParticipationRequest\PartyParticipationRequestViewModel;
 use App\Presentation\GuildMemberFacade;
+use App\Presentation\PartyParticipationRequestFacade;
 use App\Presentation\PossessionJobServiceFacade;
 
 class GuildMemberController extends Controller
@@ -104,5 +107,16 @@ class GuildMemberController extends Controller
             ->with('guildMember', $guildMemberViewModel)
             ->with('selectSkillTab', $request->selectSkillTab())
             ->with('selectJobTab', $request->selectJobTab());
+    }
+
+    public function managedPartyParticipationRequestList(GuildMember $loginMember, PartyParticipationRequestFacade $facade)
+    {
+        $participationRequests = $facade->findManagementPartyParticipationRequestList($loginMember->studentNumber()->code());
+        $participationRequestViewModels = array_map(function(PartyParticipationRequest $request) {
+            return new PartyParticipationRequestViewModel($request);
+        }, $participationRequests);
+
+        return view('Guild.Party.Management.PartyParticipationRequestList')
+            ->with('participationRequests', $participationRequestViewModels);
     }
 }

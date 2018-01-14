@@ -1,3 +1,5 @@
+@inject('skillStatusListVMHelper', App\Infrastracture\GuildMember\SkillStatusListVMHelper)
+
 <div class="mypage-profile mypage-content">
     <div class="profile-header {{ $guildMember->field()->toKey() }}">
         <h2 class="mypage-profile-name">{{ $guildMember->name }}</h2>
