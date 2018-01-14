@@ -86,10 +86,16 @@ class GuildMemberController extends Controller
         return redirect($request->redirectUrl());
     }
 
-    public function userPage(string $studentNumber, MyPageRequest $request, GuildMemberRepositoryInterface $guildMemberRepository)
+    public function userPage(
+        string $studentNumber,
+        MyPageRequest $request,
+        GuildMemberRepositoryInterface $guildMemberRepository,
+        GuildMember $loginMember
+    )
     {
         $guildMember =  $guildMemberRepository->findByStudentNumber(new StudentNumber($studentNumber));
         if(is_null($guildMember)) abort(404);
+        if($guildMember->studentNumber() == $loginMember->studentNumber()) return redirect()->route('show_my_page');
         $guildMemberViewModel = new GuildMemberViewModel($guildMember);
 
         $viewFactory = view();
