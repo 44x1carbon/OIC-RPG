@@ -1,3 +1,17 @@
-.entry-color{
-    background-color: white;
+.party-entry {
+    position: static;
+    margin: auto;
+    transform: translate(0, 0);
+}
+
+.party-entry-body {
+    height: auto;
+}
+
+.party-entry-organizer {
+    display: flex;
+    margin-top: 3px;
+    font-size: 12px;
+    color: white;
+    aligin-items: cemter;
 }
