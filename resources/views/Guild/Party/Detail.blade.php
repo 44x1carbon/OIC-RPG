@@ -67,7 +67,7 @@
                             @elseif(!is_null($partyParticipationRequestWantedRoleId))
                                 <button disabled class="btn mod-blue">他に申請中</button>
                             @else
-                                <form action="{{ route('store_party_participation_request', ['partyId' => $party->id, 'wantedroleId' => $wantedRole->id]) }}" method="POST">
+                                <form action="{{ route('store_party_participation_request', ['partyId' => $party->id, 'wantedRoleId' => $wantedRole->id]) }}" method="POST">
                                     {{ csrf_field() }}
                                     <button type="submit" class="btn mod-orange">参加したい！</button>
                                 </form>
