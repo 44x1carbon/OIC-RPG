@@ -56,7 +56,22 @@
                         </div>
 
                         <div class="wanted-role__action flex-area mod-center">
-                            <button class="btn mod-orange">参加したい！</button>
+                            @if($myPartyMemberInfo && $wantedRole->id === $myPartyMemberInfo->assigneeRole()->id())
+                                <button disabled class="btn mod-green">参加中</button>
+                            @elseif(!is_null($myPartyMemberInfo))
+                                <button disabled class="btn mod-blue">他に参加中</button>
+                            @elseif($wantedRole->assignableFrameNum === 0)
+                                <button disabled class="btn mod-blue">募集終了</button>
+                            @elseif($wantedRole->id === $partyParticipationRequestWantedRoleId)
+                                <button disabled class="btn mod-green">参加申請中</button>
+                            @elseif(!is_null($partyParticipationRequestWantedRoleId))
+                                <button disabled class="btn mod-blue">他に申請中</button>
+                            @else
+                                <form action="{{ route('store_party_participation_request', ['partyId' => $party->id, 'wantedRoleId' => $wantedRole->id]) }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn mod-orange">参加したい！</button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>
