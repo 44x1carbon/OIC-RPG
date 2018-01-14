@@ -10,136 +10,178 @@
 @section('content')
     <?php /* @var \App\Infrastracture\GuildMember\GuildMemberViewModel $guildMember */ ?>
     <div class="mypage">
-        <div class="mypage-profile">
-            <h2 class="mypage-profile-name">{{ $guildMember->name }}</h2>
-            <div class="mypage-profile-left">
-                <img src="{{ $guildMember->favoriteJob()->characterImagePath() }}" alt="">
-            </div><!--profile-left-->
-            <div class="mypage-profile-right">
-                <div class="mypage-profile-content">
-                    <p>学籍番号</p>
-                    <p>{{ $guildMember->studentNumber }}</p>
-                </div>
-                <div class="mypage-profile-content">
-                    <p>性別</p>
-                    <p>{{ $guildMember->gender->toJa() }}</p>
-                </div>
-                <div class="mypage-profile-content">
-                    <p>コース</p>
-                    <p>{{ $guildMember->course()->name }}</p>
-                    <div class="btn-wrap">
-                        <button class="btn btn-small">変更</button>
+        <div class="mypage-profile mypage-content">
+            <div class="profile-header {{ $guildMember->field()->toKey() }}">
+                <h2 class="mypage-profile-name">{{ $guildMember->name }}</h2>
+            </div>
+            <div class="profile-left">
+                <div class="fav-job-info">
+                    <div class="fav-job-img" style="background-image: url('{{ $guildMember->favoriteJob()->characterImagePath() }}')">
+                    </div>
+                    <div class="fav-job-name {{ $guildMember->favoriteJob()->field()->toKey() }}">
+                        {{ $guildMember->favoriteJob()->name }}
                     </div>
                 </div>
-                <div class="mypage-profile-content">
-                    <p>スキル</p>
-                    <?php $sortedSkill = $skillStatusListVMHelper->sortLevel($guildMember->skillStatusList()) ?>
-                    <?php /* @var \App\Infrastracture\GuildMember\MemberSkillStatusViewModel $memberSkillStatus */ ?>
-                    @foreach(array_slice($sortedSkill, 0, 5) as $memberSkillStatus)
-                        <p>{{ $memberSkillStatus->skill()->name }}: Lv.{{ $memberSkillStatus->possessionSkill->skillLevel }}</p>
-                    @endforeach
+            </div><!--profile-left-->
+            <div class="profile-right">
+                <div class="member-info">
+                    <div class="member-info__content member-info__high-order-skills">
+                        <div class="info-label">得意スキル</div>
+                        <ul class="info-data">
+                            <?php $sortedSkill = $skillStatusListVMHelper->sortLevel($guildMember->skillStatusList()) ?>
+                            <?php /* @var \App\Infrastracture\GuildMember\MemberSkillStatusViewModel $memberSkillStatus */ ?>
+                            @foreach(array_slice($sortedSkill, 0, 5) as $memberSkillStatus)
+                                <li class="high-order-skill possession-skill">
+                                    <span class="possession-skill__name">{{ $memberSkillStatus->skill()->name }}</span>
+                                    <span class="possession-skill__level">Lv.<span class="level__value">{{ $memberSkillStatus->possessionSkill->skillLevel }}</span></span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="member-info__content member-info__high-order-skills">
+                        <div class="info-label">所属コース</div>
+                        <div class="info-data">
+                            {{ $guildMember->course()->name }}
+                        </div>
+                    </div>
                 </div>
             </div><!--profile-right-->
-            <div class="mypage-profile-bottom">
-                <p>自己紹介</p>
+            <div class="profile-bottom">
+                <div class="member-info__content member-info__introduction">
+                    <div class="info-label">自己紹介</div>
+                    <div class="info-data">
+
+                    </div>
+                </div>
             </div>
         </div><!--profile-->
-        <div class="mypage-skill">
-            <h2>スキル</h2>
-            <ul class="mypage-skill-course-list">
-                <?php /* @var \App\Infrastracture\Field\FieldViewModel $field */ ?>
-                @foreach($fields as $field)
-                    <li class="mypage-skill-course-item"><a>{{ $field->name }}</a></li>
-                @endforeach
-            </ul>
-            <!-- mypage-skill-course-list -->
-            <ul class="mypage-skill-list">
-                <?php $skillStatusList = $skillStatusListVMHelper->groupByField($guildMember->skillStatusList())['it']; ?>
-                <?php /* @var \App\Infrastracture\GuildMember\MemberSkillStatusViewModel $memberSkillStatus */ ?>
-                @foreach($skillStatusList as $memberSkillStatus)
-                    @if($memberSkillStatus->skillAcquisitionStatus->isLearned())
-                        <li class="mypage-skill-item">
-                            <p>{{ $memberSkillStatus->skill()->name }}</p>
-                            <p>Lv.{{ $memberSkillStatus->possessionSkill->skillLevel }}</p>
-                        </li>
-                    @else
-                        <li class="mypage-skill-item">
-                            <p>{{ $memberSkillStatus->skill()->name }}</p>
-                            <p>未取得</p>
-                        </li>
-                    @endif
-                @endforeach
-            </ul>
+
+        <div class="mypage-skill mypage-content" id="skill">
+            <div class="skill-header">
+                スキル
+            </div>
+            <div class="skill-content">
+                <div class="skill-tab">
+                    <?php /* @var \App\Infrastracture\Field\FieldViewModel $field */ ?>
+                    @foreach($fields as $field)
+                        <a class="skill-tab-item {{ $field->toKey() == $selectSkillTab? 'active' : '' }}"
+                            href="{{ route('show_my_page') . '?skillTab='.$field->toKey().'&jobTab='.$selectJobTab.'#skill' }}">
+                            {{ $field->toShortJa() }}
+                        </a>
+                    @endforeach
+                </div>
+
+                <ul class="skill-list">
+                    <?php $skillStatusList = $skillStatusListVMHelper->groupByField($guildMember->skillStatusList())[$selectSkillTab]; ?>
+                    <?php /* @var \App\Infrastracture\GuildMember\MemberSkillStatusViewModel $memberSkillStatus */ ?>
+                    @foreach($skillStatusList as $memberSkillStatus)
+                        @if($memberSkillStatus->skillAcquisitionStatus->isLearned())
+                            <li class="skill-item learned possession-skill">
+                                <span class="possession-skill__name">{{ $memberSkillStatus->skill()->name }}</span>
+                                <span class="possession-skill__level">Lv.<span class="level__value">{{ $memberSkillStatus->possessionSkill->skillLevel }}</span></span>
+                            </li>
+                        @else
+                            <li class="skill-item not-learned possession-skill">
+                                <span class="possession-skill__name">{{ $memberSkillStatus->skill()->name }}</span>
+                                <span class="possession-skill__level">未取得</span>
+                            </li>
+                        @endif
+                    @endforeach
+                </ul>
+            </div>
+
         </div>
         <!-- mypage-skill -->
-        <div class="mypage-job">
-            <h2>ジョブ</h2>
-            <ul class="mypage-job-course-list">
-                <?php /* @var \App\Infrastracture\Field\FieldViewModel $field */ ?>
-                @foreach($fields as $field)
-                    <li class="mypage-job-course-item"><a>{{ $field->name }}</a></li>
-                @endforeach
-            </ul>
-            <ul class="mypage-job-list">
-                <?php $jobStatusList = $jobStatusListVMHelper->groupByField($guildMember->jobStatusList())['it']; ?>
-                <?php /* @var \App\Infrastracture\GuildMember\MemberJobStatusViewModel $memberJobStatus */ ?>
-                @foreach($jobStatusList as $memberJobStatus)
-                <li class="mypage-job-item">
-                    @if($memberJobStatus->status->isGettable())
-                        <a class="mypage-job-link">
-                            <div class="mypage-job-pic-mask">
-                                <img src="{{ $memberJobStatus->job()->characterImagePath() }}" alt="">
-                            </div>
-                            <div class="mypage-job-content">
-                                <p>{{ $memberJobStatus->job()->name }}</p>
-                                <p>習得可能</p>
-                                <p>
-                                    取得条件
-                                    <?php /* @var \App\Infrastracture\Job\GetConditionViewModel $condition */ ?>
-                                    @foreach($memberJobStatus->job()->getConditions() as $condition)
-                                        <span>{{ $condition->skill()->name }}: Lv.{{ $condition->requiredLevel }}</span>
-                                    @endforeach
-                                </p>
-                            </div>
+        <div class="mypage-job mypage-content" id="job">
+            <div class="job-header">
+                ジョブ
+            </div>
+            <div class="job-content">
+                <div class="job-tab">
+                    <?php /* @var \App\Infrastracture\Field\FieldViewModel $field */ ?>
+                    @foreach($fields as $field)
+                        <a class="job-tab-item {{ $field->toKey() == $selectJobTab? 'active' : '' }}"
+                           href="{{ route('show_my_page') . '?skillTab='.$selectSkillTab.'&jobTab='.$field->toKey().'#job' }}">
+                            {{ $field->toShortJa() }}
                         </a>
-                    @elseif($memberJobStatus->status->isLearned())
-                        <a class="mypage-job-link">
-                            <div class="mypage-job-pic-mask">
-                                <img src="{{ $memberJobStatus->job()->characterImagePath() }}" alt="">
+                    @endforeach
+                </div>
+                <ul class="job-list">
+                    <?php $jobStatusList = $jobStatusListVMHelper->groupByField($guildMember->jobStatusList())[$selectJobTab]; ?>
+                    <?php /* @var \App\Infrastracture\GuildMember\MemberJobStatusViewModel $memberJobStatus */ ?>
+                    @foreach($jobStatusList as $memberJobStatus)
+                        <li class="job-item">
+                            <div class="job-img-area">
+                                <div class="job-img">
+                                    @if($memberJobStatus->status->isGettable())
+                                        <img src="{{ $memberJobStatus->job()->silhouettePath() }}" alt="">
+                                    @elseif($memberJobStatus->status->isLearned())
+                                        <img src="{{ $memberJobStatus->job()->characterImagePath() }}" alt="">
+                                    @else
+                                        <img src="{{ $memberJobStatus->job()->silhouettePath() }}" alt="">
+                                    @endif
+                                </div>
                             </div>
-                            <div class="mypage-job-content">
-                                <p>{{ $memberJobStatus->job()->name }}</p>
-                                <p>習得済み</p>
-                                <p>
-                                    取得条件
-                                    <?php /* @var \App\Infrastracture\Job\GetConditionViewModel $condition */ ?>
-                                    @foreach($memberJobStatus->job()->getConditions() as $condition)
-                                        <span>{{ $condition->skill()->name }}: Lv.{{ $condition->requiredLevel }}</span>
-                                    @endforeach
-                                </p>
+                            <div class="job-info-area">
+                                <div class="job-info">
+                                    <div class="job-info__name">
+                                        {{ $memberJobStatus->job()->name }}
+                                    </div>
+                                </div>
                             </div>
-                        </a>
-                    @else
-                        <a class="mypage-job-link">
-                            <div class="mypage-job-pic-mask">
-                                <img src="{{ $memberJobStatus->job()->characterImagePath() }}" alt="">
+                            <div class="job-status-area">
+                                <div class="job-status">
+                                    @if($memberJobStatus->status->isGettable())
+                                        習得可能
+                                    @elseif($memberJobStatus->job()->id == $guildMember->favoriteJob()->id)
+                                        お気に入り
+                                    @elseif($memberJobStatus->status->isLearned())
+                                        習得済み
+                                    @else
+                                        未習得
+                                    @endif
+                                </div>
                             </div>
-                            <div class="mypage-job-content">
-                                <p>{{ $memberJobStatus->job()->name }}</p>
-                                <p>未習得</p>
-                                <p>
-                                    取得条件
-                                    <?php /* @var \App\Infrastracture\Job\GetConditionViewModel $condition */ ?>
-                                    @foreach($memberJobStatus->job()->getConditions() as $condition)
-                                        <span>{{ $condition->skill()->name }}: Lv.{{ $condition->requiredLevel }}</span>
-                                    @endforeach
-                                </p>
+                            <div class="job-get-condition-area">
+                                <div class="job-get-condition">
+                                    <div class="job-get-condition__label">取得条件</div>
+                                    <ul class="job-get-condition__list">
+                                        <?php /* @var \App\Infrastracture\Job\GetConditionViewModel $condition */ ?>
+                                        @foreach($memberJobStatus->job()->getConditions() as $condition)
+                                            <li class="condtion possession-skill">
+                                                <span class="possession-skill__name">{{ $condition->skill()->name }}</span>
+                                                <span class="possession-skill__level">Lv.<span class="level__value">{{ $condition->requiredLevel }}</span></span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
-                        </a>
-                    @endif
-                </li>
-                @endforeach
-            </ul>
+                            <div class="job-action-area">
+                                <div class="job-action">
+                                    @if($memberJobStatus->status->isGettable())
+                                        <form action="{{ route('do_get_job') }}" method="post"
+                                              class="action__get">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="jobId" value="{{ $memberJobStatus->job()->id }}">
+                                            <input type="hidden" name="redirectUrl" value="{{ route('show_my_page') . '?skillTab='.$selectSkillTab.'&jobTab='.$selectJobTab.'#job' }}">
+                                            <button type="submit">習得</button>
+                                        </form>
+                                    @elseif($memberJobStatus->status->isLearned())
+                                        <form action="{{ route('do_favorite_job') }}" method="post"
+                                              class="action__favorite">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="jobId" value="{{ $memberJobStatus->job()->id }}">
+                                            <input type="hidden" name="redirectUrl" value="{{ route('show_my_page') . '?skillTab='.$selectSkillTab.'&jobTab='.$selectJobTab.'#job' }}">
+                                            <button type="submit" class="{{ $memberJobStatus->job()->id == $guildMember->favoriteJob()->id? 'disable' : '' }}">お気に入り</button>
+                                        </form>
+                                    @else
+                                    @endif
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
     </div><!--mypage-->
 @endsection

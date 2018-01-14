@@ -10,6 +10,9 @@ use App\Domain\GuildMember\ValueObjects\Gender;
 use App\Domain\GuildMember\ValueObjects\LoginInfo;
 use App\Domain\GuildMember\ValueObjects\MailAddress;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\Job\ValueObjects\JobId;
+use App\Domain\PossessionJob\PossessionJob;
+use App\Domain\PossessionJob\PossessionJobCollection;
 use App\Domain\PossessionSkill\PossessionSkillCollection;
 use App\Infrastracture\AuthData\AuthData;
 use Illuminate\Auth\Events\Login;
@@ -45,7 +48,11 @@ class  GuildMemberAppService
             $course,
             $gender,
             $mailAddress,
-            $defaultJob->jobId()
+            $defaultJob->jobId(),
+            null,
+            new PossessionJobCollection([
+                new PossessionJob($studentNumber, $defaultJob->jobId())
+            ])
         );
 
         if($this->repository->save($guildMember)) {
@@ -53,5 +60,14 @@ class  GuildMemberAppService
         } else {
             throw new \Exception('[ApplicationService] Guild Member Register Error');
         }
+    }
+
+    public function setupFavoriteJob(StudentNumber $studentNumber, JobId $jobId): JobId
+    {
+        $guildMember = $this->repository->findByStudentNumber($studentNumber);
+        $guildMember->setFavoriteJob($jobId);
+        $this->repository->save($guildMember);
+
+        return $jobId;
     }
 }

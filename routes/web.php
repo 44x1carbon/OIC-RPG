@@ -31,6 +31,9 @@ Route::post('/sign_up/profile', GuildMemberRegistrationController::class.'@doPro
 Route::get('/sign_up/school_info', GuildMemberRegistrationController::class.'@showSchoolInfo')->name('show_sign_up_school_info');
 Route::post('/sign_up/school_info', GuildMemberRegistrationController::class.'@doSchoolInfo')->name('do_sign_up_school_info');
 Route::post('/sign_up', SignUpController::class.'@store')->name('post_sign_up');
+Route::get('/sign_in', function() {
+    return view('SignIn');
+})->name('show_sign_in');
 Route::post('/sign_in', SignInController::class.'@store')->name('post_sign_in');
 
 /** パーティー作成のフロー */
@@ -45,7 +48,8 @@ Route::post('/guild_member', GuildMemberController::class.'@update')->name('upda
 
 Route::delete('/guild_member/delete', GuildMemberController::class.'@destroy')->name('destroy_guild_member');
 
-Route::get('/me/my_page', GuildMemberController::class.'@myPage')->name('my_page');
+/** マイページ */
+Route::get('/me/my_page', GuildMemberController::class.'@myPage')->name('show_my_page');
 
 /** パーティー編集 */
 Route::get('/party/edit', function() {
@@ -70,12 +74,20 @@ Route::get('/party/management/applying', function() {
     return view('guild.party.management.applying');
 });
 
+
+/** ジョブ習得 */
+Route::post('/me/get_job', GuildMemberController::class.'@getJob')->name('do_get_job');
+
+/** お気に入りのジョブの設定 */
+Route::post('/me/favorite_job', GuildMemberController::class.'@setupFavoriteJob')->name('do_favorite_job');
+
+/** デバッグ用 */
 if(env('APP_ENV', 'local') == 'local') {
     Route::get('/debug/learn_skill', DebugController::class.'@showLearnSkill')->name('show_learn_skill');
     Route::post('/debug/learn_skill', DebugController::class.'@doLearnSkill');
 }
 
-Route::get('/', function(\App\Domain\GuildMember\GuildMember $loginMember) {
+Route::get('/top', function(\App\Domain\GuildMember\GuildMember $loginMember) {
    return view('Top')
        ->with('guildMember', new \App\Infrastracture\GuildMember\GuildMemberViewModel($loginMember));
 })->name('top');
@@ -84,6 +96,6 @@ Route::get('/guild', function() {
     return view('Guild.Top');
 })->name('show_guild');
 
-Route::get('/landing', function(){
+Route::get('/', function(){
     return view('landing');
 });
