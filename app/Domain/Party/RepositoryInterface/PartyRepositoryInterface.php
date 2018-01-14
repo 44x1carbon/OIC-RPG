@@ -18,6 +18,8 @@ interface PartyRepositoryInterface
 
     public function findListByManagerId(StudentNumber $managerId): ?array;
 
+    public function findListByOfficerId(StudentNumber $officerId): ?array;
+
     public function save(Party $party): bool;
 
     public function all(): array;

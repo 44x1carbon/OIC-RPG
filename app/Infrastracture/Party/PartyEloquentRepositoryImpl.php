@@ -43,6 +43,22 @@ class PartyEloquentRepositoryImpl implements PartyRepositoryInterface
         })->toArray();
     }
 
+    public function findListByOfficerId(StudentNumber $officerId): ?array
+    {
+        $partyList = $this->all();
+        $officerParties = array_filter($partyList, function ($party) use($officerId) {
+            $result = false;
+            foreach ($party->partyMembers() as $partyMember) {
+                if ($officerId->equals($partyMember->memberId())) {
+                    $result = true;
+                }
+            }
+            return $result;
+        });
+
+        return $officerParties;
+    }
+
     public function save(Party $party): bool
     {
         return PartyEloquent::saveDomainObject($party);
