@@ -15,17 +15,18 @@
     <ul class="party-list party-management-list">
         <li class="party-item party-management-item">
             <div class="party-header">
-                <p class="party-type">Webシステム</p>
+                <p class="party-type">webシステム</p>
                 <h3 class="party-theme">学内の共同政策を推進するサービス</h3>
             </div>
             <div class="party-body row party-management-body">
                 <p class="party-body-left party-recruiting-status mod-yellow">募集中</p>
+                <!-- 募集中= mod-yellow 募集終了= mod-gray -->
                 <div class="party-body-right">
                     <div class="party-management-detail">
                         <h4 class="party-management-body-title">役割</h4>
                         <div class="party-management-body-content">
-                            <p>Webデザイナー</p>
-                            <p>希望ジョブ：Webデザイナー</p>
+                            <p>webデザイナー</p>
+                            <p>希望ジョブ：webデザイナー</p>
                         </div>
                     </div>
                     <div class="party-management-detail marginb">
@@ -42,6 +43,5 @@
             </div>
         </li>
     </ul>
-    </section>
 </div>
 @endsection
