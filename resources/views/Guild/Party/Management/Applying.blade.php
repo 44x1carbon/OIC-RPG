@@ -8,7 +8,7 @@
 <div class="background">
     <div class="layer layer1 board"></div>
 </div><!-- background -->
-@include('guild.party.management._navgation', ['name' => 'applying'])
+@include('Guild.Party.Management._Navgation', ['name' => 'applying'])
 <div class="party-management">
     <h2 class="party-management-title">参加申請中のパーティー一覧</h2>
     <ul class="party-list party-management-list">

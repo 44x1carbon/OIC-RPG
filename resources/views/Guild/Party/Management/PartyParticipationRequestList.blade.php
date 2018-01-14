@@ -13,7 +13,7 @@
     <div class="background">
         <div class="layer layer1 board"></div>
     </div><!-- background -->
-    @include('guild.party.management._navgation')
+    @include('Guild.Party.Management._Navgation')
     <div class="party-management participation-request-list">
         <?php /* @var \App\Infrastracture\PartyParticipationRequest\PartyParticipationRequestViewModel  $participationRequest */ ?>
         <?php
