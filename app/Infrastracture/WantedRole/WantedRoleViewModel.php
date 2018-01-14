@@ -48,4 +48,20 @@ class WantedRoleViewModel
 
         return $this->wantedMembers;
     }
+
+    /**
+     * @return bool
+     */
+    public function isFrameFull(): bool
+    {
+        return $this->wantedRole->isFrameFull();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFrameEmpty(): bool
+    {
+        return $this->wantedRole->isFrameEmpty();
+    }
 }
