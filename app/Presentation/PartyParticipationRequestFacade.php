@@ -40,6 +40,22 @@ class PartyParticipationRequestFacade
         return $this->partyAppService->sendPartyParticipationRequest($partyId, $wantedRoleId, new StudentNumber($guildMemberIdData));
     }
 
+    // $partyParticipationRequestIdからパーティ参加申請をキャンセルする
+    public function cancelPartyParticipationRequest(
+        string $partyParticipationRequestId,
+        string $loginMemberId
+    )
+    {
+        $partyParticipationRequest = $this->partyParticipationRequestRepo->findById($partyParticipationRequestId);
+
+        // パーティ参加申請送った本人が行っているかチェック
+        if ($partyParticipationRequest->guildMemberId()->equals(new StudentNumber($loginMemberId))){
+            return $this->partyAppService->cancelPartyParticipationRequest($partyParticipationRequest->id());
+        }else{
+            return false;
+        }
+    }
+
     // パーティ参加申請に返信
     public function replyPartyParticipationRequest(
         string $partyParticipationRequestId,

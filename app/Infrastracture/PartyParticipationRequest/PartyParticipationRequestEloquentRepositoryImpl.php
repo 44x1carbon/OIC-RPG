@@ -102,4 +102,12 @@ class PartyParticipationRequestEloquentRepositoryImpl implements PartyParticipat
         } while ($this->eloquent->where('party_participation_request_id', $randId)->first());
         return $randId;
     }
+
+    public function delete(PartyParticipationRequest $partyParticipationRequest): bool
+    {
+        $partyParticipationRequestModel = $this->eloquent->findById($partyParticipationRequest->id());
+        if (!$partyParticipationRequestModel) return false;
+
+        return $partyParticipationRequestModel->delete();
+    }
 }

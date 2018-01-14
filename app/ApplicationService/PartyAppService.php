@@ -89,6 +89,13 @@ class PartyAppService
 
         return $partyParticipationRequest->id();
     }
+    public function cancelPartyParticipationRequest(
+        string $partyParticipationRequestId
+    )
+    {
+        $partyParticipationRequest = $this->partyParticipationRequestRepository->findById($partyParticipationRequestId);
+        return $this->partyParticipationRequestRepository->delete($partyParticipationRequest);
+    }
 
     public function replyPartyParticipationRequest(string $partyParticipationRequestId, StudentNumber $partyManagerId, Reply $reply)
     {
