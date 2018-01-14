@@ -1,7 +1,5 @@
 @extends('Shared._DefaultLayout')
 
-
-
 @section('header_title')
     ステータス
 @endsection

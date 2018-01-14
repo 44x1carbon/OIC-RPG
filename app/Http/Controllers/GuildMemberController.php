@@ -109,14 +109,14 @@ class GuildMemberController extends Controller
             ->with('selectJobTab', $request->selectJobTab());
     }
 
-    public function managedParticipationRequestList(GuildMember $loginMember, PartyParticipationRequestFacade $facade)
+    public function managedPartyParticipationRequestList(GuildMember $loginMember, PartyParticipationRequestFacade $facade)
     {
         $participationRequests = $facade->findManagementPartyParticipationRequestList($loginMember->studentNumber()->code());
         $participationRequestViewModels = array_map(function(PartyParticipationRequest $request) {
             return new PartyParticipationRequestViewModel($request);
         }, $participationRequests);
 
-        return view('Guild.Party.Management.ParticipationRequestList')
+        return view('Guild.Party.Management.PartyParticipationRequestList')
             ->with('participationRequests', $participationRequestViewModels);
     }
 }

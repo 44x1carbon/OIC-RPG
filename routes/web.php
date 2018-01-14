@@ -80,7 +80,7 @@ Route::get('/party/management/applying', function() {
     return view('guild.party.management.applying');
 });
 
-Route::get('/party/management/participation_request_list', GuildMemberController::class.'@managedParticipationRequestList')
+Route::get('/party/management/participation_request_list', GuildMemberController::class.'@managedPartyParticipationRequestList')
     ->name('shoe_participation_request_list');
 
 
