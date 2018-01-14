@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\ApplicationService\GuildMemberAppService;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Http\Requests\FavoriteJobRequest;
 use App\Http\Requests\GetJobRequest;
 use App\Http\Requests\GuildMemberRequest;
@@ -83,5 +84,25 @@ class GuildMemberController extends Controller
         $facade->setupFavoriteJob($loginMember->studentNumber()->code(), $request->jobId());
 
         return redirect($request->redirectUrl());
+    }
+
+    public function userPage(
+        string $studentNumber,
+        MyPageRequest $request,
+        GuildMemberRepositoryInterface $guildMemberRepository,
+        GuildMember $loginMember
+    )
+    {
+        $guildMember =  $guildMemberRepository->findByStudentNumber(new StudentNumber($studentNumber));
+        if(is_null($guildMember)) abort(404);
+        if($guildMember->studentNumber() == $loginMember->studentNumber()) return redirect()->route('show_my_page');
+        $guildMemberViewModel = new GuildMemberViewModel($guildMember);
+
+        $viewFactory = view();
+        $viewFactory->composer('*', FieldViewModelComposer::class);
+        return $viewFactory->make('Status.MyPage')
+            ->with('guildMember', $guildMemberViewModel)
+            ->with('selectSkillTab', $request->selectSkillTab())
+            ->with('selectJobTab', $request->selectJobTab());
     }
 }

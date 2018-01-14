@@ -50,6 +50,8 @@ Route::delete('/guild_member/delete', GuildMemberController::class.'@destroy')->
 
 /** マイページ */
 Route::get('/me/my_page', GuildMemberController::class.'@myPage')->name('show_my_page');
+/** マイページ */
+Route::get('/guild_members/{studentNumber}', GuildMemberController::class.'@userPage')->name('show_user_page');
 
 /** パーティー編集 */
 Route::get('/party/edit', function() {

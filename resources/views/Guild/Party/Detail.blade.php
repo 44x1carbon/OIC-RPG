@@ -86,13 +86,13 @@
             <div class="member-list__body flex-area panel__body mod-no-padding">
                 <?php /* @var \App\Infrastracture\Party\PartyMemberInfoViewModel $partyMemberInfo */ ?>
                 @foreach($party->partyMemberInfos() as $partyMemberInfo)
-                    <div class="member-item">
+                    <a class="member-item" href="{{ route('show_user_page', ['studentNumber' => $partyMemberInfo->member()->studentNumber]) }}">
                         <div class="member-item__role">{{ $partyMemberInfo->assigneeRole->roleName }}</div>
                         <div class="member-item__image">
                             <img src="{{ $partyMemberInfo->member()->favoriteJob()->mypImagePath() }}" class="member-icon">
                         </div>
                         <div class="member-item__name">{{ $partyMemberInfo->member()->name }}</div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>
