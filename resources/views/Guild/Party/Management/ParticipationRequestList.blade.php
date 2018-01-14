@@ -60,7 +60,7 @@
                                                 <button class="btn mod-red mod-no-border"
                                                         type="submit"
                                                         name="reply"
-                                                        value="{{ \App\Domain\PartyParticipationRequest\ValueObjects\Reply::REJECTION }}">>
+                                                        value="{{ \App\Domain\PartyParticipationRequest\ValueObjects\Reply::REJECTION }}">
                                                     拒否
                                                 </button>
                                             </form>
