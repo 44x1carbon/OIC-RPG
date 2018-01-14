@@ -28,4 +28,6 @@ interface PartyParticipationRequestRepositoryInterface
     public function all(): array;
 
     public function nextId(): string;
+
+    public function delete(PartyParticipationRequest $partyParticipationRequest): bool;
 }
