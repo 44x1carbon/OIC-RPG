@@ -85,6 +85,8 @@ Route::post('/me/favorite_job', GuildMemberController::class.'@setupFavoriteJob'
 if(env('APP_ENV', 'local') == 'local') {
     Route::get('/debug/learn_skill', DebugController::class.'@showLearnSkill')->name('show_learn_skill');
     Route::post('/debug/learn_skill', DebugController::class.'@doLearnSkill');
+    Route::get('/debug/sign_in', DebugController::class.'@showSignIn')->name('show_sign_in');
+    Route::post('/debug/sign_in', DebugController::class.'@doSignIn');
 }
 
 Route::get('/top', function(\App\Domain\GuildMember\GuildMember $loginMember) {
