@@ -25,7 +25,7 @@ class PartyParticipationRequestViewModel
     private $guildMemberRepo;
     private $party = null;
     private $wantedRole = null;
-    private $guildMember = null;
+    private $applicant = null;
 
     public function __construct(PartyParticipationRequest $partyParticipationRequest)
     {
@@ -63,14 +63,14 @@ class PartyParticipationRequestViewModel
         return $this->wantedRole;
     }
 
-    public function guildMember(): GuildMemberViewModel
+    public function applicant(): GuildMemberViewModel
     {
-        if (is_null($this->guildMember)){
+        if (is_null($this->applicant)){
             $guildMember = $this->guildMemberRepo->findByStudentNumber($this->partyParticipationRequest->guildMemberId());
-            $this->guildMember = new GuildMemberViewModel($guildMember);
+            $this->applicant = new GuildMemberViewModel($guildMember);
         }
 
-        return $this->guildMember;
+        return $this->applicant;
     }
 
 }
