@@ -12,38 +12,42 @@
         <div class="search">
             <div class="search-warp">
                 <form action="{{ route('search_party') }}" method="GET">
-                    <div class="radio-wrap">
-                        <input type="radio" name="radio" value="" id="serach-party" checked>
-                        <label class="radio-name" for="serach-party">パーティー</label>
-                        <input type="radio" name="radio" value="" id="serach-user">
-                        <label class="radio-name" for="serach-user">ユーザー</label>
-                    </div>
+                    <h2 class="search-title">検索条件</h2>
                     <div class="input-wrap">
-                        <input type="text" class="input" placeholder="検索キーワード" name="keyword">
+                        <input type="text" class="input search-input" placeholder="検索キーワード" name="keyword">
+                        <button type="submit" class="btn btn-small mod-green search-submit">検索</button>
                     </div>
-                    <button type="submit" class="btn">検索</button>
                 </form>
             </div>
-            <ul class="search_list">
+            <ul class="party-list">
                 <?php /* @var App\Domain\Party\Party $party */ ?>
                 @foreach($searchResult as $index => $party)
-                    <li class="search_list-item">
-                        <a href="{{ route('show_party_detail', ['partyId' => $party->id()]) }}" class="list-item-link">
-                            <div class="search_list-item-header">
-                                <h3 class="search_list-item-title">{{ $party->productionIdea()->productionTheme() }}</h3>
+                    <li class="party-list-item map">
+                        <a href="{{ route('show_party_detail', ['partyId' => $party->id()]) }}" class="party">
+                            <div class="party-header">
+                                <p class="party-type">{{ $party->productionIdea()->productionType()->name() }}</p>
+                                <h3 class="party-theme">{{ $party->productionIdea()->productionTheme() }}</h3>
                             </div>
-                            <ul class="search_list-item-body">
-                                <li class="party-seach_list-item-content-title">
-                                    種類:
-                                    <p class="party-seach_list-item-content">{{ $party->productionIdea()->productionType()->name() }}</p>
-                                </li>
-                                <li class="party-seach_list-item-content-title">
-                                    説明:
-                                    <p class="party-seach_list-item-content">
-                                        {{ $party->productionIdea()->ideaDescription() }}
-                                    </p>
-                                </li>
-                            </ul>
+                            <div class="party-body">
+                                <h4 class="party-body-title">募集中の役割</h4>
+                                <ul class="party-wanted_role-list">
+                                    <li class="party-wanted_role-item row flex-center before">
+                                        <div class="party-wanted_role-content">
+                                            <p class="party-wanted_role-name">サーバーサイドエンジニア</p>
+                                            <p class="party-wanted_role-reference_job">希望ジョブ：Webエンジニア</p>
+                                        </div>
+                                        <p class="party-wanted_role-status mod-red">満員</p>
+                                    </li>
+                                    <li class="party-wanted_role-item row flex-center before">
+                                        <div class="party-wanted_role-content">
+                                            <p class="party-wanted_role-name">Webデザイナー</p>
+                                            <p class="party-wanted_role-reference_job">希望ジョブ：Webデザイナー</p>
+                                        </div>
+                                        <p class="party-wanted_role-status mod-green">空き</p>
+                                    </li>
+
+                                <ul>
+                            </div>
                         </a>
                     </li>
                 @endforeach

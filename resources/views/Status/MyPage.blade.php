@@ -8,6 +8,9 @@
 @endsection
 
 @section('content')
+    <div class="background">
+        <div class="layer layer1" style="background-color: #333"></div>
+    </div>
     <?php /* @var \App\Infrastracture\GuildMember\GuildMemberViewModel $guildMember */ ?>
     <div class="mypage">
         <div class="mypage-profile mypage-content">

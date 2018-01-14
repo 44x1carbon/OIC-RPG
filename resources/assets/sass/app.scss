@@ -2,7 +2,7 @@
 @import '~mathsass/dist/math';
 
 body {
-    background-color: #333;
+    //background-color: #333;
 }
 
 @import "variables";
@@ -57,3 +57,4 @@ Object
 @import "page/_search.scss";
 @import "page/_party-search.scss";
 @import "page/_landing.scss";
+@import "page/_party-list.scss";
