@@ -8,6 +8,7 @@ use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 use App\Http\Requests\PartyCreateRequest;
 use App\Infrastracture\Party\PartyViewModel;
+use App\Infrastracture\PartyParticipationRequest\PartyParticipationRequestViewModel;
 use App\Presentation\PartyServiceFacade;
 use Illuminate\Http\Request;
 
@@ -44,10 +45,11 @@ class PartyController extends Controller
         $party = $partyRepository->findById($partyId);
 
         // パーティに対し申請中の役割があれば取得
-        $partyParticipationRequestWantedRoleId = null;
-        $myPartyParticipationRequest = $partyParticipationRequestRepo->findByPartyIdAndStudentNumber($partyId, $loginMember->studentNumber());
-        if($myPartyParticipationRequest){
-            $partyParticipationRequestWantedRoleId = $myPartyParticipationRequest->wantedRoleId();
+        $partyParticipationRequestViewModel = null;
+        $partyParticipationRequest = $partyParticipationRequestRepo->findByPartyIdAndStudentNumber($partyId, $loginMember->studentNumber());
+        if ($partyParticipationRequest)
+        {
+            $partyParticipationRequestViewModel = new PartyParticipationRequestViewModel($partyParticipationRequest);
         }
 
         // パーティに既に参加している場合は取得
@@ -60,7 +62,7 @@ class PartyController extends Controller
 
         return view('Guild.Party.Detail')
             ->with('party', new PartyViewModel($party))
-            ->with('partyParticipationRequestWantedRoleId', $partyParticipationRequestWantedRoleId)
+            ->with('partyParticipationRequest', $partyParticipationRequestViewModel)
             ->with('myPartyMemberInfo', $myPartyMemberInfo);
     }
 }

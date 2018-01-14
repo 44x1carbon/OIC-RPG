@@ -62,9 +62,13 @@
                                 <button disabled class="btn mod-blue">他に参加中</button>
                             @elseif($wantedRole->assignableFrameNum === 0)
                                 <button disabled class="btn mod-blue">募集終了</button>
-                            @elseif($wantedRole->id === $partyParticipationRequestWantedRoleId)
-                                <button disabled class="btn mod-green">参加申請中</button>
-                            @elseif(!is_null($partyParticipationRequestWantedRoleId))
+                            @elseif($partyParticipationRequest && $wantedRole->id === $partyParticipationRequest->wantedRole()->id)
+                                <form action="{{ route('destroy_party_participation_request', ['partyParticipationRequestId' => $partyParticipationRequest->id]) }}" method="POST">
+                                    {{ method_field('delete') }}
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn mod-green">申請キャンセル</button>
+                                </form>
+                            @elseif(!is_null($partyParticipationRequest))
                                 <button disabled class="btn mod-blue">他に申請中</button>
                             @else
                                 <form action="{{ route('store_party_participation_request', ['partyId' => $party->id, 'wantedRoleId' => $wantedRole->id]) }}" method="POST">
