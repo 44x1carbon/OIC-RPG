@@ -61,6 +61,7 @@ Route::get('/party/{partyId}/detail', PartyController::class.'@detail')->name('s
 
 /** パーティ参加申請 */
 Route::post('/party/{partyId}/send/{wantedRoleId}', PartyParticipationRequestController::class.'@store')->name('store_party_participation_request');
+Route::delete('/party_participation_request/{partyParticipationRequestId}/delete', PartyParticipationRequestController::class.'@destroy')->name('destroy_party_participation_request');
 
 /** 検索 */
 Route::get('/party/search', PartyController::class.'@search' )->name('search_party');

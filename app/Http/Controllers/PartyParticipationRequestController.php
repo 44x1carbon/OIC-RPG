@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\GuildMember\GuildMember;
 use App\Presentation\PartyParticipationRequestFacade;
+use Illuminate\Http\Request;
 
 class PartyParticipationRequestController
 {
@@ -23,5 +24,15 @@ class PartyParticipationRequestController
     {
         $partyParticipationRequestFacade->sendPartyParticipationRequest($partyId, $wantedRoleId, $loginMember->studentNumber()->code());
         return redirect()->route('show_party_detail', ['partyId' => $partyId]);
+    }
+
+    public function destroy(
+        string $partyParticipationRequestId,
+        PartyParticipationRequestFacade $partyParticipationRequestFacade,
+        GuildMember $loginMember
+    )
+    {
+        $partyParticipationRequestFacade->cancelPartyParticipationRequest($partyParticipationRequestId, $loginMember->studentNumber()->code());
+        return back();
     }
 }
