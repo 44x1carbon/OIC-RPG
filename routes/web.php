@@ -69,17 +69,9 @@ Route::delete('/party_participation_request/{partyParticipationRequestId}/delete
 Route::get('/party/search', PartyController::class.'@search' )->name('search_party');
 
 /** パーティー管理 */
-Route::get('/party/management/holding', function() {
-    return view('guild.party.management.holding');
-});
-Route::get('/party/management/entry', function() {
-    return view('guild.party.management.entry');
-});
-
-Route::get('/party/management/applying', function() {
-    return view('guild.party.management.applying');
-});
-
+Route::get('/party/management/holding',PartyManagedController::class.'@holding')->name('holding_party');
+Route::get('/party/management/entry',PartyManagedController::class.'@entry')->name('entry_party');
+Route::get('/party/management/applying',PartyManagedController::class.'@applying')->name('applying_party');
 
 /** ジョブ習得 */
 Route::post('/me/get_job', GuildMemberController::class.'@getJob')->name('do_get_job');
