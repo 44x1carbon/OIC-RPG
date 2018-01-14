@@ -1,0 +1,23 @@
+.participation-request-list {
+  .production-theme {
+    font-size: 20px;
+  }
+
+  .by-wanted-role {
+    .mypage-content {
+      margin-bottom: 0px;
+    }
+  }
+}
+.requester {
+  .replay-actions {
+    background-color: #BE9B64;
+    border: solid 1px #BE9B64;
+    justify-content: space-around;
+    padding: 10px;
+  }
+
+  @include not-last-child() {
+    margin-bottom: 20px;
+  }
+}
