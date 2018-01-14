@@ -20,33 +20,34 @@
                 </form>
             </div>
             <ul class="party-list">
-                <?php /* @var App\Domain\Party\Party $party */ ?>
+                <?php /* @var \App\Infrastracture\Party\PartyViewModel $party */ ?>
                 @foreach($searchResult as $index => $party)
                     <li class="party-list-item map">
-                        <a href="{{ route('show_party_detail', ['partyId' => $party->id()]) }}" class="party">
+                        <a href="{{ route('show_party_detail', ['partyId' => $party->id]) }}" class="party">
                             <div class="party-header">
-                                <p class="party-type">{{ $party->productionIdea()->productionType()->name() }}</p>
-                                <h3 class="party-theme">{{ $party->productionIdea()->productionTheme() }}</h3>
+                                <p class="party-type">{{ $party->productionIdea()->productionType->name }}</p>
+                                <h3 class="party-theme">{{ $party->productionIdea()->productionTheme }}</h3>
                             </div>
                             <div class="party-body">
                                 <h4 class="party-body-title">募集中の役割</h4>
                                 <ul class="party-wanted_role-list">
-                                    <li class="party-wanted_role-item row flex-center before">
-                                        <div class="party-wanted_role-content">
-                                            <p class="party-wanted_role-name">サーバーサイドエンジニア</p>
-                                            <p class="party-wanted_role-reference_job">希望ジョブ：Webエンジニア</p>
-                                        </div>
-                                        <p class="party-wanted_role-status mod-red">満員</p>
-                                    </li>
-                                    <li class="party-wanted_role-item row flex-center before">
-                                        <div class="party-wanted_role-content">
-                                            <p class="party-wanted_role-name">Webデザイナー</p>
-                                            <p class="party-wanted_role-reference_job">希望ジョブ：Webデザイナー</p>
-                                        </div>
-                                        <p class="party-wanted_role-status mod-green">空き</p>
-                                    </li>
+                                    <?php /* @var \App\Infrastracture\WantedRole\WantedRoleViewModel $wantedRole */ ?>
+                                    @foreach($party->wantedRoles() as $wantedRole)
+                                        <li class="party-wanted_role-item row flex-center before">
+                                            <div class="party-wanted_role-content">
+                                                <p class="party-wanted_role-name">{{ $wantedRole->roleName }}</p>
+                                                <p class="party-wanted_role-reference_job">希望ジョブ：{{ $wantedRole->referenceJob()->name }}</p>
+                                            </div>
+                                            @if($wantedRole->isFrameFull())
+                                                <p class="party-wanted_role-status mod-red">満員</p>
+                                            @endif
 
-                                <ul>
+                                            @if($wantedRole->isFrameEmpty())
+                                                <p class="party-wanted_role-status mod-green">空き</p>
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </a>
                     </li>
