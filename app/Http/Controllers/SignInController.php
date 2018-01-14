@@ -20,11 +20,10 @@ class SignInController extends Controller
     {
         $authData = SignInFacade::signIn($request->mailAddress(), $request->password());
         if ($authData){
-            // ログインに成功したGuildMemberのStudentNumberを返す
-            return response($authData->guildMemberEntity()->studentNumber()->code());
+            return redirect()->route('show_my_page');
         }
         // ログイン失敗
-        return response(null, 401);
+        return redirect()->back();
     }
 
 }

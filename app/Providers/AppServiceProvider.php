@@ -85,8 +85,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(PartyWrittenRequestRepositoryInterface::class, PartyWrittenRequestOnMemoryRepositoryImpl::class);
         $this->app->bind(GuildMember::class, function(): ?GuildMember
         {
+
+            if(Auth::check()) return AuthData::where([
+                'email' => Auth::user()->email,
+                'password' => Auth::user()->password,
+            ])->firstOrFail()->guildMemberEntity();
             if(env('APP_ENV', 'local') === 'local') return AuthData::firstOrFail()->guildMemberEntity();
-            if(Auth::check()) return Auth::user()->guildMemberEntity();
             return null;
         });
         $this->app->singleton(JobRepositoryInterface::class, JobEloquentRepositoryImpl::class);
