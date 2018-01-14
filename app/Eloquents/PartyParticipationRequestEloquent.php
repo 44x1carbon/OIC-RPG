@@ -33,6 +33,14 @@ class PartyParticipationRequestEloquent extends Model
     }
 
     /**
+     * 引数で与えられたPartyParticipationRequestのIdが存在すれば検索して返す
+     */
+    public static function findById(string $partyParticipationRequestId): ?PartyParticipationRequestEloquent
+    {
+        return self::where('party_participation_request_id', $partyParticipationRequestId)->first();
+    }
+
+    /**
      * ドメインオブジェクトからEloquentの属性をセットする
      */
     public function setAttrByEntity(PartyParticipationRequest $partyParticipationRequest): PartyParticipationRequestEloquent
