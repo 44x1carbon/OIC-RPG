@@ -110,3 +110,6 @@ Route::get('/guild', function() {
 Route::get('/', function(){
     return view('landing');
 });
+
+Route::post('/participation_request/{partyParticipationRequestId}/reply', PartyParticipationRequestController::class.'@reply')
+    ->name('do_reply');

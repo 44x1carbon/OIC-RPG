@@ -44,8 +44,26 @@
                                     <div class="requester">
                                         @include('Shared.Status._Profile', ['guildMember' => $participationRequest->applicant()])
                                         <div class="replay-actions flex-area">
-                                            <button class="btn mod-green">許可</button>
-                                            <button class="btn mod-red mod-no-border">拒否</button>
+                                            <form action="{{ route('do_reply', ['partyParticipationRequestId' => $participationRequest->id]) }}"
+                                                  method="post">
+                                                {{ csrf_field() }}
+                                                <button class="btn mod-green"
+                                                        type="submit"
+                                                        name="reply"
+                                                        value="{{ \App\Domain\PartyParticipationRequest\ValueObjects\Reply::PERMIT }}">
+                                                    許可
+                                                </button>
+                                            </form>
+                                            <form action="{{ route('do_reply', ['partyParticipationRequestId' => $participationRequest->id]) }}"
+                                                  method="post">
+                                                {{ csrf_field() }}
+                                                <button class="btn mod-red mod-no-border"
+                                                        type="submit"
+                                                        name="reply"
+                                                        value="{{ \App\Domain\PartyParticipationRequest\ValueObjects\Reply::REJECTION }}">>
+                                                    拒否
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 @endforeach
