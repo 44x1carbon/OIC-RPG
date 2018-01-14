@@ -48,7 +48,11 @@
                     </div><!-- item -->
                     <div class="item form-item">
                         <h4 class="form-item-title">備考</h4>
+<<<<<<< Updated upstream
                         <input type="textarea" class="input" name="party[wantedRoleList][{{$index}}][remarks]" value="{{ $wantedRole->remarks() }}"><!-- 備考 -->
+=======
+                        <textarea class="input textarea" name="party[wantedRoleList][{{$index}}][remarks]">{{ $wantedRole->remarks() }}</textarea><!-- 備考 -->
+>>>>>>> Stashed changes
                         @foreach($errors->get("party.wantedRoleList.$index.remarks") as $message)
                             <p>{{ $message }}</p>
                         @endforeach
