@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\GuildMember\GuildMember;
+use App\Domain\Party\Party;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 use App\Http\Requests\PartyCreateRequest;
@@ -31,8 +32,9 @@ class PartyController extends Controller
     {
         $keyword = $request->input('keyword', '');
         $searchResult = $partyServiceFacade->searchParty($keyword);
+        $partyViewModels = array_map(function(Party $party) { return new PartyViewModel($party);}, $searchResult);
         return view('Guild.Search.Party')
-            ->with('searchResult', $searchResult);
+            ->with('searchResult', $partyViewModels);
     }
   
     public function detail(GuildMember $loginMember, string $partyId, PartyRepositoryInterface $partyRepository)

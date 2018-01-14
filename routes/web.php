@@ -48,7 +48,8 @@ Route::post('/guild_member', GuildMemberController::class.'@update')->name('upda
 
 Route::delete('/guild_member/delete', GuildMemberController::class.'@destroy')->name('destroy_guild_member');
 
-Route::get('/me/my_page', GuildMemberController::class.'@myPage')->name('my_page');
+/** マイページ */
+Route::get('/me/my_page', GuildMemberController::class.'@myPage')->name('show_my_page');
 
 /** パーティー編集 */
 Route::get('/party/edit', function() {
@@ -76,6 +77,14 @@ Route::get('/party/management/applying', function() {
     return view('guild.party.management.applying');
 });
 
+
+/** ジョブ習得 */
+Route::post('/me/get_job', GuildMemberController::class.'@getJob')->name('do_get_job');
+
+/** お気に入りのジョブの設定 */
+Route::post('/me/favorite_job', GuildMemberController::class.'@setupFavoriteJob')->name('do_favorite_job');
+
+/** デバッグ用 */
 if(env('APP_ENV', 'local') == 'local') {
     Route::get('/debug/learn_skill', DebugController::class.'@showLearnSkill')->name('show_learn_skill');
     Route::post('/debug/learn_skill', DebugController::class.'@doLearnSkill');

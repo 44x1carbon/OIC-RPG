@@ -35,3 +35,37 @@ if (! function_exists('is_assoc')) {
         return true;
     }
 }
+
+if (! function_exists('is_any')) {
+    /**
+     * @param array $data
+     * @param bool|Closure $check
+     * @return bool
+     */
+    function is_any(array $data, $check = true) {
+        if(count($data) == 0) return false;
+        $results = array_map(function($d) use($check) {
+            if(is_object($check) && $check instanceof Closure) return $check($d);
+            return $d == $check;
+        }, $data);
+
+        return in_array(true, $results);
+    }
+}
+
+if (! function_exists('is_all')) {
+    /**
+     * @param array $data
+     * @param bool|Closure $check
+     * @return bool
+     */
+    function is_all(array $data, $check = true) {
+        if(count($data) == 0) return false;
+        $results = array_map(function($d) use($check) {
+            if(is_object($check) && $check instanceof Closure) return $check($d);
+            return $d == $check;
+        }, $data);
+
+        return !in_array(false, $results);
+    }
+}

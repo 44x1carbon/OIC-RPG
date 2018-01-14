@@ -18,7 +18,6 @@ $side-content-width: 70px;
   position: relative;
   height: 100%;
 
-
   &.left {
     width: $side-content-width;
   }
@@ -56,11 +55,12 @@ $side-content-width: 70px;
   background: linear-gradient(180deg, rgba(102, 60, 6, 0) 0%, #0C0400 55.25%);
 
   $size: $side-content-width;
-  top: ($size/8);
+  top: $side-content-width/10;
   height: $size;
   width: $size;
-  font-size: 13px;
+
   padding: 10px;
+  font-size: 13px;
 
   .btn {
     width: 100%;

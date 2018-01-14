@@ -136,4 +136,14 @@ class WantedRole
     {
         return $this->jobRepo->findByid($this->referenceJobId());
     }
+
+    public function isFrameFull(): bool
+    {
+        return $this->assignableFrameNum() == 0;
+    }
+
+    public function isFrameEmpty(): bool
+    {
+        return $this->assignableFrameNum() > 0;
+    }
 }

@@ -1,114 +1,380 @@
-.mypage {
+// 共通部分
+.mypage {  
   position: relative;
-  width: 100%;
-  padding: 0 15px;
+  width: 100%;  
 }
 
-.mypage-profile {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  width: 100%;
-  padding: 15px;
-  background: white;
-  flex-wrap: wrap;
-}
+.mypage-content {
+  background-image: url('/images/back.jpeg');
+  background-size: cover;
+  border: solid 1px #BF9C60;
+  border-radius: 2px;
 
-.mypage-profile-name {
-  width: 100%;
-  padding: 6px 0;
-  text-align: center;
-  background: gray;
-}
-
-.mypage-profile-left {
-  position: relative;
-  width: 50%;
-  height: 360px;
-  img{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 175%;
-    transform: translate(-18%, 0);
+  &:not(:last-child) {
+    margin-bottom: 40px;
   }
 }
 
-.mypage-profile-right {
-  z-index: 2;
-  width: 50%;
-  padding: 21px 3px 0 9px;
+.possession-skill {
+  padding-bottom: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 2px;
+
+  &__level {
+    float: right;
+    .level__value {
+      display: inline-block;
+      text-align: right;
+      width: 1.5em;
+    }
+  }
 }
 
-.mypage-profile-content {
+/* プロフィール */
+.mypage-profile {
+  display: grid;
+  grid-template-areas: 'mp-header mp-header'
+                       'mp-left   mp-right'
+                       'mp-bottom mp-bottom';
+  grid-template-columns: 60% 40%;
+  grid-template-rows: 40px 300px 100px;
+  position: relative;
+}
+
+.profile-header {
+  background-image: linear-gradient(180deg, #BF9C60 50.28%, #8A8219 100%);
+
+  border: solid 1px #BF9C60;
+  font-size: 20px;
+
+  grid-area: mp-header;
+  line-height: 40px;
+  text-align: center;
+}
+
+.profile-left {
+  grid-area: mp-left;
+  height: 100%;
+
+  overflow: hidden;
+}
+
+.profile-right {
+  grid-area: mp-right;
+}
+
+.profile-bottom {
+  grid-area: mp-bottom;
+}
+
+
+.member-info__content {
+  margin: 4px;
+  margin-top: 10px;
+
+  .info-label {
+    background-color: #A9942E;
+    border: solid 2px #BE9B64;
+    border-radius: 2px 2px 0px 0px;
+    display: inline-block;
+    font-size: 14px;
+    padding: 4px;
+  }
+
+  .info-data {
+    padding: 4px;
+    font-size: 13px;
+
+    box-sizing: border-box;
+    background-color: #F3EECE;
+    border: solid 2px #BE9B64;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.fav-job-info {
+  background-color: rgba(33, 33, 33, 0.6);
+  box-sizing: border-box;
+  height: 100%;
+  margin: 10px;
+  overflow: hidden;
+  position: relative;
+
+  .fav-job-img {
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    position: relative;
+    width: 100%;
+
+    img {
+      width: auto;
+      height: 100%;
+    }
+  }
+
+  .fav-job-name {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    margin: 0 auto;
+    padding: 8px;
+    box-sizing: border-box;
+    text-align: center;
+    width: 80%;
+    font-size: 13px;
+
+    background-color: #F3EECE;
+    border: solid 2px #BE9B64;
+    border-radius: 2px;
+  }
+}
+
+.member-info__high-order-skills {
+  .high-order-skill {
+    padding: 2px 2px;
+
+    &__level {
+      float: right;
+
+      .value {
+        display: inline-block;
+        width: 2em;
+        text-align: right;
+      }
+    }
+  }
+}
+
+.member-info__introduction {
+  .info-data {
+    min-height: 4em;
+  }
+}
+
+/* スキル */
+.skill-header {
+  background: linear-gradient(180deg, #BF9C60 50.28%, #8A8219 100%);
+  border: solid 2px #BE9B64;
+  padding: 8px 2px;
+}
+
+.skill-content {
+  padding: 10px;
+}
+
+.skill-tab {
   display: flex;
-  margin-bottom: 21px;
-  font-size: 12px;
-  justify-content: space-between;
-  flex-wrap: wrap;
+
+  .skill-tab-item {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0 4px 0;
+    border-collapse: collapse;
+    border-radius: 10px 10px 0 0;
+    color: #000000;
+    text-decoration: none;
+    width: 100%;
+
+    border: solid 1px #BE9B64;
+    background-color: #F3EECE;
+
+    &.active {
+      background-color: #A9942E;
+    }
+  }
 }
 
-.mypage-profile-bottom {
-  position: absolute;
-  left: 50%;
-  bottom: 30px;
-  width: 90%;
-  height: 100px;
-  margin: 0 auto;
-  background: gray;
-  transform: translateX(-50%);
-  p {
-    padding: 9px;
+.skill-list {
+  border: solid 2px #BE9B64;
+  background-color: #F3EECE;
+
+  padding: 10px;
+}
+
+.skill-item {
+  border: 2px solid #AA9520;
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 10px;
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+
+  &.learned {
+    background: linear-gradient(180deg, #00B93B 16.26%, #000 91%);
+  }
+
+  &.not-learned {
+    background: linear-gradient(180deg, #ddd 16.26%, #333333 91%);
+  }
+
+  &__name {
+    font-size: 16px;
+  }
+
+  &__level, &__status {
+    font-size: 13px;
+    float: right;
+  }
+}
+
+// ジョブ
+.job-header {
+  background: linear-gradient(180deg, #BF9C60 50.28%, #8A8219 100%);
+  border: solid 2px #BE9B64;
+  padding: 8px 2px;
+}
+
+.job-content {
+  padding: 10px;
+}
+
+.job-tab {
+  display: flex;
+
+  .job-tab-item {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0 4px 0;
+    border-collapse: collapse;
+    border-radius: 10px 10px 0 0;
+    color: #000000;
+    text-decoration: none;
+    width: 100%;
+
+    border: solid 1px #BE9B64;
+    background-color: #F3EECE;
+
+    &.active {
+      background-color: #A9942E;
+    }
+  }
+}
+
+.job-list {
+  background-color: #F3EECE;
+  border: solid 2px #BE9B64;
+
+  padding: 10px;
+}
+
+.job-item {
+  background-image: url('/images/back.jpeg');
+  background-size: cover;
+  border: solid 1px #BF9C60;
+  border-radius: 2px;
+  display: grid;
+
+  grid-template-areas: 'j-image  j-info     '
+                       'j-image  j-condition'
+                       'j-image  j-condition'
+                       'j-status j-action   ';
+
+  grid-template-columns: 30% 70%;
+
+  padding: 4px;
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+
+.job-status-area {
+  align-self: center;
+  grid-area: j-status;
+  justify-self: center;
+}
+
+.job-img-area {
+  padding: 0 2px;
+  grid-area: j-image;
+}
+
+.job-info-area {
+  grid-area: j-info;
+}
+
+.job-get-condition-area {
+  align-self: end;
+  grid-area: j-condition;
+}
+
+.job-action-area {
+  align-self: center;
+  grid-area: j-action;
+  justify-self: end;
+  padding: 4px 0;
+}
+
+.job-img {
+  height: 100%;
+  width: 100%;
+
+  img {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.job-info {
+  &__name {
+    font-size: 14px;
+  }
+}
+
+.job-get-condition {
+  &__label {
+    display: inline-block;
+    background-color: #A9942E;
+    border: solid 2px #BE9B64;
+    border-radius: 2px 2px 0px 0px;
     font-size: 12px;
   }
+
+  &__list {
+    background-color: #F3EECE;
+    border: solid 1px #BE9B64;
+
+    font-size: 13px;
+    padding: 1px 2px;
+  }
 }
 
-.mypage-skill {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  margin: 30px 0 0;
-  padding: 15px;
-  background: white;
+.job-action {
+  .action__get {
+    button[type=submit] {
+      background: linear-gradient(180deg, #00B93B 16.26%, #000 91%);
+      border: 2px solid #AA9520;
+      border-radius: 2px;
+      color: #ffffff;
+      font-size: 13px;
+      padding: 4px;
+    }
+  }
+
+  .action__favorite {
+    button[type=submit] {
+      background: linear-gradient(180deg, #FFF67F 0%, #F2994A 59.48%);
+      border: 2px solid #AA9520;
+      border-radius: 2px;
+      color: #ffffff;
+      font-size: 13px;
+      padding: 4px;
+
+      &.disable {
+        background: linear-gradient(180deg, #ddd 16.26%, #333333 91%);
+      }
+    }
+  }
 }
 
-.mypage-skill-course-list {
-  display: flex;
-}
-
-.mypage-skill-course-item {
-  margin-right: 15px;
-}
-
-.mypage-skill-list {
-
-}
-
-.mypage-skill-item {
-  display: flex;
-  margin-bottom: 15px;
-  background: gray;
-}
-
-.mypage-job {
-  position: relative;
-  margin: 30px 0 0;
-  padding: 15px;
-  background: white;
-}
-
-.mypage-job-course-list {
-  display: flex;
-}
-
-.mypage-job-course-item {
-  margin-right: 15px;
-}
-
-.mypage-job-item {
-  background: gray;
-}
-
-.mypage-job-link {
-  display: flex;
+.job-status {
+  font-size: 14px;
+  padding: 4px;
 }
