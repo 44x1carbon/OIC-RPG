@@ -5,7 +5,7 @@ namespace App\ApplicationService;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Party\Party;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
-use App\Domain\Party\Spec\PartySpec;
+use App\Domain\Party\Spec\PartySearchSpec;
 use App\Domain\Party\ValueObjects\ActivityEndDate;
 use App\Domain\PartyParticipationRequest\PartyParticipationRequest;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
@@ -64,7 +64,7 @@ class PartyAppService
             return true;
         });
         $matchedParty = array_filter($releasedParty, function(Party $party) use($keyword){
-            return PartySpec::isKeywordMatch($party, $keyword);
+            return PartySearchSpec::isKeywordMatch($party, $keyword);
         });
 
         return array_values($matchedParty);
