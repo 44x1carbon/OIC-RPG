@@ -9,7 +9,7 @@
             <?php /* @var \App\Infrastracture\Field\FieldViewModel $field */ ?>
             @foreach($fields as $field)
                 <a class="job-tab-item {{ $field->toKey() == $selectJobTab? 'active' : '' }}"
-                   href="{{ route('show_my_page') . '?skillTab='.$selectSkillTab.'&jobTab='.$field->toKey().'#job' }}">
+                   href="{{  '?skillTab='.$selectSkillTab.'&jobTab='.$field->toKey().'#job' }}">
                     {{ $field->toShortJa() }}
                 </a>
             @endforeach
