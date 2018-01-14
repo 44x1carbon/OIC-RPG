@@ -82,6 +82,17 @@ class Party
         return $filterArr[0];
     }
 
+    // パーティの役割の中に指定したギルドメンバーが存在するか判定し、いた場合WantedRoleを取得する
+    public function findWantedRoleListByPartyMemberId(StudentNumber $partyMemberId): ?WantedRole
+    {
+        $filterArr = array_values(array_filter($this->wantedRoles(), function(WantedRole $wantedRole) use($partyMemberId){
+            return $wantedRole->isOfficerId($partyMemberId);
+        }));
+
+        if(count($filterArr) === 0) return null;
+        return $filterArr[0];
+    }
+
     public function isPartyManagerId(StudentNumber $partyManagerId)
     {
         return $this->partyManagerId->equals($partyManagerId);
