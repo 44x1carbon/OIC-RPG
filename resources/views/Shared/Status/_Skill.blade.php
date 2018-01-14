@@ -1,3 +1,5 @@
+@inject('skillStatusListVMHelper', App\Infrastracture\GuildMember\SkillStatusListVMHelper)
+
 <div class="mypage-skill mypage-content" id="skill">
     <div class="skill-header">
         スキル

@@ -1,3 +1,5 @@
+@inject('jobStatusListVMHelper', App\Infrastracture\GuildMember\JobStatusListVMHelper)
+
 <div class="mypage-job mypage-content" id="job">
     <div class="job-header">
         ジョブ

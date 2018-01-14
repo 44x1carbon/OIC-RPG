@@ -96,3 +96,9 @@
         background-image: url($file + '@2x.' + $type);
     }
 }
+
+@mixin not-last-child() {
+    &:not(:last-child) {
+        @content;
+    }
+}

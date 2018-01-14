@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Domain\GuildMember\GuildMember;
+use App\Http\Requests\ReplyRequest;
 use App\Presentation\PartyParticipationRequestFacade;
 use Illuminate\Http\Request;
 
@@ -33,6 +34,22 @@ class PartyParticipationRequestController
     )
     {
         $partyParticipationRequestFacade->cancelPartyParticipationRequest($partyParticipationRequestId, $loginMember->studentNumber()->code());
+        return back();
+    }
+
+    public function reply(
+        string $partyParticipationRequestId,
+        ReplyRequest $request,
+        PartyParticipationRequestFacade $partyParticipationRequestFacade,
+        GuildMember $loginMember
+    )
+    {
+        $partyParticipationRequestFacade->replyPartyParticipationRequest(
+            $partyParticipationRequestId,
+            $loginMember->studentNumber()->code(),
+            $request->reply()
+        );
+
         return back();
     }
 }

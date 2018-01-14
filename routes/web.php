@@ -80,6 +80,9 @@ Route::get('/party/management/applying', function() {
     return view('guild.party.management.applying');
 });
 
+Route::get('/party/management/participation_request_list', GuildMemberController::class.'@managedPartyParticipationRequestList')
+    ->name('shoe_participation_request_list');
+
 
 /** ジョブ習得 */
 Route::post('/me/get_job', GuildMemberController::class.'@getJob')->name('do_get_job');
@@ -107,3 +110,6 @@ Route::get('/guild', function() {
 Route::get('/', function(){
     return view('landing');
 });
+
+Route::post('/participation_request/{partyParticipationRequestId}/reply', PartyParticipationRequestController::class.'@reply')
+    ->name('do_reply');
