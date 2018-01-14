@@ -9,6 +9,7 @@
 namespace App\Domain\WantedRole;
 
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Job\Job;
 use App\Domain\Job\JobRepositoryInterface;
 use App\Domain\Party\Exception\NotFoundAssignableFrameException;
@@ -145,5 +146,10 @@ class WantedRole
     public function isFrameEmpty(): bool
     {
         return $this->assignableFrameNum() > 0;
+    }
+
+    public function isOfficerId(StudentNumber $officerId): bool
+    {
+        return $this->wantedMemberList->isOfficerId($officerId);
     }
 }

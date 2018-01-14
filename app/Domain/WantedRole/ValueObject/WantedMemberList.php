@@ -2,6 +2,7 @@
 
 namespace App\Domain\WantedRole\ValueObject;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\WantedMember\Factory\WantedMemberFactory;
 use App\Domain\WantedMember\Spec\WantedMemberSpec;
 use App\Domain\WantedMember\WantedMember;
@@ -82,5 +83,13 @@ class WantedMemberList
         return array_values(array_filter($this->all(), function(WantedMember $wantedMember) {
             return WantedMemberSpec::isAssigned($wantedMember);
         }));
+    }
+
+    public function isOfficerId(StudentNumber $officerId): bool
+    {
+        foreach ($this->all() as $wantedMember) {
+            if(!is_null($wantedMember->officerId()) && $officerId->equals($wantedMember->officerId())) return true;
+        }
+        return false;
     }
 }

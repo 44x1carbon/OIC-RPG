@@ -11,12 +11,9 @@
     <div class="panel">
         <div class="panel__header mod-border">パーティー管理</div>
         <div class="menu-links panel__body mod-no-padding flex-area">
-            {{--<a href="{{ route('') }}" class="menu__link">管理</a>--}}
-            {{--<a href="{{ route('') }}" class="menu__link">参加</a>--}}
-            {{--<a href="{{ route('') }}" class="menu__link">申請</a>--}}
-            <a href="#" class="menu__link">管理</a>
-            <a href="#" class="menu__link">参加</a>
-            <a href="#" class="menu__link">申請</a>
+            <a href="{{ route('holding_party') }}" class="menu__link">管理</a>
+            <a href="{{ route('entry_party') }}" class="menu__link">参加</a>
+            <a href="{{ route('applying_party') }}" class="menu__link">申請中</a>
         </div>
     </div>
     <div class="panel">
