@@ -27,7 +27,52 @@ class PartyRegistrationController extends Controller
 
     public function showProductionIdea(ProductionTypeRepositoryInterface $productionTypeRepository)
     {
+        if(env('APP_ENV') == 'local') {
+            $productionTypeRepo = app(\App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface::class);
+            $jobRepo            = app(\App\Domain\Job\JobRepositoryInterface::class);
+
+            $activeEndDate = \Carbon\Carbon::tomorrow()->format('Y-m-d');
+            $productionTypeDto = new \App\Presentation\DTO\ProductionTypeDto(
+                $productionTypeRepo->findByName('Webシステム')->id(),
+                'Webシステム'
+            );
+            $productionIdeaDto = new \App\Presentation\DTO\ProductionIdeaDto(
+                '学内での共同制作を推進するサービス(デモ)',
+                $productionTypeDto,
+                '学内には様々なコースの優秀な学生がたくさんいます。現状、コース間での交流はほぼなく共同で作品を作る機会もありません。お互いが得意な分野で力を合わせることでより良い作品が作れると私は信じております。そこで学内での共同制作を推進するサービスを作成しようと考えています。スキルの可視化や制作メンバーの募集が主な機能になります。'
+            );
+            $partyDto = new \App\Presentation\DTO\PartyDto(
+                $activeEndDate,
+                $productionIdeaDto,
+                [
+                    new WantedRoleDto(
+                        'サーバーサイドエンジニア',
+                        '言語はPHP、フレームワークはLaravelの5.4を利用します',
+                        $jobRepo->findByName('Webエンジニア')->jobId()->code(),
+                        3,
+                        true
+                    ),
+                    new WantedRoleDto(
+                        'Webデザイナー',
+                        'スマホ用のWebアプリをデザインしていただきます。マークアップもできる方が良いです。',
+                        $jobRepo->findByName('Webデザイナー')->jobId()->code(),
+                        1,
+                        false
+                    ),
+                    new WantedRoleDto(
+                        'キャラクター絵師',
+                        'RPG風のアプリにする予定です。ジョブにキャラクターの立ち絵を使いたいのでファンタジーなキャラが書ける人を募集しています。',
+                        $jobRepo->findByName('ゲームグラフィッカー')->jobId()->code(),
+                        4,
+                        false
+                    ),
+                ]
+            );
+            $this->setSessionData($partyDto);
+        }
+
         return view('Guild.Party.Registration.ProductionIdea')
+            ->with('session', $this->getSessionData())
             ->with('productionTypes', $productionTypeRepository->all());
     }
 
