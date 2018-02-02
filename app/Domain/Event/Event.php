@@ -9,6 +9,10 @@
 namespace App\Domain\Event;
 
 
+use App\Domain\Event\ValueObjects\EvaluationPeriod;
+use App\Domain\Event\ValueObjects\EventHoldPeriod;
+use App\Domain\Event\ValueObjects\EventId;
+use App\Domain\Event\ValueObjects\ReleasePeriod;
 use Faker\Provider\DateTime;
 use PhpParser\Node\Scalar\String_;
 use Symfony\Component\VarDumper\Caster\DateCaster;
@@ -72,7 +76,7 @@ class Event
         return $this->eventHoldPeriod;
     }
 
-    public function evaluationPeriod(): EvalutionPeriod
+    public function evaluationPeriod(): EvaluationPeriod
     {
         return $this->evaluationPeriod;
     }
