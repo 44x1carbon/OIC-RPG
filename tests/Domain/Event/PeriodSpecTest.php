@@ -21,6 +21,7 @@ class PeriodSpecTest extends TestCase
 
     public function setUp()
     {
+        parent::setUp();
         $this->start = new DateTime('2019-01-01');
         $this->late = new DateTime('2020-01-01');
     }
