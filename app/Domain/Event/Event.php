@@ -57,39 +57,4 @@ class Event
     {
         return $this->evaluationPeriod;
     }
-
-    public function setId(EventId $id)
-    {
-        $this->id = $id;
-    }
-
-    public function setName(String $name)
-    {
-        $this->name = $name;
-    }
-
-    public function setTheme(String $theme)
-    {
-        $this->theme = $theme;
-    }
-
-    public function setDescription(String $description)
-    {
-        $this->description = $description;
-    }
-
-    public function setReleaseStartDate(DateTime $dateTime)
-    {
-        $this->releaseStartDate = $dateTime;
-    }
-
-    public function setEventHoldPeriod(EventHoldPeriod $eventHoldPeriod)
-    {
-        $this->eventHoldPeriod = $eventHoldPeriod;
-    }
-
-    public function setEvaluationPeriod(EvaluationPeriod $evaluationPeriod)
-    {
-        $this->evaluationPeriod = $evaluationPeriod;
-    }
 }
