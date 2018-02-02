@@ -72,7 +72,7 @@ class Party
         $wantedRole->addFrame($num);
     }
 
-    private function findWantedRoleById(string $wantedRoleId): ?WantedRole
+    public function findWantedRoleById(string $wantedRoleId): ?WantedRole
     {
         $filterArr = array_values(array_filter($this->wantedRoles(), function(WantedRole $wantedRole) use($wantedRoleId){
             return $wantedRole->id() === $wantedRoleId;
