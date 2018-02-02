@@ -23,6 +23,25 @@ class Event
     private $eventHoldPeriod;
     private $evaluationPeriod;
 
+    public function __construct(
+        EventId $id,
+        string $name,
+        string $theme,
+        string $description,
+        ReleasePeriod $releasePeriod,
+        EventHoldPeriod $eventHoldPeriod,
+        EvaluationPeriod $evaluationPeriod
+    )
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->theme = $theme;
+        $this->description = $description;
+        $this->releasePeriod = $releasePeriod;
+        $this->eventHoldPeriod = $eventHoldPeriod;
+        $this->evaluationPeriod = $evaluationPeriod;
+    }
+
     public function id(): EventId
     {
         return $this->id;
