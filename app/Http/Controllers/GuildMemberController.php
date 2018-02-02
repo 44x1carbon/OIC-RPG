@@ -12,18 +12,28 @@ namespace App\Http\Controllers;
 use App\ApplicationService\GuildMemberAppService;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\GuildMember\RepositoryInterface\GuildMemberRepositoryInterface;
+use App\Domain\GuildMember\SearchService;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\GuildMember\ValueObjects\SearchCriteria;
+use App\Domain\Job\Job;
+use App\Domain\Job\JobRepositoryInterface;
 use App\Domain\PartyParticipationRequest\PartyParticipationRequest;
+use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
+use App\Domain\Skill\Skill;
 use App\Http\Requests\FavoriteJobRequest;
 use App\Http\Requests\GetJobRequest;
 use App\Http\Requests\GuildMemberRequest;
+use App\Http\Requests\GuildMemberSearchRequest;
 use App\Http\Requests\MyPageRequest;
 use App\Http\ViewComposers\FieldViewModelComposer;
 use App\Infrastracture\GuildMember\GuildMemberViewModel;
+use App\Infrastracture\Job\JobViewModel;
+use App\Infrastracture\Job\SkillViewModel;
 use App\Infrastracture\PartyParticipationRequest\PartyParticipationRequestViewModel;
 use App\Presentation\GuildMemberFacade;
 use App\Presentation\PartyParticipationRequestFacade;
 use App\Presentation\PossessionJobServiceFacade;
+use Illuminate\Http\Request;
 
 class GuildMemberController extends Controller
 {
@@ -118,5 +128,21 @@ class GuildMemberController extends Controller
 
         return view('Guild.Party.Management.PartyParticipationRequestList')
             ->with('participationRequests', $participationRequestViewModels);
+    }
+
+    public function search(GuildMemberSearchRequest $request, SearchService $service, JobRepositoryInterface $jobRepository, SkillRepositoryInterface $skillRepository)
+    {
+        $guildMembers = $service->search($request->searchCriteria());
+
+        return view('Guild.Search.GuildMember')
+            ->with('allJob', array_map(function(Job $j) {
+                return new JobViewModel($j);
+            }, $jobRepository->all()))
+            ->with('allSkill', array_map(function(Skill $s) {
+                return new SkillViewModel($s);
+            }, $skillRepository->all()))
+            ->with('guildMembers', array_map(function(GuildMember $g) {
+                return new GuildMemberViewModel($g);
+            }, $guildMembers));
     }
 }
