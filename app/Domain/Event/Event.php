@@ -19,7 +19,7 @@ class Event
     private $name;
     private $theme;
     private $description;
-    private $releaseStartDate;
+    private $releasePeriod;
     private $eventHoldPeriod;
     private $evaluationPeriod;
 
@@ -43,9 +43,9 @@ class Event
         return $this->description;
     }
 
-    public function releaseStartDate(): DateTime
+    public function releasePeriod(): ReleasePeriod
     {
-        return $this->releaseStartDate;
+        return $this->releasePeriod;
     }
 
     public function eventHoldPeriod(): EventHoldPeriod
