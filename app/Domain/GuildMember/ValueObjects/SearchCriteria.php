@@ -2,10 +2,14 @@
 
 namespace App\Domain\GuildMember\ValueObjects;
 
-use App\Domain\Job\Job;
 use App\Domain\Job\ValueObjects\JobId;
-use App\Domain\Skill\Skill;
 
+
+/**
+ * Class SearchCriteria
+ * 検索条件を構築するクラス
+ * @package App\Domain\GuildMember\ValueObjects
+ */
 class SearchCriteria
 {
 
