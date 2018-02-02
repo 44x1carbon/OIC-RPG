@@ -87,10 +87,10 @@ return [
 
         'herokumysql' => [
             'driver'    => 'mysql',
-            'host'      => $clear_url["host"],
-            'database'  => substr($clear_url["path"], 1),
-            'username'  => $clear_url["user"],
-            'password'  => $clear_url["pass"],
+            'host'      => isset($clear_url["host"]) ? $clear_url["host"] : "",
+            'database'  => isset($clear_url["path"]) ? substr($clear_url["path"], 1) : "",
+            'username'  => isset($clear_url["user"]) ? $clear_url["user"] : "",
+            'password'  => isset($clear_url["pass"]) ? $clear_url["pass"] : "",
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
