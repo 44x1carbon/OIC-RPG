@@ -20,8 +20,8 @@ class CreateNotificationsTable extends Migration
             $table->string('message');
             $table->string('to_student_number');
             $table->string('notification_at');
-            $table->string('read_flg');
-            $table->string('link_id');
+            $table->boolean('read_flg');
+            $table->unsignedInteger('link_id');
             $table->timestamps();
         });
     }
