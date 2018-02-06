@@ -8,6 +8,7 @@
 
 namespace App\Infrastracture\Notification;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Notification\Notification;
 use App\Domain\Notification\RepositoryInterface\NotificationRepositoryInterface;
 use App\DomainUtility\RandomStringGenerator;
@@ -28,6 +29,16 @@ class NotificationEloquentRepositoryImpl implements NotificationRepositoryInterf
         $notificationModel = $this->notificationEloquent->findById($code);
         if(is_null($notificationModel)) return null;
         return $notificationModel->toEntity();
+    }
+
+    public function findListByStudentNumber(StudentNumber $studentNumber): ?array
+    {
+        $notificationModels = $this->notificationEloquent->findListByStudentNumber($studentNumber);
+        $notifications = array_map(function(Notification $notification) {
+                return $notification;
+            }, $notificationModels);
+
+        return $notifications;
     }
 
     public function nextId(): string
@@ -55,4 +66,14 @@ class NotificationEloquentRepositoryImpl implements NotificationRepositoryInterf
         return $notificationCollection->toArray();
     }
 
+    /**
+     * 未読の通知があるかどうか
+     * @return bool
+     */
+    public function hasUnreadNotifications(StudentNumber $studentNumber): bool
+    {
+        $notificationModels = $this->notificationEloquent->findListByStudentNumberUnread($studentNumber);
+
+        return count($notificationModels) > 0;
+    }
 }
