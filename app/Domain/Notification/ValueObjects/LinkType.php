@@ -19,7 +19,7 @@ class LinkType
 
     private $type;
 
-    public function __construct(string $type)
+    private function __construct(string $type)
     {
         $this->type = $type;
         if( !LinkTypeSpec::isAvailable($type) ) throw new \Exception("Error");
@@ -48,9 +48,9 @@ class LinkType
         return $this->type === self::PARTY_PARTICIPATION_REQUEST;
     }
 
-    // リンクタイプがパーティかどうがe
-    public function isParty(): bool
+    // リンクのタイプを判定
+    public function is(string $type): bool
     {
-        return $this->type === self::PARTY;
+        return $this->type === $type;
     }
 }
