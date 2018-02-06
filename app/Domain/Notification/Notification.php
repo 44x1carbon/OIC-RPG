@@ -11,6 +11,7 @@ namespace App\Domain\Notification;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Notification\ValueObjects\Link;
 use Carbon\Carbon;
+use Faker\Provider\DateTime;
 
 class Notification
 {
@@ -65,6 +66,7 @@ class Notification
     }
 
     /**
+     * 通知先のギルドメンバーの学籍番号
      * @return StudentNumber
      */
     public function toStudentNumber(): StudentNumber
@@ -81,19 +83,30 @@ class Notification
     }
 
     /**
+     * 通知日時
      * @return \DateTime
      */
-    public function notificationAt()
+    public function notificationAt(): DateTime
     {
         return $this->notificationAt;
     }
 
     /**
+     * 既読かどうか
      * @return bool
      */
     public function isRead(): bool
     {
         return $this->readFlg;
+    }
+
+    /**
+     * 未読かどうか
+     * @return bool
+     */
+    public function isUnread(): bool
+    {
+        return !$this->readFlg;
     }
 
     /**
