@@ -32,10 +32,6 @@ class NotificationMessageSpec
         /* @var GuildMember $guildMember */
         $guildMember = $guildMemberRepository->findByStudentNumber($partyParticipationRequest->guildMemberId());
 
-        $message = '';
-//        var_dump($partyParticipationRequest);
-//        var_dump($party->wantedRoles());
-//        dd($party->findWantedRoleById($partyParticipationRequest->wantedRoleId()));
         return "あなたが管理している ".$party->productionIdea()->productionTheme()." パーティに ".$guildMember->studentName()." さんから ".$party->findWantedRoleById($partyParticipationRequest->wantedRoleId())->roleName()." に参加申請が来ています。\n";
     }
 
