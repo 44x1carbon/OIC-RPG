@@ -16,6 +16,28 @@ class NotificationEloquent extends Model
         return $notificationModel;
     }
 
+    /**
+     * 学籍番号を指定して、通知のリストを取得する
+     * @param StudentNumber $studentNumber
+     * @return NotificationEloquent[]
+     */
+    public static function findListByStudentNumber(StudentNumber $studentNumber): ?array
+    {
+        $notificationModels = self::where('to_student_number', $studentNumber->code())->all();
+        return $notificationModels;
+    }
+
+    /**
+     * 学籍番号を指定して、未読の通知がある場合取得する
+     * @param StudentNumber $studentNumber
+     * @return NotificationEloquent[]
+     */
+    public static function findListByStudentNumberUnread(StudentNumber $studentNumber): array
+    {
+        $unreadNotificationModels = self::where('to_student_number', $studentNumber->code())->where('read_flg', false)->all();
+        return $unreadNotificationModels;
+    }
+
     public static function fromEntity(Notification $notification): NotificationEloquent
     {
         $notificationModel = self::findById($notification->id());
