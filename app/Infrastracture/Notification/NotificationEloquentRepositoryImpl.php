@@ -15,9 +15,17 @@ use App\Eloquents\NotificationEloquent;
 
 class NotificationEloquentRepositoryImpl implements NotificationRepositoryInterface
 {
+    /* @var NotificationEloquent $notificationEloquent */
+    protected $notificationEloquent;
+
+    public function __construct(NotificationEloquent $notificationEloquent)
+    {
+        $this->notificationEloquent = $notificationEloquent;
+    }
+
     public function findById(string $code): ?Notification
     {
-        $notificationModel = NotificationEloquent::findById($code);
+        $notificationModel = $this->notificationEloquent->findById($code);
         if(is_null($notificationModel)) return null;
         return $notificationModel->toEntity();
     }
@@ -26,20 +34,20 @@ class NotificationEloquentRepositoryImpl implements NotificationRepositoryInterf
     {
         do{
             $randId = RandomStringGenerator::makeLowerCase(4);
-        }while(!is_null(notificationEloquent::findById($randId)));
+        }while(!is_null($this->notificationEloquent->findById($randId)));
 
         return $randId;
     }
 
     public function save(Notification $notification): bool
     {
-        NotificationEloquent::saveDomainObject($notification);
+        $this->notificationEloquent->saveDomainObject($notification);
         return true;
     }
 
     public function all(): array
     {
-        $notificationModels = NotificationEloquent::all();
+        $notificationModels = $this->notificationEloquent->all();
 
         $notificationCollection = $notificationModels->map(function(NotificationEloquent $eloquent) {
             return $eloquent->toEntity();
