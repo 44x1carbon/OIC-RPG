@@ -34,8 +34,8 @@ class NotificationEloquentRepositoryImpl implements NotificationRepositoryInterf
     public function findListByStudentNumber(StudentNumber $studentNumber): ?array
     {
         $notificationModels = $this->notificationEloquent->findListByStudentNumber($studentNumber);
-        $notifications = array_map(function(Notification $notification) {
-                return $notification;
+        $notifications = array_map(function(NotificationEloquent $notificationModel) {
+                return $notificationModel->toEntity();
             }, $notificationModels);
 
         return $notifications;
