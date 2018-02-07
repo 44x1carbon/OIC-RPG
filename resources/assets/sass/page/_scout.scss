@@ -1,0 +1,43 @@
+.scout-modal {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  display: flex;
+  width: 100vw;
+  height: calc(100vh - 90px);
+  padding: 40px 20px;
+  background: rgba(0, 0, 0, .6);
+  opacity: 0;
+  pointer-events: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  &.show {
+    z-index: 100;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.scout-modal-inner {
+  width: 100%;
+  height: 50%;
+  padding: 30px 20px;
+  background: black;
+border: 1px solid #C39300;
+  border-radius: 0 0 5px 5px;
+
+}
+
+.scout-modal-header {
+  width: 100%;
+  padding: 12px 18px;
+  border: 1px solid #C39300;
+  border-style: ridge ridge none;
+  background: #5A3A1A;
+}
+
+.scout-modal-title {
+  font-size: 18px;
+  color: white;
+}
