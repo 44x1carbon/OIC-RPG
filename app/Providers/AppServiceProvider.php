@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
+use App\Domain\Event\EventRepositoryInterface;
 use App\Domain\Field\FieldRepositoryInterface;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\Job\JobRepositoryInterface;
@@ -19,6 +20,7 @@ use App\Infrastracture\AuthData\AuthData;
 use App\Infrastracture\Course\CourseEloquentRepositoryImpl;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
+use App\Infrastracture\Event\EventEloquentRepositoryImpl;
 use App\Infrastracture\Field\FieldEloquentRepositoryImpl;
 use App\Infrastracture\Job\JobEloquentRepositoryImpl;
 use App\Infrastracture\Party\PartyEloquentRepositoryImpl;
@@ -101,5 +103,6 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(JobRepositoryInterface::class, JobEloquentRepositoryImpl::class);
         $this->app->singleton(FieldRepositoryInterface::class, FieldEloquentRepositoryImpl::class);
+        $this->app->singleton(EventRepositoryInterface::class, EventEloquentRepositoryImpl::class);
     }
 }
