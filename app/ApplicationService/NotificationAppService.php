@@ -8,14 +8,8 @@
 
 namespace App\ApplicationService;
 
-use App\Domain\GuildMember\ValueObjects\StudentNumber;
-use App\Domain\Notification\Notification;
+use App\Domain\Notification\Factory\NotificationFactory;
 use App\Domain\Notification\RepositoryInterface\NotificationRepositoryInterface;
-use App\Domain\Notification\ValueObjects\Link;
-use App\Domain\Notification\ValueObjects\LinkType;
-use App\Domain\Notification\ValueObjects\NotificationMessageSpec;
-use App\Domain\Notification\ValueObjects\NotificationTitleSpec;
-use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 
 class NotificationAppService
@@ -24,18 +18,18 @@ class NotificationAppService
     private $partyParticipationRequestRepository;
     /* @var NotificationRepositoryInterface $notificationRepository */
     private $notificationRepository;
-    /* @var PartyRepositoryInterface $partyRepository */
-    private $partyRepository;
+    /* @var NotificationFactory $notificationFactory */
+    private $notificationFactory;
 
     public function __construct(
         PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository,
         NotificationRepositoryInterface $notificationRepository,
-        PartyRepositoryInterface $partyRepository
+        NotificationFactory $notificationFactory
     )
     {
-        $this->partyParticipationRequestRepository  = $partyParticipationRequestRepository;
+        $this->partyParticipationRequestRepository = $partyParticipationRequestRepository;
         $this->notificationRepository = $notificationRepository;
-        $this->partyRepository = $partyRepository;
+        $this->notificationFactory = $notificationFactory;
     }
 
     /**
@@ -43,16 +37,8 @@ class NotificationAppService
      */
     public function sendPartyParticipationRequestReception (string $partyParticipationRequestId)
     {
-        $partyParticipationRequest = $this->partyParticipationRequestRepository->findById($partyParticipationRequestId);
-        $party = $this->partyRepository->findById($partyParticipationRequest->partyId());
 
-        $notification = new Notification(
-                                $this->notificationRepository->nextId(),
-                                NotificationTitleSpec::partyParticipationRequestReception($partyParticipationRequestId),
-                                NotificationMessageSpec::partyParticipationRequestReception($partyParticipationRequestId),
-                                $party->partyManagerId(),
-                                new Link($partyParticipationRequestId, LinkType::PARTY_PARTICIPATION_REQUEST())
-                            );
+        $notification = $this->notificationFactory->receivePartyParticipationRequestNotification($partyParticipationRequestId);
 
         $this->notificationRepository->save($notification);
 
@@ -64,14 +50,9 @@ class NotificationAppService
      */
     public function sendPartyParticipationRequestReply(string $partyParticipationRequestId)
     {
-        $partyParticipationRequest = $this->partyParticipationRequestRepository->findById($partyParticipationRequestId);
-        $notification = new Notification(
-                                $this->notificationRepository->nextId(),
-                                NotificationTitleSpec::partyParticipationRequestReply($partyParticipationRequestId),
-                                NotificationMessageSpec::partyParticipationRequestReply($partyParticipationRequestId),
-                                $partyParticipationRequest->guildMemberId(),
-                                new Link($partyParticipationRequestId, LinkType::PARTY_PARTICIPATION_REQUEST())
-                            );
+
+        $notification = $this->notificationFactory->replyPartyParticipationRequestNotification($partyParticipationRequestId);
+
         $this->notificationRepository->save($notification);
 
         return $notification->id();
@@ -88,5 +69,4 @@ class NotificationAppService
 
         return $notification->id();
     }
-
 }
