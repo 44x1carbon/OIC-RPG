@@ -60,9 +60,9 @@ class EventEloquent extends Model
             $this->name,
             $this->theme,
             $this->description,
-            new ReleasePeriod($this->release_start_date, $this->release_end_date),
-            new EventHoldPeriod($this->event_hold_start_date, $this->event_hold_end_date),
-            new EvaluationPeriod($this->evaluation_start_date, $this->evaluation_end_date)
+            new ReleasePeriod(new \DateTime($this->release_start_date), new \DateTime($this->release_end_date)),
+            new EventHoldPeriod(new \DateTime($this->event_hold_start_date), new \DateTime($this->event_hold_end_date)),
+            new EvaluationPeriod(new \DateTime($this->evaluation_start_date), new \DateTime($this->evaluation_end_date))
         );
         return $entity;
     }

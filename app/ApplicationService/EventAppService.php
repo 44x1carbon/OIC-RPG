@@ -37,9 +37,9 @@ class EventAppService
         EvaluationPeriod $evaluationPeriod
     ): EventId
     {
-        if(!PeriodSpec::allValidate($releasePeriod->startDate(), $releasePeriod->endDate())) throw new DomainException('Error');
-        if(!PeriodSpec::allValidate($eventHoldPeriod->startDate(), $eventHoldPeriod->endDate())) throw new DomainException('Error');
-        if(!PeriodSpec::allValidate($evaluationPeriod->startDate(), $evaluationPeriod->endDate())) throw new DomainException('Error');
+        if(!PeriodSpec::allValidate($releasePeriod)) throw new DomainException('Error');
+        if(!PeriodSpec::allValidate($eventHoldPeriod)) throw new DomainException('Error');
+        if(!PeriodSpec::allValidate($evaluationPeriod)) throw new DomainException('Error');
 
         $event = new Event(
             $this->repo->nextId(),

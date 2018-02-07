@@ -39,9 +39,9 @@ class EventFacade
             $name,
             $theme,
             $description,
-            new ReleasePeriod($releaseStartDate, $releaseEndDate),
-            new EventHoldPeriod($holdStartDate, $holdEndDate),
-            new EvaluationPeriod($evaluationStartDate, $evaluationEndDate)
+            new ReleasePeriod(new \DateTime($releaseStartDate), new \DateTime($releaseEndDate)),
+            new EventHoldPeriod(new \DateTime($holdStartDate), new \DateTime($holdEndDate)),
+            new EvaluationPeriod(new \DateTime($evaluationStartDate), new \DateTime($evaluationEndDate))
         );
         return $id->code();
     }
