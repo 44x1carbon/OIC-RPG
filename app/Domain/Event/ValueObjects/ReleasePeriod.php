@@ -10,15 +10,12 @@ namespace App\Domain\Event\ValueObjects;
 
 use DateTime;
 
-class ReleasePeriod
+class ReleasePeriod extends Period
 {
-    private $startDate;
-    private $endDate;
-
-    public function __construct(string $startDate, string $endDate)
+    public function __construct(DateTime $startDate, DateTime $endDate)
     {
-        $this->startDate = new DateTime($startDate);
-        $this->endDate = new DateTime($endDate);
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
 
     public function startDate(): DateTime
