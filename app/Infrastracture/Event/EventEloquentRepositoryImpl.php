@@ -33,9 +33,9 @@ class EventEloquentRepositoryImpl implements EventRepositoryInterface
         return $eventCollection->toArray();
     }
 
-    public function findById(string $code): ?Event
+    public function findById(EventId $id): ?Event
     {
-        return null_safety(EventEloquent::findById($code), function(EventEloquent $eloquent){
+        return null_safety(EventEloquent::findById($id->code()), function(EventEloquent $eloquent){
             return $eloquent->toEntity();
         });
     }

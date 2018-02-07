@@ -17,7 +17,7 @@ interface EventRepositoryInterface
 
     public function all(): array;
 
-    public function findById(string $code): ?Event;
+    public function findById(EventId $id): ?Event;
 
     public function nextId(): EventId;
 }
