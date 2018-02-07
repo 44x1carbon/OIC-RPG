@@ -31,9 +31,9 @@ class EventSpecTest extends TestCase
         $name = 'MF';
         $theme = 'oic';
         $description = '作品展';
-        $releasePeriod = new ReleasePeriod('2018-01-01', '2018-02-01');
-        $eventHoldPeriod = new EventHoldPeriod('2018-01-02', '2018-01-15');
-        $evaluationPeriod = new EvaluationPeriod('2018-01-16', '2018-01-30');
+        $releasePeriod = new ReleasePeriod(new \DateTime('2018-01-01'), new \DateTime('2018-02-01'));
+        $eventHoldPeriod = new EventHoldPeriod(new \DateTime('2018-01-02'), new \DateTime('2018-01-15'));
+        $evaluationPeriod = new EvaluationPeriod(new \DateTime('2018-01-16'), new \DateTime('2018-01-30'));
 
         $this->event = new Event(
             $id,
@@ -89,7 +89,7 @@ class EventSpecTest extends TestCase
     {
         $this->assertFalse(EventSpec::validateEndedEventHoldPeriod(
             $this->event->eventHoldPeriod(),
-            new EvaluationPeriod('2018-01-15', '2018-01-31')
+            new EvaluationPeriod(new \DateTime('2018-01-15'), new \DateTime('2018-01-31'))
         ));
     }
 }

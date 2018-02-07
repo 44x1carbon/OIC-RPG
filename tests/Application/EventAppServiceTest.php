@@ -35,11 +35,11 @@ class EventAppServiceTest extends TestCase
             'MF',
             'oic',
             '作品展',
-            new ReleasePeriod('2020-01-01', '2020-02-01'),
-            new EventHoldPeriod('2020-01-02', '2020-01-15'),
-            new EvaluationPeriod('2020-01-16', '2020-01-30')
+            new ReleasePeriod(new \DateTime('2019-01-01'), new \DateTime('2019-02-01')),
+            new EventHoldPeriod(new \DateTime('2019-01-02'), new \DateTime('2019-01-15')),
+            new EvaluationPeriod(new \DateTime('2019-01-16'), new \DateTime('2019-01-30'))
         );
-        $result = $this->repo->findById($id->code());
+        $result = $this->repo->findById($id);
         $this->assertTrue(isset($result));
     }
 }

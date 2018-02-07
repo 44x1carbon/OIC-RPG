@@ -1,6 +1,7 @@
 <?php
 
 use App\Domain\Event\EventRepositoryInterface;
+use App\Domain\Event\ValueObjects\EventId;
 use App\Presentation\EventFacade;
 use Tests\TestCase;
 
@@ -39,7 +40,8 @@ class EventFacadeTest extends TestCase
             '2020-01-16',
             '2020-01-30'
         );
-        $result = $this->repo->findById($id);
+        $eventId = new EventId($id);
+        $result = $this->repo->findById($eventId);
         $this->assertTrue(isset($result));
     }
 }
