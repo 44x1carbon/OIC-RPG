@@ -9,6 +9,7 @@
 namespace App\Domain\Event\Spec;
 
 
+use App\Domain\Event\ValueObjects\Period;
 use App\Domain\Event\ValueObjects\ReleasePeriod;
 use App\DomainUtility\SpecTrait;
 use Carbon\Carbon;
@@ -18,11 +19,11 @@ class PeriodSpec
 {
     use SpecTrait;
 
-    public static function allValidate(DateTime $startDate, DateTime $endDate): bool
+    public static function allValidate(Period $period): bool
     {
-        if(!self::isAfterNow($startDate)) return false;
-        if(!self::isAfterNow($endDate)) return false;
-        if(!self::isAfterStartDate($startDate, $endDate)) return false;
+        if(!self::isAfterNow($period->startDate)) return false;
+        if(!self::isAfterNow($period->endDate)) return false;
+        if(!self::isAfterStartDate($period->startDate, $period->endDate)) return false;
         return true;
     }
 
