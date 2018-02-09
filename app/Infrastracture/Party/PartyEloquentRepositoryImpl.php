@@ -79,4 +79,14 @@ class PartyEloquentRepositoryImpl implements PartyRepositoryInterface
         return $randId;
     }
 
+    /**
+     * 最新のパーティを5つ取得
+     */
+    public function getNewFiveParty(): array
+    {
+        return $this->eloquent->orderBy('created_at', 'desc')->take(5)->get()->map(function(PartyEloquent $model) {
+            return $model->toEntity();
+        })->toArray();
+    }
+
 }
