@@ -11,6 +11,7 @@ namespace App\Infrastracture\Notification;
 
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Notification\Notification;
+use App\Domain\Notification\ValueObjects\NotificationType;
 use App\Infrastracture\Link\LinkViewModel;
 use DateTime;
 
@@ -20,8 +21,9 @@ class NotificationViewModel
     private $title = null;             // 通知タイトル
     private $message = null;           // 通知メッセージ
     private $toStudentNumber = null;   // 通知先学籍番号
-    private $notificationAt = null;    // 通知日時
     private $link = null;              // リンクVO
+    private $notificationType = null;  // 通知種類
+    private $notificationAt = null;    // 通知日時
     private $readFlg = null;           // 既読フラグ
 
     public function __construct(Notification $notification)
@@ -32,6 +34,7 @@ class NotificationViewModel
         $this->message = $notification->message();
         $this->toStudentNumber = $notification->toStudentNumber();
         $this->link = new LinkViewModel($notification->link());
+        $this->notificationType = $notification->notificationType();
         $this->notificationAt = $notification->notificationAt();
         $this->readFlg = $notification->isRead();
     }
@@ -75,6 +78,15 @@ class NotificationViewModel
     public function link(): LinkViewModel
     {
         return $this->link;
+    }
+
+    /**
+     * 通知種類
+     * @return NotificationType
+     */
+    public function notificationType(): NotificationType
+    {
+        return $this->notificationType;
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Eloquents;
 
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Notification\Notification;
+use App\Domain\Notification\ValueObjects\NotificationType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -50,6 +51,7 @@ class NotificationEloquent extends Model
         $notificationModel->title               = $notification->title();
         $notificationModel->message             = $notification->message();
         $notificationModel->to_student_number   = $notification->toStudentNumber()->code();
+        $notificationModel->notification_type   = $notification->notificationType()->type();
         $notificationModel->notification_at     = $notification->notificationAt();
         $notificationModel->read_flg            = $notification->isRead();
         $notificationModel->link_id             = LinkEloquent::fromVo($notification->link())->id;
@@ -67,6 +69,7 @@ class NotificationEloquent extends Model
             $this->message,
             new StudentNumber($this->to_student_number),
             $linkEloquent->toVo(),
+            new NotificationType($this->notification_type),
             new \DateTime($this->notification_at),
             $this->read_flg
         );

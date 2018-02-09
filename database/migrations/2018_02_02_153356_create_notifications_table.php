@@ -19,6 +19,7 @@ class CreateNotificationsTable extends Migration
             $table->string('title');
             $table->string('message');
             $table->string('to_student_number');
+            $table->string('notification_type');
             $table->string('notification_at');
             $table->boolean('read_flg');
             $table->unsignedInteger('link_id');
