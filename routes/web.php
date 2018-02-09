@@ -95,10 +95,7 @@ if(env('APP_ENV', 'local') == 'local') {
     Route::post('/debug/sign_in', DebugController::class.'@doSignIn');
 }
 
-Route::get('/top', function(\App\Domain\GuildMember\GuildMember $loginMember) {
-   return view('Top')
-       ->with('guildMember', new \App\Infrastracture\GuildMember\GuildMemberViewModel($loginMember));
-})->name('top');
+Route::get('/top', TopController::class.'@index')->name('top');
 
 Route::get('/guild', function() {
     return view('Guild.Top');

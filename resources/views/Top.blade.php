@@ -27,10 +27,10 @@
                     </div>
                 </a>
             </li>
-            <li class="rpg-top-menu-item disabled">
-                <a href="#" class="rpg-top-menu-link raid-battle">
+            <li class="rpg-top-menu-item notification">
+                <a href="{{ route('show_notification') }}" class="rpg-top-menu-link raid-notification">
                     <div class="menu__name">
-                        レイドバトル
+                        通知  {{ $sendNotification ? 'あり' : 'なし'}}
                     </div>
                 </a>
             </li>
