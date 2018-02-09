@@ -19,7 +19,7 @@ class LinkType
 
     private $type;
 
-    private function __construct(string $type)
+    public function __construct(string $type)
     {
         $this->type = $type;
         if( !LinkTypeSpec::isAvailable($type) ) throw new \Exception("Error");
