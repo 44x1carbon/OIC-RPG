@@ -26,7 +26,7 @@ class ReplyPartyParticipationRequestMessageFactory implements NotificationMessag
         /* @var Party $party */
         $party = $partyRepository->findById($partyParticipationRequest->partyId());
 
-        return $party->productionIdea()->productionTheme()."パーティへ送った参加申請の返信が来ています";
+        return "「".$party->productionIdea()->productionTheme()."」参加申請の返信が来ています。";
     }
 
     public function createMessage(string $id)
@@ -40,11 +40,11 @@ class ReplyPartyParticipationRequestMessageFactory implements NotificationMessag
         /* @var Party $party */
         $party = $partyRepository->findById($partyParticipationRequest->partyId());
 
-        $message = $party->productionIdea()->productionTheme()." パーティの ".$party->findWantedRoleById($partyParticipationRequest->wantedRoleId())->roleName()." への参加については、\n";
+        $message = "あなたが申請を送った「".$party->productionIdea()->productionTheme()."」の「".$party->findWantedRoleById($partyParticipationRequest->wantedRoleId())->roleName()."」への参加申請は、\n";
         if ($partyParticipationRequest->reply()->isPermit()) {
-            $message = $message."参加が承認されました！おめでとうございます！";
+            $message = $message."無事、承認されました！おめでとうございます！";
         } elseif ($partyParticipationRequest->reply()->isRejection()) {
-            $message = $message."参加が拒否されました。今後ますますのご健闘をお祈り申し上げます。";
+            $message = $message."残念ですが、拒否されました。今後ますますのご健闘をお祈り申し上げます。";
         }
         return $message;
     }

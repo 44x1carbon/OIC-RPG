@@ -13,6 +13,7 @@ use App\Domain\Notification\Notification;
 use App\Domain\Notification\RepositoryInterface\NotificationRepositoryInterface;
 use App\Domain\Notification\ValueObjects\Link;
 use App\Domain\Notification\ValueObjects\LinkType;
+use App\Domain\Notification\ValueObjects\NotificationType;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 
@@ -60,7 +61,8 @@ class NotificationFactory
             $this->receivePartyParticipationRequestMessageFactory->createTitle($partyParticipationRequestId),
             $this->receivePartyParticipationRequestMessageFactory->createMessage($partyParticipationRequestId),
             $party->partyManagerId(),
-            new Link($partyParticipationRequestId, LinkType::PARTY_PARTICIPATION_REQUEST())
+            new Link($partyParticipationRequestId, LinkType::PARTY_PARTICIPATION_REQUEST()),
+            NotificationType::RECEIVE_PARTY_PARTICIPATION_REQUEST()
         );
         return $notification;
     }
@@ -81,7 +83,8 @@ class NotificationFactory
             $this->replyPartyParticipationRequestMessageFactory->createTitle($partyParticipationRequestId),
             $this->replyPartyParticipationRequestMessageFactory->createMessage($partyParticipationRequestId),
             $partyParticipationRequest->guildMemberId(),
-            new Link($partyParticipationRequestId, LinkType::PARTY_PARTICIPATION_REQUEST())
+            new Link($partyParticipationRequestId, LinkType::PARTY_PARTICIPATION_REQUEST()),
+            NotificationType::REPLY_PARTY_PARTICIPATION_REQUEST()
         );
         return $notification;
     }
