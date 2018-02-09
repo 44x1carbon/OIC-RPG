@@ -28,7 +28,7 @@ class ReceivePartyParticipationRequestMessageFactory implements NotificationMess
         /* @var Party $party */
         $party = $partyRepository->findById($partyParticipationRequest->partyId());
 
-        return $party->productionIdea()->productionTheme()."パーティに参加申請が来ています。";
+        return "「".$party->productionIdea()->productionTheme()."」へ参加申請が来ています。";
     }
 
     public function createMessage(string $id)
@@ -46,7 +46,7 @@ class ReceivePartyParticipationRequestMessageFactory implements NotificationMess
         /* @var GuildMember $guildMember */
         $guildMember = $guildMemberRepository->findByStudentNumber($partyParticipationRequest->guildMemberId());
 
-        return "あなたが管理している ".$party->productionIdea()->productionTheme()." パーティに ".$guildMember->studentName()." さんから ".$party->findWantedRoleById($partyParticipationRequest->wantedRoleId())->roleName()." に参加申請が来ています。\n";
+        return "あなたが管理している「 ".$party->productionIdea()->productionTheme()." 」の\n「".$party->findWantedRoleById($partyParticipationRequest->wantedRoleId())->roleName()." 」に\n ".$guildMember->studentName()." さんから参加申請が来ています。";
     }
 
 }
