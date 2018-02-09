@@ -36,7 +36,7 @@ class NotificationEloquentRepositoryImpl implements NotificationRepositoryInterf
         $notificationModels = $this->notificationEloquent->findListByStudentNumber($studentNumber);
         $notifications = array_map(function(NotificationEloquent $notificationModel) {
                 return $notificationModel->toEntity();
-            }, $notificationModels);
+            }, $notificationModels->all());
 
         return $notifications;
     }
@@ -75,5 +75,12 @@ class NotificationEloquentRepositoryImpl implements NotificationRepositoryInterf
         $notificationModels = $this->notificationEloquent->findListByStudentNumberUnread($studentNumber);
 
         return count($notificationModels) > 0;
+    }
+
+    public function delete(Notification $notification): bool
+    {
+        $notificationModel = $this->notificationEloquent->findById($notification->id());
+        if (!$notificationModel) return false;
+        return $notificationModel->delete();
     }
 }
