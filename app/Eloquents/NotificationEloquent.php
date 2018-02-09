@@ -4,6 +4,7 @@ namespace App\Eloquents;
 
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Notification\Notification;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class NotificationEloquent extends Model
@@ -21,9 +22,9 @@ class NotificationEloquent extends Model
      * @param StudentNumber $studentNumber
      * @return NotificationEloquent[]
      */
-    public static function findListByStudentNumber(StudentNumber $studentNumber): ?array
+    public static function findListByStudentNumber(StudentNumber $studentNumber): Collection
     {
-        $notificationModels = self::where('to_student_number', $studentNumber->code())->all();
+        $notificationModels = self::where('to_student_number', $studentNumber->code())->get();
         return $notificationModels;
     }
 
@@ -32,9 +33,9 @@ class NotificationEloquent extends Model
      * @param StudentNumber $studentNumber
      * @return NotificationEloquent[]
      */
-    public static function findListByStudentNumberUnread(StudentNumber $studentNumber): array
+    public static function findListByStudentNumberUnread(StudentNumber $studentNumber): Collection
     {
-        $unreadNotificationModels = self::where('to_student_number', $studentNumber->code())->where('read_flg', false)->all();
+        $unreadNotificationModels = self::where('to_student_number', $studentNumber->code())->where('read_flg', false)->get();
         return $unreadNotificationModels;
     }
 
