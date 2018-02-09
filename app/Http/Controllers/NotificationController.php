@@ -24,6 +24,12 @@ class NotificationController extends Controller
             return new NotificationViewModel($notification);
         }, $notifications);
 
+        // 新しい通知が上に来るようにソート
+        usort($notificationViewModels, function ($notification1, $notification2)
+        {
+            return $notification2->notificationAt() <=> $notification1->notificationAt();
+        });
+
         return view('Notification.Index')->with('notifications', $notificationViewModels);
     }
 
