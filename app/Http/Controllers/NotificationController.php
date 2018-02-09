@@ -38,6 +38,9 @@ class NotificationController extends Controller
     {
         $notification = $notificationAppService->notification($loginMember->studentNumber(), $notificationId);
 
+        // 開いた通知を既読にする
+        $notificationAppService->readNotification($notificationId);
+
         // 自分宛の通知か判定
         return view('Notification.Detail')
             ->with('notification', new NotificationViewModel($notification));
