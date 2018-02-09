@@ -10,8 +10,15 @@
         <div> {{ $notification->title() }}</div>
         <div> {{ $notification->message() }} </div>
             <a href="{{ route('show_notification') }}" class="notification-title">通知一覧</a>
-        @if($notification->link()->linkType()->is('party') || $notification->link()->linkType()->is('partyParticipationRequest'))
-                <a href="{{ $notification->link()->partyUrl() }}" class="party">パーティ</a>
-        @endif
+            @if($notification->notificationType()->is('receivePartyParticipationRequest'))
+                @if($notification->link()->linkType()->is('partyParticipationRequest'))
+                    <a href="{{ $notification->link()->url() }}" class="party">参加申請一覧</a>
+                @endif
+            @endif
+            @if($notification->notificationType()->is('replyPartyParticipationRequest'))
+                @if($notification->link()->linkType()->is('partyParticipationRequest'))
+                    <a href="{{ $notification->link()->partyUrl() }}" class="party">パーティ</a>
+                @endif
+            @endif
     </div>
 @endsection
