@@ -10,7 +10,7 @@
     @foreach($notifications as $notification)
         <a href="{{ route('show_notification_detail', ['notificationId' => $notification->id()]) }}" class="party">
             <div class="title">
-                {{ $notification->title() }}
+                {{ $notification->title() }} {{$notification->isRead() ? '既読' : '未読'}}
             </div>
             <div class="notificationAt">
                 {{ $notification->notificationAt()->format('Y/m/d  H:i:s') }}
