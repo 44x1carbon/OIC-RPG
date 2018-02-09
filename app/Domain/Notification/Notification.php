@@ -11,7 +11,7 @@ namespace App\Domain\Notification;
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Notification\ValueObjects\Link;
 use Carbon\Carbon;
-use Faker\Provider\DateTime;
+use \DateTime;
 
 class Notification
 {
