@@ -8,9 +8,13 @@
 
 namespace App\ApplicationService;
 
+use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Notification\Factory\NotificationFactory;
+use App\Domain\Notification\Notification;
 use App\Domain\Notification\RepositoryInterface\NotificationRepositoryInterface;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
+use App\Eloquents\NotificationEloquent;
+use Exception;
 
 class NotificationAppService
 {
@@ -56,6 +60,18 @@ class NotificationAppService
         $this->notificationRepository->save($notification);
 
         return $notification->id();
+    }
+
+    /**
+     * 通知IDを元に取得する
+     */
+    public function notification(StudentNumber $studentNumber, string $notificationId)
+    {
+        $notification = $this->notificationRepository->findById($notificationId);
+
+        if (!$notification->toStudentNumber()->equals($studentNumber)) throw new Exception('存在しない通知IDです。');
+
+        return $notification;
     }
 
     /**
