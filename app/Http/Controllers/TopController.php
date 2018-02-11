@@ -11,8 +11,8 @@ namespace App\Http\Controllers;
 use App\ApplicationService\FeedAppService;
 use App\Domain\Feed\Feed;
 use App\Domain\GuildMember\GuildMember;
-use App\Domain\Notification\RepositoryInterface\NotificationRepositoryInterface;
 use App\Infrastracture\Feed\FeedViewModel;
+use App\Domain\Notification\Spec\NotificationSpec;
 use App\Infrastracture\GuildMember\GuildMemberViewModel;
 
 class TopController extends Controller
@@ -20,8 +20,8 @@ class TopController extends Controller
     // Top画面
     public function index(
         GuildMember $loginMember,
-        NotificationRepositoryInterface $notificationRepository,
-        FeedAppService $feedAppService
+        FeedAppService $feedAppService,
+        NotificationSpec $notificationSpec
     )
     {
         // 最新のFeedを取得
@@ -32,7 +32,7 @@ class TopController extends Controller
 
         return view('Top')
             ->with('guildMember', new GuildMemberViewModel($loginMember))
-            ->with('sendNotification', $notificationRepository->hasUnreadNotifications($loginMember->studentNumber()))
+            ->with('sendNotification', $notificationSpec::hasUnreadNotifications($loginMember->studentNumber()))
             ->with('feedList', $feedViewModelList);
     }
 }

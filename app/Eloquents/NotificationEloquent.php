@@ -12,6 +12,28 @@ class NotificationEloquent extends Model
 {
     protected $table = 'notifications';
 
+    /**
+     * 指定した学籍番号宛の通知のみを含むクエリーのスコープ
+     * @param $query
+     * @param StudentNumber $studentNumber
+     * @return mixed
+     */
+    public function scopeOfToStudentNumber($query, StudentNumber $studentNumber)
+    {
+        return $query->where('to_student_number', $studentNumber->code());
+    }
+
+    /**
+     * 指定した既読フラグの状態の通知のみを含むクエリーのスコープ
+     * @param $query
+     * @param bool $isRead
+     * @return mixed
+     */
+    public function scopeOfReadFlg($query, bool $isRead)
+    {
+        return $query->where('read_flg', $isRead);
+    }
+
     public static function findById(string $id): ?NotificationEloquent
     {
         $notificationModel = self::where('notification_id', $id)->first();
@@ -25,7 +47,7 @@ class NotificationEloquent extends Model
      */
     public static function findListByStudentNumber(StudentNumber $studentNumber): Collection
     {
-        $notificationModels = self::where('to_student_number', $studentNumber->code())->get();
+        $notificationModels = self::ofToStudentNumber($studentNumber)->get();
         return $notificationModels;
     }
 
@@ -36,7 +58,7 @@ class NotificationEloquent extends Model
      */
     public static function findListByStudentNumberUnread(StudentNumber $studentNumber): Collection
     {
-        $unreadNotificationModels = self::where('to_student_number', $studentNumber->code())->where('read_flg', false)->get();
+        $unreadNotificationModels = self::ofToStudentNumber($studentNumber)->ofReadFlg(false)->get();
         return $unreadNotificationModels;
     }
 

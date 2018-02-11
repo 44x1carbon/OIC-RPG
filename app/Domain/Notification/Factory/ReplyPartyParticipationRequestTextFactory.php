@@ -13,9 +13,9 @@ use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyParticipationRequest\PartyParticipationRequest;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 
-class ReplyPartyParticipationRequestMessageFactory implements NotificationMessageFactoryInterface
+class ReplyPartyParticipationRequestTextFactory implements NotificationTextFactoryInterface
 {
-    public function createTitle(string $id)
+    public function createTitle(string $id): string
     {
         /* @var PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository */
         $partyParticipationRequestRepository = app(PartyParticipationRequestRepositoryInterface::class);
@@ -29,7 +29,7 @@ class ReplyPartyParticipationRequestMessageFactory implements NotificationMessag
         return "「".$party->productionIdea()->productionTheme()."」参加申請の返信が来ています。";
     }
 
-    public function createMessage(string $id)
+    public function createMessage(string $id): string
     {
         /* @var PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository */
         $partyParticipationRequestRepository = app(PartyParticipationRequestRepositoryInterface::class);
