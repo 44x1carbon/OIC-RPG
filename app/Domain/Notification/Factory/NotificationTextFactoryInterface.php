@@ -8,7 +8,7 @@
 
 namespace App\Domain\Notification\Factory;
 
-interface NotificationMessageFactoryInterface
+interface NotificationTextFactoryInterface
 {
     public function createTitle(string $id): string;
 

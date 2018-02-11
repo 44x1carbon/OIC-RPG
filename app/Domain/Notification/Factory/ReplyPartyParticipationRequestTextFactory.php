@@ -13,7 +13,7 @@ use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyParticipationRequest\PartyParticipationRequest;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 
-class ReplyPartyParticipationRequestMessageFactory implements NotificationMessageFactoryInterface
+class ReplyPartyParticipationRequestTextFactory implements NotificationTextFactoryInterface
 {
     public function createTitle(string $id): string
     {

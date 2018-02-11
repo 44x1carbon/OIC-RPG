@@ -25,24 +25,24 @@ class NotificationFactory
     private $notificationRepository;
     /* @var PartyRepositoryInterface $partyRepository */
     private $partyRepository;
-    /* @var ReceivePartyParticipationRequestMessageFactory $receivePartyParticipationRequestMessageFactory */
-    private $receivePartyParticipationRequestMessageFactory;
-    /* @var ReplyPartyParticipationRequestMessageFactory $replyPartyParticipationRequestMessageFactory */
-    private $replyPartyParticipationRequestMessageFactory;
+    /* @var ReceivePartyParticipationRequestTextFactory $receivePartyParticipationRequestTextFactory */
+    private $receivePartyParticipationRequestTextFactory;
+    /* @var ReplyPartyParticipationRequestTextFactory $replyPartyParticipationRequestTextFactory */
+    private $replyPartyParticipationRequestTextFactory;
 
     public function __construct(
         PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository,
         NotificationRepositoryInterface $notificationRepository,
         PartyRepositoryInterface $partyRepository,
-        ReceivePartyParticipationRequestMessageFactory $receivePartyParticipationRequestMessageFactory,
-        ReplyPartyParticipationRequestMessageFactory $replyPartyParticipationRequestMessageFactory
+        ReceivePartyParticipationRequestTextFactory $receivePartyParticipationRequestTextFactory,
+        ReplyPartyParticipationRequestTextFactory $replyPartyParticipationRequestTextFactory
     )
     {
         $this->partyParticipationRequestRepository = $partyParticipationRequestRepository;
         $this->notificationRepository = $notificationRepository;
         $this->partyRepository = $partyRepository;
-        $this->receivePartyParticipationRequestMessageFactory = $receivePartyParticipationRequestMessageFactory;
-        $this->replyPartyParticipationRequestMessageFactory = $replyPartyParticipationRequestMessageFactory;
+        $this->receivePartyParticipationRequestTextFactory = $receivePartyParticipationRequestTextFactory;
+        $this->replyPartyParticipationRequestTextFactory = $replyPartyParticipationRequestTextFactory;
     }
 
     /**
@@ -58,8 +58,8 @@ class NotificationFactory
 
         $notification = new Notification(
             $this->notificationRepository->nextId(),
-            $this->receivePartyParticipationRequestMessageFactory->createTitle($partyParticipationRequestId),
-            $this->receivePartyParticipationRequestMessageFactory->createMessage($partyParticipationRequestId),
+            $this->receivePartyParticipationRequestTextFactory->createTitle($partyParticipationRequestId),
+            $this->receivePartyParticipationRequestTextFactory->createMessage($partyParticipationRequestId),
             $party->partyManagerId(),
             new Link($partyParticipationRequestId, LinkType::PARTY_PARTICIPATION_REQUEST()),
             NotificationType::RECEIVE_PARTY_PARTICIPATION_REQUEST()
@@ -80,8 +80,8 @@ class NotificationFactory
 
         $notification = new Notification(
             $this->notificationRepository->nextId(),
-            $this->replyPartyParticipationRequestMessageFactory->createTitle($partyParticipationRequestId),
-            $this->replyPartyParticipationRequestMessageFactory->createMessage($partyParticipationRequestId),
+            $this->replyPartyParticipationRequestTextFactory->createTitle($partyParticipationRequestId),
+            $this->replyPartyParticipationRequestTextFactory->createMessage($partyParticipationRequestId),
             $partyParticipationRequest->guildMemberId(),
             new Link($partyParticipationRequestId, LinkType::PARTY_PARTICIPATION_REQUEST()),
             NotificationType::REPLY_PARTY_PARTICIPATION_REQUEST()

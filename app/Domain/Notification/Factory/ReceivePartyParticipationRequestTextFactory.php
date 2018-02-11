@@ -15,7 +15,7 @@ use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyParticipationRequest\PartyParticipationRequest;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 
-class ReceivePartyParticipationRequestMessageFactory implements NotificationMessageFactoryInterface
+class ReceivePartyParticipationRequestTextFactory implements NotificationTextFactoryInterface
 {
     public function createTitle(string $id): string
     {
