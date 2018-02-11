@@ -17,7 +17,7 @@ use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationR
 
 class ReceivePartyParticipationRequestMessageFactory implements NotificationMessageFactoryInterface
 {
-    public function createTitle(string $id)
+    public function createTitle(string $id): string
     {
         /* @var PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository */
         $partyParticipationRequestRepository = app(PartyParticipationRequestRepositoryInterface::class);
@@ -31,7 +31,7 @@ class ReceivePartyParticipationRequestMessageFactory implements NotificationMess
         return "「".$party->productionIdea()->productionTheme()."」へ参加申請が来ています。";
     }
 
-    public function createMessage(string $id)
+    public function createMessage(string $id): string
     {
         /* @var PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository */
         $partyParticipationRequestRepository = app(PartyParticipationRequestRepositoryInterface::class);

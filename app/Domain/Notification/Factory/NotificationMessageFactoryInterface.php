@@ -10,7 +10,7 @@ namespace App\Domain\Notification\Factory;
 
 interface NotificationMessageFactoryInterface
 {
-    public function createTitle(string $id);
+    public function createTitle(string $id): string;
 
-    public function createMessage(string $id);
+    public function createMessage(string $id): string;
 }
