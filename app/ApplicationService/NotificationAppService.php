@@ -12,6 +12,7 @@ use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Notification\Factory\NotificationFactory;
 use App\Domain\Notification\Notification;
 use App\Domain\Notification\RepositoryInterface\NotificationRepositoryInterface;
+use App\Domain\Notification\Spec\NotificationSpec;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 use App\Eloquents\NotificationEloquent;
 use Exception;
@@ -24,16 +25,20 @@ class NotificationAppService
     private $notificationRepository;
     /* @var NotificationFactory $notificationFactory */
     private $notificationFactory;
+    /* @var NotificationSpec $notificationSpec */
+    private $notificationSpec;
 
     public function __construct(
         PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository,
         NotificationRepositoryInterface $notificationRepository,
-        NotificationFactory $notificationFactory
+        NotificationFactory $notificationFactory,
+        NotificationSpec $notificationSpec
     )
     {
         $this->partyParticipationRequestRepository = $partyParticipationRequestRepository;
         $this->notificationRepository = $notificationRepository;
         $this->notificationFactory = $notificationFactory;
+        $this->notificationSpec = $notificationSpec;
     }
 
     /**
@@ -69,7 +74,8 @@ class NotificationAppService
     {
         $notification = $this->notificationRepository->findById($notificationId);
 
-        if (!$notification->toStudentNumber()->equals($studentNumber)) throw new Exception('存在しない通知IDです。');
+        // notificationが引数で受け取ったstudentNumber宛のものか判定
+        if (!$this->notificationSpec::isNotificationToStudentNumber($studentNumber, $notification)) throw new Exception('存在しない通知IDです。');
 
         return $notification;
     }

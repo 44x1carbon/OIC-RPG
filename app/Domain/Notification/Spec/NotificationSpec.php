@@ -10,6 +10,7 @@ namespace App\Domain\Notification\Spec;
 
 
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
+use App\Domain\Notification\Notification;
 use App\Domain\Notification\RepositoryInterface\NotificationRepositoryInterface;
 
 class NotificationSpec
@@ -25,5 +26,14 @@ class NotificationSpec
         $notificationList = $notificationRepository->findUnreadListByStudentNumber($studentNumber);
 
         return count($notificationList) > 0;
+    }
+
+    /**
+     * 渡したStudentNumberのユーザー宛の通知かどうか判定
+     * @return bool
+     */
+    public static function isNotificationToStudentNumber(StudentNumber $studentNumber, Notification $notification): bool
+    {
+        return $notification->toStudentNumber()->equals($studentNumber);
     }
 }
