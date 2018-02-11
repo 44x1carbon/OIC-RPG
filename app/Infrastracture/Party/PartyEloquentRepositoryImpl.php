@@ -80,11 +80,11 @@ class PartyEloquentRepositoryImpl implements PartyRepositoryInterface
     }
 
     /**
-     * 最新のパーティを5つ取得
+     * 最新のパーティを引数で渡された数だけ取得する
      */
-    public function getNewFiveParty(): array
+    public function takeNewParty(int $n): array
     {
-        return $this->eloquent->orderBy('created_at', 'desc')->take(5)->get()->map(function(PartyEloquent $model) {
+        return $this->eloquent->orderBy('created_at', 'desc')->take($n)->get()->map(function(PartyEloquent $model) {
             return $model->toEntity();
         })->toArray();
     }

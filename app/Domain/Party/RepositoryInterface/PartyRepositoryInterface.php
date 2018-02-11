@@ -26,5 +26,5 @@ interface PartyRepositoryInterface
 
     public function nextId(): string;
 
-    public function getNewFiveParty(): array;
+    public function takeNewParty(int $n): array;
 }

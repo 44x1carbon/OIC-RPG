@@ -48,7 +48,7 @@ class FeedAppService
      */
     private function feedNewParty()
     {
-        $parties = $this->partyRepository->getNewFiveParty();
+        $parties = $this->partyRepository->takeNewParty(5);
 
         return array_map(function(Party $party) {
             return $this->feedFactory->createPartyFeed($party);
