@@ -24,7 +24,7 @@ interface NotificationRepositoryInterface
 
     public function all(): array;
 
-    public function hasUnreadNotifications(StudentNumber $studentNumber): bool;
+    public function findUnreadListByStudentNumber(StudentNumber $studentNumber): array;
 
     public function delete(Notification $notification): bool;
 }

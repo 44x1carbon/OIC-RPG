@@ -67,14 +67,17 @@ class NotificationEloquentRepositoryImpl implements NotificationRepositoryInterf
     }
 
     /**
-     * 未読の通知があるかどうか
+     * 学籍番号を元に未読の通知のリストを取得
      * @return bool
      */
-    public function hasUnreadNotifications(StudentNumber $studentNumber): bool
+    public function findUnreadListByStudentNumber(StudentNumber $studentNumber): array
     {
         $notificationModels = $this->notificationEloquent->findListByStudentNumberUnread($studentNumber);
+        $notifications = array_map(function(NotificationEloquent $notificationModel) {
+            return $notificationModel->toEntity();
+        }, $notificationModels->all());
 
-        return count($notificationModels) > 0;
+        return $notifications;
     }
 
     public function delete(Notification $notification): bool
