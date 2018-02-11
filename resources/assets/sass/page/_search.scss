@@ -28,5 +28,24 @@
   border-radius: 0 7px 7px 0 !important;
 }
 
+.search-options {
+  padding: 12px 15px;
+  margin-bottom: 30px;
+  border: 3px solid #C39300;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #AB8359 0%, #543918 100%);
+  p {
+    margin: 0 6px;
+    color: white;
+  }
+}
 
+.search-options-title {
+  margin-bottom: 6px;
+  font-size: 18px;
+  color: white;
+}
 
+.search-options-item {
+  margin-bottom: 6px;
+}

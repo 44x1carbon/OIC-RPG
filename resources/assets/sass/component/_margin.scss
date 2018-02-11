@@ -5,9 +5,3 @@
 .ml-auto {
   margin-left: auto;
 }
-
-// margin minus
-@mixin margin-minus($property) {
-  margin: $property;
-}
-

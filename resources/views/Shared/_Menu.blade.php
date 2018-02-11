@@ -34,7 +34,7 @@
 
 <script>
     window.onload = function () {
-        let scoutModal = document.getElementsByClassName('js-scout-modal-show')[0]
+        let menu = document.getElementsByClassName('menu')[0]
         document.getElementsByClassName('menu-btn')[0].onclick = () => {
             menu.classList.add('show')
         }
