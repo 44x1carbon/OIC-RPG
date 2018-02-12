@@ -12,6 +12,7 @@ namespace App\Presentation;
 use App\ApplicationService\EventAppService;
 use App\Domain\Event\ValueObjects\EvaluationPeriod;
 use App\Domain\Event\ValueObjects\EventHoldPeriod;
+use App\Domain\Event\ValueObjects\EventId;
 use App\Domain\Event\ValueObjects\ReleasePeriod;
 
 class EventFacade
@@ -44,5 +45,17 @@ class EventFacade
             new EvaluationPeriod(new \DateTime($evaluationStartDate), new \DateTime($evaluationEndDate))
         );
         return $id->code();
+    }
+
+    public function ranking(string $eventId, string $partyId, $rank): string
+    {
+        $id = $this->eventAppService->ranking(new EventId($eventId), $partyId, $rank);
+
+        return $id;
+    }
+
+    public function getRanking(string $eventId): array
+    {
+        return $this->eventAppService->getRanking(new EventId($eventId));
     }
 }
