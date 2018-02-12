@@ -8,6 +8,7 @@ use App\Domain\Event\ValueObjects\EventId;
 use App\Domain\Event\ValueObjects\ReleasePeriod;
 use App\Domain\EventParty\EventParty;
 use App\Domain\EventParty\EventPartyRepositoryInterface;
+use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use Tests\TestCase;
 
 /**
@@ -26,6 +27,9 @@ class EventAppServiceTest extends TestCase
     protected $eventPartyRepo;
     /* @var EventAppService $appService */
     protected $appService;
+    /* @var PartyRepositoryInterface $partyRepo */
+    protected $partyRepo;
+
 
     public function setUp()
     {
@@ -33,6 +37,7 @@ class EventAppServiceTest extends TestCase
         $this->repo = app(EventRepositoryInterface::class);
         $this->eventPartyRepo = app(EventPartyRepositoryInterface::class);
         $this->appService = app(EventAppService::class);
+        $this->partyRepo = app(PartyRepositoryInterface::class);
     }
 
     public function testIssueEventSuccess()
@@ -77,5 +82,33 @@ class EventAppServiceTest extends TestCase
         $result = $this->eventPartyRepo->findByEventIdAndPartyId($eventId, $partyId);
 
         $this->assertTrue($result->rank() === $rank);
+    }
+
+    public function testGetRanking()
+    {
+        $result = true;
+        $eventId = new EventId('aaaa');
+        for($i = 5; $i > 0; $i--)
+        {
+            $this->eventPartyRepo->save(new EventParty(
+                $eventId,
+                $this->partyRepo->nextId(),
+                null,
+                null,
+                $i
+            ));
+        }
+
+        $sortEventPartyCollection = $this->appService->getRanking($eventId);
+
+        $j = 1;
+        /* @var EventParty $value */
+        foreach ($sortEventPartyCollection as $value)
+        {
+            if($value->rank() != $j){$result = false; break;}
+            $j++;
+        }
+
+        $this->assertTrue($result);
     }
 }
