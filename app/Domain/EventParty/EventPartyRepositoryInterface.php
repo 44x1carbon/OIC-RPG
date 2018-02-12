@@ -18,4 +18,6 @@ interface EventPartyRepositoryInterface
     public function findByEventId(EventId $id): array;
 
     public function findByEventIdAndPartyId(EventId $eventId, string $partyId): ?EventParty;
+
+    public function allEventPartyRankingOrderByAsc(EventId $eventId): array;
 }

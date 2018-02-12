@@ -33,4 +33,9 @@ class EventPartyEloquentRepositoryImpl implements EventPartyRepositoryInterface
             return $eloquent->toEntity();
         });
     }
+
+    public function allEventPartyRankingOrderByAsc(EventId $eventId): array
+    {
+        return EventPartyEloquent::allEventPartyRankingOrderByAsc($eventId->code());
+    }
 }

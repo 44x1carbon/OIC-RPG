@@ -17,6 +17,17 @@ class EventPartyEloquent extends Model
 {
     protected $table = 'event_parties';
 
+    public static function allEventPartyRankingOrderByAsc(string $code): ?array
+    {
+        $eventPartyModels = self::where('event_id', $code)
+            ->whereNotNull('rank')
+            ->orderBy('rank','asc')->get();
+        $eventPartyCollection = $eventPartyModels->map(function(EventPartyEloquent $eloquent){
+            return $eloquent->toEntity();
+        });
+        return $eventPartyCollection->toArray();
+    }
+
     public static function findByEventId(string $code): ?array
     {
         $eventPartyModels = self::where('event_id', $code)->get();
