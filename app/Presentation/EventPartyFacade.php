@@ -27,4 +27,16 @@ class EventPartyFacade
 
         return $result;
     }
+
+    public function updateWork(string $eventId, string $partyId, string $workName = null, string $workIntroduction = null): string
+    {
+        $id = $this->eventPartyAppService->updateWork(
+            new EventId($eventId),
+            $partyId,
+            $workName,
+            $workIntroduction
+        );
+
+        return $id;
+    }
 }

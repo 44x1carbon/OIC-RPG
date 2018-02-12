@@ -67,4 +67,10 @@ class EventParty
     {
         $this->rank = $rank;
     }
+
+    public function updateWork(string $workName = null, string $workIntroduction = null)
+    {
+        if(!is_null($workName)) $this->setWorkName($workName);
+        if(!is_null($workIntroduction)) $this->setWorkIntroduction($workIntroduction);
+    }
 }

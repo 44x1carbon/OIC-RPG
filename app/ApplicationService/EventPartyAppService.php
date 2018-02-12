@@ -30,4 +30,14 @@ class EventPartyAppService
         $eventParty = new EventParty($eventId, $partyId);
         return $this->repo->save($eventParty);
     }
+
+    public function updateWork(EventId $eventId, string $partyId, string $workName = null, string $introduction = null): string
+    {
+        $eventParty = $this->repo->findByEventIdAndPartyId($eventId, $partyId);
+        $eventParty->updateWork($workName, $introduction);
+
+        $this->repo->save($eventParty);
+
+        return $eventParty->partyId();
+    }
 }
