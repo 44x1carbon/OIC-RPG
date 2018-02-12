@@ -17,15 +17,18 @@ use App\Domain\Event\ValueObjects\EvaluationPeriod;
 use App\Domain\Event\ValueObjects\EventHoldPeriod;
 use App\Domain\Event\ValueObjects\EventId;
 use App\Domain\Event\ValueObjects\ReleasePeriod;
+use App\Domain\EventParty\EventPartyRepositoryInterface;
 use App\Exceptions\DomainException;
 
 class EventAppService
 {
-    protected $repo;
+    protected $eventRepo;
+    protected $eventPartyRepo;
 
-    public function __construct(EventRepositoryInterface $repository)
+    public function __construct(EventRepositoryInterface $eventRepo, EventPartyRepositoryInterface $eventPartyRepo)
     {
-        $this->repo = $repository;
+        $this->eventRepo = $eventRepo;
+        $this->eventPartyRepo = $eventPartyRepo;
     }
 
     public function issueEvent(
@@ -42,7 +45,7 @@ class EventAppService
         if(!PeriodSpec::allValidate($evaluationPeriod)) throw new DomainException('Error');
 
         $event = new Event(
-            $this->repo->nextId(),
+            $this->eventRepo->nextId(),
             $name,
             $theme,
             $description,
@@ -53,8 +56,18 @@ class EventAppService
 
         if(!EventSpec::allValidate($event)) throw new DomainException('設定期間が誤っています');
 
-        $this->repo->save($event);
+        $this->eventRepo->save($event);
 
         return $event->id();
+    }
+
+    public function ranking(EventId $eventId, string $partyId, int $rank): string
+    {
+        $eventParty = $this->eventPartyRepo->findByEventIdAndPartyId($eventId, $partyId);
+        $eventParty->setRank($rank);
+
+        $this->eventPartyRepo->save($eventParty);
+
+        return $eventParty->partyId();
     }
 }
