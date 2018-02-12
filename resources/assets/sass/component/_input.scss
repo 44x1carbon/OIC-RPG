@@ -39,8 +39,17 @@ input:focus::-moz-placeholder {
   height: 50px;
 }
 
+.input-small {
+  width: 10%;
+}
+
+.input-number {
+  text-align: right;
+}
+
 .textarea {
   height: 70px;
-  padding: 6px 3px;
+  padding: 6px;
+  text-indent: 0;
 }
 
