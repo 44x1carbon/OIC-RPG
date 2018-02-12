@@ -85,6 +85,10 @@ Route::post('/me/get_job', GuildMemberController::class.'@getJob')->name('do_get
 /** お気に入りのジョブの設定 */
 Route::post('/me/favorite_job', GuildMemberController::class.'@setupFavoriteJob')->name('do_favorite_job');
 
+/** 通知 */
+Route::get('/notification', NotificationController::class.'@index')->name('show_notification');
+Route::get('/notification/{notificationId}/detail', NotificationController::class.'@detail')->name('show_notification_detail');
+
 /** デバッグ用 */
 if(env('APP_ENV', 'local') == 'local') {
     Route::get('/debug/learn_skill', DebugController::class.'@showLearnSkill')->name('show_learn_skill');
@@ -93,10 +97,7 @@ if(env('APP_ENV', 'local') == 'local') {
     Route::post('/debug/sign_in', DebugController::class.'@doSignIn');
 }
 
-Route::get('/top', function(\App\Domain\GuildMember\GuildMember $loginMember) {
-   return view('Top')
-       ->with('guildMember', new \App\Infrastracture\GuildMember\GuildMemberViewModel($loginMember));
-})->name('top');
+Route::get('/top', TopController::class.'@index')->name('top');
 
 Route::get('/guild', function() {
     return view('Guild.Top');

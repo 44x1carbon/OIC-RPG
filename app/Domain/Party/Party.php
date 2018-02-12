@@ -33,14 +33,17 @@ class Party
     private $partyMembers;
     // 募集役割一覧
     private $wantedRoles;
+    // パーティ作成日
+    private $createdAt;
 
-    public function __construct(string $id, ActivityEndDate $activityEndDate, StudentNumber $managerId, ProductionIdea $productionIdea = null, $wantedRoles = [])
+    public function __construct(string $id, ActivityEndDate $activityEndDate, StudentNumber $managerId, ProductionIdea $productionIdea = null, $wantedRoles = [], $createdAt = null)
     {
         $this->id = $id;
         $this->activityEndDate = $activityEndDate;
         $this->partyManagerId = $managerId;
         $this->productionIdea = $productionIdea ??new ProductionIdea( $this->id);
         $this->wantedRoles = $wantedRoles;
+        $this->createdAt = $createdAt;
     }
 
     public function editProductionIdea(string $productionTheme = null, string $productionTypeId = null, string $ideaDescription = null)
@@ -72,7 +75,7 @@ class Party
         $wantedRole->addFrame($num);
     }
 
-    private function findWantedRoleById(string $wantedRoleId): ?WantedRole
+    public function findWantedRoleById(string $wantedRoleId): ?WantedRole
     {
         $filterArr = array_values(array_filter($this->wantedRoles(), function(WantedRole $wantedRole) use($wantedRoleId){
             return $wantedRole->id() === $wantedRoleId;
@@ -147,6 +150,11 @@ class Party
     public function wantedRoles(): array
     {
         return $this->wantedRoles;
+    }
+
+    public function createdAt(): \DateTime
+    {
+        return $this->createdAt;
     }
 
     public function setId($id)
