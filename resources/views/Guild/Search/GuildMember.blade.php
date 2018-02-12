@@ -45,6 +45,7 @@
         </form>
     </div>
     <ul>
+    <? /* @var \App\Infrastracture\GuildMember\GuildMemberViewModel $guildMember */ ?>
     @foreach($guildMembers as $guildMember)
       <li>
         @include('Shared.Status._Profile', ['guildMember' => $guildMember])
@@ -57,7 +58,7 @@
             </div>
             <form class="scout-modal-inner form">
                 <div class="form-item">
-                  <p class="scout-user-name"><span></span>さんをスカウトする</p>
+                  <p class="scout-user-name"><span>{{ $guildMember->name }}</span>さんをスカウトする</p>
                 </div>
                 <div class="form-item">
                     <h3 class="form-item-title">パーティー選択</h3>
@@ -84,9 +85,9 @@
             document.addEventListener('click',function(e){
                 var t=e.target;
                 if(t.classList.contains("btn-scout")) {
-                    var name = t.parentNode.parentNode.firstElementChild.children[0].firstElementChild.innerText
+//                    var name = t.parentNode.parentNode.firstElementChild.children[0].firstElementChild.innerText
                     var scoutModal = t.parentNode.parentNode.lastElementChild
-                    scoutModal.lastElementChild.firstElementChild.children[0].firstElementChild.textContent = name;
+//                    scoutModal.lastElementChild.firstElementChild.children[0].firstElementChild.textContent = name;
                     scoutModal.classList.add("show");
                 }
             })
