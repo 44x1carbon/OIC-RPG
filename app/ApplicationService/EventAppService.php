@@ -70,4 +70,9 @@ class EventAppService
 
         return $eventParty->partyId();
     }
+
+    public function getRanking(EventId $eventId): array
+    {
+        return $this->eventPartyRepo->allEventPartyRankingOrderByAsc($eventId);
+    }
 }

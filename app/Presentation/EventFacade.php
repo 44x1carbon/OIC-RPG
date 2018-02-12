@@ -53,4 +53,9 @@ class EventFacade
 
         return $id;
     }
+
+    public function getRanking(string $eventId): array
+    {
+        return $this->eventAppService->getRanking(new EventId($eventId));
+    }
 }
