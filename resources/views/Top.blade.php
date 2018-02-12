@@ -28,7 +28,7 @@
                 </a>
             </li>
             <li class="rpg-top-menu-item notification">
-                <a href="{{ route('show_notification') }}" class="rpg-top-menu-link raid-notification">
+                <a href="{{ route('show_notification') }}" class="rpg-top-menu-link notification {{ $sendNotification ? 'is-there' : ''}}">
                     <div class="menu__name">
                         通知  {{ $sendNotification ? 'あり' : 'なし'}}
                     </div>
@@ -38,9 +38,23 @@
         <div class="news">
             <div class="news__header">お知らせ</div>
             <ul class="topics news__body">
-                <li class="topic">Ver1.2 アップデートのお知らせ</li>
+                <li class="topic is-active">Ver1.2 アップデートのお知らせ</li>
                 <li class="topic">現在起きている不具合について</li>
             </ul>
         </div>
     </div><!-- rpg-top -->
+    <script>
+          var lenght = 0;
+          var max = document.getElementsByClassName('topics').length
+          topicswip = function() {
+              document.getElementsByClassName('topic')[length].classList.toggle('is-active');
+              if(max == length) {
+                length = 0
+              } else {
+                length++
+              }
+              document.getElementsByClassName('topic')[length].classList.toggle('is-active');
+          }
+          setInterval(topicswip, 5000);
+    </script>
 @endsection
