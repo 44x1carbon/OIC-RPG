@@ -37,24 +37,32 @@
         </ul><!-- rpg-top-menu-list -->
         <div class="news">
             <div class="news__header">お知らせ</div>
-            <ul class="topics news__body">
-                <li class="topic is-active">Ver1.2 アップデートのお知らせ</li>
-                <li class="topic">現在起きている不具合について</li>
-            </ul>
+            <div class="topics news__body">
+                <?php /* @var \App\Infrastracture\Feed\FeedViewModel $feed */ ?>
+                @foreach($feedList as $feed)
+                    <div class="card topic is-active">
+                        <a href="{{ $feed->link()->partyUrl() }}">
+                            {{ $feed->message() }}
+                        </a>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div><!-- rpg-top -->
     <script>
-          var lenght = 0;
-          var max = document.getElementsByClassName('topics').length
-          topicswip = function() {
-              document.getElementsByClassName('topic')[length].classList.toggle('is-active');
-              if(max == length) {
-                length = 0
-              } else {
-                length++
-              }
-              document.getElementsByClassName('topic')[length].classList.toggle('is-active');
-          }
-          setInterval(topicswip, 5000);
+            var lenght = 0;
+            var max = document.getElementsByClassName('topics').length
+            topicswip = function() {
+                document.getElementsByClassName('topic')[length].classList.toggle('is-active');
+                if(max == length) {
+                    length = 0
+                } else {
+                    length++
+                }
+                document.getElementsByClassName('topic')[length].classList.toggle('is-active');
+            }
+            if(max > 1) {
+                setInterval(topicswip, 5000);
+            }
     </script>
 @endsection

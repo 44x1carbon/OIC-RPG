@@ -45,11 +45,13 @@ Route::get('/party/registration/confirm', PartyRegistrationController::class.'@s
 Route::post('/party', PartyController::class.'@store')->name('store_party');
 
 Route::post('/guild_member', GuildMemberController::class.'@update')->name('update_guild_member');
+Route::match(['get', 'post'], '/guild_member/search', GuildMemberController::class.'@search')->name('search_guild_member');
 
 Route::delete('/guild_member/delete', GuildMemberController::class.'@destroy')->name('destroy_guild_member');
 
 /** マイページ */
 Route::get('/me/my_page', GuildMemberController::class.'@myPage')->name('show_my_page');
+
 /** マイページ */
 Route::get('/guild_members/{studentNumber}', GuildMemberController::class.'@userPage')->name('show_user_page');
 
