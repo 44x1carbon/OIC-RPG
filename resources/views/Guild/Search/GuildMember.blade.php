@@ -5,6 +5,10 @@
 @endsection
 
 @section('content')
+    <div class="background">
+        <div class="layer layer1 board"></div>
+        <div class="layer layer2 opasity"></div>
+    </div><!-- background -->
     <div class="search-options">
         <h2 class="search-options-title">検索条件</h2>
         <form action="{{ route('search_guild_member') }}" method="post" class="form">
