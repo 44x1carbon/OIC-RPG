@@ -29,7 +29,7 @@ class EventAppServiceTest extends TestCase
         $this->appService = app(EventAppService::class);
     }
 
-    public function testSuccess()
+    public function testIssueEventSuccess()
     {
         $id = $this->appService->issueEvent(
             'MF',
@@ -41,5 +41,20 @@ class EventAppServiceTest extends TestCase
         );
         $result = $this->repo->findById($id);
         $this->assertTrue(isset($result));
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testIssueEventFail()
+    {
+        $id = $this->appService->issueEvent(
+            'MF',
+            'oic',
+            '作品展',
+            new ReleasePeriod(new \DateTime('2018-01-01'), new \DateTime('2018-02-01')),
+            new EventHoldPeriod(new \DateTime('2019-01-02'), new \DateTime('2019-01-15')),
+            new EvaluationPeriod(new \DateTime('2020-01-16'), new \DateTime('2020-01-30'))
+        );
     }
 }
