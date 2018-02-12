@@ -37,10 +37,16 @@
         </ul><!-- rpg-top-menu-list -->
         <div class="news">
             <div class="news__header">お知らせ</div>
-            <ul class="topics news__body">
-                <li class="topic">Ver1.2 アップデートのお知らせ</li>
-                <li class="topic">現在起きている不具合について</li>
-            </ul>
+            <div class="topics news__body">
+                <?php /* @var \App\Infrastracture\Feed\FeedViewModel $feed */ ?>
+                @foreach($feedList as $feed)
+                    <div class="card">
+                        <a href="{{ $feed->link()->partyUrl() }}">
+                            {{ $feed->message() }}
+                        </a>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div><!-- rpg-top -->
 @endsection
