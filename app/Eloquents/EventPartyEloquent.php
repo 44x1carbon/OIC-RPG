@@ -54,7 +54,7 @@ class EventPartyEloquent extends Model
             $eventPartyModel->party_id = $eventParty->partyId();
         }
         $eventPartyModel->name = $eventParty->workName();
-        $eventPartyModel->introduction - $eventParty->workIntroduction();
+        $eventPartyModel->introduction = $eventParty->workIntroduction();
         $eventPartyModel->rank = $eventParty->rank();
 
         return $eventPartyModel;
