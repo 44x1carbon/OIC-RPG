@@ -49,4 +49,20 @@ class EventPartyFacadeTest extends TestCase
 
         $this->assertFalse($this->facade->joinEvent('aaaa', 'bbbb'));
     }
+
+    public function testUpdateWork()
+    {
+        $this->repo->save($this->eventParty);
+
+        $id = $this->facade->updateWork(
+            $this->eventParty->eventId()->code(),
+            $this->eventParty->partyId(),
+            $name = 'OIC-RPG',
+            $introduction = 'OICでの学園生活をRPG化するサービス'
+        );
+
+        $result = $this->repo->findByEventIdAndPartyId($this->eventParty->eventId(), $id);
+
+        $this->assertTrue($result->workName() === $name && $result->workIntroduction() === $introduction);
+    }
 }

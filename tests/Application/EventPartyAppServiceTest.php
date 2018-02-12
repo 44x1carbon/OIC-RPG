@@ -49,4 +49,20 @@ class EventPartyAppServiceTest extends TestCase
 
         $this->assertFalse($this->appService->joinEvent(new EventId('aaaa'), 'bbbb'));
     }
+
+    public function testUpdateWork()
+    {
+        $this->repo->save($this->eventParty);
+
+        $this->appService->updateWork(
+            $this->eventParty->eventId(),
+            $this->eventParty->partyId(),
+            $name = 'OIC-RPG',
+            $introduction = 'OICでの学園生活をRPG化するサービス'
+        );
+
+        $result = $this->repo->findByEventIdAndPartyId($this->eventParty->eventId(), $this->eventParty->partyId());
+
+        $this->assertTrue($result->workName() === $name && $result->workIntroduction() === $introduction);
+    }
 }
