@@ -16,7 +16,7 @@
             <h2 class="notification-title">{{ $notification->title() }}</h2>
         </div>
         <div class="notification-body column flex-while">
-            <p class="message">{{ $notification->message() }}</p>
+            <p class="message">{!! $notification->message() !!}</p>
             @if($notification->notificationType()->is('receivePartyParticipationRequest'))
                 @if($notification->link()->linkType()->is('partyParticipationRequest'))
                 <div class="row flex-center-length">

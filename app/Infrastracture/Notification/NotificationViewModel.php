@@ -31,7 +31,7 @@ class NotificationViewModel
         $this->notification = $notification;
         $this->id = $notification->id();
         $this->title = $notification->title();
-        $this->message = $notification->message();
+        $this->message = $this->saftyNl2Br($notification->message());
         $this->toStudentNumber = $notification->toStudentNumber();
         $this->link = new LinkViewModel($notification->link());
         $this->notificationType = $notification->notificationType();
@@ -114,5 +114,10 @@ class NotificationViewModel
     public function isUnread(): bool
     {
         return !$this->readFlg;
+    }
+
+    private function saftyNl2Br(string $text): string
+    {
+        return nl2br(htmlspecialchars($text));
     }
 }
