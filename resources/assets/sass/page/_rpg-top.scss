@@ -148,14 +148,20 @@ $item-size: 80px;
   }
   .topic {
     position: absolute;
+    padding: 2px;
+    box-sizing: border-box;
     top: 5em;
-    display: block;
+    left: 0;
+    opacity: 0;
     width: 100%;
     height: 100%;
     margin-bottom: 6px;
-    line-height: 1.5;
+    line-height: 1.2;
+
     &.is-active {
       top: 0;
+      opacity: 1;
+      transition: 1s;
     }
   }
 }
