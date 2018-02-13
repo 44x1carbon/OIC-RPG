@@ -109,3 +109,6 @@ Route::get('/', function(){
 
 Route::post('/participation_request/{partyParticipationRequestId}/reply', PartyParticipationRequestController::class.'@reply')
     ->name('do_reply');
+
+Route::post('/scout', ScoutController::class.'@send')
+    ->name('send_scout');
