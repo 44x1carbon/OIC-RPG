@@ -40,7 +40,7 @@
             <div class="topics news__body">
                 <?php /* @var \App\Infrastracture\Feed\FeedViewModel $feed */ ?>
                 @foreach($feedList as $feed)
-                    <div class="card topic is-active">
+                    <div class="card topic {{ $loop->first? 'is-active' : ''  }}">
                         <a href="{{ $feed->link()->partyUrl() }}">
                             {{ $feed->message() }}
                         </a>
@@ -50,19 +50,19 @@
         </div>
     </div><!-- rpg-top -->
     <script>
-            var lenght = 0;
-            var max = document.getElementsByClassName('topics').length
-            topicswip = function() {
-                document.getElementsByClassName('topic')[length].classList.toggle('is-active');
-                if(max == length) {
-                    length = 0
+            var current = 0;
+            var max = document.getElementsByClassName('topic').length
+            var topicswip = function() {
+                document.getElementsByClassName('is-active')[0].classList.remove('is-active');
+                if(max-1 <= current) {
+                    current = 0
                 } else {
-                    length++
+                    current++
                 }
-                document.getElementsByClassName('topic')[length].classList.toggle('is-active');
+                document.getElementsByClassName('topic')[current].classList.add('is-active');
             }
             if(max > 1) {
-                setInterval(topicswip, 5000);
+                setInterval(topicswip, 10000);
             }
     </script>
 @endsection
