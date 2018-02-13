@@ -64,6 +64,10 @@
                     <h3 class="form-item-title">パーティー選択</h3>
                     <select class="select input">
                       <option>パーティー</option>
+                        <? /* @var \App\Infrastracture\Party\PartyViewModel $party */ ?>
+                        @foreach($managedPartyList as $party)
+                            <option value="{{ $party->id }}">{{ $party->productionIdea()->productionTheme }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-item">

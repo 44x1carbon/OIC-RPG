@@ -17,6 +17,8 @@ use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\GuildMember\ValueObjects\SearchCriteria;
 use App\Domain\Job\Job;
 use App\Domain\Job\JobRepositoryInterface;
+use App\Domain\Party\Party;
+use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyParticipationRequest\PartyParticipationRequest;
 use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Domain\Skill\Skill;
@@ -29,6 +31,7 @@ use App\Http\ViewComposers\FieldViewModelComposer;
 use App\Infrastracture\GuildMember\GuildMemberViewModel;
 use App\Infrastracture\Job\JobViewModel;
 use App\Infrastracture\Job\SkillViewModel;
+use App\Infrastracture\Party\PartyViewModel;
 use App\Infrastracture\PartyParticipationRequest\PartyParticipationRequestViewModel;
 use App\Presentation\GuildMemberFacade;
 use App\Presentation\PartyParticipationRequestFacade;
@@ -130,11 +133,21 @@ class GuildMemberController extends Controller
             ->with('participationRequests', $participationRequestViewModels);
     }
 
-    public function search(GuildMemberSearchRequest $request, SearchService $service, JobRepositoryInterface $jobRepository, SkillRepositoryInterface $skillRepository)
+    public function search(
+        GuildMemberSearchRequest $request,
+        SearchService $service,
+        JobRepositoryInterface $jobRepository,
+        SkillRepositoryInterface $skillRepository,
+        PartyRepositoryInterface $partyRepository,
+        GuildMember $loginMember
+    )
     {
         $guildMembers = $service->search($request->searchCriteria());
 
         return view('Guild.Search.GuildMember')
+            ->with('managedPartyList', array_map(function (Party $party) {
+                return new PartyViewModel($party);
+            }, $partyRepository->findListByManagerId($loginMember->studentNumber())))
             ->with('allJob', array_map(function(Job $j) {
                 return new JobViewModel($j);
             }, $jobRepository->all()))
