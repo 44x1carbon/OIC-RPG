@@ -28,7 +28,7 @@
                 </a>
             </li>
             <li class="rpg-top-menu-item notification">
-                <a href="{{ route('show_notification') }}" class="rpg-top-menu-link raid-notification">
+                <a href="{{ route('show_notification') }}" class="rpg-top-menu-link notification {{ $sendNotification ? 'is-there' : ''}}">
                     <div class="menu__name">
                         通知  {{ $sendNotification ? 'あり' : 'なし'}}
                     </div>
@@ -40,7 +40,7 @@
             <div class="topics news__body">
                 <?php /* @var \App\Infrastracture\Feed\FeedViewModel $feed */ ?>
                 @foreach($feedList as $feed)
-                    <div class="card">
+                    <div class="card topic {{ $loop->first? 'is-active' : ''  }}">
                         <a href="{{ $feed->link()->partyUrl() }}">
                             {{ $feed->message() }}
                         </a>
@@ -49,4 +49,20 @@
             </div>
         </div>
     </div><!-- rpg-top -->
+    <script>
+            var current = 0;
+            var max = document.getElementsByClassName('topic').length
+            var topicswip = function() {
+                document.getElementsByClassName('is-active')[0].classList.remove('is-active');
+                if(max-1 <= current) {
+                    current = 0
+                } else {
+                    current++
+                }
+                document.getElementsByClassName('topic')[current].classList.add('is-active');
+            }
+            if(max > 1) {
+                setInterval(topicswip, 10000);
+            }
+    </script>
 @endsection
