@@ -17,12 +17,20 @@ class PartyAppService
     protected $partyRepository;
     protected $partyParticipationRequestRepository;
     protected $partyMemberAppService;
+    /* @var NotificationAppService $notificationAppService */
+    protected $notificationAppService;
 
-    function __construct(PartyRepositoryInterface $partyRepository, PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository, PartyMemberAppService $partyMemberAppService)
+    function __construct(
+        PartyRepositoryInterface $partyRepository,
+        PartyParticipationRequestRepositoryInterface $partyParticipationRequestRepository,
+        PartyMemberAppService $partyMemberAppService,
+        NotificationAppService $notificationAppService
+    )
     {
         $this->partyRepository = $partyRepository;
         $this->partyParticipationRequestRepository = $partyParticipationRequestRepository;
         $this->partyMemberAppService = $partyMemberAppService;
+        $this->notificationAppService = $notificationAppService;
     }
 
     public function registerParty(ActivityEndDate $activityEndDate, StudentNumber $managerId): string
@@ -87,8 +95,12 @@ class PartyAppService
 
         $this->partyParticipationRequestRepository->save($partyParticipationRequest);
 
+        // 参加申請を送ったパーティの管理者に通知を送る
+        $this->notificationAppService->sendPartyParticipationRequestReception($partyParticipationRequestId);
+
         return $partyParticipationRequest->id();
     }
+
     public function cancelPartyParticipationRequest(
         string $partyParticipationRequestId
     )
@@ -109,6 +121,9 @@ class PartyAppService
 
         // パーティ参加申請への返答が許可だった場合はパーティにメンバーをassign
         if ($reply->isPermit()) $this->partyMemberAppService->assignPartyMember($partyParticipationRequest->partyId(), $partyParticipationRequest->wantedRoleId(), $partyManagerId, $partyParticipationRequest->guildMemberId());
+
+        // パーティ参加申請を送ったギルドメンバーに通知を送る
+        $this->notificationAppService->sendPartyParticipationRequestReply($partyParticipationRequestId);
 
         return $partyParticipationRequest->id();
     }

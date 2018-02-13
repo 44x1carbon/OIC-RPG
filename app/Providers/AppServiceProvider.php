@@ -6,6 +6,7 @@ use App\Domain\Course\RepositoryInterface\CourseRepositoryInterface;
 use App\Domain\Field\FieldRepositoryInterface;
 use App\Domain\GuildMember\GuildMember;
 use App\Domain\Job\JobRepositoryInterface;
+use App\Domain\Notification\RepositoryInterface\NotificationRepositoryInterface;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 use App\Domain\PartyWrittenRequest\RepositoryInterface\PartyWrittenRequestRepositoryInterface;
@@ -22,6 +23,7 @@ use App\Domain\Skill\RepositoryInterface\SkillRepositoryInterface;
 use App\Infrastracture\Course\CourseOnMemoryRepositoryImpl;
 use App\Infrastracture\Field\FieldEloquentRepositoryImpl;
 use App\Infrastracture\Job\JobEloquentRepositoryImpl;
+use App\Infrastracture\Notification\NotificationEloquentRepositoryImpl;
 use App\Infrastracture\Party\PartyEloquentRepositoryImpl;
 use App\Infrastracture\Party\PartyOnMemoryRepositoryImpl;
 use App\Infrastracture\PartyParticipationRequest\PartyParticipationRequestEloquentRepositoryImpl;
@@ -104,5 +106,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(JobRepositoryInterface::class, JobEloquentRepositoryImpl::class);
         $this->app->singleton(FieldRepositoryInterface::class, FieldEloquentRepositoryImpl::class);
         $this->app->singleton(ScoutRepositoryInterface::class, ScoutEloquentRepositoryImpl::class);
+        $this->app->singleton(NotificationRepositoryInterface::class, NotificationEloquentRepositoryImpl::class);
     }
 }

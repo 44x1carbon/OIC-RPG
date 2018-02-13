@@ -27,20 +27,26 @@
                     </div>
                 </a>
             </li>
-            <li class="rpg-top-menu-item disabled">
-                <a href="#" class="rpg-top-menu-link raid-battle">
+            <li class="rpg-top-menu-item notification">
+                <a href="{{ route('show_notification') }}" class="rpg-top-menu-link raid-notification">
                     <div class="menu__name">
-                        レイドバトル
+                        通知  {{ $sendNotification ? 'あり' : 'なし'}}
                     </div>
                 </a>
             </li>
         </ul><!-- rpg-top-menu-list -->
         <div class="news">
             <div class="news__header">お知らせ</div>
-            <ul class="topics news__body">
-                <li class="topic">Ver1.2 アップデートのお知らせ</li>
-                <li class="topic">現在起きている不具合について</li>
-            </ul>
+            <div class="topics news__body">
+                <?php /* @var \App\Infrastracture\Feed\FeedViewModel $feed */ ?>
+                @foreach($feedList as $feed)
+                    <div class="card">
+                        <a href="{{ $feed->link()->partyUrl() }}">
+                            {{ $feed->message() }}
+                        </a>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div><!-- rpg-top -->
 @endsection

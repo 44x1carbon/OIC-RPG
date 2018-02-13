@@ -74,7 +74,8 @@ class PartyEloquent extends Model
             new ActivityEndDate($this->active_end_date),
             new StudentNumber($this->manager_id),
             $productionIdea,
-            $wantedRoles
+            $wantedRoles,
+            new \DateTime($this->created_at)
         );
     }
 }
