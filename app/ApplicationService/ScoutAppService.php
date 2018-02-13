@@ -33,8 +33,8 @@ class ScoutAppService
 
         $party = $this->partyRepository->findById($partyId);
 
-        if(is_null($party)) throw new \Exception("");
-        if(!$party->isPartyManagerId($from)) throw new \Exception("");
+        if(is_null($party)) throw new \Exception("not found party");
+        if(!$party->isPartyManagerId($from)) throw new \Exception("no manager");
 
         $id = $this->scoutRepository->nextId();
         $scout = new Scout(
@@ -46,6 +46,5 @@ class ScoutAppService
             new \DateTime()
         );
 
-        $this->scoutRepository->save($scout);
     }
 }
