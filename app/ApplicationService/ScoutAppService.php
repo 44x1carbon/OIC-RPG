@@ -46,5 +46,10 @@ class ScoutAppService
             new \DateTime()
         );
 
+        /* @var NotificationAppService $notificationAppService */
+        $notificationAppService = app(NotificationAppService::class);
+        $notificationAppService->sendScoutNotification($scout);
+
+        return $this->scoutRepository->save($scout);
     }
 }

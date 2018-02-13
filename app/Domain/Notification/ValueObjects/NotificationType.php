@@ -14,8 +14,13 @@ class NotificationType
 {
     const RECEIVE_PARTY_PARTICIPATION_REQUEST = 'receivePartyParticipationRequest';
     const REPLY_PARTY_PARTICIPATION_REQUEST = 'replyPartyParticipationRequest';
+    const SCOUT = 'scout';
 
-    const TYPE_LIST = [self::RECEIVE_PARTY_PARTICIPATION_REQUEST, self::REPLY_PARTY_PARTICIPATION_REQUEST];
+    const TYPE_LIST = [
+        self::RECEIVE_PARTY_PARTICIPATION_REQUEST,
+        self::REPLY_PARTY_PARTICIPATION_REQUEST,
+        self::SCOUT
+    ];
 
     private $type;
 
@@ -40,6 +45,11 @@ class NotificationType
     public static function REPLY_PARTY_PARTICIPATION_REQUEST(): NotificationType
     {
         return new NotificationType(self::REPLY_PARTY_PARTICIPATION_REQUEST);
+    }
+
+    public static function SCOUT(): NotificationType
+    {
+        return new NotificationType(self::SCOUT);
     }
 
     // リンクのタイプを判定
