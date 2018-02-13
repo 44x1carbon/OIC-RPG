@@ -61,4 +61,16 @@ class LinkViewModel
         }
         return null;
     }
+
+    public function label(): string
+    {
+        if($this->linkType->is(LinkType::PARTY_PARTICIPATION_REQUEST)) {
+            return "参加申請一覧へ";
+        } else
+        if($this->linkType->is(LinkType::PARTY)) {
+            return "パーティ詳細へ";
+        } else {
+            return "";
+        }
+    }
 }

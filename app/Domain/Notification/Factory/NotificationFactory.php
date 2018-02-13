@@ -83,7 +83,7 @@ class NotificationFactory
             $this->replyPartyParticipationRequestTextFactory->createTitle($partyParticipationRequestId),
             $this->replyPartyParticipationRequestTextFactory->createMessage($partyParticipationRequestId),
             $partyParticipationRequest->guildMemberId(),
-            new Link($partyParticipationRequestId, LinkType::PARTY_PARTICIPATION_REQUEST()),
+            new Link($partyParticipationRequest->partyId(), LinkType::PARTY()),
             NotificationType::REPLY_PARTY_PARTICIPATION_REQUEST()
         );
         return $notification;
