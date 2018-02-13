@@ -56,14 +56,15 @@
             <div class="scout-modal-header">
                 <h2 class="scout-modal-title">スカウト</h2>
             </div>
-            <form class="scout-modal-inner form">
+            <form class="scout-modal-inner form" action="{{ route('send_scout') }}" method="post">
+                {{ csrf_field() }}
                 <div class="form-item">
                   <p class="scout-user-name"><span>{{ $guildMember->name }}</span>さんをスカウトする</p>
+                  <input type="hidden" name="to" value="{{ $guildMember->studentNumber }}">
                 </div>
                 <div class="form-item">
                     <h3 class="form-item-title">パーティー選択</h3>
-                    <select class="select input">
-                      <option>パーティー</option>
+                    <select class="select input" name="partyId">
                         <? /* @var \App\Infrastracture\Party\PartyViewModel $party */ ?>
                         @foreach($managedPartyList as $party)
                             <option value="{{ $party->id }}">{{ $party->productionIdea()->productionTheme }}</option>
@@ -72,7 +73,7 @@
                 </div>
                 <div class="form-item">
                     <h3 class="form-item-title">メッセージ</h3>
-                    <textarea class="input textarea" row="5"></textarea>
+                    <textarea class="input textarea" row="5" name="message"></textarea>
                 </div>
                 <div class="btn-wrap row flex-while">
                     <button type="button" class="btn mod-red scout-modal-close">キャンセル</button>
