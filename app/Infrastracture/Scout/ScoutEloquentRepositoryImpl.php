@@ -22,7 +22,6 @@ class ScoutEloquentRepositoryImpl implements ScoutRepositoryInterface
         do {
             $id = RandomStringGenerator::makeLowerCase(8);
             $model = $this->eloquent->where('scout_id', $id)->first();
-            var_dump($model);
         } while($model != null);
 
         return $id;
