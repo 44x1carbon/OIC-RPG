@@ -10,6 +10,7 @@ use App\Domain\Notification\RepositoryInterface\NotificationRepositoryInterface;
 use App\Domain\Party\RepositoryInterface\PartyRepositoryInterface;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
 use App\Domain\PartyWrittenRequest\RepositoryInterface\PartyWrittenRequestRepositoryInterface;
+use App\Domain\Scout\ScoutRepositoryInterface;
 use App\Domain\WantedMember\RepositoryInterface\WantedMemberRepositoryInterface;
 use App\Domain\ProductionIdea\RepositoryInterface\ProductionIdeaRepositoryInterface;
 use App\Domain\ProductionType\RepositoryInterface\ProductionTypeRepositoryInterface;
@@ -27,6 +28,7 @@ use App\Infrastracture\Party\PartyEloquentRepositoryImpl;
 use App\Infrastracture\Party\PartyOnMemoryRepositoryImpl;
 use App\Infrastracture\PartyParticipationRequest\PartyParticipationRequestEloquentRepositoryImpl;
 use App\Infrastracture\PartyWrittenRequest\PartyWrittenRequestOnMemoryRepositoryImpl;
+use App\Infrastracture\Scout\ScoutEloquentRepositoryImpl;
 use App\Infrastracture\Skill\SkillEloquentRepositoryImpl;
 use App\Infrastracture\ProductionIdea\ProductionIdeaEloquentRepositoryImpl;
 use App\Infrastracture\ProductionType\ProductionTypeEloquentRepositoryImpl;
@@ -103,6 +105,7 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(JobRepositoryInterface::class, JobEloquentRepositoryImpl::class);
         $this->app->singleton(FieldRepositoryInterface::class, FieldEloquentRepositoryImpl::class);
+        $this->app->singleton(ScoutRepositoryInterface::class, ScoutEloquentRepositoryImpl::class);
         $this->app->singleton(NotificationRepositoryInterface::class, NotificationEloquentRepositoryImpl::class);
     }
 }
