@@ -31,9 +31,9 @@ class SendScoutRequest extends FormRequest
         ];
     }
 
-    public function to(): StudentNumber
+    public function to(): string
     {
-        return new StudentNumber($this->get('to'));
+        return $this->get('to');
     }
 
     public function partyId(): string
