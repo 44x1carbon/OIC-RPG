@@ -105,6 +105,7 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(JobRepositoryInterface::class, JobEloquentRepositoryImpl::class);
         $this->app->singleton(FieldRepositoryInterface::class, FieldEloquentRepositoryImpl::class);
+        $this->app->singleton(ScoutRepositoryInterface::class, ScoutEloquentRepositoryImpl::class);
         $this->app->singleton(NotificationRepositoryInterface::class, NotificationEloquentRepositoryImpl::class);
         $this->app->singleton(ScoutRepositoryInterface::class, ScoutEloquentRepositoryImpl::class);
     }
