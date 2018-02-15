@@ -10,10 +10,12 @@ namespace App\ApplicationService;
 
 use App\Domain\GuildMember\ValueObjects\StudentNumber;
 use App\Domain\Notification\Factory\NotificationFactory;
+use App\Domain\Notification\Factory\ScoutNotificationFactory;
 use App\Domain\Notification\Notification;
 use App\Domain\Notification\RepositoryInterface\NotificationRepositoryInterface;
 use App\Domain\Notification\Spec\NotificationSpec;
 use App\Domain\PartyParticipationRequest\RepositoryInterface\PartyParticipationRequestRepositoryInterface;
+use App\Domain\Scout\Scout;
 use App\Eloquents\NotificationEloquent;
 use Exception;
 
@@ -64,6 +66,13 @@ class NotificationAppService
 
         $this->notificationRepository->save($notification);
 
+        return $notification->id();
+    }
+
+    public function sendScoutNotification(Scout $scout)
+    {
+        $notification = (new ScoutNotificationFactory($scout))->build();
+        $this->notificationRepository->save($notification);
         return $notification->id();
     }
 

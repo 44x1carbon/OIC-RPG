@@ -43,7 +43,7 @@ class SendScoutRequest extends FormRequest
 
     public function message(): string
     {
-        return $this->get('message') || '';
+        return $this->get('message') ?? '';
     }
 
     public function redirectTo(): string

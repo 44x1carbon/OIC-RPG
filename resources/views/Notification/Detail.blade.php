@@ -16,21 +16,10 @@
             <h2 class="notification-title">{{ $notification->title() }}</h2>
         </div>
         <div class="notification-body column flex-while">
-            <p class="message">{{ $notification->message() }}</p>
-            @if($notification->notificationType()->is('receivePartyParticipationRequest'))
-                @if($notification->link()->linkType()->is('partyParticipationRequest'))
-                <div class="row flex-center-length">
-                    <a href="{{ $notification->link()->url() }}" class="link">参加申請一覧を見る</a>
-                </div>
-                @endif
-            @endif
+            <p class="message">{!! $notification->message() !!}</p>
+            <div class="row flex-center-length">
+                <a href="{{ $notification->link()->url() }}" class="link">{{ $notification->link()->label() }}</a>
+            </div>
         </div>
-            @if($notification->notificationType()->is('replyPartyParticipationRequest'))
-                @if($notification->link()->linkType()->is('partyParticipationRequest'))
-i               <div class="row flex-center-length">
-                    <a href="{{ $notification->link()->partyUrl() }}" class="link">パーティ詳細を見る</a>
-                </div>
-                @endif
-            @endif
     </div>
 @endsection
