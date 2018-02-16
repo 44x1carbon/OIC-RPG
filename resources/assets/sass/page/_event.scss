@@ -1,0 +1,83 @@
+.event-detail {
+  border-radius: 3px;
+}
+
+.event-detail-heading {
+  background-image: linear-gradient(180deg, #BF9C60 50.28%, #8A8219 100%);
+  border: solid 1px #BF9C60;
+  padding: 8px 6px;
+}
+
+.event-detail-title {
+  padding: 9px 0;
+  background: linear-gradient(180deg, #E43F46 0%, #A12B30 100%);
+  border: 1px solid white;
+  border-radius: 5px;
+  h3{
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.5;
+    color: gold;
+    text-align: center;
+    text-shadow: 2px 2px 1px #B1632A, -2px 2px 1px #B1632A, 2px -2px 1px #B1632A, -2px -2px 1px #B1632A;
+  }
+}
+
+.event-detail-duration {
+  font-size: 12px;
+  text-align: left;
+}
+
+.event-detail-body {
+  padding: 12px 6px;
+}
+
+.event-detail-theme {
+  padding: 0 15px;
+  color: white;
+  p {
+    font-size: 18px;
+  }
+}
+
+.event-detail-join-team {
+  li {
+    line-height: 2;
+  }
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.color-white {
+  color: white;
+}
+
+.event-topic {
+  display: block;
+  height: 100%;
+  background: linear-gradient(180deg, #E43F46 0%, #A12B30 100%);
+}
+
+.event-topic-title {
+  font-weight: bold;
+  line-height: 1.5;
+  color: gold;
+  text-align: center;
+  text-shadow: 2px 2px 1px #B1632A, -2px 2px 1px #B1632A, 2px -2px 1px #B1632A, -2px -2px 1px #B1632A;
+}
+
+.event-topic-theme {
+    color: white;
+  text-align: center;
+}
+
+.event-topic-kaisai {
+  color: white;
+  text-align:center;
+}

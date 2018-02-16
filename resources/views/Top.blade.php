@@ -38,6 +38,13 @@
         <div class="news">
             <div class="news__header">お知らせ</div>
             <div class="topics news__body">
+                <div class="card topic">
+                  <a href="/event/detail" class="event-topic">
+                    <p class="event-topic-title">メディアフロンティア杯</p>
+                    <p class="event-topic-theme">テーマ：輪</p>
+                    <p class="event-topic-kaisai">〜開催中〜</p>
+                  </a>
+                </div>
                 <?php /* @var \App\Infrastracture\Feed\FeedViewModel $feed */ ?>
                 @foreach($feedList as $feed)
                     <div class="card topic {{ $loop->first? 'is-active' : ''  }}">

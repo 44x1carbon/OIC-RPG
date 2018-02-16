@@ -89,6 +89,11 @@ Route::post('/me/favorite_job', GuildMemberController::class.'@setupFavoriteJob'
 Route::get('/notification', NotificationController::class.'@index')->name('show_notification');
 Route::get('/notification/{notificationId}/detail', NotificationController::class.'@detail')->name('show_notification_detail');
 
+/** イベント */
+Route::get('/event/detail', function() {
+    return view('guild.event.detail');
+});
+
 /** デバッグ用 */
 if(env('APP_ENV', 'local') == 'local') {
     Route::get('/debug/learn_skill', DebugController::class.'@showLearnSkill')->name('show_learn_skill');
