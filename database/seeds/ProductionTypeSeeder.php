@@ -22,6 +22,14 @@ class ProductionTypeSeeder extends Seeder
     public function run()
     {
         $this->repo->save(new ProductionType($this->repo->nextId(), 'Webシステム'));
-        $this->repo->save(new ProductionType($this->repo->nextId(), 'Webデザイン'));
+        $this->repo->save(new ProductionType($this->repo->nextId(), '業務システム'));
+        $this->repo->save(new ProductionType($this->repo->nextId(), 'アプリ'));
+        $this->repo->save(new ProductionType($this->repo->nextId(), 'Webサイト'));
+        $this->repo->save(new ProductionType($this->repo->nextId(), '映像'));
+        $this->repo->save(new ProductionType($this->repo->nextId(), '2Dゲーム'));
+        $this->repo->save(new ProductionType($this->repo->nextId(), '3Dゲーム'));
+        $this->repo->save(new ProductionType($this->repo->nextId(), 'プロダクションデザイン'));
+        $this->repo->save(new ProductionType($this->repo->nextId(), 'イラスト'));
+
     }
 }
