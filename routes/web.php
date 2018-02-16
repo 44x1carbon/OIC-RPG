@@ -91,7 +91,7 @@ Route::get('/notification/{notificationId}/detail', NotificationController::clas
 
 /** イベント */
 Route::get('/event/detail', function() {
-    return view('Guild.Event.Detail');
+    return view('Guild.Event.detail');
 });
 
 /** デバッグ用 */
