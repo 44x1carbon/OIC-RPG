@@ -4,8 +4,7 @@
         <div class="menu-links panel__body mod-no-padding flex-area">
             <a href="{{ route('show_party_registration_production_idea') }}" class="menu__link">パーティー作成</a>
             <a href="{{ route('search_party') }}" class="menu__link">パーティー検索</a>
-            <a href="#" class="menu__link">パーティー管理</a>
-            {{--<a href="{{ route('') }}" class="menu__link">パーティー管理</a>--}}
+            <a href="{{ route('search_guild_member') }}" class="menu__link">スカウト</a>
         </div>
     </div>
     <div class="panel">

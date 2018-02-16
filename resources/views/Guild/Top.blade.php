@@ -18,8 +18,7 @@
         <div class="guild-top__menu">
             <a href="{{ route('show_party_registration_production_idea') }}" class="btn mod-red">パーティー登録</a>
             <a href="{{ route('search_party') }}" class="btn mod-red">パーティー検索</a>
-            {{--<a href="" class="btn mod-red">ユーザー検索</a>--}}
-            {{--<a href="" class="btn mod-red">パーティー登録</a>--}}
+            <a href="{{ route('search_guild_member') }}" class="btn mod-red">スカウト</a>
         </div>
         <div class="guild-top__news"></div>
     </div>
