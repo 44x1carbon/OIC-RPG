@@ -14,7 +14,7 @@ class GuildMemberRegistrationController extends Controller
 {
     public function showAuthInfo()
     {
-        return view('signup.authinfo');
+        return view('SignUp.AuthInfo');
     }
 
     public function doAuthInfo(AuthInfoRequest $request)
@@ -25,7 +25,7 @@ class GuildMemberRegistrationController extends Controller
 
     public function showProfile()
     {
-        return view('signup.profile');
+        return view('SignUp.Profile');
     }
 
     public function doProfile(ProfileRequest $request)
@@ -36,7 +36,7 @@ class GuildMemberRegistrationController extends Controller
 
     public function showSchoolInfo(CourseRepositoryInterface $courseRepository)
     {
-        return view('signup.schoolinfo')
+        return view('SignUp.SchoolInfo')
             ->with('session', session('guild_member'))
             ->with('courses', $courseRepository->all());
     }
